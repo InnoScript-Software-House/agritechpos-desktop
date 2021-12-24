@@ -1,3 +1,10 @@
+/**
+ * Developer                    - Aung Htet Paing
+ * Start Date                   - 25 Dec 2021
+ * Phone                        - 09421038123, 09758276201
+ * Email                        - aunghtetpaing.info@gmail.com
+**/
+
 const { BrowserWindow, app, ipcMain, Notification, dialog } = require('electron');
 const path = require('path');
 
@@ -5,9 +12,9 @@ const isDev = !app.isPackaged;
 
 const createWindow = () => {
     const win = new BrowserWindow({
-        maxWidth: 500,
-        maxHeight: 600,
-        backgroundColor: '#eeeeee',
+        maxWidth: 1000,
+        maxHeight: 800,
+        backgroundColor: '#eee',
         webPreferences: {
             nodeIntegration: true,
             nodeIntegrationInWorker: true,
@@ -31,10 +38,12 @@ ipcMain.on('notify', (_, message) => {
     new Notification({title: 'Notification', body: message}).show();
 });
 
-ipcMain.on('dialog', (_, message) => {
-    dialog.showMessageBox(null, message).then((response) => {
-        console.log(response);
-    });
+ipcMain.on('dialog',async (e, message) => {
+    return await dialog.showMessageBox(null, message);
 });
 
 app.whenReady().then(createWindow);
+
+app.on('window-all-closed', () => {
+    app.quit();
+})
