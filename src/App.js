@@ -4,6 +4,10 @@ import Login from './pages/auth/Login';
 
 export default class App extends Component {
 
+  componentDidMount() {
+    window.nativeApi.notification.sendNoti('sys-start-notify');
+  }
+
   render() {
     return(
       <HashRouter>
