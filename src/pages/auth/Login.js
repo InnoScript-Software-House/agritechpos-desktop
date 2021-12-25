@@ -7,11 +7,9 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import translate from '../../assets/i18n/mm.json';
-import { loginAction } from '../../redux/actions/auth.action';
-import { showWarningDialog } from '../../services/nativeDialog.service';
+import { trans } from '../../assets/i18n/mm.json';
 
-class Login extends Component {
+class LoginPage extends Component {
 
     constructor(props) {
         super(props);
@@ -36,7 +34,14 @@ class Login extends Component {
         const { authLoginAction } = this.props;
 
         if(username === '' || password === '') {
-            return showWarningDialog(translate.auth.login.credential_err_title, translate.auth.login.credential_err)
+            this.setState({ is_error: true })
+            // return electron.dialogApi.sendDialog({
+            //     title: 'Login Fail', 
+            //     message: 'Invalid username and password',
+            //     type: 'warning',
+            //     defaultId: 0,
+            //     buttons: ['OK']
+            // })
         }
 
         const requestBody = {
@@ -57,7 +62,7 @@ class Login extends Component {
                 <div className='content-header'>
                     {/* <img className='login-logo' src={`file://assets/images/logo.png`} alt='kubota' /> */}
                     <h3 className='login-title'> 
-                        {translate.auth.login.title} 
+                        {trans.auth.login.title} 
                     </h3>
                 </div>
 
@@ -66,7 +71,7 @@ class Login extends Component {
                         <input 
                             className='form-control' 
                             type={`text`}
-                            placeholder={translate.auth.login.input_username}
+                            placeholder={trans.auth.login.input_username}
                             value={username}
                             onChange={e => this.setState({ username: e.target.value})}
                         />
@@ -76,7 +81,7 @@ class Login extends Component {
                         <input 
                             className='form-control' 
                             type={`password`}
-                            placeholder={translate.auth.login.input_password}
+                            placeholder={trans.auth.login.input_password}
                             value={password}
                             onChange={e => this.setState({ password: e.target.value})}
                         />
@@ -87,12 +92,12 @@ class Login extends Component {
                             className={`btn btn-default ${is_error ? 'btn-is-error' : is_loading ? 'btn-is-error' : null }`}
                             onClick={() => this.login()}
                             disabled={is_error}
-                        > {translate.auth.login.btn_login} 
+                        > {trans.auth.login.btn_login} 
                         </button>
                     </div>
 
                     <div className='reset-password-wrapper'>
-                        <span> {translate.auth.login.btn_reset} </span> 
+                        <span> {trans.auth.login.btn_reset} </span> 
                     </div>
                 </div>
             </div>
@@ -111,4 +116,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login);
+)(LoginPage);
