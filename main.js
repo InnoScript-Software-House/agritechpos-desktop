@@ -1,4 +1,3 @@
-
 /**
  * Developer                    - Aung Htet Paing
  * Start Date                   - 25 Dec 2021
@@ -6,7 +5,7 @@
  * Email                        - aunghtetpaing.info@gmail.com
 **/
 
-const { BrowserWindow, app, ipcMain, Notification, dialog, Tray } = require('electron');
+const { BrowserWindow, app, ipcMain, Notification, dialog, Tray, Menu } = require('electron');
 const path = require('path');
 const { trans } = require('./src/assets/i18n/mm.json');
 
@@ -26,6 +25,8 @@ let browserWindowOptions = {
     backgroundColor: '#eeeeee',
 }
 
+let menuHide = new Menu();
+
 /**
  * BrowserWindow
  * 
@@ -39,26 +40,23 @@ let browserWindowOptions = {
  * [ LoginWindow ]
  */
 
-let loginWindow;
+let resetWindow, dashboardWindow;
 
-const createWindow = (browserWindowType) => {
+let mainWindow = () => {
+    let win = new BrowserWindow({
+        width: 1800,
+        height: 1000,
+        fullscreen: false,
+        type: 'MainWindow',
+        ...browserWindowOptions
+    });
 
-    let win;
+    win.loadFile('./index.html');
 
-    if(browserWindowType === 'login') {
-        loginWindow = new BrowserWindow({
-            maxWidth: 400,
-            maxHeight: 600,
-            title: 'Kubota POS - Login',
-            type: 'Login',
-            icon: new Tray('./src/assets/images/sample.jpg'),
-            ...browserWindowOptions
-        });
-
-        loginWindow.loadFile('./index.html');
-        win = loginWindow;
-    }
+    win.webContents.openDevTools()
+    return win;
 }
+
 
 if(isDev) {
     require('electron-reload')(__dirname, {
@@ -78,9 +76,40 @@ const sysNotification = () => {
     notify.show();
 }
 
+
+/**
+ * Dialog Box
+ * 
+ * ===========================
+ * Electron Native Dialog Box
+ * ===========================
+ * 
+ * Display native system dialogs for opening and saving files, alerting, etc.
+*/
+
+const warningDialogBox = (bwtype, title, message) => {
+
+    const windowType = bwtype === 'login-validation' ? 
+    loginWindow : 
+    null;
+
+    const options = {
+        type: 'warning',
+        title: title,
+        message: message
+    }
+
+    const dialogBox = dialog.showMessageBox(windowType, options);
+    return dialogBox;
+}
+
 app.whenReady().then(() => {
-    createWindow('login');
+    const contents = mainWindow();
+    contents.webContents.on('did-finish-load', () => {
+        contents.webContents.send('get-loading-state', true);
+    });
 });
+
 
 /**
  * IPCMain
@@ -100,3 +129,45 @@ ipcMain.on('notify', (_, type) => {
         return sysNotification();
     };
 });
+
+// ** Open Dialog Box
+ipcMain.on('dialog', (_, type) => {
+    const dialog = type === 'login-validation' ?
+    warningDialogBox(type, trans.auth.validate.valid_login_title,  trans.auth.validate.valid_credential) :
+    null;
+
+    return dialog;
+});
+
+// ** Browser Window Create
+ipcMain.on('browser-window', (_, type) => {
+});
+
+// ** Open Login Window
+ipcMain.once('open-login-window', (event) => {
+    let focusWindow = BrowserWindow.getFocusedWindow();
+    focusWindow.close();
+    const contents = loginWindow();
+    contents.webContents.on('did-finish-load', () => {
+        contents.webContents.send('get-loading-state', false);
+    });
+});
+
+// Browser Window FullScreen
+ipcMain.on('browser-window-fullscreen', (event) => {
+    let focusWindow = BrowserWindow.getFocusedWindow();
+    focusWindow.fullScreen = true;
+    focusWindow.fullScreenable = true;
+});
+
+
+ipcMain.on('loading', (event, loadingState) => {
+    event.reply('sadasd')
+});
+
+
+
+ipcMain.on('create-window', (_, type) => {
+    loginWindow.close();
+    createWindow(type)
+})

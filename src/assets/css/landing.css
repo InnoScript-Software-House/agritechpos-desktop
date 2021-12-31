@@ -1,0 +1,19 @@
+.landing-logo {
+    width: 500px;
+    padding-top: 50px;
+}
+
+.landing-title {
+    font-size: 35px;
+    color: #4CA6AA;
+    font-weight: lighter;
+    padding-top: 50px;
+}
+
+.landing-spinner {
+    margin-top: 20px;
+}
+
+.btn-primary:last-child {
+    margin-left: 20px;
+}

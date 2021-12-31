@@ -13,15 +13,29 @@ contextBridge.exposeInMainWorld('nativeApi', {
             ipcRenderer.send('notify', type);
         }
     },
-    dialogApi: {
-        sendDialog(message) {
-            ipcRenderer.send('dialog', message);
+    dialog: {
+        sendDialog(type) {
+            ipcRenderer.send('dialog', type);
         }
     },
-    batteryApi: {
-
+    browserWindow : {
+        sendBrowserWindow(type) {
+            ipcRenderer.send('browser-window', type);
+        },
+        fullscreen(data) {
+            ipcRenderer.send('browser-window-fullscreen', data);
+        },
+        openLoginWindow() {
+            ipcRenderer.send('open-login-window');
+        }
     },
-    filesApi: {
+    loading: {
+        getLoading(getData) {
+            return ipcRenderer.on('get-loading-state',(event, result) => {
+                getData(result);
+            });
+        }
 
     }
+
 });
