@@ -14,29 +14,21 @@ body {
 }
 
 /* Form, Input, Button */
-
-.btn-primary {
-    background-color: #4CA6AA!important;
-    margin-top: 20px;
-}
-
-.form-group-input {
-    height: 60px!important;
-    margin-bottom: 5px;
-}
-
-.form-control:focus {
-    outline: none !important;
-    border-color: #01a3a6;
-    box-shadow: 0 0 10px #01a3a6;
-}
-
 .btn {
     height: 55px;
     border-radius: 5px;
     color: #fff;
     font-size: large;
     cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #4CA6AA!important;
+    margin-top: 20px;
+}
+
+.btn-search {
+    margin-top: 0px;
 }
 
 .btn-default {
@@ -50,6 +42,27 @@ body {
 
 .btn-is-error {
     background-color: rgba(1, 163, 166,0.5);
+}
+
+.form-group-input {
+    height: 60px!important;
+    margin-bottom: 5px;
+}
+
+.form-control:focus {
+    outline: none !important;
+    border-color: #01a3a6;
+    box-shadow: 0 0 10px #01a3a6;
+}
+
+
+.data-table-loading-wrapper {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Button Error */

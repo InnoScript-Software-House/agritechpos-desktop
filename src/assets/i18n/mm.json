@@ -40,12 +40,20 @@
     },
     "menu" : [
         {
+            "label": "အရောင်းဘောင်ချာဖွင့်ခြင်း",
+            "link": "/dashboard"
+        },
+        {
             "label": "ပစ္စည်းစာရင်း",
             "link": "/inventory"
         },
         {
             "label": "အရောင်းစာရင်း",
             "link": "/sell-report"
+        },
+        {
+            "label": "အရောင်းစာရေးများ",
+            "link": "/user"
         },
         {
             "label": "ဆက်တင်",
