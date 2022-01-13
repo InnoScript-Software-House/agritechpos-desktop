@@ -1,15 +1,18 @@
-# Getting Started with Create React App And Electron JS
+# ArgriTech POS Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and [Electron JS]https://www.electronjs.org/docs/latest 
+This project was bootstrapped with 
+[Create React App](https://github.com/facebook/create-react-app) 
+[Electron JS](https://www.electronjs.org/docs/latest)
+[Express JS](https://expressjs.com/en/4x/api.html)
 
 ## Available Scripts
 
 In the project directory, you can run:
 
 ### `npm start` for open desktop app [window, Mac, Linux]
-### `npm run watch` to build and generate react web app to build folder
-### `npm run react build` to build and generate react web app to production
-### `npm run pack` to build desktop app
+### `npm run watch` for realtime watch and build react app
+### `npm run react build` for build react app
+### `npm run pack` for build desktop app
 
 Runs the app in the development mode.\
 
