@@ -8,6 +8,8 @@ In the project directory, you can run:
 
 ### `npm start` for open desktop app [window, Mac, Linux]
 ### `npm run watch` to build and generate react web app to build folder
+### `npm run react build` to build and generate react web app to production
+### `npm run pack` to build desktop app
 
 Runs the app in the development mode.\
 

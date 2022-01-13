@@ -3,7 +3,8 @@
         "app": {
             "enter_btn" : "ဆော့၀ဲထဲသို့၀င်မည်",
             "register_btn": "စာရင်းသွင်းရန်",
-            "register_title": "ဆော့၀ဲအသုံးပြုရန် မှတ်ပုံတင်မည်"
+            "register_title": "ဆော့၀ဲအသုံးပြုရန် မှတ်ပုံတင်မည်",
+            "app_exit": "Logout"
         },
         "register" : {
             "user_name" : "အသုံပြုသူ၏နာမည် အပြည့်အစုံထည့်ရန်",
@@ -58,6 +59,33 @@
         {
             "label": "ဆက်တင်",
             "link": "/setting"
+        },
+        {
+            "label": "Logout",
+            "link": "/login"
         }
-    ]
+    ],
+    "pages": {
+        "setting": {
+            "header_title": "ဆက်တင်များ",
+            "sub_menu": [
+                {
+                    "label": "ဆာဗာချိတ်ဆက်မှုများ",
+                    "component": "network"
+                },
+                {
+                    "label": "ဘာသာစကား",
+                    "component": "language"
+                },
+                {
+                    "label": "အဆင့်မြင့်တင်ခြင်းများ",
+                    "component": "update"
+                },
+                {
+                    "label": "လိုင်စင်",
+                    "component": "license"
+                }
+            ]
+        }
+    }
 }

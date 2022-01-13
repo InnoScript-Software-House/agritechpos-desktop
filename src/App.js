@@ -6,18 +6,19 @@
 **/
 
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Routes, Route, HashRouter, Switch } from 'react-router-dom';
+import { Route, HashRouter } from 'react-router-dom';
 import LoginPage from './pages/auth/Login';
 import DashboardPage from './pages/Dashboard';
 import InventroyPage from './pages/Inventroy';
 import LandingPage from './pages/Landing';
 import RegisterPage from './pages/Register';
+import SettingPage from './pages/Setting';
 import UserViewPage from './pages/user/UserView';
 
-export default class App extends Component {
+class App extends Component {
 
   render() {
+
     return(
       <HashRouter>
         <Route exact path={'/'} component={LandingPage} />
@@ -26,7 +27,10 @@ export default class App extends Component {
         <Route exact path={'/dashboard'} component={DashboardPage} />
         <Route exact path={'/inventory'} component={InventroyPage} />
         <Route exact path={'/user'} component={UserViewPage} />
+        <Route exact  path={'/setting'} component={SettingPage} />
       </HashRouter>
     );
   }
 }
+
+export default App;
