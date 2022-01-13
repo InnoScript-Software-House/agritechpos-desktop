@@ -7,7 +7,11 @@
 
 import { combineReducers } from "redux";
 import { authReducer } from "./auth.reducer";
+import { langReducer } from "./lang.reducer";
+import { serialKeyReducer } from "./serialkey.reducer";
 
 export default combineReducers({
-    authReducer: authReducer
+    auth: authReducer,
+    lang: langReducer,
+    serialKey: serialKeyReducer
 });

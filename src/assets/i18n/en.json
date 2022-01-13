@@ -1,0 +1,21 @@
+{
+    "app": {
+        "enter_btn" : "Login",
+        "register_btn": "စာရင်းသွင်းရန်",
+        "register_title": "ဆော့၀ဲအသုံးပြုရန် မှတ်ပုံတင်မည်",
+        "app_exit": "Logout"
+    },
+    "landingPage": {
+        "unicode": "Unicode",
+        "zawgyi": "Zawgyi",
+        "english": "English",
+        "select_language": "ဘာသာစကားရွေးချယ်ရန်",
+        "title": "Agricultural Equipment POS Software"
+    },
+    "serialKeyForm" : {
+        "description" : "To use the software, you need to enter a serial number and confirm. You can enter the serial number on the software CD.",
+        "serialKeyEnter": "Enter serial number",
+        "btn-enter": "Submit",
+        "err": "Invalid serial number!"
+    }
+}

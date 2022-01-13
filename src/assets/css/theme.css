@@ -2,65 +2,38 @@
     font-family: "Pyidaungsu";
     src: url(../fonts/Pyidaungsu-Bold.woff);
 }
+
+@font-face {
+    font-family: 'ZawgyiOne';
+    src: url(../fonts//Zawgyi-One.woff);
+}
   
 *{
     padding: 0px;
     margin: 0px;
     font-family: "Pyidaungsu";
+}
+
+body {
     background-color: #eeeeee;
 }
 
-.wrapper {
-    width: calc(100% - 20px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-}
-
-.content-body, 
-.content-header {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 10px;
-}
-
 /* Form, Input, Button */
-.form-group {
-    width: calc(100% - 20px);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
-.form-control {
-    width: calc(100% - 20px);
-    height: 38px;
-    padding: 10px;
-    border: 1px solid #01a3a6;
-    border-radius: 5px;
-}
-
-.form-control:focus {
-    outline: none !important;
-    border-color: #01a3a6;
-    box-shadow: 0 0 10px #01a3a6;
-}
-
 .btn {
-    width: 100%;
-    height: 55px;
-    border-radius: 5px;
+    height: 50px;
+    border-radius: 0px;
     color: #fff;
     font-size: large;
     cursor: pointer;
+    border: 0px;
+}
+
+.btn-primary {
+    background-color: #4CA6AA!important;
+}
+
+.btn-search {
+    margin-top: 0px;
 }
 
 .btn-default {
@@ -76,6 +49,71 @@
     background-color: rgba(1, 163, 166,0.5);
 }
 
-/* Button Error */
+textarea, 
+textarea.form-control, 
+input.form-control, 
+input[type=text], 
+input[type=password], 
+input[type=email], 
+input[type=number], 
+[type=text].form-control, 
+[type=password].form-control, 
+[type=email].form-control, 
+[type=tel].form-control, 
+[contenteditable].form-control {
+  border-radius: 0px;
+}
 
-@import url(./auth.css);
+textarea:focus, 
+textarea.form-control:focus, 
+input.form-control:focus, 
+input[type=text]:focus, 
+input[type=password]:focus, 
+input[type=email]:focus, 
+input[type=number]:focus, 
+[type=text].form-control:focus, 
+[type=password].form-control:focus, 
+[type=email].form-control:focus, 
+[type=tel].form-control:focus, 
+[contenteditable].form-control:focus {
+  box-shadow: initial!important;
+}
+
+.form-group-input {
+    height: 60px!important;
+    margin-bottom: 5px;
+}
+
+.form-control:focus {
+    outline: none !important;
+    border-color: #01a3a6;
+    box-shadow: 0 0 10px #01a3a6;
+}
+
+
+.data-table-loading-wrapper {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-check:active + .btn-primary:focus, 
+.btn-check:checked + .btn-primary:focus, 
+.btn-primary.active:focus, 
+.btn-primary:active:focus, 
+.show > .btn-primary.dropdown-toggle:focus,
+.btn-check:focus + .btn-primary, 
+.btn-primary:focus {
+    box-shadow: initial!important;
+}
+
+.zawgyi {
+    font-family: 'ZawgyiOne'!important;
+}
+
+/* Button Error */
+@import url(./landing.css);
+@import url(./login.css);

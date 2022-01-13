@@ -1,15 +1,20 @@
-# Getting Started with Create React App
+# ArgriTech POS Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with 
+[Create React App](https://github.com/facebook/create-react-app) 
+[Electron JS](https://www.electronjs.org/docs/latest)
+[Express JS](https://expressjs.com/en/4x/api.html)
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm start` for open desktop app [window, Mac, Linux]
+### `npm run watch` for realtime watch and build react app
+### `npm run react build` for build react app
+### `npm run pack` for build desktop app
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.

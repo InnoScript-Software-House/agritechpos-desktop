@@ -6,8 +6,11 @@
 **/
 
 import React, { Component } from 'react';
+import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { trans } from '../../assets/i18n/mm.json';
+import { HeaderComponent } from '../../components/header';
 
 class LoginPage extends Component {
 
@@ -23,25 +26,20 @@ class LoginPage extends Component {
 
     componentDidMount() {
         const { getAuthData } = this.props;
+
         this.setState({
             screen_loading: false,
             authData: getAuthData
-        })
+        });
     }
 
     async login() {
         const { username, password } = this.state;
-        const { authLoginAction } = this.props;
+        const { history } = this.props;
+        // const { authLoginAction } = this.props;
 
         if(username === '' || password === '') {
-            this.setState({ is_error: true })
-            // return electron.dialogApi.sendDialog({
-            //     title: 'Login Fail', 
-            //     message: 'Invalid username and password',
-            //     type: 'warning',
-            //     defaultId: 0,
-            //     buttons: ['OK']
-            // })
+            return window.nativeApi.dialog.sendDialog('login-validation');
         }
 
         const requestBody = {
@@ -49,58 +47,55 @@ class LoginPage extends Component {
             password: this.password
         };
 
-        const loginStatus = await authLoginAction(requestBody);
-        
-        return loginStatus;
+        // const loginStatus = await authLoginAction(requestBody);
+        history.push('/dashboard');
     }
 
     render() {
         const { username, password, is_error, is_loading } = this.state;
         
         return (
-            <div className='wrapper'>
-                <div className='content-header'>
-                    {/* <img className='login-logo' src={`file://assets/images/logo.png`} alt='kubota' /> */}
-                    <h3 className='login-title'> 
-                        {trans.auth.login.title} 
-                    </h3>
-                </div>
+            <>
+                <HeaderComponent />
+                <div className='container'>
+                    <div className='row justify-content-center'>
+                        <div className='col-4 align-self-center'>
+                            <img className='login-logo' src='build/assets/images/logo.png' alt='kubota' />
+                            <h3 className='login-title'>{trans.auth.login.title} </h3>
 
-                <div className='content-body'>
-                    <div className='form-group'>
-                        <input 
-                            className='form-control' 
-                            type={`text`}
-                            placeholder={trans.auth.login.input_username}
-                            value={username}
-                            onChange={e => this.setState({ username: e.target.value})}
-                        />
-                    </div>
+                            <InputGroup className='mb-3'>
+                                <FormControl
+                                    className='form-group-input'
+                                    type="text"
+                                    placeholder={trans.auth.login.input_username}
+                                    value={username}
+                                    onChange={e => this.setState({ username: e.target.value})}
+                                />
+                            </InputGroup>
 
-                    <div className='form-group rm-margin'>
-                        <input 
-                            className='form-control' 
-                            type={`password`}
-                            placeholder={trans.auth.login.input_password}
-                            value={password}
-                            onChange={e => this.setState({ password: e.target.value})}
-                        />
-                    </div>
+                            <InputGroup>
+                                <FormControl
+                                    className='form-group-input'
+                                    type="password"
+                                    placeholder={trans.auth.login.input_password}
+                                    value={password}
+                                    onChange={e => this.setState({ password: e.target.value})}
+                                />
+                            </InputGroup>
 
-                    <div className='form-group rm-margin'>
-                        <button 
-                            className={`btn btn-default ${is_error ? 'btn-is-error' : is_loading ? 'btn-is-error' : null }`}
-                            onClick={() => this.login()}
-                            disabled={is_error}
-                        > {trans.auth.login.btn_login} 
-                        </button>
-                    </div>
+                            <Button
+                                onClick={() => this.login()}
+                            > 
+                                {trans.auth.login.btn_login}  
+                            </Button>
 
-                    <div className='reset-password-wrapper'>
-                        <span> {trans.auth.login.btn_reset} </span> 
+                            <div className='forget-password-wrapper'>
+                                <label> {trans.auth.login.btn_reset} </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
 }
