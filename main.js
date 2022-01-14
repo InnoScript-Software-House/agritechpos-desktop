@@ -4,13 +4,6 @@
  * Phone                        - 09421038123, 09758276201
  * Email                        - aunghtetpaing.info@gmail.com
 **/
-const http = require("http");
-const express = require("express");
-
-const server = express();
-
-server.use(express.json());
-const httpServer = http.createServer(server);
 
 const { BrowserWindow, app, ipcMain, Notification, dialog, Tray, Menu } = require('electron');
 const path = require('path');
@@ -115,12 +108,6 @@ app.whenReady().then(() => {
     contents.webContents.on('did-finish-load', () => {
         contents.webContents.send('get-loading-state', true);
     });
-
-    // server listening 
-    httpServer.listen(4001, () => {
-    console.log(`Server running on port 4001`);
-    });
-
 });
 
 
