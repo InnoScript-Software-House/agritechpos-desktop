@@ -7,7 +7,7 @@
 
 // ** Framework Libraries
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 import { Link, Navigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import i18next from 'i18next';

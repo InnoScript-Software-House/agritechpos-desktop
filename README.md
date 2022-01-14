@@ -14,6 +14,12 @@ In the project directory, you can run:
 ### `npm run react build` for build react app
 ### `npm run pack` for build desktop app
 
+## System limit for number of file watchers reached [Ubuntu]
+### `sudo nano /etc/sysctl.conf`
+### Add a line at the bottom `fs.inotify.max_user_watches=524288`
+### Then save and exit!
+### `sudo sysctl -p`
+
 Runs the app in the development mode.\
 
 The page will reload when you make changes.\
