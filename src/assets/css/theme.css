@@ -114,6 +114,9 @@ input[type=number]:focus,
     font-family: 'ZawgyiOne'!important;
 }
 
+.err {
+    color: red;
+}
 /* Button Error */
 @import url(./landing.css);
 @import url(./login.css);
