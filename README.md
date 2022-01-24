@@ -7,17 +7,24 @@ This project was bootstrapped with
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory, you can run:.\
+for open desktop app [window, Mac, Linux].\
+### `npm start`
 
-### `npm start` for open desktop app [window, Mac, Linux]
-### `npm run watch` for realtime watch and build react app
-### `npm run react build` for build react app
+### `npm run watch`
+for realtime watch and build react app .\
+
+### `npm run react build` 
+for build react app .\
 ### `npm run pack` for build desktop app
 
 ## System limit for number of file watchers reached [Ubuntu]
 ### `sudo nano /etc/sysctl.conf`
-### Add a line at the bottom `fs.inotify.max_user_watches=524288`
-### Then save and exit!
+Add a line at the bottom .\
+
+### `fs.inotify.max_user_watches=524288`
+
+Then save and exit! .\
 ### `sudo sysctl -p`
 
 Runs the app in the development mode.\

@@ -26,3 +26,8 @@ export const LANG_GET = 'LANG_GET';
 export const GET_SERIAL_KEY = 'GET_SERIAL_KEY';
 export const SET_SERIAL_KEY = 'SET_SERIAL_KEY';
 export const SERIAL_KEY_VALUE = 'SERIAL_KEY_VALUE';
+
+// ** Database Connection
+export const DBCONNECTION_VALUE = 'DBCONNECTION_VALUE';
+export const GET_DBCONNECTION = 'GET_DBCONNECTION';
+export const SET_DBCONNECTION = 'SET_DBCONNECTION';

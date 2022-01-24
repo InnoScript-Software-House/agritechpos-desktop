@@ -5,6 +5,8 @@
  * Email                        - aunghtetpaing.info@gmail.com
 **/
 
+const { dbConnect } = require('./src/database/index');
+
 const { BrowserWindow, app, ipcMain, Notification, dialog, Tray, Menu } = require('electron');
 const path = require('path');
 const { trans } = require('./src/assets/i18n/mm.json');

@@ -16,14 +16,16 @@ import { connect } from 'react-redux';
 // ** Redux 
 import { setLangAction } from '../redux/actions/lang.action';
 
-// ** Implimentation Libraries
-import { t, zawgyi } from '../utilities/translation.utility';
+// ** App Libraries
 import { getSerialKeyAction } from '../redux/actions/serialkey.action';
-import { LANG_VALUE, SERIAL_KEY_VALUE } from '../redux/actionTypes';
+import { LANG_VALUE, SERIAL_KEY_VALUE, DBCONNECTION_VALUE } from '../redux/actionTypes';
+import { SerialKeyForm } from '../components/serialKeyForm';
+import { DatabaseConfig } from '../components/landing/database-config';
+import { t, zawgyi } from '../utilities/translation.utility';
 
 // ** Import Data Source
 import lngData from '../assets/i18n/language.json';
-import { SerialKeyForm } from '../components/serialKeyForm';
+
 
 class LandingPage extends Component {
 
@@ -32,7 +34,8 @@ class LandingPage extends Component {
         this.state = {
             is_loading: true,
             lang_value: localStorage.getItem(LANG_VALUE) ? localStorage.getItem(LANG_VALUE) : 'unicode',
-            serialNumber: localStorage.getItem(SERIAL_KEY_VALUE) ? localStorage.getItem(SERIAL_KEY_VALUE) : null
+            serialNumber: localStorage.getItem(SERIAL_KEY_VALUE) ? localStorage.getItem(SERIAL_KEY_VALUE) : null,
+            dbInfo: localStorage.getItem(DBCONNECTION_VALUE) ? localStorage.getItem(DBCONNECTION_VALUE) : null
         }
     }
 
@@ -47,17 +50,23 @@ class LandingPage extends Component {
 
         this.setState({
             lang_value: getLang.payload
-        })
+        });
     }
 
     async getSerial(value) {
         this.setState({
             serialNumber: value
-        })
+        });
+    }
+
+    async getDbInfo(value) {
+        this.setState({
+            dbInfo: value
+        });
     }
 
     render() {
-        const { lang_value, serialNumber } = this.state;
+        const { lang_value, serialNumber, dbInfo } = this.state;
 
         return (
             <>
@@ -89,7 +98,9 @@ class LandingPage extends Component {
 
                     <h3 className={`landing-title ${zawgyi(lang_value)}`}> { t('landingPage.title')} </h3>
 
-                    {serialNumber === null && (<SerialKeyForm lng={lang_value} serialKeyHandler={(e) => this.getSerial(e)}/>)}
+                    {serialNumber === null && (<SerialKeyForm lng={lang_value} serialKeyHandler={(e) => this.getSerial(e)} />)}
+
+                    {(serialNumber && dbInfo === null) && (<DatabaseConfig lng={lang_value} dbInfoHandler={(e) => this.getDbInfo(e)} />)}
 
                     {/* <div className=''>
                                     <Link to={'login'}> 

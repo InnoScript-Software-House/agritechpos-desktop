@@ -62,7 +62,7 @@ export const SerialKeyForm = ({ lng, serialKeyHandler }) => {
         <div className="flex-row m-2">
             <p className={`${zawgyi(lng)}`}> {t('serialKeyForm.description')}</p>
             
-            <label className={`serial-key-label mb-1 mt-3 ${zawgyi(lng)}`}> {t('serialKeyForm.serialKeyEnter')} </label>
+            <label className={`serial-key-label mb-3 mt-3 ${zawgyi(lng)}`}> {t('serialKeyForm.serialKeyEnter')} </label>
             <div className="d-flex flex-row">
                 <InputGroup className="serial-key-input">
                     <FormControl
@@ -133,7 +133,7 @@ export const SerialKeyForm = ({ lng, serialKeyHandler }) => {
                 <Button className={`${zawgyi(lng)}`} onClick={() => submit()}> {t('serialKeyForm.btn-enter')} </Button>
             </div>
 
-            { err && (<label className={`err-message ${zawgyi(lng)}`}> {err} </label>)}
+            { err && (<label className={`err-message mt-3 mb-3 ${zawgyi(lng)}`}> {err} </label>)}
             
         </div>
     )
