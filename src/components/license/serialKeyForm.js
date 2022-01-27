@@ -5,24 +5,13 @@
  * Email                        - aunghtetpaing.info@gmail.com
 **/
 
-// ** Framework Libraries
-import { t } from "i18next";
 import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { ArrowLeft } from "react-bootstrap-icons";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { setSerialKeyAction } from "../redux/actions/serialkey.action";
-import { LANG_VALUE } from "../redux/actionTypes";
-import { zawgyi } from "../utilities/translation.utility";
+import { t, zawgyi } from "../../utilities/translation.utility";
 
-// ** Redux 
-// ** Implimentation Libraries
-// ** Import Data Source
+import '../../assets/css/serial-key-form.css';
 
-export const SerialKeyForm = ({ lng, serialKeyHandler }) => {
-
-    const dispatch = useDispatch();
+export const SerialKeyForm = ({ lng, retriveSerialKey }) => {
 
     const [key01, setKey01] = useState('');
     const [key02, setKey02] = useState('');
@@ -35,12 +24,12 @@ export const SerialKeyForm = ({ lng, serialKeyHandler }) => {
 
     const submit = () => {
         if(key01 === '' || key02 === '' || key03 === '' || key04 === '' || key05 === '' || key06 === '') {
-            setErr(t('serialKeyForm.err'));
+            setErr(t('serial-key-error'));
             return;
         }
 
         if(key01.length < 4 || key02.length < 4 || key03.length < 4 || key04.length < 4 || key05.length < 4 || key06.length < 4) {
-            setErr(t('serialKeyForm.err'));
+            setErr(t('serial-key-error'));
             return;
         }
 
@@ -53,16 +42,15 @@ export const SerialKeyForm = ({ lng, serialKeyHandler }) => {
          * .... proesss
         */
 
-        dispatch(setSerialKeyAction(serialNumber));
-        serialKeyHandler(serialNumber);
+         retriveSerialKey(serialNumber);
         
     }
 
     return (
         <div className="flex-row m-2">
-            <p className={`${zawgyi(lng)}`}> {t('serialKeyForm.description')}</p>
+            <p className={`${zawgyi(lng)}`}> {t('serial-description')}</p>
             
-            <label className={`serial-key-label mb-3 mt-3 ${zawgyi(lng)}`}> {t('serialKeyForm.serialKeyEnter')} </label>
+            <label className={`serial-key-label mb-3 mt-3 ${zawgyi(lng)}`}> {t('serial-key-enter')} </label>
             <div className="d-flex flex-row">
                 <InputGroup className="serial-key-input">
                     <FormControl
@@ -130,10 +118,15 @@ export const SerialKeyForm = ({ lng, serialKeyHandler }) => {
                     />
                 </InputGroup>
 
-                <Button className={`${zawgyi(lng)}`} onClick={() => submit()}> {t('serialKeyForm.btn-enter')} </Button>
+                <Button 
+                    className={`btn-serial-key-enter ${zawgyi(lng)}`} 
+                    onClick={() => submit()}
+                > 
+                    {t('serial-key-submit')} 
+                </Button>
             </div>
 
-            { err && (<label className={`err-message mt-3 mb-3 ${zawgyi(lng)}`}> {err} </label>)}
+            { err && (<label className={`serial-key-err-message mt-3 mb-3 ${zawgyi(lng)}`}> {err} </label>)}
             
         </div>
     )

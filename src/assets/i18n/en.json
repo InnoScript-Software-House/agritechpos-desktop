@@ -1,22 +1,27 @@
-{
+{   
+    "change-language" : "Change Language",
+    "unicode": "Unicode",
+    "zawgyi": "Zawgyi",
+    "english": "English",
+    "title": "Agricultural Equipment POS Software",
+    "serial-description" : "To use the software, you need to enter a serial number and confirm. You can enter the serial number on the software CD.",
+    "serial-key-enter": "Enter serial number",
+    "serial-key-error": "Invalid serial number!",
+    "serial-key-submit": "Submit",
+    "user-description-title": "User Information",
+    "user-first-name": "First Name",
+    "user-last-name": "Last Name",
+    "user-phone" : "Phone Number",
+    "user-email": "Email",
+    "user-address": "Address",
+    "user-info-empty-error": "All fields are requied",
+    "user-info-phone-error" : "Invalid Phone number",
+    "plan-info-title" : "Plan Information",
     "app": {
         "enter_btn" : "Login",
         "register_btn": "စာရင်းသွင်းရန်",
         "register_title": "ဆော့၀ဲအသုံးပြုရန် မှတ်ပုံတင်မည်",
         "app_exit": "Logout"
-    },
-    "landingPage": {
-        "unicode": "Unicode",
-        "zawgyi": "Zawgyi",
-        "english": "English",
-        "select_language": "ဘာသာစကားရွေးချယ်ရန်",
-        "title": "Agricultural Equipment POS Software"
-    },
-    "serialKeyForm" : {
-        "description" : "To use the software, you need to enter a serial number and confirm. You can enter the serial number on the software CD.",
-        "serialKeyEnter": "Enter serial number",
-        "btn-enter": "Submit",
-        "err": "Invalid serial number!"
     },
     "db-config": {
         "title": "Database Configuration Setting",

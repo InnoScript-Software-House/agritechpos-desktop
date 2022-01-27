@@ -6,36 +6,20 @@
 **/
 
 import axios from "axios";
-import { baseUrl, env } from "../../environment";
-import { showWarningDialog } from "./nativeDialog.service";
-import translate from '../assets/i18n/mm.json';
+import { apiUrl, env } from "../environment";
 
-axios.defaults.baseURL = baseUrl[env];
+axios.defaults.baseURL = apiUrl[env];
 
-export const getRequest = async (url) => {
-    try {
-        const response = await axios.get(`${baseUrl[env]}/${url}`);
-        console.log(response);
-    } catch (error) {
-        if(error.message === 'Network Error') {
-            showWarningDialog(translate.networkError.title, translate.networkError.message);
-        }
-
-        return null;
+const httpHandler = (response) => {
+    if(response.success === false) {
+        // Show Error Dialog Box
+        return response;
     }
+
+    return response.data.data;
 }
 
-export const postRequest = async (url, body, config) => {
-    try {
-        const response = await axios.post(`${baseUrl[env]}/${url}`, body, config);
-        return response;
-    } catch (error) {
-        
-        if(error.message === 'Network Error') {
-            showWarningDialog(translate.networkError.title, translate.networkError.message);
-        }
-
-        return null;
-        
-    }
+export const getRequest = async(url) => {
+    const response = await axios.get(url);
+    return httpHandler(response);
 }

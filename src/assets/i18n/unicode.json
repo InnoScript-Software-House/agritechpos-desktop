@@ -1,22 +1,27 @@
 {
+    "change-language": "ဘာသာစကားရွေးချယ်ရန်",
+    "unicode": "ယူနီကုဒ်",
+    "zawgyi": "ဇော်ဂျီ",
+    "english": "အင်္ဂလိပ်",
+    "title": "လယ်ယာသုံးစက်ကိရိယာအရောင်းဆော့ဝဲ",
+    "serial-description" : "ဆော့၀ဲအသုံးပြုနိုင်ရန် serial နံပါတ် ထည့်သွင်းအတည်ပြုရန် လိုအပ်ပါသည်။ ဆော့၀ဲ CD တွင် ပါရှိသည့် serial နံပါတ်အား ထည့်သွင်းအသုံးပြုနိုင်ပါသည်။",
+    "serial-key-enter": "Serial number ထည့်ရန်",
+    "serial-key-err": "serial နံပါတ် မှန်ကန်မှုမရှိပါ။",
+    "serial-key-submit": "အတည်ပြုမည်",
+    "user-description-title": "User Information",
+    "user-first-name": "First Name",
+    "user-last-name": "Last Name",
+    "user-phone" : "Phone Number",
+    "user-email" : "Email",
+    "user-address": "Address",
+    "user-info-empty-error": "All fields are requied",
+    "user-info-phone-error" : "Invalid Phone number",
+    "plan-info-title" : "Plan Information",
     "app": {
         "enter_btn" : "ဆော့၀ဲထဲသို့၀င်မည်",
         "register_btn": "စာရင်းသွင်းရန်",
         "register_title": "ဆော့၀ဲအသုံးပြုရန် မှတ်ပုံတင်မည်",
         "app_exit": "Logout"
-    },
-    "landingPage": {
-        "unicode": "ယူနီကုဒ်",
-        "zawgyi": "ဇော်ဂျီ",
-        "english": "အင်္ဂလိပ်",
-        "select_language": "ဘာသာစကားရွေးချယ်ရန်",
-        "title": "လယ်ယာသုံးစက်ကိရိယာအရောင်းဆော့ဝဲ"
-    },
-    "serialKeyForm" : {
-        "description" : "ဆော့၀ဲအသုံးပြုနိုင်ရန် serial နံပါတ် ထည့်သွင်းအတည်ပြုရန် လိုအပ်ပါသည်။ ဆော့၀ဲ CD တွင် ပါရှိသည့် serial နံပါတ်အား ထည့်သွင်းအသုံးပြုနိုင်ပါသည်။",
-        "serialKeyEnter": "Serial number ထည့်ရန်",
-        "btn-enter": "အတည်ပြုမည်",
-        "err": "serial နံပါတ် မှန်ကန်မှုမရှိပါ။"
     },
     "demo-text" : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
 }

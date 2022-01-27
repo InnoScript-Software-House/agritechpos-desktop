@@ -14,6 +14,7 @@ import LandingPage from './pages/Landing';
 import RegisterPage from './pages/Register';
 import SettingPage from './pages/Setting';
 import UserViewPage from './pages/user/UserView';
+import LicensePage from './pages/License';
 
 class App extends Component {
 
@@ -22,6 +23,7 @@ class App extends Component {
     return(
       <HashRouter>
         <Route exact path={'/'} component={LandingPage} />
+        <Route exact path={'/license'} component={LicensePage} />
         <Route exact path={'/login'} component={LoginPage} />
         <Route exact path={'/register'} component={RegisterPage} />
         <Route exact path={'/dashboard'} component={DashboardPage} />

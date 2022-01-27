@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { Link, Navigate } from 'react-router-dom';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Spinner } from 'react-bootstrap';
 import i18next from 'i18next';
 import { connect } from 'react-redux';
 
@@ -18,14 +18,13 @@ import { setLangAction } from '../redux/actions/lang.action';
 
 // ** App Libraries
 import { getSerialKeyAction } from '../redux/actions/serialkey.action';
-import { LANG_VALUE, SERIAL_KEY_VALUE, DBCONNECTION_VALUE } from '../redux/actionTypes';
-import { SerialKeyForm } from '../components/serialKeyForm';
-import { DatabaseConfig } from '../components/landing/database-config';
-import { t, zawgyi } from '../utilities/translation.utility';
+import { SERIAL_KEY_VALUE, DBCONNECTION_VALUE } from '../redux/actionTypes';
 
 // ** Import Data Source
-import lngData from '../assets/i18n/language.json';
+import { checkLicense } from '../services/license.service';
 
+// ** Import css
+import '../assets/css/landing/index.css';
 
 class LandingPage extends Component {
 
@@ -33,44 +32,38 @@ class LandingPage extends Component {
         super(props);
         this.state = {
             is_loading: true,
-            lang_value: localStorage.getItem(LANG_VALUE) ? localStorage.getItem(LANG_VALUE) : 'unicode',
             serialNumber: localStorage.getItem(SERIAL_KEY_VALUE) ? localStorage.getItem(SERIAL_KEY_VALUE) : null,
             dbInfo: localStorage.getItem(DBCONNECTION_VALUE) ? localStorage.getItem(DBCONNECTION_VALUE) : null
         }
     }
 
     async componentDidMount() {
-        const { lang_value } = this.state;
-        i18next.changeLanguage(lang_value);
-    }
-
-    async changeLang(value) {
-        const getLang = await this.props.setLang(value);
-        i18next.changeLanguage(getLang.payload);
+        const { history } = this.props;
+        const response = await checkLicense(this.props);
 
         this.setState({
-            lang_value: getLang.payload
-        });
-    }
-
-    async getSerial(value) {
-        this.setState({
-            serialNumber: value
-        });
-    }
-
-    async getDbInfo(value) {
-        this.setState({
-            dbInfo: value
+            is_loading: false
+        }, () => {
+            if(response.length === 0) {
+                history.push('/license');
+            }
         });
     }
 
     render() {
-        const { lang_value, serialNumber, dbInfo } = this.state;
+        const { is_loading } = this.state;
 
         return (
             <>
-            <div className='d-flex flex-row'>
+                {is_loading && (
+                    <div className='d-flex flex-column full-height justify-content-center align-items-center'>
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden"> Loading... </span>
+                        </Spinner>
+                    </div>
+                )}
+
+                {/* <div className='d-flex flex-row'>
                 <div className='col-6'>
                     <img className='side-image' src="build/assets/images/side_image.jpeg" />
                 </div>
@@ -102,7 +95,7 @@ class LandingPage extends Component {
 
                     {(serialNumber && dbInfo === null) && (<DatabaseConfig lng={lang_value} dbInfoHandler={(e) => this.getDbInfo(e)} />)}
 
-                    {/* <div className=''>
+                    <div className=''>
                                     <Link to={'login'}> 
                                         <Button> {t('app.enter_btn')} </Button>
                                     </Link>
@@ -110,10 +103,10 @@ class LandingPage extends Component {
                                     <Link to={'/register'}> 
                                         <Button className='btn-primary'> {t('app.register_btn')} </Button>
                                     </Link>
-                                </div>   */}
+                                </div>  
                 </div>
-            </div>
-            </>
+            </div> */}
+            </>            
         )
     }
 }

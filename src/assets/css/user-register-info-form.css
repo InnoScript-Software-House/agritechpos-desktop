@@ -1,0 +1,17 @@
+.user-label {
+    color: #01a3a6;
+}
+
+.input-between {
+    height: 50px;
+}
+
+.back-arrow {
+    color: #01a3a6;
+    cursor: pointer;
+}
+
+.serial-key-err-message {
+    color: red;
+    cursor: pointer;
+}

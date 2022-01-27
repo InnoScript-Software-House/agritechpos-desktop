@@ -1,0 +1,15 @@
+.bg-black {
+    background: #505254;
+    color: #b7b7b7;
+}
+
+.office-header {
+    font-size: larger;
+}
+
+.office-info,
+.company-info {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}

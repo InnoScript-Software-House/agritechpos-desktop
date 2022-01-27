@@ -19,8 +19,6 @@ export const DATA_DELETE = 'DATA_DELETE';
 // ** Language 
 export const LANG_VALUE = 'LANG_VALUE';
 export const LANG_SET = 'LANG_SET';
-export const LANG_UPDATE = 'LANG_UPDATE';
-export const LANG_GET = 'LANG_GET';
 
 // ** Serial Keys
 export const GET_SERIAL_KEY = 'GET_SERIAL_KEY';

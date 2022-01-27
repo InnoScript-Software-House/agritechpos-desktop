@@ -5,7 +5,7 @@ import { trans, pages } from '../assets/i18n/mm.json';
 import '../assets/css/setting.css';
 import { ArrowBarDown, ArrowRight, List, ListCheck } from 'react-bootstrap-icons';
 import { NetworkConnection } from '../components/settings/NetworkConnection';
-import { LanguageComponent } from '../components/settings/Language';
+import { LanguageComponent } from '../components/general/Language';
 import { UpdateComponent } from '../components/settings/Update';
 import { LicenseComponent } from '../components/settings/License';
 
