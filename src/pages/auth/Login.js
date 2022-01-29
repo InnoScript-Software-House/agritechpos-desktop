@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { trans } from '../../assets/i18n/mm.json';
 import { HeaderComponent } from '../../components/header';
+import { checkLicense } from '../../services/license.service';
 
 class LoginPage extends Component {
 
@@ -24,8 +25,9 @@ class LoginPage extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const { getAuthData } = this.props;
+        await checkLicense(this.props);
 
         this.setState({
             screen_loading: false,

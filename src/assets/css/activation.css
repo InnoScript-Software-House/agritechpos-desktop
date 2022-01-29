@@ -1,0 +1,23 @@
+/* 
+.select-device {
+    border-radius: 0px!important;
+}
+
+.select-device:focus {
+    outline: none !important;
+    box-shadow: 0 0 0px rgba(0,0,0,0)!important;
+}
+
+.btn-plan-enter {
+    margin-top: 30px;
+    height: inherit!important;
+} */
+
+.info-label {
+    width: 200px;
+    color: #474747;
+}
+
+.info-text {
+    color: #474747;
+}

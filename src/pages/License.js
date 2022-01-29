@@ -17,6 +17,7 @@ import { PlanForm } from '../components/license/planForm';
 
 import '../assets/css/license.css';
 import { Footer } from '../components/footer';
+import { Activation } from '../components/license/activation';
 
 class LicensePage extends Component {
 
@@ -53,17 +54,23 @@ class LicensePage extends Component {
   getBackStep(e) {
     
     if(e === 'serial-key') {
-      this.setState({
+      return this.setState({
         userInfo: null,
         serialNumber: null
       });
     }
 
     if(e === 'user-info') {
-      this.setState({
+      return this.setState({
         userInfo: null,
         plan: null
       })
+    }
+
+    if(e === 'plan') {
+      return this.setState({
+        plan: null
+      });
     }
   }
 
@@ -107,7 +114,17 @@ class LicensePage extends Component {
                 backStep={(e) => this.getBackStep(e)}
               />
             )}
-           
+
+            {(serialNumber && userInfo && plan) && (
+              <Activation 
+                lng={lang}
+                serial={serialNumber}
+                user={userInfo}
+                plan={plan}
+                backStep={(e) => this.getBackStep(e)}
+                history={this.props.history}
+              />
+            )}
           </div>
         </div>
 

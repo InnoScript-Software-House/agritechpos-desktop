@@ -45,7 +45,7 @@ export const PlanForm = ({ lng, retrivePlan, backStep }) => {
         setErr(null);
 
         const planData = {
-            activation: activation,
+            activated_at: activation,
             duration: duration,
             device: device
         }

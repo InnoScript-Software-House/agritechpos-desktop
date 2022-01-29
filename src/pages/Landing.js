@@ -5,26 +5,18 @@
  * Email                        - aunghtetpaing.info@gmail.com
 **/
 
-// ** Framework Libraries
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { Link, Navigate } from 'react-router-dom';
 import { Button, Form, Spinner } from 'react-bootstrap';
 import i18next from 'i18next';
 import { connect } from 'react-redux';
-
-// ** Redux 
 import { setLangAction } from '../redux/actions/lang.action';
-
-// ** App Libraries
 import { getSerialKeyAction } from '../redux/actions/serialkey.action';
 import { SERIAL_KEY_VALUE, DBCONNECTION_VALUE } from '../redux/actionTypes';
-
-// ** Import Data Source
 import { checkLicense } from '../services/license.service';
-
-// ** Import css
 import '../assets/css/landing/index.css';
+import axios from 'axios';
 
 class LandingPage extends Component {
 
@@ -41,13 +33,32 @@ class LandingPage extends Component {
         const { history } = this.props;
         const response = await checkLicense(this.props);
 
-        this.setState({
-            is_loading: false
-        }, () => {
-            if(response.length === 0) {
-                history.push('/license');
-            }
-        });
+        if(response === null) {
+            history.push('/error/0');
+            return;
+        }
+
+        if(response && response.message === 'licnese is expired') {
+            history.push('/error/expired');
+            return;
+        }
+
+        if(response && response.length === 0) {
+            history.push('/license');
+            return;
+        }
+
+        if(response && response.length > 0) {
+            localStorage.setItem('LICENSE', response[0].token);
+            // const token = response[0].token;
+
+            // axios.defaults.headers.get['license'] = token;
+            // axios.defaults.headers.post['license'] = token;
+            // axios.defaults.headers.delete['license'] = token;
+            // axios.defaults.headers.put['license'] = token;
+
+            history.push('/login');
+        }
     }
 
     render() {

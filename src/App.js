@@ -15,6 +15,7 @@ import RegisterPage from './pages/Register';
 import SettingPage from './pages/Setting';
 import UserViewPage from './pages/user/UserView';
 import LicensePage from './pages/License';
+import ErrorPage from './pages/error';
 
 class App extends Component {
 
@@ -30,6 +31,7 @@ class App extends Component {
         <Route exact path={'/inventory'} component={InventroyPage} />
         <Route exact path={'/user'} component={UserViewPage} />
         <Route exact  path={'/setting'} component={SettingPage} />
+        <Route exact path={'/error/:status'} component={ErrorPage} />
       </HashRouter>
     );
   }
