@@ -9,9 +9,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { t, zawgyi } from "../../utilities/translation.utility";
 import { ArrowLeft } from "react-bootstrap-icons";
-import { activatedLicense, storeLicense } from "../../services/license.service";
+import { activatedLicense, storeLicense } from "../../services/license.service.js";
 
-import '../../assets/css/activation.css';
+import '../../assets/css/components/activation.css';
 
 export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
 
@@ -34,7 +34,7 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
 
         await storeLicense(requestBody);
         setLoading(false);
-        history.push('/');
+        history.push('/user/first');
     }
 
     const checkActivated = useCallback(async() => {

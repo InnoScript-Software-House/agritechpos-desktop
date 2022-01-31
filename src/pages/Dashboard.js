@@ -1,30 +1,15 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
-import Navigation from '../components/navigation'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { Navigation } from '../components/general/Navigation';
 
-const menu = [
-    {
-        "label": "ပစ္စည်းစာရင်း",
-        "link": "/inventory"
-    },
-    {
-        "label": "အရောင်းစာရင်း",
-        "link": "/sell-report"
-    },
-    {
-        "label": "ဆက်တင်",
-        "link": "/setting"
-    }
-];
-
-export default class DashboardPage extends Component {
+class DashboardPage extends Component {
 
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-       
     }
 
     render() {
@@ -35,3 +20,16 @@ export default class DashboardPage extends Component {
         )
     }
 }
+
+
+const mapStateToProps = (state) => ({
+    reducer: state
+});
+  
+const mapDispatchToProps = (dispatch) => ({
+});
+  
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(DashboardPage));

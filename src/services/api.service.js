@@ -1,26 +1,19 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 import axios from "axios";
 import { apiUrl, env } from "../environment";
+import { ACCESS_TOKEN, LICENSE } from "../redux/actionTypes";
 
 axios.defaults.baseURL = apiUrl[env];
 
-const getLicense = localStorage.getItem('LICENSE');
+const getLicense = localStorage.getItem(LICENSE) ? localStorage.getItem(LICENSE) : null;
+const getToken = localStorage.getItem(ACCESS_TOKEN) ? localStorage.getItem(ACCESS_TOKEN) : null;
 
 if(getLicense) {
-    axios.defaults.headers = {
-        license: getLicense
-    }
+    axios.defaults.headers.common['license'] = getLicense;
 }
 
 const httpHandler = (response) => {
     
-    if(response.status === 404 || response.status === 422) {
+    if(response.status === 401 || response.status === 404 || response.status === 422 || response.status === 400 || response.status === 500) {
         return {
             ...response.data,
             status: response.status
@@ -28,7 +21,6 @@ const httpHandler = (response) => {
     }
 
     if(response.success === false) {
-        // Show Error Dialog Box
         return response.response;
     }
 

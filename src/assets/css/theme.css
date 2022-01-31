@@ -131,6 +131,11 @@ input[type=number]:focus,
 .spinner-border {
     color: green!important;
 }
+
+/* Overwrite */
+.lang-overwrite > .lang-wrapper > .lang-title {
+    color: #fff;
+}
 /* Button Error */
 /* @import url(./landing.css);
 @import url(./login.css); */

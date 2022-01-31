@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { t, zawgyi } from "../../utilities/translation.utility";
 
-import '../../assets/css/serial-key-form.css';
+import '../../assets/css/components/serial-key-form.css';
 
 export const SerialKeyForm = ({ lng, retriveSerialKey }) => {
 

@@ -8,10 +8,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Footer } from '../components/footer';
 import { t, zawgyi } from '../utilities/translation.utility';
 import { Button } from 'react-bootstrap';
-import { checkLicense } from '../services/license.service';
+import { checkLicense } from '../services/license.service.js';
 import { ArrowLeft } from 'react-bootstrap-icons';
 
 import '../assets/css/error.css';
@@ -48,6 +47,11 @@ class ErrorPage extends Component {
         if(status === 'expired') {
             setTitle = t('error-license-expired-title');
             setErrorMessage = t('error-license-expired-message');
+        }
+
+        if(status === 'unknown') {
+            setTitle = t('error-unknown-title');
+            setErrorMessage = t('error-unknown-message');
         }
 
         return this.setState({
@@ -105,7 +109,7 @@ class ErrorPage extends Component {
             <div className='d-flex flex-column justify-content-start align-items-center mt-3'>
                 <div className='col-4'>
                     <h3 className={`error-title ${zawgyi(lang)}`}> {title} </h3>
-                    <p className={`error-message ${zawgyi(lang)}`}> {errorMessage} </p>
+                    <p className={`error-message-description ${zawgyi(lang)}`}> {errorMessage} </p>
 
                     {Number(status) === 0 && (
                     <Button 

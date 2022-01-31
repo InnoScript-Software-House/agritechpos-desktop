@@ -5,15 +5,16 @@
  * Email                        - aunghtetpaing.info@gmail.com
 **/
 
-import { postRequest } from "../../services/api.service";
-import { LOGIN_ACTION } from "../actionTypes";
+import axios from "axios";
+import { ACCESS_TOKEN, SET_ACCEASS_TOEKN } from "../actionTypes";
 
-const url = 'auth';
+export const setTokenAction = (accessToken) => async (dispatch) => {
 
-export const loginAction = (credential) => async (dispatch) => {
-    const response = await postRequest(`${url}/login`, credential);
+    localStorage.setItem(ACCESS_TOKEN, accessToken);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
     return dispatch({
-        type: LOGIN_ACTION,
-        payload: response
+        type: SET_ACCEASS_TOEKN,
+        payload: accessToken
     });
 }

@@ -1,16 +1,8 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { t, zawgyi } from "../../utilities/translation.utility";
-
-import '../../assets/css/user-register-info-form.css';
 import { ArrowLeft } from "react-bootstrap-icons";
+import '../../assets/css/components/user-register-info-form.css';
 
 export const UserInformationForm = ({ lng, retriveUserInfo, backStep }) => {
 

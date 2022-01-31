@@ -1,0 +1,19 @@
+[
+    {
+        "id": 1,
+        "label": "nav-dashboard",
+        "url": "/dashboard"
+        
+    },
+    {
+        "id": 2,
+        "label": "nav-profile",
+        "url": "/profile"
+    },
+    {
+        "id": 3,
+        "label": "nav-logout",
+        "url": "/logout"
+    }
+
+]

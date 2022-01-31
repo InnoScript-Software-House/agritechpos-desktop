@@ -1,11 +1,3 @@
-
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -14,10 +6,10 @@ import { t, zawgyi } from '../utilities/translation.utility';
 import { SerialKeyForm } from '../components/license/serialKeyForm';
 import { UserInformationForm } from '../components/license/userInformation';
 import { PlanForm } from '../components/license/planForm';
+import { Footer } from '../components/general/Footer';
+import { Activation } from '../components/license/activation';
 
 import '../assets/css/license.css';
-import { Footer } from '../components/footer';
-import { Activation } from '../components/license/activation';
 
 class LicensePage extends Component {
 

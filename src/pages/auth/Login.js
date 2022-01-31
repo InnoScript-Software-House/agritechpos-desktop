@@ -1,17 +1,13 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 import React, { Component } from 'react';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { trans } from '../../assets/i18n/mm.json';
-import { HeaderComponent } from '../../components/header';
-import { checkLicense } from '../../services/license.service';
+import { Language } from '../../components/general/Language';
+import { t, zawgyi } from '../../utilities/translation.utility';
+import { login } from '../../services/auth.service';
+import { setTokenAction } from '../../redux/actions/auth.action';
+
+import '../../assets/css/login.css';
 
 class LoginPage extends Component {
 
@@ -20,81 +16,95 @@ class LoginPage extends Component {
         this.state = {
             username: '',
             password: '',
-            screen_loading: true,
-            authData: null
+            is_loading: false,
+            err_message: null
         }
     }
 
-    async componentDidMount() {
-        const { getAuthData } = this.props;
-        await checkLicense(this.props);
-
-        this.setState({
-            screen_loading: false,
-            authData: getAuthData
-        });
+    componentDidMount() {
+        console.log(this.props);
     }
 
     async login() {
         const { username, password } = this.state;
         const { history } = this.props;
-        // const { authLoginAction } = this.props;
 
         if(username === '' || password === '') {
-            return window.nativeApi.dialog.sendDialog('login-validation');
+            return this.setState({
+                err_message: t('login-required')
+            });
         }
 
         const requestBody = {
-            username: this.username,
-            password: this.password
+            name: username,
+            password: password
         };
 
-        // const loginStatus = await authLoginAction(requestBody);
-        history.push('/dashboard');
+        this.setState({
+            is_loading: true
+        });
+
+        const response = await login(requestBody);
+
+        console.log(response);
+
+        if(response.success === false) {
+            return this.setState({
+                err_message: response.message,
+                is_loading: false
+            });
+        }
+
+       await this.props.setToken(response.access_token);
+
+       history.push('/dashboard');
+       
     }
 
     render() {
-        const { username, password, is_error, is_loading } = this.state;
+        const { username, password, is_loading, err_message } = this.state;
+        const { lang } = this.props.reducer;
         
         return (
             <>
-                <HeaderComponent />
-                <div className='container'>
-                    <div className='row justify-content-center'>
-                        <div className='col-4 align-self-center'>
-                            <img className='login-logo' src='build/assets/images/logo.png' alt='kubota' />
-                            <h3 className='login-title'>{trans.auth.login.title} </h3>
+                <div className='d-flex flex-row justify-content-end'>
+                    <Language props={this.props} />
+                </div>
 
-                            <InputGroup className='mb-3'>
-                                <FormControl
-                                    className='form-group-input'
-                                    type="text"
-                                    placeholder={trans.auth.login.input_username}
-                                    value={username}
-                                    onChange={e => this.setState({ username: e.target.value})}
-                                />
-                            </InputGroup>
+                <div className='d-flex flex-column'>
+                    <img className='login-logo align-self-center' src='build/assets/images/logo.png' alt='kubota' />
 
-                            <InputGroup>
-                                <FormControl
-                                    className='form-group-input'
-                                    type="password"
-                                    placeholder={trans.auth.login.input_password}
-                                    value={password}
-                                    onChange={e => this.setState({ password: e.target.value})}
-                                />
-                            </InputGroup>
+                    <div className='col-3 align-self-center'>
+                        <h3 className={`login-title mt-3 ${zawgyi(lang)}`}> {t('login-title')} </h3>
+                        <InputGroup className='mt-3'>
+                            <FormControl
+                                className={`${zawgyi(lang)}`}
+                                type="text"
+                                placeholder={t('login-input-username')}
+                                value={username}
+                                onChange={e => this.setState({ username: e.target.value})}
+                            />
+                        </InputGroup>
 
-                            <Button
-                                onClick={() => this.login()}
-                            > 
-                                {trans.auth.login.btn_login}  
-                            </Button>
+                        <InputGroup className='mt-3'>
+                            <FormControl
+                                className={`${zawgyi(lang)}`}
+                                type="password"
+                                placeholder={t('login-input-password')}
+                                value={password}
+                                onChange={e => this.setState({ password: e.target.value})}
+                            />
+                        </InputGroup>
 
-                            <div className='forget-password-wrapper'>
-                                <label> {trans.auth.login.btn_reset} </label>
-                            </div>
-                        </div>
+                        <Button
+                            className={`mt-3 ${zawgyi(lang)}`}
+                            disabled={is_loading}
+                            onClick={() => this.login()}
+                        > 
+                            {t('login-btn-enter')}  
+                        </Button>
+
+                        <p className={`login-error mt-3 ${zawgyi(lang)}`}> {err_message} </p>
                     </div>
                 </div>
             </>
@@ -103,14 +113,14 @@ class LoginPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    getAuthData: state.authReducer
+    reducer: state
 });
   
 const mapDispatchToProps = (dispatch) => ({
-    authLoginAction: (credential) => dispatch(loginAction(credential))
+    setToken: (accessToken) => dispatch(setTokenAction(accessToken)),
 });
-  
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(LoginPage);
+)(withRouter(LoginPage));
