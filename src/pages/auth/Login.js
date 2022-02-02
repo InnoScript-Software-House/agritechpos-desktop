@@ -22,7 +22,6 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
     }
 
     async login() {
@@ -45,8 +44,6 @@ class LoginPage extends Component {
         });
 
         const response = await login(requestBody);
-
-        console.log(response);
 
         if(response.success === false) {
             return this.setState({

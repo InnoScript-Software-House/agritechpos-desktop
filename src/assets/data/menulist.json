@@ -3,17 +3,20 @@
         "id": 1,
         "label": "nav-dashboard",
         "url": "/dashboard"
-        
     },
     {
         "id": 2,
+        "label": "nav-shop",
+        "url": "/shop"
+    },
+    {
+        "id": 3,
         "label": "nav-profile",
         "url": "/profile"
     },
     {
-        "id": 3,
+        "id": 4,
         "label": "nav-logout",
         "url": "/logout"
     }
-
 ]

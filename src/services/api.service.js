@@ -1,6 +1,7 @@
 import axios from "axios";
 import { apiUrl, env } from "../environment";
 import { ACCESS_TOKEN, LICENSE } from "../redux/actionTypes";
+import history from "../utilities/histroy";
 
 axios.defaults.baseURL = apiUrl[env];
 
@@ -11,9 +12,18 @@ if(getLicense) {
     axios.defaults.headers.common['license'] = getLicense;
 }
 
+if(getToken) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${getToken}`;
+}
+
 const httpHandler = (response) => {
-    
-    if(response.status === 401 || response.status === 404 || response.status === 422 || response.status === 400 || response.status === 500) {
+
+    if(response.status === 401) {
+        history.push('/logout');
+        window.location.reload();
+    } 
+
+    if(response.status === 404 || response.status === 422 || response.status === 400 || response.status === 500) {
         return {
             ...response.data,
             status: response.status

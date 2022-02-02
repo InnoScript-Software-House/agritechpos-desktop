@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, HashRouter } from 'react-router-dom';
+import history from './utilities/histroy';
 
 /** Auth Routes */
 import LoginPage from './pages/auth/Login';
@@ -15,12 +16,14 @@ import ErrorPage from './pages/Error';
 import FirstUserRegisterPage from './pages/user/FirstUserRegister';
 import ProfilePage from './pages/user/Profile';
 
+import ShopPage from './pages/Shop';
+
 class App extends Component {
 
   render() {
 
     return(
-      <HashRouter>
+      <HashRouter history={history}>
         <Route exact path={'/'} component={LandingPage} />
         <Route exact path={'/license'} component={LicensePage} />
         <Route exact path={'/dashboard'} component={DashboardPage} />
@@ -31,6 +34,7 @@ class App extends Component {
         <Route exact path={'/logout'} component={LogoutPage} />
 
         <Route exact path={'/profile'} component={ProfilePage} />
+        <Route exact path={'/shop'} component={ShopPage} />
       </HashRouter>
     );
   }
