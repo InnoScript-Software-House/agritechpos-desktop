@@ -12,22 +12,29 @@ import { ShopComponent } from '../components/settings/shop';
 import { Navigation } from '../components/general/Navigation';
 
 import '../assets/css/setting.css';
+import { NumberSpecificationComponent } from '../components/settings/numberSpecification';
 
 class SettingPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            openComponent: 'ShopComponent'
+            openComponent: 'NumberSpecificationComponent'
         }
     }
 
     componentDidMount() {
+        console.log(this.props);
+        const { search } = this.props.location;
 
+        if(search) {
+            const getComponentName = search.split('=')[1];
+            this.changeComponent(getComponentName);
+            return;
+        }
     }
 
     changeComponent(e) {
-        console.log(e);
         this.setState({
             openComponent: e
         })
@@ -51,6 +58,8 @@ class SettingPage extends Component {
                     </div>
 
                     {openComponent && openComponent === 'ShopComponent' && (<ShopComponent props={this.props} />)}
+
+                    {openComponent && openComponent === 'NumberSpecificationComponent' && (<NumberSpecificationComponent props={this.props} />)}
                 </div>
             </>
         )

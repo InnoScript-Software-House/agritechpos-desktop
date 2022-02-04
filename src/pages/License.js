@@ -119,8 +119,6 @@ class LicensePage extends Component {
             )}
           </div>
         </div>
-
-        <Footer />
       </>
     )
   }

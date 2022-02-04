@@ -1,10 +1,3 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 const { BrowserWindow, app, Menu } = require('electron');
 const path = require('path');
 
@@ -30,7 +23,7 @@ let mainWindow = () => {
     let win = new BrowserWindow({
         width: 1800,
         height: 1000,
-        fullscreen: false,
+        fullscreen: true,
         type: 'MainWindow',
         ...browserWindowOptions
     });

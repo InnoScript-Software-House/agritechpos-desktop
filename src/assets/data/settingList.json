@@ -3,5 +3,9 @@
     {
         "label": "setting-shop",
         "component": "ShopComponent"
+    },
+    {
+        "label": "setting-number-specification",
+        "component": "NumberSpecificationComponent"
     }
 ]

@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { Button, ProgressBar } from 'react-bootstrap';
-import { pages } from '../../assets/i18n/mm.json';
+import React from 'react';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { BsArrowRightShort } from "react-icons/bs";
-
 import * as settingLits from '../../assets/data/settingList.json';
+
 import '../../assets/css/components/sidebar.css';
 
 export const SideBarComponent = ({ props, getComponent }) => {

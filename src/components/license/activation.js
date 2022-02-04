@@ -1,10 +1,3 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { t, zawgyi } from "../../utilities/translation.utility";
@@ -12,6 +5,7 @@ import { ArrowLeft } from "react-bootstrap-icons";
 import { activatedLicense, storeLicense } from "../../services/license.service.js";
 
 import '../../assets/css/components/activation.css';
+import axios from "axios";
 
 export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
 
@@ -32,7 +26,8 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
             key: encKey
         }
 
-        await storeLicense(requestBody);
+        const response = await storeLicense(requestBody);
+        axios.defaults.headers.common['license'] = response.token;
         setLoading(false);
         history.push('/user/first');
     }

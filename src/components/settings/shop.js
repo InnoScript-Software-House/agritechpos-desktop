@@ -34,6 +34,7 @@ export const ShopComponent = ({ props }) => {
                     <Card className='m-3'>
                         {shop ? (
                             <Card.Body>
+                                 <Card.Title className={`m-3 shop-card-title ${zawgyi(lang)}`}> {t('shop-info-title')} </Card.Title>
                                 <Card.Text className='d-flex flex-row justify-content-between'>
                                     <label className={`me ${zawgyi(lang)}`}> {t('shop-label-name')} </label>
                                     <label className={`${zawgyi(lang)}`}> {shop.name} </label>
@@ -61,7 +62,7 @@ export const ShopComponent = ({ props }) => {
                             </Card.Body>
                         ) : (
                             <Card.Body className='d-flex flex-column'>
-                                <Card.Title className={`mb-3 ${zawgyi(lang)}`}> {t('shop-info-title')}</Card.Title>
+                                <Card.Title className={`m-3 shop-card-title ${zawgyi(lang)}`}> {t('shop-info-title')} </Card.Title>
                                 <Card.Text className={`shop-info-norecord d-flex align-self-center align-items-center ${zawgyi(lang)}`}> {t('shop-info-no-record')} </Card.Text>
                             </Card.Body>
                         )}

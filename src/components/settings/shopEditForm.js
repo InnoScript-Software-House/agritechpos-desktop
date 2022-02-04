@@ -1,4 +1,4 @@
-import React, { useDebugValue, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { updateShop } from '../../services/shop.service';
@@ -41,13 +41,9 @@ export const EditShopFormComponent = ({ props, dataSource, retrive }) => {
             email: email
         }
 
-        console.log(requestBody);
-
         setLoading(true);
 
         const response = await updateShop(requestBody);
-
-        console.log(response);
 
         if(response.success === false) {
             setError(response.message);
@@ -67,7 +63,7 @@ export const EditShopFormComponent = ({ props, dataSource, retrive }) => {
         <div className='col-7'>
             <div className='d-flex flex-column'>
                 <Card className='m-3'>
-                    <Card.Title className={`m-3 ${zawgyi(lang)}`}> {t('shop-update-title')} </Card.Title>
+                    <Card.Title className={`m-3 shop-card-title ${zawgyi(lang)}`}> {t('shop-update-title')} </Card.Title>
 
                     <Card.Body>
                         <InputGroup className='mb-3'>

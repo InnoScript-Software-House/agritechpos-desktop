@@ -1,0 +1,16 @@
+.number-spec-component {
+    width: 100%;
+}
+
+.number-spec-info-title,
+.activity-log-title {
+     color: #01a3a6;
+}
+
+.char-error {
+    color: red;
+}
+
+.number-spec-activity-log-wrapper {
+    width: 500px;
+}

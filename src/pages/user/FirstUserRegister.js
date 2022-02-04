@@ -74,8 +74,6 @@ class FirstUserRegisterPage extends Component {
             });
         }
 
-        console.log(response);
-
         return this.setState({
             is_loading: false,
             err_message: null
