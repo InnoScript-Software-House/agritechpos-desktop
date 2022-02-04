@@ -1,0 +1,18 @@
+.sidebar-wrapper {
+    height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #01a3a6;
+}
+
+.sidebar-title {
+    color: #01a3a6;
+    font-size: large;
+}
+
+.sidebar-list {
+    list-style: none;
+}
+
+.sidebar-list > li {
+    cursor: pointer;
+}

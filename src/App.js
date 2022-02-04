@@ -16,7 +16,7 @@ import ErrorPage from './pages/Error';
 import FirstUserRegisterPage from './pages/user/FirstUserRegister';
 import ProfilePage from './pages/user/Profile';
 
-import ShopPage from './pages/Shop';
+import SettingPage from './pages/Setting';
 
 class App extends Component {
 
@@ -34,7 +34,7 @@ class App extends Component {
         <Route exact path={'/logout'} component={LogoutPage} />
 
         <Route exact path={'/profile'} component={ProfilePage} />
-        <Route exact path={'/shop'} component={ShopPage} />
+        <Route exact path={'/setting'} component={SettingPage} />
       </HashRouter>
     );
   }

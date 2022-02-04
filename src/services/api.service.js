@@ -21,7 +21,7 @@ const httpHandler = (response) => {
     if(response.status === 401) {
         history.push('/logout');
         window.location.reload();
-    } 
+    }
 
     if(response.status === 404 || response.status === 422 || response.status === 400 || response.status === 500) {
         return {
@@ -60,6 +60,23 @@ export const getRequest = async (url) => {
 
 export const postRequest = async (url, body) => {
     const response = await axios.post(url, body).then((result) => {
+        return result;
+    }, (error) => {
+
+        if(error && error.response) {
+            return error.response;
+        }
+
+        return {
+            message: "Network Error",
+            status: 0
+        }
+    });
+    return httpHandler(response);
+}
+
+export const putRequest = async (url, body) => {
+    const response = await axios.put(url, body).then((result) => {
         return result;
     }, (error) => {
 

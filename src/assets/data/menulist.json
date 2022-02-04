@@ -6,8 +6,8 @@
     },
     {
         "id": 2,
-        "label": "nav-shop",
-        "url": "/shop"
+        "label": "nav-setting",
+        "url": "/setting"
     },
     {
         "id": 3,
