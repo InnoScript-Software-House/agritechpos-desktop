@@ -1,10 +1,3 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -93,12 +86,12 @@ class FirstUserRegisterPage extends Component {
                     <Language props={this.props} />
                 </div>
 
-                <div className='d-flex flex-row justify-content-between'>
-                    <div className='col-5 d-flex flex-column justify-content-center'>
+                <div className='d-md-flex flex-row justify-content-between'>
+                    <div className='col-md-5 d-flex flex-column justify-content-center'>
                         <img src="build/assets/images/side_image.jpeg" className='cover-image align-self-center mt-3' />
                     </div>
 
-                    <div className='col-7 d-flex flex-column justify-content-start'>
+                    <div className='col-md-7 d-md-flex flex-column justify-content-start'>
                         <h3 className={`title m-3 ${zawgyi(lang)}`}> {t('first-user-title')} </h3>
                         <p className={`m-3 ${zawgyi(lang)}`}> {t('first-user-description')} </p>
 

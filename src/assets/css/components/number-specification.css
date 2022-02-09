@@ -4,7 +4,7 @@
 
 .number-spec-info-title,
 .activity-log-title {
-     color: #01a3a6;
+    color: #01a3a6;
 }
 
 .char-error {
@@ -13,4 +13,23 @@
 
 .number-spec-activity-log-wrapper {
     width: 500px;
+}
+
+.icon-btn {
+    height: 29px;
+    text-align: center;
+    background-color: #01a3a6;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 3px;
+}
+
+.icon-btn:hover {
+    background-color: rgb(220, 220, 220);
+    color: #000;
+}
+
+.table-wrapper {
+    width: 100%;
 }

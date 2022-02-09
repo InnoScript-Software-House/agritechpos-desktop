@@ -7,10 +7,7 @@ export const authReducer = (state = initialState, action) => {
 
     switch(type) {
         case SET_ACCEASS_TOEKN: {
-            return {
-                ...state,
-                ...payload
-            }
+            return payload
         }
 
         default:

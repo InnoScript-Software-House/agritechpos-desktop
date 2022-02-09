@@ -11,9 +11,9 @@ export const SideBarComponent = ({ props, getComponent }) => {
 
 
     return(
-        <div className='d-flex flex-column sidebar-wrapper'>
-            <div className='m-3'>
-                <h3 className={`sidebar-title mb-3 ${zawgyi(lang)}`}> {t('setting-sub-title')} </h3>
+        <div className='d-md-flex flex-column sidebar-wrapper'>
+            <div className='m-2'>
+                <h3 className={`sidebar-title mb-1 ${zawgyi(lang)}`}> {t('setting-sub-title')} </h3>
 
                 <ul className='sidebar-list'>
                     {settingLits.map((value, index) => {

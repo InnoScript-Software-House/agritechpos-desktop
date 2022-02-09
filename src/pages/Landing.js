@@ -9,6 +9,7 @@ import { checkFirstUser } from '../services/user.service';
 import axios from 'axios';
 
 import '../assets/css/landing/index.css';
+import { getFirstDevice } from '../services/device.service';
 
 class LandingPage extends Component {
 
@@ -46,6 +47,12 @@ class LandingPage extends Component {
         if(response && response.length > 0) {
             localStorage.setItem(LICENSE, response[0].token);
             axios.defaults.headers.common["license"] = response[0].token;
+        }
+
+        const firstDevice = await getFirstDevice();
+
+        if(firstDevice.length === 0) {
+            history.push('/device/first');
         }
 
         const firstUser = await checkFirstUser();

@@ -18,6 +18,8 @@ class DashboardPage extends Component {
 
     async checkApp() {
         const { notification } = this.state;
+        console.log(this.props);
+        
         const shop = await getShop();
 
         let updateNotification = notification;

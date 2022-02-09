@@ -45,6 +45,6 @@ if(isDev) {
 app.whenReady().then(() => {
     const contents = mainWindow();
     contents.webContents.on('did-finish-load', () => {
-        // contents.webContents.send('get-loading-state', true);
+        contents.webContents.send('get-device-info', true);
     });
 });

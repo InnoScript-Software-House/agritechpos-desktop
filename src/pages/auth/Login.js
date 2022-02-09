@@ -6,6 +6,7 @@ import { Language } from '../../components/general/Language';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { login } from '../../services/auth.service';
 import { setTokenAction } from '../../redux/actions/auth.action';
+import { setAccountAction } from '../../redux/actions/account.action';
 
 import '../../assets/css/login.css';
 
@@ -44,6 +45,7 @@ class LoginPage extends Component {
         });
 
         const response = await login(requestBody);
+        console.log(response);
 
         if(response.success === false) {
             return this.setState({
@@ -53,7 +55,8 @@ class LoginPage extends Component {
         }
 
        await this.props.setToken(response.access_token);
-
+       await this.props.setAccount(response.account);
+    
        history.push('/dashboard');
        
     }
@@ -115,6 +118,7 @@ const mapStateToProps = (state) => ({
   
 const mapDispatchToProps = (dispatch) => ({
     setToken: (accessToken) => dispatch(setTokenAction(accessToken)),
+    setAccount: (account) => dispatch(setAccountAction(account))
 });
 
 export default connect(

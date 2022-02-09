@@ -10,21 +10,21 @@ import { LicenseComponent } from '../components/settings/License';
 import { SideBarComponent } from '../components/settings/sidebar';
 import { ShopComponent } from '../components/settings/shop';
 import { Navigation } from '../components/general/Navigation';
+import { NumberSpecificationComponent } from '../components/settings/numberSpecification';
 
 import '../assets/css/setting.css';
-import { NumberSpecificationComponent } from '../components/settings/numberSpecification';
+import { DeviceComponent } from '../components/settings/device';
 
 class SettingPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            openComponent: 'NumberSpecificationComponent'
+            openComponent: 'DeviceComponent'
         }
     }
 
     componentDidMount() {
-        console.log(this.props);
         const { search } = this.props.location;
 
         if(search) {
@@ -52,14 +52,16 @@ class SettingPage extends Component {
             <>
                 <Navigation props={this.props} />
 
-                <div className='d-flex flex-row'>
-                    <div className='col-2'>
+                <div className='d-md-flex flex-row'>
+                    <div className='col-md-2'>
                         <SideBarComponent props={this.props} getComponent={e => this.selectedComponent(e) }/>
                     </div>
 
                     {openComponent && openComponent === 'ShopComponent' && (<ShopComponent props={this.props} />)}
 
                     {openComponent && openComponent === 'NumberSpecificationComponent' && (<NumberSpecificationComponent props={this.props} />)}
+
+                    {openComponent && openComponent === 'DeviceComponent' && (<DeviceComponent props={this.props} />)}
                 </div>
             </>
         )

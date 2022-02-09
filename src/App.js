@@ -17,6 +17,7 @@ import FirstUserRegisterPage from './pages/user/FirstUserRegister';
 import ProfilePage from './pages/user/Profile';
 
 import SettingPage from './pages/Setting';
+import FirstDevice from './pages/device/FirstDevice';
 
 class App extends Component {
 
@@ -35,6 +36,8 @@ class App extends Component {
 
         <Route exact path={'/profile'} component={ProfilePage} />
         <Route exact path={'/setting'} component={SettingPage} />
+
+        <Route exact path={'/device/first'} component={FirstDevice} />
       </HashRouter>
     );
   }

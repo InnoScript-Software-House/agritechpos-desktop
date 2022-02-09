@@ -7,7 +7,6 @@ export const DashboardNotiCompoment = ({ props, notification }) => {
     const { lang } = props.reducer;
     const { history } = props;
 
-    console.log(notification);
     return(
         <div className="d-flex flex-column">
             {notification.shop === true && (
