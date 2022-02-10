@@ -11,16 +11,16 @@ import { SideBarComponent } from '../components/settings/sidebar';
 import { ShopComponent } from '../components/settings/shop';
 import { Navigation } from '../components/general/Navigation';
 import { NumberSpecificationComponent } from '../components/settings/numberSpecification';
+import { DeviceComponent } from '../components/settings/device';
 
 import '../assets/css/setting.css';
-import { DeviceComponent } from '../components/settings/device';
 
 class SettingPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            openComponent: 'DeviceComponent'
+            openComponent: 'ShopComponent'
         }
     }
 

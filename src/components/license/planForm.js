@@ -65,7 +65,7 @@ export const PlanForm = ({ lng, retrivePlan, backStep }) => {
             <div className="d-flex flex-column">
                 <div className="d-flex flex-row justify-content-start mb-3">
                         <Form.Group className="me-3">
-                            <Form.Label> Activation Date </Form.Label>
+                            <Form.Label className={`${zawgyi(lng)}`}> {t('input-activation-date')} </Form.Label>
                             <Form.Control
                                 type="date"
                                 value={activation}
@@ -74,7 +74,7 @@ export const PlanForm = ({ lng, retrivePlan, backStep }) => {
                         </Form.Group>
 
                         <Form.Group className="me-3">
-                            <Form.Label> Duration(Year) </Form.Label>
+                            <Form.Label className={`${zawgyi(lng)}`}> {t('input-duration')} </Form.Label>
                             <Form.Control 
                                className="select-device"
                                as="select"
@@ -92,7 +92,7 @@ export const PlanForm = ({ lng, retrivePlan, backStep }) => {
                         </Form.Group>
 
                         <Form.Group className="me-3">
-                            <Form.Label> Number of Device </Form.Label>
+                            <Form.Label className={`${zawgyi(lng)}`}> {t('input-number-of-device')} </Form.Label>
                             <Form.Control
                                 className="select-device"
                                 as="select"

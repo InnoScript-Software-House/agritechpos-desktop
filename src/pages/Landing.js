@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { setLangAction } from '../redux/actions/lang.action';
-import { LICENSE } from '../redux/actionTypes';
+import { DEVICE_VALUE, LICENSE } from '../redux/actionTypes';
 import { checkLicense } from '../services/license.service.js';
 import { checkFirstUser } from '../services/user.service';
 import axios from 'axios';
@@ -53,9 +53,26 @@ class LandingPage extends Component {
 
         if(firstDevice.length === 0) {
             history.push('/device/first');
+            return;
         }
 
+        const { device } = window.nativeApi;
+        
+        device.get((result) => {
+            const networkInterfaces = result.networkInterfaces();
+
+            if(networkInterfaces.wlp2s0) {
+                axios.defaults.headers.common['ip'] = networkInterfaces.wlp2s0[0].address;
+                axios.defaults.headers.common['mac'] = networkInterfaces.wlp2s0[0].mac;
+                localStorage.setItem(DEVICE_VALUE, JSON.stringify(networkInterfaces.wlp2s0[0]));
+            }
+        });
+
         const firstUser = await checkFirstUser();
+
+        if(firstUser && firstUser.success === false) {
+            history.push('/error/device')
+        }
 
         if(firstUser && firstUser.status === 404) {
             history.push('/user/first');

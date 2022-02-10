@@ -1,47 +1,49 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Alert, Button, Card, Form, FormControl, InputGroup } from "react-bootstrap";
+import React, {useState } from "react";
+import { Button, Card, FormControl, InputGroup } from "react-bootstrap";
 import { t, zawgyi } from "../../utilities/translation.utility";
-import { BsArrowRightShort, BsDisplay } from "react-icons/bs";
-import { getDevice } from "../../services/license.service";
+import { createDevice } from "../../services/device.service";
 
-import '../../assets/css/components/device-update.css';
+import '../../assets/css/components/device-create.css';
 
-export const UpdateDeviceComponent = ({ props }) => {
+export const CreateeDeviceComponent = ({ props, disable, reload }) => {
+
     const { lang } = props.reducer;
-    const [limit, setLimit] = useState(null);
     const [error, setError] = useState(null);
     const [name, setName] = useState('');
     const [ip, setIP] = useState('');
     const [mac, setMac] = useState('');
+    const [note, setNote] = useState('');
 
-    const createDevice = () => {
+    const create = async () => {
 
         if(name === '' || ip === '' || mac === '') {
             setError(t('device-create-empty-error'));
             return;
         }
-    }
 
-    const fetchApi = useCallback(async() => {
-        const response = await getDevice();
-
-        if(response && response.success === false) {
-            return setError(response.message);
+        const requestBody = {
+            name: name,
+            ip: ip,
+            mac: mac,
+            note: note
         }
 
-        // setLimit(Number(response.plan.device));
-        setLimit(10);
-    },[]);
+        const response = await createDevice(requestBody);
 
-    useEffect(() => {
-        fetchApi()
-    },[fetchApi]);
+        if(response && response.success === false) {
+            setError(response.message);
+            return;
+        }
+
+        setError(null);
+        reload(true);
+    }
 
     return(
         <div className="col-md-3">
             <Card>
-                <Card.Title className="p-3 device-update-title"> 
-                    <span className={`${zawgyi(lang)}`}> {t('device-update-title')} </span>
+                <Card.Title className="p-3 device-create-title"> 
+                    <span className={`${zawgyi(lang)}`}> {t('device-create-title')} </span>
                 </Card.Title>
 
                 <Card.Body className="d-md-flex flex-column justify-content-md-start">
@@ -52,6 +54,7 @@ export const UpdateDeviceComponent = ({ props }) => {
                             value={name}
                             placeholder={t('device-input-name')}
                             onChange={(e) => setName(e.target.value)}
+                            disabled={disable}
                         />
                     </InputGroup>
 
@@ -62,6 +65,7 @@ export const UpdateDeviceComponent = ({ props }) => {
                             value={ip}
                             placeholder={t('device-input-ip-address')}
                             onChange={(e) => setIP(e.target.value)}
+                            disabled={disable}
                         />
                     </InputGroup>
 
@@ -72,10 +76,28 @@ export const UpdateDeviceComponent = ({ props }) => {
                             value={mac}
                             placeholder={t('device-input-mac-address')}
                             onChange={(e) => setMac(e.target.value)}
+                            disabled={disable}
                         />
                     </InputGroup>
 
-                    <Button className={`btn-device-create ${zawgyi(lang)}`} onClick={() => createDevice()}> {t('btn-device-create')} </Button>
+                    <InputGroup className="mb-2">
+                        <FormControl
+                            className={`${zawgyi(lang)}`}
+                            type="text"
+                            value={note}
+                            placeholder={t('device-input-mac-note')}
+                            onChange={(e) => setNote(e.target.value)}
+                            disabled={disable}
+                        />
+                    </InputGroup>
+
+                    <Button 
+                        className={`btn-device-create ${zawgyi(lang)}`} 
+                        onClick={() => create()}
+                        disabled={disable}
+                    > 
+                        {t('btn-device-create')} 
+                    </Button>
 
                     {error && (<span className="device-error"> {error} </span>)}
                 </Card.Body>

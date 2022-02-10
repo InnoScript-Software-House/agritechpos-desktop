@@ -12,6 +12,7 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
     const [reginfo, setReginfo] = useState(null);
     const [encKey, setEncKey] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const requestBody = {
         serial: serial,
@@ -27,6 +28,13 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
         }
 
         const response = await storeLicense(requestBody);
+
+        if(response && response.success === false) {
+            setError(response.message);
+            setLoading(false);
+            return;
+        }
+
         axios.defaults.headers.common['license'] = response.token;
         setLoading(false);
         history.push('/user/first');
@@ -61,27 +69,27 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
                 <div className="d-flex flex-row justify-content-between mb-3">
                     <div className="col-6">
                         <div className="d-flex">
-                            <label className="info-label"> Serial Number </label>
+                            <label className={`info-label ${zawgyi(lng)}`}> {t('label-serial-number')} </label>
                             <span className="info-text me-3"> {reginfo.serial} </span>
                         </div>
 
                         <div className="d-flex">
-                            <label className="info-label"> Register Name </label>
+                            <label className={`info-label ${zawgyi(lng)}`}> Register Name </label>
                             <span className="info-text me-3"> {reginfo.user.display_name} </span>
                         </div>
 
                         <div className="d-flex">
-                            <label className="info-label"> Phone </label>
+                            <label className={`info-label ${zawgyi(lng)}`}> Phone </label>
                             <span className="info-text me-3"> {reginfo.user.phone} </span>
                         </div>
 
                         <div className="d-flex">
-                            <label className="info-label"> Email </label>
+                            <label className={`info-label ${zawgyi(lng)}`}> Email </label>
                             <span className="info-text me-3"> {reginfo.user.email} </span>
                         </div>
 
                         <div className="d-flex">
-                            <label className="info-label"> Address </label>
+                            <label className={`info-label ${zawgyi(lng)}`}> Address </label>
                             <span className="info-text me-3"> {reginfo.user.address} </span>
                         </div>
                     </div>

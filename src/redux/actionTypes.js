@@ -6,3 +6,5 @@ export const LANG_SET = 'LANG_SET';
 
 export const SET_ACCOUNT = 'SET_ACCOUNT';
 export const ACCOUNT_VALUE = 'ACCOUNT_VALUE';
+
+export const DEVICE_VALUE = 'DEVICE_VALUE';

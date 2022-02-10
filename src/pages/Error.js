@@ -54,6 +54,11 @@ class ErrorPage extends Component {
             setErrorMessage = t('error-unknown-message');
         }
 
+        if(status === 'device') {
+            setTitle = t('error-device-title');
+            setErrorMessage = t('error-device-message');
+        }
+
         return this.setState({
             title: setTitle,
             errorMessage: setErrorMessage,
@@ -106,8 +111,8 @@ class ErrorPage extends Component {
                 )}
 
             </div>
-            <div className='d-flex flex-column justify-content-start align-items-center mt-3'>
-                <div className='col-4'>
+            <div className='d-md-flex flex-column justify-content-start align-items-center mt-3'>
+                <div className='col-md-4'>
                     <h3 className={`error-title ${zawgyi(lang)}`}> {title} </h3>
                     <p className={`error-message-description ${zawgyi(lang)}`}> {errorMessage} </p>
 

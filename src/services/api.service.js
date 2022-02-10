@@ -1,12 +1,13 @@
 import axios from "axios";
 import { apiUrl, env } from "../environment";
-import { ACCESS_TOKEN, LICENSE } from "../redux/actionTypes";
+import { ACCESS_TOKEN, DEVICE_VALUE, LICENSE } from "../redux/actionTypes";
 import history from "../utilities/histroy";
 
 axios.defaults.baseURL = apiUrl[env];
 
 const getLicense = localStorage.getItem(LICENSE) ? localStorage.getItem(LICENSE) : null;
 const getToken = localStorage.getItem(ACCESS_TOKEN) ? localStorage.getItem(ACCESS_TOKEN) : null;
+const getDevice = localStorage.getItem(DEVICE_VALUE) ? localStorage.getItem(DEVICE_VALUE) : null;
 
 if(getLicense) {
     axios.defaults.headers.common['license'] = getLicense;
@@ -14,6 +15,12 @@ if(getLicense) {
 
 if(getToken) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${getToken}`;
+}
+
+if(getDevice) {
+    const device = JSON.parse(getDevice);
+    axios.defaults.headers.common['ip'] = device.address;
+    axios.defaults.headers.common['mac'] = device.mac;
 }
 
 const httpHandler = (response) => {
