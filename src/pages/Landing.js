@@ -10,6 +10,7 @@ import axios from 'axios';
 
 import '../assets/css/landing/index.css';
 import { getFirstDevice } from '../services/device.service';
+import { defineMacAndIP } from '../services/utility.service';
 
 class LandingPage extends Component {
 
@@ -24,53 +25,50 @@ class LandingPage extends Component {
         const { history } = this.props;
         const response = await checkLicense(this.props);
 
-        if(response === null) {
+        if (response === null) {
             history.push('/error/0');
             return;
         }
 
-        if(response && response.message === 'licnese is expired') {
+        if (response && response.message === 'licnese is expired') {
             history.push('/error/expired');
             return;
         }
 
-        if(response && response.message === 'unknown error') {
+        if (response && response.message === 'unknown error') {
             history.push('/error/unknown');
             return;
         }
 
-        if(response && response.length === 0) {
+        if (response && response.length === 0) {
             history.push('/license');
             return;
         }
 
-        if(response && response.length > 0) {
+        if (response && response.length > 0) {
             localStorage.setItem(LICENSE, response[0].token);
             axios.defaults.headers.common["license"] = response[0].token;
         }
 
         const firstDevice = await getFirstDevice();
 
-        if(firstDevice.length === 0) {
+        if (firstDevice.length === 0) {
             history.push('/device/first');
             return;
         }
 
         const { device } = window.nativeApi;
-        
         device.get((result) => {
             const networkInterfaces = result.networkInterfaces();
-
-            if(networkInterfaces.wlp2s0) {
-                axios.defaults.headers.common['ip'] = networkInterfaces.wlp2s0[0].address;
-                axios.defaults.headers.common['mac'] = networkInterfaces.wlp2s0[0].mac;
-                localStorage.setItem(DEVICE_VALUE, JSON.stringify(networkInterfaces.wlp2s0[0]));
-            }
+            const getMacAndIp = defineMacAndIP(networkInterfaces);
+            axios.defaults.headers.common['ip'] = getMacAndIp.address;
+            axios.defaults.headers.common['mac'] = getMacAndIp.mac;
+            localStorage.setItem(DEVICE_VALUE, JSON.stringify(getMacAndIp));
         });
 
         const firstUser = await checkFirstUser();
 
-        if(firstUser && firstUser.status === 404) {
+        if (firstUser && firstUser.status === 404) {
             history.push('/user/first');
             return;
         } else {
@@ -91,7 +89,7 @@ class LandingPage extends Component {
                         </Spinner>
                     </div>
                 )}
-            </>            
+            </>
         )
     }
 }
@@ -99,11 +97,11 @@ class LandingPage extends Component {
 const mapStateToProps = (state) => ({
     reducer: state
 });
-  
+
 const mapDispatchToProps = (dispatch) => ({
     setLang: (value) => dispatch(setLangAction(value))
 });
-  
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
