@@ -70,10 +70,6 @@ class LandingPage extends Component {
 
         const firstUser = await checkFirstUser();
 
-        if(firstUser && firstUser.success === false) {
-            history.push('/error/device')
-        }
-
         if(firstUser && firstUser.status === 404) {
             history.push('/user/first');
             return;

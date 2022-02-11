@@ -82,7 +82,7 @@ class FirstUserRegisterPage extends Component {
 
         return (
             <>
-                <div className='d-flex flex-row justify-content-end'>
+                <div className='d-md-flex flex-row justify-content-end'>
                     <Language props={this.props} />
                 </div>
 

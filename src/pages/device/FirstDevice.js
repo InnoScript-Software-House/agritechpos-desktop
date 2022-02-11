@@ -9,6 +9,7 @@ import '../../assets/css/first-device.css';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { createFirstDevice } from '../../services/device.service';
+import axios from 'axios';
 
 class FirstDevice extends Component {
 
@@ -67,6 +68,9 @@ class FirstDevice extends Component {
       return;
     }
 
+    axios.defaults.headers.common['ip'] = ip;
+    axios.defaults.headers.common['mac'] = mac;
+    
     this.setState({
       error: null
     });

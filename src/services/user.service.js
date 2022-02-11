@@ -23,3 +23,8 @@ export const getProfile = async () => {
     const response = await getRequest(`${url}/profile`);
     return handlerException(response);
 }
+
+export const getUsers = async () => {
+    const response = await getRequest(url);
+    return handlerException(response);
+}

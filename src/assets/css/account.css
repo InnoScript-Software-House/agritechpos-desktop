@@ -1,0 +1,7 @@
+.btn-account-create {
+    height: inherit!important;
+}
+
+.account-create-error {
+    color: red;
+}

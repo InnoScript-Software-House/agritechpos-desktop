@@ -37,7 +37,7 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
 
         axios.defaults.headers.common['license'] = response.token;
         setLoading(false);
-        history.push('/user/first');
+        history.push('/device/first');
     }
 
     const checkActivated = useCallback(async() => {

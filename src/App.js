@@ -18,6 +18,7 @@ import ProfilePage from './pages/user/Profile';
 
 import SettingPage from './pages/Setting';
 import FirstDevice from './pages/device/FirstDevice';
+import AccountPage from './pages/user/Account';
 
 class App extends Component {
 
@@ -38,6 +39,7 @@ class App extends Component {
         <Route exact path={'/setting'} component={SettingPage} />
 
         <Route exact path={'/device/first'} component={FirstDevice} />
+        <Route exact path={'/account'} component={AccountPage} />
       </HashRouter>
     );
   }
