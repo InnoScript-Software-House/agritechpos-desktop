@@ -1,4 +1,4 @@
-import { getRequest, postRequest } from "./api.service";
+import { delRequest, getRequest, postRequest, putRequest } from "./api.service";
 
 const url = 'auth';
 
@@ -26,5 +26,15 @@ export const getProfile = async () => {
 
 export const getUsers = async () => {
     const response = await getRequest(url);
+    return handlerException(response);
+}
+
+export const editUser = async (id, requestBody) => {
+    const response = await putRequest(`${url}/${id}`, requestBody);
+    return handlerException(response);
+}
+
+export const delUser = async (id) => {
+    const response = await delRequest(`${url}/${id}`);
     return handlerException(response);
 }

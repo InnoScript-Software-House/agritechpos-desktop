@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Navigation } from '../../components/general/Navigation';
 import { t, zawgyi } from '../../utilities/translation.utility';
-import { createAccount, getUsers } from '../../services/user.service';
+import { createAccount, editUser, getUsers } from '../../services/user.service';
 import { AccountList } from '../../components/account/accountList';
 
 import '../../assets/css/account.css';
+import { BsArrowLeftCircleFill, BsArrowLeftRight } from 'react-icons/bs';
 
 class AccountPage extends Component {
 
@@ -21,10 +22,50 @@ class AccountPage extends Component {
       confirm_password: '',
       error: null,
       loading: false,
-      userList: []
+      userList: [],
+      edit: null,
+      edit_id: null
     }
   }
 
+  async fetchData() {
+    const response = await getUsers();
+
+    if(response && response.success === false) {
+      this.setState({
+        error: response.message,
+        loading: false
+      });
+      return;
+    }
+
+    this.setState({
+      error: null,
+      userList: response,
+      loading: false
+    });
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  async getRefresh(e) {
+    if(e) {
+      this.fetchData();
+    }
+  }
+
+  editInfo(e) {
+    if(e) {
+      this.setState({
+        name: e.name,
+        phone: e.phone,
+        email: e.email,
+        edit_id: e.id
+      })
+    }
+  }
 
   async create() {
     const { name, phone, email, password, confirm_password } = this.state;
@@ -64,47 +105,70 @@ class AccountPage extends Component {
       return;
     }
 
-    const users = await getUsers();
+    return this.fetchData();
+  }
 
-    if(response && response.success === false) {
+  async update() {
+    const { phone, email, edit_id } = this.state;
+
+    const updateRequest = {
+      phone: phone,
+      email: email
+    }
+
+    const updateUser = await editUser(edit_id, updateRequest);
+
+    if(updateUser && updateUser.success === false) {
       this.setState({
-        error: response.message,
+        error: updateUser.message,
         loading: false
       });
       return;
     }
 
+    return this.fetchData();
+  }
+
+  switchBtn() {
     this.setState({
-      error: null,
-      userList: users,
-      loading: false
-    });
+      edit: null
+    })
   }
 
   render() {
     const { lang } = this.props.reducer;
-    const { error, userList } = this.state;
+    const { error, userList, edit } = this.state;
     return (
       <>
         <Navigation props={this.props} />
 
         <div className='d-md-flex flex-row justify-content-between'>
-          <div className='col-md-3 p-1'>
+          <div className='col-md-3 p-2'>
             <Card>
-              <Card.Title className='p-3'> 
-                <span className={`${zawgyi(lang)}`}> {t('account-create-title')} </span>
+              <Card.Title className='p-3'>
+                <div className='d-flex flex-row justify-content-between align-items-center'>
+                  <span className={`${zawgyi(lang)}`}>
+                    {edit === null ? t('account-create-title') : t('account-edit-title')}
+                  </span>
+
+                  {edit && (
+                    <BsArrowLeftRight size={20} className="btn-icon" onClick={() => this.switchBtn()} />
+                  )}
+                </div> 
               </Card.Title>
 
               <Card.Body>
-                <FormControl 
-                  className={`mb-2 ${zawgyi(lang)}`}
-                  type='text'
-                  placeholder={t('input-account-name')}
-                  value={this.state.name}
-                  onChange={(e) => this.setState({
-                    name: e.target.value
-                  })}
-                />
+                {edit === null && (
+                  <FormControl 
+                    className={`mb-2 ${zawgyi(lang)}`}
+                    type='text'
+                    placeholder={t('input-account-name')}
+                    value={this.state.name}
+                    onChange={(e) => this.setState({
+                      name: e.target.value
+                    })}
+                  />
+                )}
 
                 <FormControl 
                   className={`mb-2 ${zawgyi(lang)}`}
@@ -126,34 +190,48 @@ class AccountPage extends Component {
                   })}
                 />
 
-                <FormControl 
-                  className={`mb-2 ${zawgyi(lang)}`}
-                  type='password'
-                  placeholder={t('input-account-password')}
-                  value={this.state.password}
-                  onChange={(e) => this.setState({
-                    password: e.target.value
-                  })}
-                />
+                {edit === null && (
+                  <FormControl 
+                    className={`mb-2 ${zawgyi(lang)}`}
+                    type='password'
+                    placeholder={t('input-account-password')}
+                    value={this.state.password}
+                    onChange={(e) => this.setState({
+                      password: e.target.value
+                    })}
+                  />
+                )}
 
-                <FormControl 
-                  className={`mb-2 ${zawgyi(lang)}`}
-                  type='password'
-                  placeholder={t('input-account-confirm-password')}
-                  value={this.state.confirm_password}
-                  onChange={(e) => this.setState({
-                    confirm_password: e.target.value
-                  })}
-                />
+                {edit === null && (
+                  <FormControl 
+                    className={`mb-2 ${zawgyi(lang)}`}
+                    type='password'
+                    placeholder={t('input-account-confirm-password')}
+                    value={this.state.confirm_password}
+                    onChange={(e) => this.setState({
+                      confirm_password: e.target.value
+                    })}
+                  />
+                )}
 
                 <div className='d-md-flex flex-row justify-content-start align-items-center'>
-                  <Button 
-                    className='btn-account-create'
-                    onClick={() => this.create()}
-                    disabled={this.state.loading}
-                  > 
-                    {t('btn-account-create')} 
-                  </Button>
+                  {edit === null ? (
+                    <Button 
+                      className='btn-account-create'
+                      onClick={() => this.create()}
+                      disabled={this.state.loading}
+                    > 
+                      {t('btn-account-create')} 
+                    </Button>
+                  ) : (
+                    <Button 
+                      className='btn-account-create'
+                      onClick={() => this.update()}
+                      disabled={this.state.loading}
+                    > 
+                      {t('btn-account-update')} 
+                    </Button>
+                  )}
                     {error && (<span className='account-create-error ms-3'> {error} </span>)}
                 </div>
               </Card.Body>
@@ -161,7 +239,14 @@ class AccountPage extends Component {
           </div>
 
           <div className='col-md-9'>
-            <AccountList props={this.props} dataSource={userList} />
+            <AccountList 
+              props={this.props} 
+              dataSource={userList} 
+              reload={e => this.getRefresh(e)} 
+              edit={e => this.setState({ edit: e}, () => {
+                this.editInfo(e);
+              })} 
+            />
           </div>
         </div>
       </>

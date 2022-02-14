@@ -1,4 +1,4 @@
-import { getRequest, postRequest } from "./api.service";
+import { postRequest } from "./api.service";
 
 const url = 'auth';
 

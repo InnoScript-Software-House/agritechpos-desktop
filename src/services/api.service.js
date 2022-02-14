@@ -9,13 +9,8 @@ const getLicense = localStorage.getItem(LICENSE) ? localStorage.getItem(LICENSE)
 const getToken = localStorage.getItem(ACCESS_TOKEN) ? localStorage.getItem(ACCESS_TOKEN) : null;
 const getDevice = localStorage.getItem(DEVICE_VALUE) ? localStorage.getItem(DEVICE_VALUE) : null;
 
-if(getLicense) {
-    axios.defaults.headers.common['license'] = getLicense;
-}
-
-if(getToken) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${getToken}`;
-}
+axios.defaults.headers.common['license'] = getLicense ? getLicense : null;
+axios.defaults.headers.common['Authorization'] = getToken ? `Bearer ${getToken}` : null;
 
 if(getDevice) {
     const device = JSON.parse(getDevice);
@@ -84,6 +79,23 @@ export const postRequest = async (url, body) => {
 
 export const putRequest = async (url, body) => {
     const response = await axios.put(url, body).then((result) => {
+        return result;
+    }, (error) => {
+
+        if(error && error.response) {
+            return error.response;
+        }
+
+        return {
+            message: "Network Error",
+            status: 0
+        }
+    });
+    return httpHandler(response);
+}
+
+export const delRequest = async (url) => {
+    const response = await axios.delete(url).then((result) => {
         return result;
     }, (error) => {
 
