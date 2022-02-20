@@ -6,21 +6,26 @@
     },
     {
         "id": 2,
+        "label": "nav-inventory",
+        "url": "/inventory"
+    },
+    {
+        "id": 3,
         "label": "nav-account",
         "url": "/account"
     },
     {
-        "id": 3,
+        "id": 4,
         "label": "nav-setting",
         "url": "/setting"
     },
     {
-        "id": 4,
+        "id": 5,
         "label": "nav-profile",
         "url": "/profile"
     },
     {
-        "id": 5,
+        "id": 6,
         "label": "nav-logout",
         "url": "/logout"
     }

@@ -27,9 +27,9 @@ class FirstDevice extends Component {
   componentDidMount() {
     const { get } = window.nativeApi.device;
     get((device) => {
-      console.log(device);
       const networkInterface = device.networkInterfaces();
-
+      console.log(networkInterface);
+      
       if(networkInterface.wlp2s0) {
         const info = networkInterface.wlp2s0[0];
         this.setState({

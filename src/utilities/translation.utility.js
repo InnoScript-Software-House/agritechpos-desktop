@@ -1,10 +1,3 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 import i18n from 'i18next';
 import enTranslation from '../assets/i18n/en.json';
 import unicodeTranslation   from '../assets/i18n/unicode.json';

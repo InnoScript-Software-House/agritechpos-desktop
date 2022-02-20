@@ -136,6 +136,54 @@ input[type=number]:focus,
 .lang-overwrite > .lang-wrapper > .lang-title {
     color: #fff;
 }
-/* Button Error */
-/* @import url(./landing.css);
-@import url(./login.css); */
+
+.card-title {
+    color: #01a3a6;
+    font-size: 20px;
+}
+
+.card-retry,
+.card-loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-small {
+    height: inherit!important;
+    margin-top: 10px;
+}
+
+.color-primary {
+    color: #01a3a6;
+}
+
+.datatable-header {
+    font-size: 14px!important;
+}
+
+.select-input-group {
+    width: 100%;
+}
+
+.select-input-group > select {
+    width: 100%;
+    border-radius: 0px!important;
+}
+
+.select-input-group > select:focus {
+    outline: none !important;
+    box-shadow: 0 0 0px rgba(0,0,0,0);
+}
+
+.app-toast-container {
+    background-color: #eeeeee;
+    opacity: 1;
+    z-index: 999;
+}
+
+.toast-danger {
+    background-color: #dc3545;
+    color: #fff;
+}

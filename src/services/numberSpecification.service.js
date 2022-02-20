@@ -1,4 +1,4 @@
-import { getRequest, postRequest, putRequest } from "./api.service";
+import { getRequest, putRequest } from "./api.service";
 
 const url = 'number-specification';
 
@@ -7,11 +7,6 @@ const handlerException = (response) => {
         return null;
     }
     return response;
-}
-
-export const createShop = async (requestBody) => {
-    const response = await postRequest(`${url}`, requestBody);
-    return handlerException(response);
 }
 
 export const getNumberSpecList = async () => {

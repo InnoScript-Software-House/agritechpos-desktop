@@ -19,6 +19,7 @@ import ProfilePage from './pages/user/Profile';
 import SettingPage from './pages/Setting';
 import FirstDevice from './pages/device/FirstDevice';
 import AccountPage from './pages/user/Account';
+import InventoryPage from './pages/Inventory';
 
 class App extends Component {
 
@@ -40,6 +41,8 @@ class App extends Component {
 
         <Route exact path={'/device/first'} component={FirstDevice} />
         <Route exact path={'/account'} component={AccountPage} />
+
+        <Route exact path={'/inventory'} component={InventoryPage} />
       </HashRouter>
     );
   }
