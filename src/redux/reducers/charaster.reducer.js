@@ -7,10 +7,7 @@ export const charasterReducer = (state = initialState, action) => {
 
     switch(type) {
         case SET_CHAR: {
-            return {
-                ...state,
-                ...payload
-            }
+            return payload
         }
 
         default:

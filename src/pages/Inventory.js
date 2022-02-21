@@ -79,7 +79,7 @@ class InventoryPage extends Component {
                         <div className='col-md-12'>
                             <div className='d-md-flex flex-row justify-content-start align-items-center'>
                                 <Button 
-                                    className='btn-small' 
+                                    className='btn-small mt-3' 
                                     onClick={() => this.setState({
                                         openEdit: true
                                     })}

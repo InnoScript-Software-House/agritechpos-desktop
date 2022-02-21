@@ -174,7 +174,7 @@
     "item-table-title" : "Item List",
     "item-eng-name" : "English Name",
     "item-mm-name" : "Myanmar Name",
-    "item-mm-model": "Model",
+    "item-model": "Model",
     "item-qty" : "Qty",
     "item-price": "Price",
     "item-location" : "Location",
@@ -184,6 +184,9 @@
     "num-spec-use-error" : "Number charaster set can't be used, Please check number specification setting",
     "table-row-record": "ကြည့်ရှုမည့်မှတ်တမ်းအရေအတွက်",
     "table-row-total" : " | စုစုပေါင်းမှတ်တမ်းအရေအတွက်",
+    "table-loading-message" : "အချက်အလက်များ လုပ်ဆောင်နေပါသည်",
+    "input-item-search" : "Search Item List",
+    "btn-table-search-reset" : "Reset",
     "app": {
         "enter_btn" : "ဆော့၀ဲထဲသို့၀င်မည်",
         "register_btn": "စာရင်းသွင်းရန်",

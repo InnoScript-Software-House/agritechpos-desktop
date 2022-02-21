@@ -152,7 +152,6 @@ input[type=number]:focus,
 
 .btn-small {
     height: inherit!important;
-    margin-top: 10px;
 }
 
 .color-primary {
@@ -174,7 +173,7 @@ input[type=number]:focus,
 
 .select-input-group > select:focus {
     outline: none !important;
-    box-shadow: 0 0 0px rgba(0,0,0,0);
+    box-shadow: 0 0 0px rgba(0,0,0,0)!important;
 }
 
 .app-toast-container {
@@ -187,3 +186,9 @@ input[type=number]:focus,
     background-color: #dc3545;
     color: #fff;
 }
+
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    outline: none !important;
+    box-shadow: 0 0 0px rgba(0,0,0,0)!important; 
+}
+

@@ -38,11 +38,11 @@ export const ChangeNumberFormatBtn = ({ props }) => {
             }
 
             if(nullValue.length === 0) {
-                console.log(nullValue);
-                dispatch(setCharAction(data));            
+                dispatch(setCharAction(data));          
             }
         }
 
+        dispatch(setNumberFormatAction(value)); 
         setFormat(value);
     }
 

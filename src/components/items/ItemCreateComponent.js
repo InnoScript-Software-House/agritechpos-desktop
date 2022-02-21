@@ -20,7 +20,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
     const [price, setPrice] = useState(0);
     const [location, setLocation] = useState('');
 
-    const dispatch = useDispatch(setOpenToastAction());
+    const dispatch = useDispatch();
 
     const httpHandler = (response) => {
         if(response && response.success === false) {
@@ -35,7 +35,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
 
     const itemSave = async () => {
         if(eng_name === '' || mm_name === '') {
-            dispatch(setOpenToastAction('Create Item', t('create-item-name-empty'), 'danger'));
+            dispatch(setOpenToastAction('Item Create', t('create-item-name-empty'), 'danger'));
             return;
         }
 

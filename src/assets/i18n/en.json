@@ -173,7 +173,7 @@
     "item-table-title" : "Item List",
     "item-eng-name" : "English Name",
     "item-mm-name" : "Myanmar Name",
-    "item-mm-model" : "Model",
+    "item-model" : "Model",
     "item-location" : "Location",
     "item-category" : "Category",
     "item-total-price": "Total Price",
@@ -183,6 +183,9 @@
     "table-row-total" : " | Total Record",
     "btn-change-number-format-label": "Change Number Format",
     "num-spec-use-error" : "Number charaster set can't be used, Please check number specification setting",
+    "table-loading-message" : "Loading Data",
+    "input-item-search" : "Search Item List",
+    "btn-table-search-reset" : "Reset",
     "app": {
         "enter_btn" : "Login",
         "register_btn": "စာရင်းသွင်းရန်",
