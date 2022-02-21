@@ -16,6 +16,7 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
 
     const reset = () => {
         setFilterType(searchColumns[0]);
+        setText('');
         filterResult(dataSource);
     }
 

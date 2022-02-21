@@ -9,7 +9,7 @@ import { TableHeaderComponent } from "../table/tableHeader";
 import { TableLoadingComponent } from "../table/tableLoading";
 
 const searchColumns = [
-    'eng_name', 'mm_name', 'category', 'location', 'model'
+    'code', 'eng_name', 'mm_name', 'category', 'location', 'model'
 ];
 
 export const ItemListTableComponent = ({ props, dataSource }) => {

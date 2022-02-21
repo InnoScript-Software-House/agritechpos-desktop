@@ -19,14 +19,12 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
     const [qty, setQty] = useState(0);
     const [price, setPrice] = useState(0);
     const [location, setLocation] = useState('');
+    const [code, setCode] = useState('');
 
     const dispatch = useDispatch();
 
     const httpHandler = (response) => {
         if(response && response.success === false) {
-            toastOptions.title = 'Item Create';
-            toastOptions.message = response.message;
-
             dispatch(setOpenToastAction('Create Item', response.message, 'danger'));
             setBtnLoading(false);
             return;
@@ -34,7 +32,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
     }
 
     const itemSave = async () => {
-        if(eng_name === '' || mm_name === '') {
+        if(eng_name === '') {
             dispatch(setOpenToastAction('Item Create', t('create-item-name-empty'), 'danger'));
             return;
         }
@@ -46,7 +44,8 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
             qty: qty,
             price: price,
             location: location,
-            category_id: category
+            category_id: category,
+            code: code
         }
 
         setBtnLoading(true);
@@ -59,6 +58,10 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
 
     useEffect(() => {
         setCategories(categoriesList);
+
+        if(categoriesList.length > 0) {
+            setCategory(categoriesList[0].id);
+        } 
     }, [categoriesList]);
 
     return(
@@ -84,6 +87,16 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                                 )
                             })}
                         </FormControl>
+                    </InputGroup>
+
+                    <InputGroup className="mb-3">
+                        <FormControl
+                            className={`${zawgyi(lang)}`}
+                            type="text"
+                            placeholder={`${t('input-item-create-code')}`}
+                            value={code}
+                            onChange={e => setCode(e.target.value)}
+                        />
                     </InputGroup>
 
                     <InputGroup className="mb-3">

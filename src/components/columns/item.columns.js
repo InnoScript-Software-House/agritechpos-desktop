@@ -13,6 +13,11 @@ export const itemColumns = (props) => {
 
     return [
         {
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-code')} </span>,
+            selector: row => row.code,
+            sortable: true,
+        },
+        {
             name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-eng-name')} </span>,
             selector: row => row.eng_name,
             sortable: true,

@@ -10,6 +10,7 @@ import { CreateCategoryComponent } from '../components/items/CreateCategoryCompo
 import { getCategories } from '../services/category.service';
 import { ItemListTableComponent } from '../components/items/ItemListTableComponent';
 import { getItems } from '../services/item.service';
+import { CategoryChartComponent } from '../components/charts/categoryChart';
 
 class InventoryPage extends Component {
 
@@ -102,6 +103,13 @@ class InventoryPage extends Component {
 
                         <div className='col-md-9'>
                             <ItemListTableComponent props={this.props} dataSource={items} />
+
+                            <div className='row  mt-3'>
+                                <div className='col-md-4'>
+                                    <CategoryChartComponent props={this.props} dataSource={items} />
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

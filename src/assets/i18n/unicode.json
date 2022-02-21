@@ -171,6 +171,8 @@
     "input-create-name" : "Category Name",
     "input-create-description" : "Description",
     "category-error-empty": "Categroy name is required",
+    "input-item-create-code": "Item Code",
+    "item-code" : "Item Code",
     "item-table-title" : "Item List",
     "item-eng-name" : "English Name",
     "item-mm-name" : "Myanmar Name",
