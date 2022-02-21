@@ -3,7 +3,7 @@ export const autocomplete = (dataSource, text, columnName) => {
     const textString = text;
 
     const filterResult = dataSource.filter((result, index) => {
-        
+
         let filterText = result[columnName] ? result[columnName] : '';
 
         if(Number(result[columnName])) {
@@ -21,5 +21,6 @@ export const autocomplete = (dataSource, text, columnName) => {
     });
 
     return filterResult;
+    
 
 }
