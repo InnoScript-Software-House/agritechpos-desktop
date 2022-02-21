@@ -8,6 +8,8 @@
 import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { t, zawgyi } from "../../utilities/translation.utility";
+import { setOpenToastAction } from "../../redux/actions/toast.action";
+import { useDispatch } from 'react-redux';
 
 import '../../assets/css/components/serial-key-form.css';
 
@@ -24,12 +26,12 @@ export const SerialKeyForm = ({ lng, retriveSerialKey }) => {
 
     const submit = () => {
         if(key01 === '' || key02 === '' || key03 === '' || key04 === '' || key05 === '' || key06 === '') {
-            setErr(t('serial-key-error'));
+            dispatch(setOpenToastAction('Create Item', 'Invalid Serial Key', 'danger'));
             return;
         }
 
         if(key01.length < 4 || key02.length < 4 || key03.length < 4 || key04.length < 4 || key05.length < 4 || key06.length < 4) {
-            setErr(t('serial-key-error'));
+            dispatch(setOpenToastAction('Create Item', 'Invalid Serial Key', 'danger'));
             return;
         }
 
