@@ -1,11 +1,5 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
-const {ipcRenderer, contextBridge } = require('electron');
+const { ipcRenderer, contextBridge } = require('electron');
+const { device } = require('./src/node');
 
 contextBridge.exposeInMainWorld('nativeApi', {
     notification: {
@@ -13,29 +7,9 @@ contextBridge.exposeInMainWorld('nativeApi', {
             ipcRenderer.send('notify', type);
         }
     },
-    dialog: {
-        sendDialog(type) {
-            ipcRenderer.send('dialog', type);
+    device: {
+        get(data) {
+            return data(device);
         }
-    },
-    browserWindow : {
-        sendBrowserWindow(type) {
-            ipcRenderer.send('browser-window', type);
-        },
-        fullscreen(data) {
-            ipcRenderer.send('browser-window-fullscreen', data);
-        },
-        openLoginWindow() {
-            ipcRenderer.send('open-login-window');
-        }
-    },
-    loading: {
-        getLoading(getData) {
-            return ipcRenderer.on('get-loading-state',(event, result) => {
-                getData(result);
-            });
-        }
-
     }
-
 });

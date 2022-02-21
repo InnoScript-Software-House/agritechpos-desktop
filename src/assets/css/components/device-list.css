@@ -1,0 +1,29 @@
+.device-list-title {
+    color: #01a3a6;  
+}
+
+.btn-device-update {
+    height: inherit!important;
+}
+
+.btn-icon-edit {
+    cursor: pointer;
+}
+
+.btn-icon-edit:hover {
+    color: #01a3a6;
+}
+
+.device-update-error {
+    color: red;
+}
+
+.success {
+    color: #033c1e;
+    font-weight: 900;
+}
+
+.danger {
+    color: red;
+    font-weight: 900;
+}

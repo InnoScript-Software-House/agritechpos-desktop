@@ -1,107 +1,94 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
-// ** Framework Libraries
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
-import { Link, Navigate } from 'react-router-dom';
-import { Button, Form } from 'react-bootstrap';
-import i18next from 'i18next';
+import { Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
-
-// ** Redux 
 import { setLangAction } from '../redux/actions/lang.action';
+import { DEVICE_VALUE, LICENSE } from '../redux/actionTypes';
+import { checkLicense } from '../services/license.service.js';
+import { checkFirstUser } from '../services/user.service';
+import axios from 'axios';
 
-// ** Implimentation Libraries
-import { t, zawgyi } from '../utilities/translation.utility';
-import { getSerialKeyAction } from '../redux/actions/serialkey.action';
-import { LANG_VALUE, SERIAL_KEY_VALUE } from '../redux/actionTypes';
-
-// ** Import Data Source
-import lngData from '../assets/i18n/language.json';
-import { SerialKeyForm } from '../components/serialKeyForm';
+import '../assets/css/landing/index.css';
+import { getFirstDevice } from '../services/device.service';
+import { defineMacAndIP } from '../services/utility.service';
 
 class LandingPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            is_loading: true,
-            lang_value: localStorage.getItem(LANG_VALUE) ? localStorage.getItem(LANG_VALUE) : 'unicode',
-            serialNumber: localStorage.getItem(SERIAL_KEY_VALUE) ? localStorage.getItem(SERIAL_KEY_VALUE) : null
+            is_loading: true
         }
     }
 
     async componentDidMount() {
-        const { lang_value } = this.state;
-        i18next.changeLanguage(lang_value);
-    }
+        const { history } = this.props;
+        const response = await checkLicense(this.props);
 
-    async changeLang(value) {
-        const getLang = await this.props.setLang(value);
-        i18next.changeLanguage(getLang.payload);
+        if (response === null) {
+            history.push('/error/0');
+            return;
+        }
 
-        this.setState({
-            lang_value: getLang.payload
-        })
-    }
+        if (response && response.message === 'licnese is expired') {
+            history.push('/error/expired');
+            return;
+        }
 
-    async getSerial(value) {
-        this.setState({
-            serialNumber: value
-        })
+        if (response && response.message === 'unknown error') {
+            history.push('/error/unknown');
+            return;
+        }
+
+        if (response && response.length === 0) {
+            history.push('/license');
+            return;
+        }
+
+        if (response && response.length > 0) {
+            localStorage.setItem(LICENSE, response[0].token);
+            axios.defaults.headers.common["license"] = response[0].token;
+        }
+
+        const firstDevice = await getFirstDevice();
+
+        if (firstDevice.length === 0) {
+            history.push('/device/first');
+            return;
+        }
+
+        const { device } = window.nativeApi;
+        device.get((result) => {
+            const networkInterfaces = result.networkInterfaces();
+            const getMacAndIp = defineMacAndIP(networkInterfaces);
+            axios.defaults.headers.common['ip'] = getMacAndIp.address;
+            axios.defaults.headers.common['mac'] = getMacAndIp.mac;
+            localStorage.setItem(DEVICE_VALUE, JSON.stringify(getMacAndIp));
+        });
+
+        const firstUser = await checkFirstUser();
+
+        if (firstUser && firstUser.status === 404) {
+            history.push('/user/first');
+            return;
+        } else {
+            history.push('/login');
+            return;
+        }
     }
 
     render() {
-        const { lang_value, serialNumber } = this.state;
+        const { is_loading } = this.state;
 
         return (
             <>
-            <div className='d-flex flex-row'>
-                <div className='col-6'>
-                    <img className='side-image' src="build/assets/images/side_image.jpeg" />
-                </div>
-
-                <div className='col-6'>
-                    <div className='d-flex flex-row justify-content-end'>
-                        <Form.Select
-                            className={`select-language-box m-1 ${zawgyi(lang_value)}`}
-                            value={lang_value}
-                            onChange={(e) => this.changeLang(e.target.value)}
-                            >
-                                { lngData.languages.map((value, index) => {
-                                    return(
-                                        <option 
-                                            key={`language_id_${index}`}
-                                            className={zawgyi(lang_value)}
-                                            value={value.value} 
-                                        > 
-                                            {t(value.label)} 
-                                        </option>
-                                    )
-                                })}
-                        </Form.Select>
+                {is_loading && (
+                    <div className='d-flex flex-column full-height justify-content-center align-items-center'>
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden"> Loading... </span>
+                        </Spinner>
                     </div>
-
-                    <h3 className={`landing-title ${zawgyi(lang_value)}`}> { t('landingPage.title')} </h3>
-
-                    {serialNumber === null && (<SerialKeyForm lng={lang_value} serialKeyHandler={(e) => this.getSerial(e)}/>)}
-
-                    {/* <div className=''>
-                                    <Link to={'login'}> 
-                                        <Button> {t('app.enter_btn')} </Button>
-                                    </Link>
-
-                                    <Link to={'/register'}> 
-                                        <Button className='btn-primary'> {t('app.register_btn')} </Button>
-                                    </Link>
-                                </div>   */}
-                </div>
-            </div>
+                )}
             </>
         )
     }
@@ -110,12 +97,11 @@ class LandingPage extends Component {
 const mapStateToProps = (state) => ({
     reducer: state
 });
-  
+
 const mapDispatchToProps = (dispatch) => ({
-    setLang: (value) => dispatch(setLangAction(value)),
-    getSerialKey: () => dispatch(getSerialKeyAction())
+    setLang: (value) => dispatch(setLangAction(value))
 });
-  
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps

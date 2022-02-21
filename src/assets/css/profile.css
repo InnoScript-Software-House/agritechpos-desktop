@@ -1,0 +1,27 @@
+.profile-wrapper {
+    width: 100%;
+}
+
+.profile-card {
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.active-status {
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+}
+
+.enable {
+    background-color: rgb(15, 170, 15);
+    color: #fff;
+}
+
+.disable {
+    background-color: red;
+    color: #fff;
+}
+
+.profile-update-error {
+    color: red;
+}

@@ -18,6 +18,16 @@ body {
     background-color: #eeeeee;
 }
 
+/* Layout */
+.full-height {
+    height: 100vh!important;
+}
+
+/* Title & Header */
+.title {
+    color: #01a3a6;
+}
+
 /* Form, Input, Button */
 .btn {
     height: 50px;
@@ -90,7 +100,6 @@ input[type=number]:focus,
     box-shadow: 0 0 10px #01a3a6;
 }
 
-
 .data-table-loading-wrapper {
     width: 100%;
     height: 300px;
@@ -114,6 +123,72 @@ input[type=number]:focus,
     font-family: 'ZawgyiOne'!important;
 }
 
-/* Button Error */
-@import url(./landing.css);
-@import url(./login.css);
+.err {
+    color: red;
+}
+
+/* Spinner */
+.spinner-border {
+    color: green!important;
+}
+
+/* Overwrite */
+.lang-overwrite > .lang-wrapper > .lang-title {
+    color: #fff;
+}
+
+.card-title {
+    color: #01a3a6;
+    font-size: 20px;
+}
+
+.card-retry,
+.card-loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-small {
+    height: inherit!important;
+}
+
+.color-primary {
+    color: #01a3a6;
+}
+
+.datatable-header {
+    font-size: 14px!important;
+}
+
+.select-input-group {
+    width: 100%;
+}
+
+.select-input-group > select {
+    width: 100%;
+    border-radius: 0px!important;
+}
+
+.select-input-group > select:focus {
+    outline: none !important;
+    box-shadow: 0 0 0px rgba(0,0,0,0)!important;
+}
+
+.app-toast-container {
+    background-color: #eeeeee;
+    opacity: 1;
+    z-index: 999;
+}
+
+.toast-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    outline: none !important;
+    box-shadow: 0 0 0px rgba(0,0,0,0)!important; 
+}
+

@@ -1,37 +1,60 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
-import Navigation from '../components/navigation'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { DashboardNotiCompoment } from '../components/dashboard/notification';
+import { Navigation } from '../components/general/Navigation';
+import { getShop } from '../services/shop.service';
 
-const menu = [
-    {
-        "label": "ပစ္စည်းစာရင်း",
-        "link": "/inventory"
-    },
-    {
-        "label": "အရောင်းစာရင်း",
-        "link": "/sell-report"
-    },
-    {
-        "label": "ဆက်တင်",
-        "link": "/setting"
-    }
-];
-
-export default class DashboardPage extends Component {
+class DashboardPage extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            notification: {
+                shop: false
+            }
+        }
     }
 
-    componentDidMount() {
-       
+    async checkApp() {
+        const { notification } = this.state;
+        console.log(this.props);
+        
+        const shop = await getShop();
+
+        let updateNotification = notification;
+        updateNotification.shop = shop === null ? true : false
+
+        this.setState({
+            notification: updateNotification
+        });
+    }
+
+    async componentDidMount() {
+        this.checkApp();
+        
     }
 
     render() {
+        const { notification } = this.state;
         return (
             <>
                 <Navigation props={this.props} />
+                <DashboardNotiCompoment props={this.props} notification={notification} />
             </>
         )
     }
 }
+
+
+const mapStateToProps = (state) => ({
+    reducer: state
+});
+  
+const mapDispatchToProps = (dispatch) => ({
+});
+  
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(DashboardPage));

@@ -1,17 +1,18 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 import { combineReducers } from "redux";
+import { accountReducer } from "./account.reducer";
 import { authReducer } from "./auth.reducer";
+import { charasterReducer } from "./charaster.reducer";
+import { devcieReducer } from "./device.reducer";
 import { langReducer } from "./lang.reducer";
-import { serialKeyReducer } from "./serialkey.reducer";
+import { numberFormatReducer } from "./numberFormat.reducer";
+import { toastReducer } from "./toast.reducer";
 
 export default combineReducers({
     auth: authReducer,
     lang: langReducer,
-    serialKey: serialKeyReducer
+    account: accountReducer,
+    device: devcieReducer,
+    numberFormat: numberFormatReducer,
+    toast: toastReducer,
+    char: charasterReducer
 });

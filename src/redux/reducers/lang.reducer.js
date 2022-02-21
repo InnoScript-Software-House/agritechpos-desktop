@@ -11,17 +11,9 @@ const initialState = localStorage.getItem(LANG_VALUE) ? localStorage.getItem(LAN
 
 export const langReducer = (state = initialState, action) => {
     const { type, payload } = action;
-    
     switch(type) {
         case LANG_SET: {
-            return {
-                ...state,
-                ...payload
-            }
-        }
-
-        case LANG_GET: {
-            return payload
+            return payload;
         }
 
         default:

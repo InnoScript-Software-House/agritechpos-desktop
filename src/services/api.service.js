@@ -1,41 +1,112 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 import axios from "axios";
-import { baseUrl, env } from "../../environment";
-import { showWarningDialog } from "./nativeDialog.service";
-import translate from '../assets/i18n/mm.json';
+import { apiUrl, env } from "../environment";
+import { ACCESS_TOKEN, DEVICE_VALUE, LICENSE } from "../redux/actionTypes";
+import history from "../utilities/histroy";
 
-axios.defaults.baseURL = baseUrl[env];
+axios.defaults.baseURL = apiUrl[env];
 
-export const getRequest = async (url) => {
-    try {
-        const response = await axios.get(`${baseUrl[env]}/${url}`);
-        console.log(response);
-    } catch (error) {
-        if(error.message === 'Network Error') {
-            showWarningDialog(translate.networkError.title, translate.networkError.message);
-        }
+const getLicense = localStorage.getItem(LICENSE) ? localStorage.getItem(LICENSE) : null;
+const getToken = localStorage.getItem(ACCESS_TOKEN) ? localStorage.getItem(ACCESS_TOKEN) : null;
+const getDevice = localStorage.getItem(DEVICE_VALUE) ? localStorage.getItem(DEVICE_VALUE) : null;
 
-        return null;
-    }
+axios.defaults.headers.common['license'] = getLicense ? getLicense : null;
+axios.defaults.headers.common['Authorization'] = getToken ? `Bearer ${getToken}` : null;
+
+if(getDevice) {
+    const device = JSON.parse(getDevice);
+    axios.defaults.headers.common['ip'] = device.address;
+    axios.defaults.headers.common['mac'] = device.mac;
 }
 
-export const postRequest = async (url, body, config) => {
-    try {
-        const response = await axios.post(`${baseUrl[env]}/${url}`, body, config);
+const httpHandler = (response) => {
+
+    if(response.status === 401) {
+        history.push('/logout');
+        window.location.reload();
+    }
+
+    if(response.status === 404 || response.status === 422 || response.status === 400 || response.status === 500) {
+        return {
+            ...response.data,
+            status: response.status
+        };
+    }
+
+    if(response.success === false) {
+        return response.response;
+    }
+
+    if(response.status === 0) {
         return response;
-    } catch (error) {
-        
-        if(error.message === 'Network Error') {
-            showWarningDialog(translate.networkError.title, translate.networkError.message);
+    }
+
+    return response.data.data;
+}
+
+export const getRequest = async (url) => {
+    const response = await axios.get(url).then((result) => {
+        return result;
+    }, (error) => {
+
+        if(error && error.response) {
+            return error.response;
         }
 
-        return null;
-        
-    }
+        return {
+            message: "Network Error",
+            status: 0
+        }
+    });
+    return httpHandler(response);
+}
+
+export const postRequest = async (url, body) => {
+    const response = await axios.post(url, body).then((result) => {
+        return result;
+    }, (error) => {
+
+        if(error && error.response) {
+            return error.response;
+        }
+
+        return {
+            message: "Network Error",
+            status: 0
+        }
+    });
+    return httpHandler(response);
+}
+
+export const putRequest = async (url, body) => {
+    const response = await axios.put(url, body).then((result) => {
+        return result;
+    }, (error) => {
+
+        if(error && error.response) {
+            return error.response;
+        }
+
+        return {
+            message: "Network Error",
+            status: 0
+        }
+    });
+    return httpHandler(response);
+}
+
+export const delRequest = async (url) => {
+    const response = await axios.delete(url).then((result) => {
+        return result;
+    }, (error) => {
+
+        if(error && error.response) {
+            return error.response;
+        }
+
+        return {
+            message: "Network Error",
+            status: 0
+        }
+    });
+    return httpHandler(response);
 }

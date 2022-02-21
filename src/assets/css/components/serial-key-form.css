@@ -1,0 +1,22 @@
+.serial-key-label {
+    color: #01a3a6;
+}
+
+.serial-key-input,
+.serial-key-input > input {
+    width: 110px!important;
+}
+
+.serial-key-input > input {
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+.btn-serial-key-enter {
+    height: 60px!important;
+    border: 0px!important;
+}
+
+.serial-key-err-message {
+    color: red;
+}

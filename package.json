@@ -67,17 +67,24 @@
   "dependencies": {
     "axios": "^0.24.0",
     "bootstrap": "^5.1.3",
+    "crypto-js": "^4.1.1",
+    "generate-password": "^1.7.0",
     "i18next": "^21.6.6",
     "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "numeral": "^2.0.6",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.1",
     "react-bootstrap-icons": "^1.7.2",
     "react-data-table-component": "^7.4.6",
+    "react-data-table-component-with-filter": "^7.4.5",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.15.3",
+    "react-icons": "^4.3.1",
     "react-redux": "^7.2.6",
     "react-router": "^6.2.1",
     "react-router-dom": "^5.0.0",
-    "redux": "^4.1.2"
+    "redux": "^4.1.2",
+    "sequelize": "^6.13.0"
   }
 }
