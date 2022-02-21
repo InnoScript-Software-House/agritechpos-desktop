@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { t, zawgyi } from "../../utilities/translation.utility";
 import { ArrowLeft } from "react-bootstrap-icons";
+import { useDispatch } from 'react-redux';
+import { setOpenToastAction } from "../../redux/actions/toast.action";
 import '../../assets/css/components/user-register-info-form.css';
 
 export const UserInformationForm = ({ lng, retriveUserInfo, backStep }) => {
@@ -13,16 +15,25 @@ export const UserInformationForm = ({ lng, retriveUserInfo, backStep }) => {
     const [address, setAddress] = useState('');
 
     const [err, setErr] = useState(null);
+    const dispatch = useDispatch();
+    const checkphone = /^(\+?(95)|[09])\d{10}/g;
+
+    var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     const submit = () => {
         if(firstName === '' || lastName === '' || email === '' || phone === '' || address === '') {
-            setErr(t('user-info-empty-error'));
+            dispatch(setOpenToastAction('User Info',t('user-info-empty-error'),'danger'));
             return;
         }
 
-        if(!Number(phone)) {
-            setErr(t('user-info-phone-error'));
-            return;
+        if(!pattern.test(email)){
+            dispatch(setOpenToastAction('User Info',t('invalid-email-error'),'danger'));
+            return
+        }
+
+        if(!checkphone.test(phone)){
+            dispatch(setOpenToastAction('User Info',t('Invalid Phone Number'),'danger'));
+            return
         }
 
         setErr(null);
@@ -117,7 +128,7 @@ export const UserInformationForm = ({ lng, retriveUserInfo, backStep }) => {
                 </Button>
             </div>
 
-            { err && (<label className={`serial-key-err-message mt-3 mb-3 ${zawgyi(lng)}`}> {err} </label>)}
+            {/* { err && (<label className={`serial-key-err-message mt-3 mb-3 ${zawgyi(lng)}`}> {err} </label>)} */}
             
         </div>
     )

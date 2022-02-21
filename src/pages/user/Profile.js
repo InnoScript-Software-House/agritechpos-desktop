@@ -5,8 +5,13 @@ import { Navigation } from '../../components/general/Navigation';
 import { getProfile } from '../../services/user.service';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
+import { setOpenToastAction } from '../../redux/actions/toast.action';
 
 import '../../assets/css/profile.css';
+
+const checkphone = /^(\+?(95)|[09])\d{10}/g;
+
+var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class ProfilePage extends Component {
 
@@ -42,16 +47,26 @@ class ProfilePage extends Component {
     const {update_email, update_name, update_phone} = this.state;
 
     if(update_email === '' || update_name === '' || update_phone === '') {
-      return this.setState({
-        error: t('profile-update-empty-error')
-      })
+      return this.props.openToast('Profile Update', t('profile-update-empty-error'), 'danger');
+      // this.setState({
+      //   error: t('profile-update-empty-error')
+      // })
     }
 
-    if(!Number(update_phone)) {
-      return this.setState({
-        error: t('profile-update-phone-error')
-      });
+    if(!checkphone.test(update_phone)) {
+      return this.props.openToast('Profile Update', t('profile-update-phone-error'), 'danger');
+      // this.setState({
+      //   error: t('profile-update-phone-error')
+      // });
     }
+
+    if(!pattern.test(update_email)){
+      return this.props.openToast('Profile Update', t('invalid-email-error'), 'danger');
+      // this.setState({
+      //   error: t('invalid-email-error')
+      // });
+  }
+  return this.props.openToast('Profile Update', 'Profile Update Successful', 'success')
 
     this.setState({
       is_loading: true
@@ -73,16 +88,19 @@ class ProfilePage extends Component {
     const {current_password, new_password, confirm_password} = this.state;
 
     if(current_password === '' || new_password === '' || confirm_password === '') {
-      return this.setState({
-        password_error: t('profile-password-change-empty-error')
-      });
+      return this.props.openToast('Change Password', t('profile-password-change-empty-error'), 'danger');
+      // this.setState({
+      //   password_error: t('profile-password-change-empty-error')
+      // });
     }
 
     if(confirm_password !== new_password) {
-      return this.setState({
-        password_error: t('profile-password-not-match')
-      });
+      return this.props.openToast('Change Password', t('profile-password-not-match'), 'danger');
+      // this.setState({
+      //   password_error: t('profile-password-not-match')
+      // });
     }
+    this.props.openToast('Change Password', 'Password Change Successfully', 'success');
 
     this.setState({
       is_loading: true
@@ -181,9 +199,9 @@ class ProfilePage extends Component {
 
                   <div className='d-flex flex-row justify-content-between'>
                     <div>
-                      {error && (
+                      {/* {error && (
                         <label className={`mt-3 profile-update-error ${zawgyi(lang)}`}> {error} </label>
-                      )}
+                      )} */}
                     </div>
 
                     <Button
@@ -237,9 +255,9 @@ class ProfilePage extends Component {
 
                   <div className='d-flex flex-row justify-content-between'>
                     <div>
-                      {password_error && (
+                      {/* {password_error && (
                         <label className={`mt-3 profile-update-error ${zawgyi(lang)}`}> {password_error} </label>
-                      )}
+                      )} */}
                     </div>
 
                     <Button
@@ -265,6 +283,7 @@ const mapStateToProps = (state) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
+  openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
 });
   
 export default connect(

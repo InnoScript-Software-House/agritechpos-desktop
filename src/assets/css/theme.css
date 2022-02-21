@@ -1,194 +1,199 @@
 @font-face {
-    font-family: "Pyidaungsu";
-    src: url(../fonts/Pyidaungsu-Bold.woff);
+  font-family: "Pyidaungsu";
+  src: url(../fonts/Pyidaungsu-Bold.woff);
 }
 
 @font-face {
-    font-family: 'ZawgyiOne';
-    src: url(../fonts//Zawgyi-One.woff);
+  font-family: "ZawgyiOne";
+  src: url(../fonts//Zawgyi-One.woff);
 }
-  
-*{
-    padding: 0px;
-    margin: 0px;
-    font-family: "Pyidaungsu";
+
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: "Pyidaungsu";
 }
 
 body {
-    background-color: #eeeeee;
+  background-color: #eeeeee;
 }
 
 /* Layout */
 .full-height {
-    height: 100vh!important;
+  height: 100vh !important;
 }
 
 /* Title & Header */
 .title {
-    color: #01a3a6;
+  color: #01a3a6;
 }
 
 /* Form, Input, Button */
 .btn {
-    height: 50px;
-    border-radius: 0px;
-    color: #fff;
-    font-size: large;
-    cursor: pointer;
-    border: 0px;
+  height: 50px;
+  border-radius: 0px;
+  color: #fff;
+  font-size: large;
+  cursor: pointer;
+  border: 0px;
 }
 
 .btn-primary {
-    background-color: #4CA6AA!important;
+  background-color: #4ca6aa !important;
 }
 
 .btn-search {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 .btn-default {
-    background-color: #01a3a6;
-    border: 1px solid #01a3a6;
+  background-color: #01a3a6;
+  border: 1px solid #01a3a6;
 }
 
 .btn-default:active {
-    background-color: rgba(1, 163, 166,0.5);
+  background-color: rgba(1, 163, 166, 0.5);
 }
 
 .btn-is-error {
-    background-color: rgba(1, 163, 166,0.5);
+  background-color: rgba(1, 163, 166, 0.5);
 }
 
-textarea, 
-textarea.form-control, 
-input.form-control, 
-input[type=text], 
-input[type=password], 
-input[type=email], 
-input[type=number], 
-[type=text].form-control, 
-[type=password].form-control, 
-[type=email].form-control, 
-[type=tel].form-control, 
+textarea,
+textarea.form-control,
+input.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+[type="text"].form-control,
+[type="password"].form-control,
+[type="email"].form-control,
+[type="tel"].form-control,
 [contenteditable].form-control {
   border-radius: 0px;
 }
 
-textarea:focus, 
-textarea.form-control:focus, 
-input.form-control:focus, 
-input[type=text]:focus, 
-input[type=password]:focus, 
-input[type=email]:focus, 
-input[type=number]:focus, 
-[type=text].form-control:focus, 
-[type=password].form-control:focus, 
-[type=email].form-control:focus, 
-[type=tel].form-control:focus, 
+textarea:focus,
+textarea.form-control:focus,
+input.form-control:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+[type="text"].form-control:focus,
+[type="password"].form-control:focus,
+[type="email"].form-control:focus,
+[type="tel"].form-control:focus,
 [contenteditable].form-control:focus {
-  box-shadow: initial!important;
+  box-shadow: initial !important;
 }
 
 .form-group-input {
-    height: 60px!important;
-    margin-bottom: 5px;
+  height: 60px !important;
+  margin-bottom: 5px;
 }
 
 .form-control:focus {
-    outline: none !important;
-    border-color: #01a3a6;
-    box-shadow: 0 0 10px #01a3a6;
+  outline: none !important;
+  border-color: #01a3a6;
+  box-shadow: 0 0 10px #01a3a6;
 }
 
 .data-table-loading-wrapper {
-    width: 100%;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn-check:active + .btn-primary:focus, 
-.btn-check:checked + .btn-primary:focus, 
-.btn-primary.active:focus, 
-.btn-primary:active:focus, 
+.btn-check:active + .btn-primary:focus,
+.btn-check:checked + .btn-primary:focus,
+.btn-primary.active:focus,
+.btn-primary:active:focus,
 .show > .btn-primary.dropdown-toggle:focus,
-.btn-check:focus + .btn-primary, 
+.btn-check:focus + .btn-primary,
 .btn-primary:focus {
-    box-shadow: initial!important;
+  box-shadow: initial !important;
 }
 
 .zawgyi {
-    font-family: 'ZawgyiOne'!important;
+  font-family: "ZawgyiOne" !important;
 }
 
 .err {
-    color: red;
+  color: red;
 }
 
 /* Spinner */
 .spinner-border {
-    color: green!important;
+  color: green !important;
 }
 
 /* Overwrite */
 .lang-overwrite > .lang-wrapper > .lang-title {
-    color: #fff;
+  color: #fff;
 }
 
 .card-title {
-    color: #01a3a6;
-    font-size: 20px;
+  color: #01a3a6;
+  font-size: 20px;
 }
 
 .card-retry,
 .card-loading {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-small {
-    height: inherit!important;
+  height: inherit !important;
 }
 
 .color-primary {
-    color: #01a3a6;
+  color: #01a3a6;
 }
 
 .datatable-header {
-    font-size: 14px!important;
+  font-size: 14px !important;
 }
 
 .select-input-group {
-    width: 100%;
+  width: 100%;
 }
 
 .select-input-group > select {
-    width: 100%;
-    border-radius: 0px!important;
+  width: 100%;
+  border-radius: 0px !important;
 }
 
 .select-input-group > select:focus {
-    outline: none !important;
-    box-shadow: 0 0 0px rgba(0,0,0,0)!important;
+  outline: none !important;
+  box-shadow: 0 0 0px rgba(0, 0, 0, 0) !important;
 }
 
 .app-toast-container {
-    background-color: #eeeeee;
-    opacity: 1;
-    z-index: 999;
+  background-color: #eeeeee;
+  opacity: 1;
+  z-index: 999;
 }
 
 .toast-danger {
-    background-color: #dc3545;
-    color: #fff;
+  background-color: #dc3545;
+  color: #fff;
 }
 
-.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-    outline: none !important;
-    box-shadow: 0 0 0px rgba(0,0,0,0)!important; 
+.toast-success {
+  background-color: green;
+  color: #fff;
 }
 
+.input-group
+  > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+  outline: none !important;
+  box-shadow: 0 0 0px rgba(0, 0, 0, 0) !important;
+}

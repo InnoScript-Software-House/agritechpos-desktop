@@ -5,6 +5,8 @@ import { BsArrowUpLeftSquare, BsCheckCircle, BsDashCircle } from "react-icons/bs
 
 import '../../assets/css/components/device-list.css';
 import { updateDevice } from "../../services/device.service";
+import { setOpenToastAction } from "../../redux/actions/toast.action";
+import { useDispatch } from "react-redux";
 
 export const DeviceListComponent = ({ props, dataSource, reload }) => {
 
@@ -19,6 +21,8 @@ export const DeviceListComponent = ({ props, dataSource, reload }) => {
     const [error, setError] = useState(null);
     const [selectedDevice, setSelectedDevice] = useState(null);
 
+    const dispatch = useDispatch();
+
     const openEditForm = (value) => {
         setEdit(true);
         setIp(value.ip);
@@ -32,7 +36,8 @@ export const DeviceListComponent = ({ props, dataSource, reload }) => {
         let updateRequest = {};
 
         if(name === '' || ip === '' || mac === '') {
-            setError(t('device-update-empty-error'));
+            dispatch(setOpenToastAction('Edit Device',t('device-update-empty-error'),'danger'));
+            // setError(t('device-update-empty-error'));
             return;  
         }
 
@@ -50,7 +55,8 @@ export const DeviceListComponent = ({ props, dataSource, reload }) => {
         const response = await updateDevice(selectedDevice.id, updateRequest);
 
         if(response && response.success === false) {
-            setError(response.message);
+            dispatch(setOpenToastAction('Edit Device', response.message, 'danger'));
+            // setError(response.message);
             return;
         }
 
@@ -62,10 +68,12 @@ export const DeviceListComponent = ({ props, dataSource, reload }) => {
         const response = await updateDevice(id, {active: status});
 
         if(response && response.success === false) {
-            setError(response.message);
+            dispatch(setOpenToastAction('Device Status', response.message, 'danger'));
+            // setError(response.message);
             return;
         }
 
+        dispatch(setOpenToastAction('Device Status', 'Device Status Changed Successfully', 'success'));
         reload(true);
         setEdit(false);
     }

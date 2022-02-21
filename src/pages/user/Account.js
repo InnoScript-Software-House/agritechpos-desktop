@@ -6,9 +6,13 @@ import { Navigation } from '../../components/general/Navigation';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { createAccount, editUser, getUsers } from '../../services/user.service';
 import { AccountList } from '../../components/account/accountList';
+import { setOpenToastAction } from '../../redux/actions/toast.action';
 
 import '../../assets/css/account.css';
 import { BsArrowLeftCircleFill, BsArrowLeftRight } from 'react-icons/bs';
+
+const checkphone = /^(\+?(95)|[09])\d{10}/g;
+var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class AccountPage extends Component {
 
@@ -32,10 +36,11 @@ class AccountPage extends Component {
     const response = await getUsers();
 
     if(response && response.success === false) {
-      this.setState({
-        error: response.message,
-        loading: false
-      });
+      this.props.openToast('Account', response.message, 'danger');
+      // this.setState({
+      //   error: response.message,
+      //   loading: false
+      // });
       return;
     }
 
@@ -71,16 +76,34 @@ class AccountPage extends Component {
     const { name, phone, email, password, confirm_password } = this.state;
 
     if(name === '' || phone === '' || email === '' || password === '' || confirm_password === '') {
-      this.setState({
-        error: t('account-create-empty-error')
-      });
+      this.props.openToast('Account', t('account-create-empty-error'), 'danger');
+      // this.setState({
+      //   error: t('account-create-empty-error')
+      // });
       return;
     }
 
+    if(!pattern.test(email)){
+      this.props.openToast('Account', t('invalid-email-error'), 'danger');
+      // this.setState({
+      //   error: t('invalid-email-error')
+      // });
+      return;
+    }
+
+    if(!checkphone.test(phone)){
+      this.props.openToast('Account', t('invalid phone number'), 'danger');
+      // this.setState({
+      //   error: ('invalid phone number')
+      // });
+      return
+    }
+
     if(password !== confirm_password) {
-      this.setState({
-        error: t('account-does-not-match-error')
-      });
+       this.props.openToast('Account', t('account-does-not-match-error'), 'danger');
+      // this.setState({
+      //   error: t('account-does-not-match-error')
+      // });
       return;
     }
 
@@ -98,14 +121,16 @@ class AccountPage extends Component {
     const response = await createAccount(resquestBody);
 
     if(response && response.success === false) {
-      this.setState({
-        error: response.message,
-        loading: false
-      });
+      this.props.openToast('Account', response.message, 'danger');
+      // this.setState({
+      //   error: response.message,
+      //   loading: false
+      // });
       return;
     }
 
-    return this.fetchData();
+    this.fetchData();
+    return this.props.openToast('Account', 'Account Create Successful', 'success');
   }
 
   async update() {
@@ -119,8 +144,9 @@ class AccountPage extends Component {
     const updateUser = await editUser(edit_id, updateRequest);
 
     if(updateUser && updateUser.success === false) {
+      this.props.openToast('Account', updateUser.message, 'danger');
       this.setState({
-        error: updateUser.message,
+        // error: updateUser.message,
         loading: false
       });
       return;
@@ -232,7 +258,7 @@ class AccountPage extends Component {
                       {t('btn-account-update')} 
                     </Button>
                   )}
-                    {error && (<span className='account-create-error ms-3'> {error} </span>)}
+                    {/* {error && (<span className='account-create-error ms-3'> {error} </span>)} */}
                 </div>
               </Card.Body>
             </Card>
@@ -259,6 +285,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme)),
 });
 
 export default connect(

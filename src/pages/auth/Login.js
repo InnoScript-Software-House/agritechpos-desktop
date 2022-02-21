@@ -7,6 +7,9 @@ import { t, zawgyi } from '../../utilities/translation.utility';
 import { login } from '../../services/auth.service';
 import { setTokenAction } from '../../redux/actions/auth.action';
 import { setAccountAction } from '../../redux/actions/account.action';
+import { setOpenToastAction } from '../../redux/actions/toast.action';
+import { AppToast } from '../../components/general/toasts';
+import { ToastContainer } from 'react-bootstrap';
 
 import '../../assets/css/login.css';
 
@@ -30,9 +33,10 @@ class LoginPage extends Component {
         const { history } = this.props;
 
         if(username === '' || password === '') {
-            return this.setState({
-                err_message: t('login-required')
-            });
+            return this.props.openToast('Login', t('login-required'), 'danger');
+            // this.setState({
+            //     err_message: t('login-required')
+            // });
         }
 
         const requestBody = {
@@ -48,10 +52,11 @@ class LoginPage extends Component {
         console.log(response);
 
         if(response.success === false) {
-            return this.setState({
-                err_message: response.message,
-                is_loading: false
-            });
+            return this.props.openToast('Login', response.message, 'danger');
+            // this.setState({
+            //     err_message: response.message,
+            //     is_loading: false
+            // });
         }
 
        await this.props.setToken(response.access_token);
@@ -67,6 +72,12 @@ class LoginPage extends Component {
         
         return (
             <>
+                <ToastContainer
+                className= 'app-toast-container'
+                position={'top-end'}
+                >
+                    <AppToast props={this.props} />
+                </ToastContainer>
                 <div className='d-flex flex-row justify-content-end'>
                     <Language props={this.props} />
                 </div>
@@ -118,7 +129,8 @@ const mapStateToProps = (state) => ({
   
 const mapDispatchToProps = (dispatch) => ({
     setToken: (accessToken) => dispatch(setTokenAction(accessToken)),
-    setAccount: (account) => dispatch(setAccountAction(account))
+    setAccount: (account) => dispatch(setAccountAction(account)),
+    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme)),
 });
 
 export default connect(
