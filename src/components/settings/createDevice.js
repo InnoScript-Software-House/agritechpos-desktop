@@ -15,6 +15,7 @@ export const CreateeDeviceComponent = ({ props, disable, reload }) => {
     const [ip, setIP] = useState('');
     const [mac, setMac] = useState('');
     const [note, setNote] = useState('');
+    const dispatch = useDispatch();
 
     const create = async () => {
 
