@@ -2,6 +2,8 @@ import React, {useState } from "react";
 import { Button, Card, FormControl, InputGroup } from "react-bootstrap";
 import { t, zawgyi } from "../../utilities/translation.utility";
 import { createDevice } from "../../services/device.service";
+import { useDispatch } from 'react-redux';
+import { setOpenToastAction } from '../../redux/actions/toast.action'
 
 import '../../assets/css/components/device-create.css';
 
@@ -17,7 +19,8 @@ export const CreateeDeviceComponent = ({ props, disable, reload }) => {
     const create = async () => {
 
         if(name === '' || ip === '' || mac === '') {
-            setError(t('device-create-empty-error'));
+            dispatch(setOpenToastAction('Device Creatae', t('device-create-empty-error'), 'danger'));
+            // setError(t('device-create-empty-error'));
             return;
         }
 
@@ -31,7 +34,7 @@ export const CreateeDeviceComponent = ({ props, disable, reload }) => {
         const response = await createDevice(requestBody);
 
         if(response && response.success === false) {
-            setError(response.message);
+            dispatch(setOpenToastAction('Device Create', response.message, 'danger'));
             return;
         }
 
@@ -99,7 +102,7 @@ export const CreateeDeviceComponent = ({ props, disable, reload }) => {
                         {t('btn-device-create')} 
                     </Button>
 
-                    {error && (<span className="device-error"> {error} </span>)}
+                    {/* {error && (<span className="device-error"> {error} </span>)} */}
                 </Card.Body>
             </Card>
         </div>
