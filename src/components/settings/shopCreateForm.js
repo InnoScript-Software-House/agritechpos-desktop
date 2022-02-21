@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { createShop } from '../../services/shop.service';
+import { useDispatch } from 'react-redux';
+import { setOpenToastAction } from '../../redux/actions/toast.action';
 
 import '../../assets/css/components/shop.css';
 
@@ -16,13 +18,25 @@ export const CreateShopFormComponent = ({ props, retrive }) => {
 
     const { lang } = props.reducer;
 
+    const dispatch = useDispatch();
+    const checkphone = /^(\+?(95)|[09])\d{10}/g;
+    var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     const create = async () => {
         if(name === '' || description === '' || phone === '' || email === '' || address === '') {
-            return setError(t('shop-create-empty-error'));
+            return dispatch(setOpenToastAction('Shop Create', t('shop-create-empty-error'),'danger'));
+            // setError(t('shop-create-empty-error'));
         }
 
-        if(!Number(phone)) {
-            return setError(t('shop-create-phone-error'));
+        if(!checkphone.test(phone)) {
+            return dispatch(setOpenToastAction('Shop Create', t('shop-create-phone-error'),'danger'));
+            // setError(t('shop-create-phone-error'));
+        }
+
+        if(!pattern.test(email))
+        {
+            return dispatch(setOpenToastAction('Shop Create', t('invalid-email-error'),'danger'));
+            // setError('invalid-email-error');
         }
 
         const requestBody = {
@@ -38,12 +52,14 @@ export const CreateShopFormComponent = ({ props, retrive }) => {
         const response = await createShop(requestBody);
         
         if(response.success === false) {
-            setError(response.message);
+            dispatch(setOpenToastAction('Create Shop', response.message,'danger'));
+            // setError(response.message);
             setLoading(false);
             return;
         }
 
         if(response) {
+            dispatch(setOpenToastAction('Create Shop', 'Create Shop Successful', 'success'))
             setLoading(false);
             setError(null);
             retrive(response)
