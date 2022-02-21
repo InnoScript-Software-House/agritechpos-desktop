@@ -7,6 +7,8 @@ import { BsArrowUpRightSquare, BsTrash } from 'react-icons/bs';
 
 import '../../assets/css/components/account-list.css';
 import { delUser, getUsers } from '../../services/user.service';
+import { setOpenToastAction } from '../../redux/actions/toast.action';
+import { useDispatch } from 'react-redux';
 
 const SubHeaderComponent = () => {
     return(
@@ -76,7 +78,7 @@ export const AccountList = ({ props, dataSource, reload, edit }) => {
         const response = await delUser(id);
 
         if(response && response.success === false) {
-            setError(response.message);
+            dispatch(setOpenToastAction('Delete Account', err, 'danger'));
             return;
         }
 
