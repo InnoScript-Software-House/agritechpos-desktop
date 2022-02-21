@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { updateShop } from '../../services/shop.service';
+import { useDispatch } from 'react-redux';
+import { setOpenToastAction } from '../../redux/actions/toast.action';
 
 import '../../assets/css/components/shop.css';
 
@@ -13,6 +15,10 @@ export const EditShopFormComponent = ({ props, dataSource, retrive }) => {
     const [address, setAddress] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    const checkphone = /^(\+?(95)|[09])\d{10}/g;
+    var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const dispatch = useDispatch();
 
     const { lang } = props.reducer;
 
@@ -26,11 +32,18 @@ export const EditShopFormComponent = ({ props, dataSource, retrive }) => {
 
     const update = async () => {
         if(name === '' || description === '' || phone === '' || email === '' || address === '') {
-            return setError(t('shop-create-empty-error'));
+            return dispatch(setOpenToastAction('Shop Create', t('shop-create-empty-error'),'danger'));
+            // setError(t('shop-create-empty-error'));
         }
 
-        if(!Number(phone)) {
-            return setError(t('shop-create-phone-error'));
+        if(!checkphone.test(phone)) {
+            return dispatch(setOpenToastAction('Shop Create', t('shop-create-phone-error'),'danger'));
+            // setError(t('shop-create-phone-error'));
+        }
+
+        if(!pattern.test(email)){
+            return dispatch(setOpenToastAction('Shop Create', t('invalid-email-error'),'danger'));
+            // setError(t('invalid-email-error'));
         }
 
         const requestBody = {
@@ -46,12 +59,14 @@ export const EditShopFormComponent = ({ props, dataSource, retrive }) => {
         const response = await updateShop(requestBody);
 
         if(response.success === false) {
-            setError(response.message);
+            dispatch(setOpenToastAction('Shop Create', errr,'danger'));
+            // setError(response.message);
             setLoading(false);
             return;
         }
 
         if(response) {
+            dispatch(setOpenToastAction('Shop Update', 'Update Shop Successfully','success'));
             setLoading(false);
             setError(null);
             retrive(response)
@@ -122,9 +137,9 @@ export const EditShopFormComponent = ({ props, dataSource, retrive }) => {
                                 {t('shop-btn-update')} 
                             </Button>
 
-                            {error && (
+                            {/* {error && (
                                 <label className={`ms-3 shop-error ${zawgyi(lang)}`}> {error} </label>
-                            )}
+                            )} */}
                         </div>
                     </Card.Body>
                 </Card>
