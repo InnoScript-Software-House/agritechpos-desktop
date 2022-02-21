@@ -8,6 +8,9 @@ import { UserInformationForm } from '../components/license/userInformation';
 import { PlanForm } from '../components/license/planForm';
 import { Footer } from '../components/general/Footer';
 import { Activation } from '../components/license/activation';
+import { ToastContainer } from "react-bootstrap";
+import { AppToast } from '../components/general/toasts';
+
 
 import '../assets/css/license.css';
 
@@ -72,6 +75,12 @@ class LicensePage extends Component {
 
     return(
       <>
+      <ToastContainer
+          className="app-toast-container"
+          position={'top-end'}
+        >
+          <AppToast props={this.props} />
+        </ToastContainer>
         <div className='d-flex flex-row justify-content-end'>
           <Language props={this.props} />
         </div>
