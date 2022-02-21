@@ -9,6 +9,8 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { t, zawgyi } from "../../utilities/translation.utility";
 import { ArrowLeft } from "react-bootstrap-icons";
+import { useDispatch } from 'react-redux';
+import { setOpenToastAction } from "../../redux/actions/toast.action";
 
 import '../../assets/css/user-plan-info-form.css';
 
@@ -17,6 +19,8 @@ export const PlanForm = ({ lng, retrivePlan, backStep }) => {
     const [activation, setActivation] = useState('');
     const [duration, setDuration] = useState(1);
     const [device, setDevice] = useState(1);
+
+    const dispatch = useDispatch();
 
     const [err, setErr] = useState(null);
 
@@ -38,7 +42,7 @@ export const PlanForm = ({ lng, retrivePlan, backStep }) => {
 
     const submit = () => {
         if(activation === '' || duration === '' || device === '') {
-            setErr(t('user-info-empty-error'));
+            dispatch(setOpenToastAction('Plan',t('user-info-empty-error'),'danger'));
             return;
         }
 
@@ -120,7 +124,7 @@ export const PlanForm = ({ lng, retrivePlan, backStep }) => {
                 </div>
             </div>
 
-            { err && (<label className={`serial-key-err-message mt-3 mb-3 ${zawgyi(lng)}`}> {err} </label>)}
+            {/* { err && (<label className={`serial-key-err-message mt-3 mb-3 ${zawgyi(lng)}`}> {err} </label>)} */}
             
         </div>
     )
