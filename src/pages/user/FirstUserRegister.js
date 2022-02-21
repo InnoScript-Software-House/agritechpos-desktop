@@ -5,8 +5,15 @@ import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { Language } from '../../components/general/Language';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { createAccount } from '../../services/user.service';
+import { ToastContainer } from "react-bootstrap";
+import { setOpenToastAction } from '../../redux/actions/toast.action';
+import { AppToast } from '../../components/general/toasts'
 
 import '../../assets/css/first-user-register.css';
+
+var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const checkphone = /^(\+?(95)|[09])\d{10}/g;
+
 
 class FirstUserRegisterPage extends Component {
 
@@ -30,21 +37,31 @@ class FirstUserRegisterPage extends Component {
         const { history } = this.props;
 
         if(account_name === '' || phone === '' || email === '' || password === '' || confirm_password === '') {
-            return this.setState({
-                err_message: t('first-user-error-message')
-            });
+            return this.props.openToast('First User Account', t('first-user-error-message'), 'danger');
+            // this.setState({
+            //     err_message: t('first-user-error-message')
+            // });
         }
 
         if(password !== confirm_password) {
-            return this.setState({
-                err_message: t('first-user-error-confirm-password')
-            });
+            return this.props.openToast('First User Account', t('first-user-error-confirm-password'), 'danger');
+            // this.setState({
+            //     err_message: t('first-user-error-confirm-password')
+            // });
         }
 
-        if(!Number(phone)) {
-            return this.setState({
-                err_message: t('first-user-error-invalid-phone')
-            });
+        if(!pattern.test(email)){
+            return this.props.openToast('First User Account', t('invalid-email-error'), 'danger');
+            // this.setState({
+            //     err_message: t('invalid-email-error')
+            // });
+        }
+
+        if(!checkphone.test(phone)){
+            return this.props.openToast('First User Account', 'Invalid phone number', 'danger');
+            // this.setState({
+            //     err_message: ('Invalid phone number')
+            // })
         }
 
         const resquestBody = {
@@ -61,8 +78,9 @@ class FirstUserRegisterPage extends Component {
         const response = await createAccount(resquestBody);
 
         if(response.success === false) {
+            this.props.openToast('First User Account', response.message, 'danger');
             return this.setState({
-                err_message: response.message,
+                // err_message: response.message,
                 is_loading: false
             });
         }
@@ -82,6 +100,12 @@ class FirstUserRegisterPage extends Component {
 
         return (
             <>
+            <ToastContainer
+            className="app-toast-container"
+            position={'top-end'}
+            >
+                <AppToast props={this.props} />
+            </ToastContainer>
                 <div className='d-md-flex flex-row justify-content-end'>
                     <Language props={this.props} />
                 </div>
@@ -164,7 +188,7 @@ class FirstUserRegisterPage extends Component {
                             </Button>
                         </InputGroup>
 
-                        <p className={`ps-3 error-message ${zawgyi(lang)}`}> {err_message} </p>
+                        {/* <p className={`ps-3 error-message ${zawgyi(lang)}`}> {err_message} </p> */}
                     </div>
                 </div>
             </>
@@ -178,6 +202,7 @@ const mapStateToProps = (state) => ({
   });
   
   const mapDispatchToProps = (dispatch) => ({
+    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
   });
   
   export default connect(
