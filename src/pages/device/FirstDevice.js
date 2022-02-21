@@ -9,6 +9,9 @@ import '../../assets/css/first-device.css';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { createFirstDevice } from '../../services/device.service';
+import { AppToast } from '../../components/general/toasts';
+import { ToastContainer } from "react-bootstrap";
+import { setOpenToastAction } from '../../redux/actions/toast.action';
 import axios from 'axios';
 
 class FirstDevice extends Component {
@@ -46,9 +49,10 @@ class FirstDevice extends Component {
     const { history } = this.props;
 
     if(name === '' || ip === '' || mac === '') {
-      this.setState({
-        error: t('first-device-empty')
-      });
+      this.props.openToast('Device Information',t('first-device-empty'),'danger');
+      // this.setState({
+      //   error: t('first-device-empty')
+      // });
     }
 
     const requestBody = {
@@ -61,9 +65,10 @@ class FirstDevice extends Component {
     const response = await createFirstDevice(requestBody);
     
     if(response.success === false) {
-      this.setState({
-        error: response.message
-      });
+      this.props.openToast('Device Information', response.message, 'danger');
+      // this.setState({
+      //   error: response.message
+      // });
 
       return;
     }
@@ -83,6 +88,12 @@ class FirstDevice extends Component {
     const { name, ip, mac, note, error } = this.state;
     return (
      <>
+     <ToastContainer
+          className="app-toast-container"
+          position={'top-end'}
+        >
+          <AppToast props={this.props} />
+        </ToastContainer>
       <div className='d-md-flex flex-row justify-content-end'>
         <Language props={this.props} />
       </div>
@@ -140,7 +151,7 @@ class FirstDevice extends Component {
             <Button onClick={() => this.create()}> {t('btn-frist-device-create')} </Button>
           </InputGroup>
 
-          {error && (<span className='error-message ms-3'> {error}</span>)}
+          {/* {error && (<span className='error-message ms-3'> {error}</span>)} */}
         </div>
       </div>
      </>
@@ -154,7 +165,8 @@ const mapStateToProps = (state) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
-    setLang: (value) => dispatch(setLangAction(value))
+    setLang: (value) => dispatch(setLangAction(value)),
+    openToast: (title, message, method) => dispatch(setOpenToastAction(title, message, method))
 });
   
 export default connect(
