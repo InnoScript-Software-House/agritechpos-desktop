@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { autocomplete } from '../../utilities/table.utility';
 import { t, zawgyi } from '../../utilities/translation.utility';
+import { ItemExportToExcel } from '../exports/itemExportComponent';
+import { BsCloudUpload } from 'react-icons/bs';
+
+import '../../assets/css/components/table-header.css';
 
 export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeholder, filterResult }) => {
     const { lang } = props.reducer;
+
     const [text, setText] = useState('');
     const [filterType, setFilterType] = useState(searchColumns[0]);
+    const [openExportSetting, setOpenExportSetting] = useState(false);
 
     const autoSearch = (text) => {
         const result = autocomplete(dataSource, text, filterType);
@@ -21,11 +27,18 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
     }
 
     return(
-        <div className='d-md-flex flex-md-row justify-content-between align-items-center mb-3'>
-            <div className=''>
+        <div className='table-header mb-3'>
+            <div className='table-header-left'>
+                <Button 
+                    className='btn-small'
+                    onClick={() => setOpenExportSetting(true)}
+                >  
+                    <BsCloudUpload size={20} />
+                    <span className={`${zawgyi(lang)}`}> {t('export-excel-setting-btn')} </span>
+                </Button>
             </div>
 
-            <InputGroup>
+            <InputGroup className='table-header-right'>
                 <FormControl
                     className={`input-small ${zawgyi(lang)}`}
                     type='text'
@@ -58,6 +71,14 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
                     {t('btn-table-search-reset')} 
                 </Button>
             </InputGroup>
+
+           {openExportSetting && (
+                <ItemExportToExcel 
+                    props={props} 
+                    open={openExportSetting} 
+                    close={e => setOpenExportSetting(e)}
+                />
+           )}
         </div>
     )
 }

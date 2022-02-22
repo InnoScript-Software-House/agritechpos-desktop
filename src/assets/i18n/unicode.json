@@ -189,6 +189,11 @@
     "table-loading-message" : "အချက်အလက်များ လုပ်ဆောင်နေပါသည်",
     "input-item-search" : "Search Item List",
     "btn-table-search-reset" : "Reset",
+    "export-excel-setting-btn" : "Export Setting",
+    "item-option" : "Option",
+    "chart-item-categories" : "Item Categories",
+    "chart-item-active-title" : "Active",
+    "item-edit-title" : "Edit Item",
     "app": {
         "enter_btn" : "ဆော့၀ဲထဲသို့၀င်မည်",
         "register_btn": "စာရင်းသွင်းရန်",

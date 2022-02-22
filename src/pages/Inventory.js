@@ -11,6 +11,7 @@ import { getCategories } from '../services/category.service';
 import { ItemListTableComponent } from '../components/items/ItemListTableComponent';
 import { getItems } from '../services/item.service';
 import { CategoryChartComponent } from '../components/charts/categoryChart';
+import { ItemActiveChartComponent } from '../components/charts/itemsActiveChart';
 
 class InventoryPage extends Component {
 
@@ -33,7 +34,6 @@ class InventoryPage extends Component {
     }
 
     async loadingData(type) {
-
         if(type === 'category') {
             const categories = await getCategories();
             this.httpHandler(categories);
@@ -46,9 +46,30 @@ class InventoryPage extends Component {
         if(type === 'item') {
             const items = await getItems();
             this.httpHandler(items);
-            this.setState({
-                items: items
+            
+            let itemList = [];
+
+            items.map((item) => {
+                let updateItem = item;
+
+                if(item.category) {
+                    updateItem.category_title = item.category.name;
+                    updateItem.category_id = item.category.id;
+                } else {
+                    updateItem.category_title = 'Unknown Category';
+                    updateItem.category_id = null;
+                }
+
+                updateItem.total = item.price * item.qty;
+                updateItem.editable = false;
+
+                itemList.push(updateItem);
             });
+
+            this.setState({
+                items: itemList
+            });
+            
             return;
         }
     }
@@ -93,7 +114,7 @@ class InventoryPage extends Component {
                     </div>
 
                     <div className='row'>
-                        <div className='col-md-3'>
+                        <div className='col-md-2'>
                             <ItemCreateComponent 
                                 props={this.props} 
                                 categoriesList={categories}
@@ -101,12 +122,16 @@ class InventoryPage extends Component {
                             />
                         </div>
 
-                        <div className='col-md-9'>
+                        <div className='col-md-10'>
                             <ItemListTableComponent props={this.props} dataSource={items} />
 
                             <div className='row  mt-3'>
-                                <div className='col-md-4'>
+                                <div className='col-md-3'>
                                     <CategoryChartComponent props={this.props} dataSource={items} />
+                                </div>
+
+                                <div className='col-md-3'>
+                                    <ItemActiveChartComponent props={this.props} dataSource={items} />
                                 </div>
                             </div>
                             

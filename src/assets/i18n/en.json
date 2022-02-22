@@ -188,6 +188,11 @@
     "table-loading-message" : "Loading Data",
     "input-item-search" : "Search Item List",
     "btn-table-search-reset" : "Reset",
+    "export-excel-setting-btn" : "Export Setting",
+    "item-option" : "Option",
+    "chart-item-categories" : "Item Categories",
+    "chart-item-active-title" : "Active",
+    "item-edit-title" : "Edit Item",
     "app": {
         "enter_btn" : "Login",
         "register_btn": "စာရင်းသွင်းရန်",

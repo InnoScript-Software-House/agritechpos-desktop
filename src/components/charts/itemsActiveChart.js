@@ -7,45 +7,27 @@ import { t, zawgyi } from '../../utilities/translation.utility';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const CategoryChartComponent = ({ props, dataSource }) => {
+export const ItemActiveChartComponent = ({ props, dataSource }) => {
     const { lang } = props.reducer;
     
     const [chartData, setChartData] = useState(null);
 
     useEffect(() => {
         if(dataSource) {
-            let labelArray = [];
-            let dataSet = [];
-
-            dataSource.map((item, index) => {
-                labelArray.push(item.category_title);
-            });
-
-            let uniqueLabel = [...new Set(labelArray)]; 
-
-            uniqueLabel.map((catLabel, index) => {
-                const dataCount = dataSource.filter((item => item.category_title === catLabel)).length;
-                dataSet.push(dataCount);
-            });
-
+            let dataSet = [
+                dataSource.filter(item => item.active === true).length,
+                dataSource.filter(item => item.active === false).length
+            ];
+            
             const data = {
-                labels: uniqueLabel.length > 0 ? uniqueLabel : [],
+                labels: ['Active', 'Disable'],
                 datasets: [
                     {
-                        label: "# of item categories",
+                        label: "# of item active",
                         data: dataSet,
                         backgroundColor: [
                             'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',
-                        ],
-                        borderWidth: 1,
-                    },
-                    {
-                        label: "# of item categorie",
-                        data: dataSet,
-                        backgroundColor: [
-                            'rgba(255, 100, 132, 1)',
-                            'rgba(54, 100, 235, 1)',
                         ],
                         borderWidth: 1,
                     }
@@ -61,7 +43,7 @@ export const CategoryChartComponent = ({ props, dataSource }) => {
             <Card.Header>
                 <Card.Title>
                     <BsFillPieChartFill size={20} />
-                    <span className={`${zawgyi(lang)}`}> {t('chart-item-categories')} </span>
+                    <span className={`${zawgyi(lang)}`}> {t('chart-item-active-title')} </span>
                 </Card.Title>
             </Card.Header>
 

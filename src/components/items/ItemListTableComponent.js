@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
-import DataTable from "react-data-table-component-with-filter";
+import DataTable from "react-data-table-component";
 import { zawgyi, t } from '../../utilities/translation.utility';
 import { itemColumns } from "../columns/item.columns";
 import { ChangeNumberFormatBtn } from "../general/changeNumberFormatBtn";
@@ -9,7 +9,7 @@ import { TableHeaderComponent } from "../table/tableHeader";
 import { TableLoadingComponent } from "../table/tableLoading";
 
 const searchColumns = [
-    'code', 'eng_name', 'mm_name', 'category', 'location', 'model'
+    'code', 'eng_name', 'mm_name', 'category_title', 'location', 'model'
 ];
 
 export const ItemListTableComponent = ({ props, dataSource }) => {
@@ -22,23 +22,12 @@ export const ItemListTableComponent = ({ props, dataSource }) => {
         setItemList(e);
     }
 
+    const selectRowChange = (e) => {
+    }
+
     useEffect(() => {
         if(dataSource) {
-            let filterArray = [];
-
-            dataSource.map((item, index) => {
-                let updateItem = item;
-
-                if(item.category) {
-                    updateItem.category = item.category.name;
-                } else {
-                    updateItem.category = 'Unknown Category';
-                }
-
-                filterArray.push(updateItem);
-            });
-
-            setItemList(filterArray);
+            setItemList(dataSource);
             setTableLoading(false);
         }
     }, [dataSource]);
@@ -70,14 +59,15 @@ export const ItemListTableComponent = ({ props, dataSource }) => {
                     fixedHeaderScrollHeight="400px"
                     columns={itemColumns(props)}
                     data={itemList}
-                    // selectableRows={true}
-                    // onSelectedRowsChange={e => console.log(e)}
                     paginationComponentOptions={paginationComponentOptions}
                     progressPending={tableLoading}
                     progressComponent={<TableLoadingComponent />}
                     dense
                     highlightOnHover
                     pointerOnHover
+                    selectableRows={true}
+                    selectableRowsHighlight={true}
+                    onSelectedRowsChange={ e => selectRowChange(e)}
                 />
             </Card.Body>
         </Card>
