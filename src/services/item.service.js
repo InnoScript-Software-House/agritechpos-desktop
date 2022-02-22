@@ -18,3 +18,8 @@ export const saveItem = async (requestBody) => {
     const response = await postRequest(url, requestBody);
     return handlerException(response);
 }
+
+export const itemDetail = async (id) => {
+    const response = await getRequest(`${url}/${id}`);
+    return handlerException(response);
+}

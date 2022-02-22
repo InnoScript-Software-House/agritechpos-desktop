@@ -58,7 +58,7 @@ body {
 .btn-is-error {
   background-color: rgba(1, 163, 166, 0.5);
 }
-
+.form-control,
 textarea,
 textarea.form-control,
 input.form-control,
@@ -71,7 +71,7 @@ input[type="number"],
 [type="email"].form-control,
 [type="tel"].form-control,
 [contenteditable].form-control {
-  border-radius: 0px;
+  border-radius: 0px!important;
 }
 
 textarea:focus,
@@ -96,8 +96,9 @@ input[type="number"]:focus,
 
 .form-control:focus {
   outline: none !important;
-  border-color: #01a3a6;
-  box-shadow: 0 0 10px #01a3a6;
+  border-color: 0px;
+  box-shadow: initial!important;
+  border-radius: 0px!important;
 }
 
 .data-table-loading-wrapper {
@@ -196,4 +197,13 @@ input[type="number"]:focus,
   > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
   outline: none !important;
   box-shadow: 0 0 0px rgba(0, 0, 0, 0) !important;
+}
+
+.icon-btn-outline {
+  color: #01a3a6;
+}
+
+
+.btn-icon {
+  cursor: pointer;
 }
