@@ -11,6 +11,7 @@ export const CategoryChartComponent = ({ props, dataSource }) => {
     const [chartData, setChartData] = useState(null);
     const [labels, setLabels] = useState([]);
     const [data, setData] = useState([]);
+    const [color, setcolor] = useState([]);
 
 
     useEffect(() => {
@@ -29,21 +30,22 @@ export const CategoryChartComponent = ({ props, dataSource }) => {
                 dataSet.push(dataCount);
             });
             let value = [{r: 0, g: 0, b: 0, a: 1}];
-            for(let i = 0; i<dataSet.length; i++){
+            for(let i = 1; i<=dataSet.length; i++){
                 let x = 255 / dataSet.length;
-                let intvalue = Math.round(x);
-                let r = intvalue * i;
-                let g =  Math.floor(Math.random()*(255-0+1)+0);
-                let b =  Math.floor(Math.random()*(255-0+1)+0);
+                let intvalue = Math.floor(x);
+                let red = i;
+                let green = intvalue*i;
+                let blue = 255-green;
                 value.push({
-                    r: r,
-                    g: g,
-                    b: b,
+                    r: red,
+                    g: green,
+                    b: blue,
                     a: 1
                 })
             }
             let rgba = [];
             rgba.push(value.map((e, i) => `rgba(${e.r}, ${e.g}, ${e.b}, ${e.a})`));
+            console.log(rgba);
 
             const data = {
                 labels: uniqueLabel.length > 0 ? uniqueLabel : [],
