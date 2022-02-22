@@ -202,3 +202,8 @@ input[type="number"]:focus,
 .icon-btn-outline {
   color: #01a3a6;
 }
+
+
+.btn-icon {
+  cursor: pointer;
+}

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Card, FormControl, InputGroup } from "react-bootstrap";
+import { Button, Card, FormControl, InputGroup } from "react-bootstrap";
+import { BsArrowCounterclockwise } from "react-icons/bs";
 import { t, zawgyi } from "../../utilities/translation.utility";
-
 
 export const EditItemComponent = ({ props, item }) => {
 
     const { lang } = props.reducer;
+    const dispatch = useDispath();
+
     const [editItem, setEditItem] = useState(null);
     const [code, setCode] = useState('');
     const [eng_name, setEnName] = useState('');
@@ -26,6 +28,12 @@ export const EditItemComponent = ({ props, item }) => {
         setItemLocation(item.location);
     }
 
+    const update = () => {
+        const requestBody = {
+            
+        }
+    }
+
     useState(() => {
         if(item) {
             setData();
@@ -35,8 +43,9 @@ export const EditItemComponent = ({ props, item }) => {
     return(
         <Card>
             <Card.Header>
-                <Card.Title> 
+                <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center"> 
                     <span className={`${zawgyi(lang)}`}> {t('item-edit-title')} </span>
+                    <BsArrowCounterclockwise size={20} className="btn-icon" onClick={() => setData()} />
                 </Card.Title>
             </Card.Header>
 
@@ -113,6 +122,12 @@ export const EditItemComponent = ({ props, item }) => {
                     </InputGroup>
                 </Card.Body>
             )}
+
+            <Card.Footer>
+                <Button className={`btn-small ${zawgyi(lang)}`} onClick={() => update()}>
+                    {t('item-update-btn')}
+                </Button>
+            </Card.Footer>
         </Card>
     );
 }
