@@ -28,6 +28,22 @@ export const CategoryChartComponent = ({ props, dataSource }) => {
                 const dataCount = dataSource.filter((item => item.category === catLabel)).length;
                 dataSet.push(dataCount);
             });
+            let value = [{r: 0, g: 0, b: 0, a: 1}];
+            for(let i = 0; i<dataSet.length; i++){
+                let x = 255 / dataSet.length;
+                let intvalue = Math.round(x);
+                let r = intvalue * i;
+                let g =  Math.floor(Math.random()*(255-0+1)+0);
+                let b =  Math.floor(Math.random()*(255-0+1)+0);
+                value.push({
+                    r: r,
+                    g: g,
+                    b: b,
+                    a: 1
+                })
+            }
+            let rgba = [];
+            rgba.push(value.map((e, i) => `rgba(${e.r}, ${e.g}, ${e.b}, ${e.a})`));
 
             const data = {
                 labels: uniqueLabel.length > 0 ? uniqueLabel : [],
@@ -35,10 +51,7 @@ export const CategoryChartComponent = ({ props, dataSource }) => {
                     {
                         label: "# of item categories",
                         data: dataSet,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                        ],
+                        backgroundColor: rgba[0],
                         borderWidth: 1,
                     }
                 ]
