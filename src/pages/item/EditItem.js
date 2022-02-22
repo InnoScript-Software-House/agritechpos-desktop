@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+import { BsArrowLeftCircle } from 'react-icons/bs';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Navigation } from '../../components/general/Navigation';
 import { EditItemComponent } from '../../components/items/EditItemComponent';
+import { EditItemSellPriceComponent } from '../../components/items/EditItemSellPriceComponent';
 import { itemDetail } from '../../services/item.service';
 
 class EditItemPage extends Component {
@@ -43,15 +46,29 @@ class EditItemPage extends Component {
 
     render() {
         const { item, is_loading } = this.state;
+        const { history } = this.props;
+
         return (
             <>
                 <Navigation props={this.props} />
 
                 <div className='container-fluid'>
+                    <div className='row mt-1'>
+                        <div className='col-md-12 d-md-flex flex-md-row justify-content-between align-items-center'>
+                            <div className='mb-2 mt-2'>
+                                <BsArrowLeftCircle size={30} className="btn-icon" onClick={() => history.push('/inventory')} />
+                            </div>
+                        </div>
+                    </div>
+
                     {!is_loading && (
-                        <div className='row mt-3'>
+                        <div className='row mt-1'>
                             <div className='col-md-2'>
-                                <EditItemComponent props={this.props} item={item} />
+                                <EditItemComponent props={this.props} item={item} reload={() => this.loadingData()} />
+                            </div>
+
+                            <div className='col-md-4'> 
+                                <EditItemSellPriceComponent props={this.props} item={item} reload={() => this.loadingData()} />
                             </div>
                         </div>
                     )}

@@ -19,7 +19,6 @@ if(getDevice) {
 }
 
 const httpHandler = (response) => {
-
     if(response.status === 401) {
         history.push('/logout');
         window.location.reload();
@@ -37,6 +36,7 @@ const httpHandler = (response) => {
     }
 
     if(response.status === 0) {
+        history.push('/error/0');
         return response;
     }
 
@@ -47,7 +47,6 @@ export const getRequest = async (url) => {
     const response = await axios.get(url).then((result) => {
         return result;
     }, (error) => {
-
         if(error && error.response) {
             return error.response;
         }
@@ -57,6 +56,7 @@ export const getRequest = async (url) => {
             status: 0
         }
     });
+
     return httpHandler(response);
 }
 

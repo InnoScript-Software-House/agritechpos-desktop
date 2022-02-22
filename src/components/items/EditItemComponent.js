@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import { Button, Card, FormControl, InputGroup } from "react-bootstrap";
 import { BsArrowCounterclockwise } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { setOpenToastAction } from "../../redux/actions/toast.action";
+import { updateItem } from "../../services/item.service";
 import { t, zawgyi } from "../../utilities/translation.utility";
+import { LoadingComponent } from "../general/Loading";
 
-export const EditItemComponent = ({ props, item }) => {
+export const EditItemComponent = ({ props, item, reload }) => {
 
     const { lang } = props.reducer;
-    const dispatch = useDispath();
+    const { id } = props.match.params;
+    const dispatch = useDispatch();
 
     const [editItem, setEditItem] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [loadingData, setLoadingData] = useState(true);
     const [code, setCode] = useState('');
     const [eng_name, setEnName] = useState('');
     const [mm_name, setMMName] = useState('');
@@ -28,15 +35,54 @@ export const EditItemComponent = ({ props, item }) => {
         setItemLocation(item.location);
     }
 
-    const update = () => {
-        const requestBody = {
-            
+    const httpHandler = (response) => {
+        if(response && response.success === false) {
+            dispatch(setOpenToastAction('Edit Item', response.message, 'danger'));
+            setLoading(false);
+            setLoadingData(false);
+            return;
         }
     }
 
+    const update = async () => {
+        const requestBody = {
+            code: code,
+            eng_name: eng_name,
+            mm_name: mm_name,
+            model: model,
+            qty: qty,
+            price: price,
+            location: itemLocation
+        }
+
+        const fileds = Object.keys(requestBody);
+
+        fileds.map((field) => {
+            if(requestBody[field] === editItem[field]) {
+                delete requestBody[field];
+            }
+        });
+
+        if(Object.keys(requestBody).length > 0) {
+            setLoadingData(true);
+            setLoading(true);
+
+            const response = await updateItem(id, requestBody);
+            httpHandler(response);
+            dispatch(setOpenToastAction('Update Item', 'Item is updated!', 'success'));
+            setLoadingData(false);
+            setLoading(false);
+            reload();
+        }
+
+        return;
+    }
+
     useState(() => {
+        setLoadingData(true);
         if(item) {
             setData();
+            setLoadingData(false);
         }
     }, [item]);
 
@@ -49,7 +95,7 @@ export const EditItemComponent = ({ props, item }) => {
                 </Card.Title>
             </Card.Header>
 
-            { editItem && (
+            { editItem && !loadingData && (
                 <Card.Body>
                     <InputGroup className="mb-3">
                         <FormControl 
@@ -123,11 +169,23 @@ export const EditItemComponent = ({ props, item }) => {
                 </Card.Body>
             )}
 
-            <Card.Footer>
-                <Button className={`btn-small ${zawgyi(lang)}`} onClick={() => update()}>
-                    {t('item-update-btn')}
-                </Button>
-            </Card.Footer>
+            {editItem && !loadingData && (
+                <Card.Footer>
+                    <Button 
+                        className={`btn-small w-full ${zawgyi(lang)}`} 
+                            disabled={loading}
+                            onClick={() => update()}
+                        >
+                            {t('item-update-btn')}
+                    </Button>
+                </Card.Footer>
+            )}
+
+            { loadingData && (
+                <Card.Body>
+                    <LoadingComponent />
+                </Card.Body>
+            )}
         </Card>
     );
 }

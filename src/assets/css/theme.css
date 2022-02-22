@@ -207,3 +207,7 @@ input[type="number"]:focus,
 .btn-icon {
   cursor: pointer;
 }
+
+.w-full {
+  width: 100%!important;
+}

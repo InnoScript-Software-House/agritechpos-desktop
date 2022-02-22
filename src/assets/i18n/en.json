@@ -194,6 +194,13 @@
     "chart-item-active-title" : "Active",
     "item-edit-title" : "Edit Item",
     "item-update-btn" : "Update",
+    "item-edit-percentage" : "Edit Item Selling Percentage",
+    "item-percentage" : "Percentage",
+    "item-fix-amount" : "Fix Amount",
+    "item-sell-percentage" : "Sell(%)",
+    "item-sell-fix-amount" : "Sell(Fix Amount)",
+    "item-status": "Publish",
+    "item-change-status" : "Change Status",
     "app": {
         "enter_btn" : "Login",
         "register_btn": "စာရင်းသွင်းရန်",

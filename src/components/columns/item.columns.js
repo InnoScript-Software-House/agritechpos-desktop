@@ -1,4 +1,5 @@
 import React from "react";
+import { Badge } from "react-bootstrap";
 import { BsArrowUpRightSquare, BsTrash } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import { changeNumberFormat } from "../../utilities/number.utility";
@@ -8,10 +9,7 @@ const numeral = require('numeral');
 
 export const itemColumns = (props) => {
     const { lang, numberFormat, char } = props.reducer;
-
     const history = useHistory();
-
-    console.log(history);
 
     const num = (value) => {
         return changeNumberFormat(value, numberFormat, char);
@@ -22,6 +20,7 @@ export const itemColumns = (props) => {
             name: <span className='datatable-header'> # </span>,
             selector: (row, index) => index + 1,
             sortable: true,
+            width: "50px"
         },
         {
             name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-code')} </span>,
@@ -65,8 +64,23 @@ export const itemColumns = (props) => {
             sortable: true,
         },
         {
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-sell-percentage')} </span>,
+            selector: row => row.percentage + '%',
+            sortable: true,
+        },
+        {
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-sell-fix-amount')} </span>,
+            selector: row => numeral(Number(row.fix_amount)).format('0,0') + 'MMK',
+            sortable: true,
+        },
+        {
             name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-location')} </span>,
             selector: row => row.location,
+            sortable: true,
+        },
+        {
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-status')} </span>,
+            selector: row => <Badge bg={row.active ? 'success' : 'danger'}> {row.active ? 'Publish' : 'Unpublished'} </Badge>,
             sortable: true,
         },
         {

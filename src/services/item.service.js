@@ -1,4 +1,4 @@
-import { getRequest, postRequest } from "./api.service";
+import { getRequest, postRequest, putRequest } from "./api.service";
 
 const url = 'items';
 
@@ -21,5 +21,10 @@ export const saveItem = async (requestBody) => {
 
 export const itemDetail = async (id) => {
     const response = await getRequest(`${url}/${id}`);
+    return handlerException(response);
+}
+
+export const updateItem = async (id, requestBody) => {
+    const response = await putRequest(`${url}/${id}`, requestBody);
     return handlerException(response);
 }
