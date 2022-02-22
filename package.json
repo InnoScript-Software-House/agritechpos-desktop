@@ -1,5 +1,6 @@
 {
   "name": "argri_tech_pos",
+  "productName": "Argri Tech Pos",
   "version": "1.0.0",
   "description": "Agricultural Equipment POS Software",
   "main": "main.js",
@@ -55,6 +56,7 @@
     "css-loader": "^6.5.1",
     "electron": "^16.0.7",
     "electron-builder": "^22.14.5",
+    "electron-packager": "^15.4.0",
     "electron-reload": "^2.0.0-alpha.1",
     "express": "^4.17.2",
     "redux-devtools-extension": "^2.13.9",
