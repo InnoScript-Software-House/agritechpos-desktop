@@ -52,7 +52,11 @@ class LoginPage extends Component {
         console.log(response);
 
         if(response.success === false) {
-            return this.props.openToast('Login', response.message, 'danger');
+            this.props.openToast('Login', response.message, 'danger');
+            this.setState({
+                is_loading: false,
+            });
+            return 
             // this.setState({
             //     err_message: response.message,
             //     is_loading: false
