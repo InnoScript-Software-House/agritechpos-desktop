@@ -69,6 +69,7 @@
     "bootstrap": "^5.1.3",
     "chart.js": "^3.7.1",
     "crypto-js": "^4.1.1",
+    "file-saver": "^2.0.5",
     "generate-password": "^1.7.0",
     "i18next": "^21.6.6",
     "jsonwebtoken": "^8.5.1",
@@ -87,6 +88,7 @@
     "react-router": "^6.2.1",
     "react-router-dom": "^5.0.0",
     "redux": "^4.1.2",
-    "sequelize": "^6.13.0"
+    "sequelize": "^6.13.0",
+    "xlsx": "^0.18.2"
   }
 }
