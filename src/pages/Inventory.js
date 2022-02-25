@@ -10,8 +10,6 @@ import { CreateCategoryComponent } from '../components/items/CreateCategoryCompo
 import { getCategories } from '../services/category.service';
 import { ItemListTableComponent } from '../components/items/ItemListTableComponent';
 import { getItems } from '../services/item.service';
-import { CategoryChartComponent } from '../components/charts/categoryChart';
-import { ItemActiveChartComponent } from '../components/charts/itemsActiveChart';
 import { ItemsChart } from '../utilities/items.chart';
 
 class InventoryPage extends Component {
@@ -128,15 +126,15 @@ class InventoryPage extends Component {
 
                             <div className='row  mt-3'>
                                 <div className='col-md-3'>
-                                    <CategoryChartComponent props={this.props} dataSource={items} />
+                                    <ItemsChart props={this.props} type={items.map(e => e.category_title)} title={'Item Categories'} dataSource={items}/>
                                 </div>
 
                                 <div className='col-md-3'>
-                                    <ItemActiveChartComponent props={this.props} dataSource={items} />
+                                    <ItemsChart props={this.props} type={items.map(e => e.active)} title={'Active'} dataSource={items}/>
                                 </div>
 
                                 <div className='col-md-3'>
-                                    <ItemsChart props={this.props} dataSource={items.map(e => e.category_title)} />
+                                    <ItemsChart props={this.props} type={items.map(e => e.location)} title={'Location'} dataSource={items}/>
                                 </div>
                             </div>
                         </div>

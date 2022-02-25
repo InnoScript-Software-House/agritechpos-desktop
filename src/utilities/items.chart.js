@@ -8,50 +8,48 @@ import { colorGen, generateColor } from './colorgenerator';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const ItemsChart = (({ props, dataSource, }) => {
+export const ItemsChart = (({ props, type, title, dataSource}) => {
     const { lang } = props.reducer;
     const [ chartData, setChartData ] = useState(null);
-    const [ type, setType ] = useState(null);
-    console.log(dataSource)
-
 
     useEffect(() => {
-        if(dataSource){
-            let labelArray = [];
+        if(type){
             let dataSet = [];
+            let labels =[...new Set(type)];
 
-            dataSource.map((item, index) => {
-                labelArray.push(item);
-            });
-            console.log(labelArray)
-
-            labelArray.map((chartLabel, index) => {
-                const dataCount = dataSource.filter((item => item === chartLabel)).length;
+            labels.map((lbl, index) => {
+                const dataCount = type.filter((item => item === lbl)).length;
                 dataSet.push(dataCount);
             });
+            console.log(dataSource)
 
             const data = {
-                labels: dataSource.map(e => e),
-                // labels: chartType.length > 0 ? chartType.map(e => e.name) : [],
+                labels: labels.map((e) => {
+                    switch (e){
+                        case true : e='Disabled';
+                        case false : e = ' Active';
+                        default : return e;
+                    }
+                }),
                 datasets: [
                     {
-                        label: '# of ',
+                        label: '# of labels',
                         data: dataSet,
-                        backgroundColor: generateColor(dataSource),
+                        backgroundColor: ['rgba(135, 186, 235, 1)', 'rgba(235, 44, 43, 1)',...generateColor(labels)],
                         borderWidth: 1,
                     }
                 ]
             };
             setChartData(data);
          };
-},[dataSource]);
+},[type]);
 
 return (
         <Card>
             <Card.Header>
                 <Card.Title>
                     <BsFillPieChartFill size={20} />
-                    <span className={`${zawgyi(lang)}`}> {} </span>
+                    <span className={`${zawgyi(lang)}`}> { title } </span>
                 </Card.Title>
             </Card.Header>
 
