@@ -12,6 +12,7 @@ import { ItemListTableComponent } from '../components/items/ItemListTableCompone
 import { getItems } from '../services/item.service';
 import { CategoryChartComponent } from '../components/charts/categoryChart';
 import { ItemActiveChartComponent } from '../components/charts/itemsActiveChart';
+import { ItemsChart } from '../utilities/items.chart';
 
 class InventoryPage extends Component {
 
@@ -20,7 +21,7 @@ class InventoryPage extends Component {
         this.state = {
             openEdit : false,
             categories: [],
-            items: []
+            items: [],
         }
     }
 
@@ -133,8 +134,11 @@ class InventoryPage extends Component {
                                 <div className='col-md-3'>
                                     <ItemActiveChartComponent props={this.props} dataSource={items} />
                                 </div>
+
+                                <div className='col-md-3'>
+                                    <ItemsChart props={this.props} dataSource={items.map(e => e.category_title)} />
+                                </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>

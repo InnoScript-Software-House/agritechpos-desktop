@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 import { Doughnut } from 'react-chartjs-2';
 import { BsFillPieChartFill } from "react-icons/bs";
 import { t, zawgyi } from '../../utilities/translation.utility';
-import { colorGen, generateColor } from '../../utilities/colorgenerator'
+import { colorGen, generateColor } from '../../utilities/colorgenerator';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
