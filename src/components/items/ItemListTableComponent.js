@@ -17,12 +17,10 @@ export const ItemListTableComponent = ({ props, dataSource }) => {
 
     const [ tableLoading, setTableLoading ] = useState(true);
     const [ itemList, setItemList] = useState([]);
+    const [ selectedRows, setSelectedRows] = useState([]);
 
     const getFilterResult = (e) => {
         setItemList(e);
-    }
-
-    const selectRowChange = (e) => {
     }
 
     useEffect(() => {
@@ -52,6 +50,7 @@ export const ItemListTableComponent = ({ props, dataSource }) => {
                             searchColumns={searchColumns} 
                             placeholder={t('input-item-search')}
                             filterResult={e => getFilterResult(e)}
+                            selectedRows={selectedRows}
                         />
                     }
                     pagination
@@ -67,7 +66,7 @@ export const ItemListTableComponent = ({ props, dataSource }) => {
                     pointerOnHover
                     selectableRows={true}
                     selectableRowsHighlight={true}
-                    onSelectedRowsChange={ e => selectRowChange(e)}
+                    onSelectedRowsChange={ e => setSelectedRows(e.selectedRows)}
                 />
             </Card.Body>
         </Card>

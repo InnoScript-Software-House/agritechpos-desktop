@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { autocomplete } from '../../utilities/table.utility';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { ItemExportToExcel } from '../exports/itemExportComponent';
-import { BsCloudUpload } from 'react-icons/bs';
+import { BsCloudUpload, BsTrash } from 'react-icons/bs';
 
 import '../../assets/css/components/table-header.css';
 
-export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeholder, filterResult }) => {
+export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeholder, filterResult, selectedRows }) => {
     const { lang } = props.reducer;
 
     const [text, setText] = useState('');
     const [filterType, setFilterType] = useState(searchColumns[0]);
     const [openExportSetting, setOpenExportSetting] = useState(false);
+    const [selectedList, setSelectedList] = useState([]);
 
     const autoSearch = (text) => {
         const result = autocomplete(dataSource, text, filterType);
@@ -26,16 +27,34 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
         filterResult(dataSource);
     }
 
+    useEffect(() => {
+        if(selectedRows) {
+            setSelectedList(selectedRows);
+        }
+    },[selectedRows]);
+
     return(
         <div className='table-header mb-3'>
             <div className='table-header-left'>
-                <Button 
-                    className='btn-small'
-                    onClick={() => setOpenExportSetting(true)}
-                >  
-                    <BsCloudUpload size={20} />
-                    <span className={`${zawgyi(lang)}`}> {t('export-excel-setting-btn')} </span>
-                </Button>
+                {selectedRows.length > 0 && (
+                    <div className='d-md-flex flex-md-row justifiy-content-start align-items-center'>
+                        <Button 
+                            className='btn-small'
+                            onClick={() => setOpenExportSetting(true)}
+                        >  
+                            <BsCloudUpload size={20} />
+                            <span className={`${zawgyi(lang)}`}> {t('export-excel-setting-btn')} </span>
+                        </Button>
+
+                        <Button
+                            className='btn-small ms-3'
+                            onClick={() => console.log()}
+                        >
+                            <BsTrash size={20} />
+                            <span> Delete Selected Items </span>
+                        </Button>
+                    </div>
+                )}
             </div>
 
             <InputGroup className='table-header-right'>

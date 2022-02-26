@@ -1,6 +1,6 @@
 import numeral from "numeral";
 import React, { useEffect, useState } from "react";
-import { Badge, Button, Card, FormControl, InputGroup } from "react-bootstrap";
+import { Badge, Button, Card, FormControl, InputGroup, ToastHeader } from "react-bootstrap";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
@@ -13,23 +13,26 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
 
     const { lang } = props.reducer;
     const { id } = props.match.params;
+
     const dispatch = useDispatch();
 
     const [percentage, setPercentage] = useState(0);
     const [fix_amount, setFixAmount] = useState(0);
-    const [status, setStatus] = useState(false);
+    const [status, setStatus] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loadingData, setLoadingData] = useState(false);
+
+    const tostHeader = 'Update Item Selling Amount';
 
     const setData = () => {
         setPercentage(item.percentage);
         setFixAmount(item.fix_amount);
-        setStatus(item.active)
+        setStatus(item.active ? 1 : 0)
     }
 
     const httpHandler = (response) => {
         if(response && response.success === false) {
-            dispatch(setOpenToastAction('Update Item Selling Amount', response.message, 'danger'));
+            dispatch(setOpenToastAction(tostHeader, response.message, 'danger'));
             setLoading(false);
             setLoadingData(false);
             return;
@@ -48,6 +51,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
         httpHandler(response);
         setLoadingData(false);
         setLoading(false);
+        dispatch(setOpenToastAction(tostHeader, 'Item sell price is updated!', 'success'));
         reload();
         return;
     }
@@ -61,6 +65,8 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
 
         const response = await updateItem(id, requestBody);
         httpHandler(response);
+        setLoading(false);
+        dispatch(setOpenToastAction(tostHeader, 'Item publish status is updated!', 'success'));
         reload();
         return;
     }
@@ -168,8 +174,8 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                             value={status}
                             onChange={e => setStatus(e.target.value)}
                         >
-                            <option value={0}> Publish </option>
-                            <option value={1}> Unpublish </option>
+                            <option value={1}> Publish </option>
+                            <option value={0}> Unpublish </option>
                         </FormControl>
                     </InputGroup>
                 </Card.Body>

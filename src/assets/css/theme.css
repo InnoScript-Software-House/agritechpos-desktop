@@ -211,3 +211,7 @@ input[type="number"]:focus,
 .w-full {
   width: 100%!important;
 }
+
+.btn-secondary {
+  background-color: #6c757d!important;
+}
