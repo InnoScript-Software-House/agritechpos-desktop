@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { BsPlusCircle } from "react-icons/bs";
+import { BsEye, BsEyeSlash, BsListTask, BsPlusCircle } from "react-icons/bs";
 import { Navigation } from '../components/general/Navigation';
 import { ItemCreateComponent } from '../components/items/ItemCreateComponent';
 import { CreateCategoryComponent } from '../components/items/CreateCategoryComponent';
@@ -12,6 +12,7 @@ import { ItemListTableComponent } from '../components/items/ItemListTableCompone
 import { getItems } from '../services/item.service';
 import { CategoryChartComponent } from '../components/charts/categoryChart';
 import { ItemActiveChartComponent } from '../components/charts/itemsActiveChart';
+import { DeleteDialog } from '../components/general/deleteDialog';
 
 class InventoryPage extends Component {
 
@@ -20,7 +21,8 @@ class InventoryPage extends Component {
         this.state = {
             openEdit : false,
             categories: [],
-            items: []
+            items: [],
+            openCreateItem: true
         }
     }
 
@@ -75,14 +77,15 @@ class InventoryPage extends Component {
     }
 
     async componentDidMount() { 
+        console.log(this.props.reducer);
         await this.loadingData('category');
         await this.loadingData('item');
     }
     
 
     render() {
-        const { lang } = this.props.reducer;
-        const { openEdit, categories, items } = this.state;
+        const { lang, delModal } = this.props.reducer;
+        const { openEdit, categories, items, openCreateItem } = this.state;
         return(
             <>
                 <Navigation props={this.props} />
@@ -100,6 +103,16 @@ class InventoryPage extends Component {
                     <div className='row'>
                         <div className='col-md-12'>
                             <div className='d-md-flex flex-row justify-content-start align-items-center'>
+                                <Button
+                                    className='btn-small mt-3 me-3'
+                                    onClick={() => this.setState({
+                                        openCreateItem: !openCreateItem
+                                    })}
+                                >
+                                    {openCreateItem ? (<BsEyeSlash size={20} />) :  <BsEye size={20} />}
+                                    <span className='me-3'> {openCreateItem ? 'Hide Create Item' : 'Show Create Item'} </span>
+                                </Button>
+
                                 <Button 
                                     className='btn-small mt-3' 
                                     onClick={() => this.setState({
@@ -109,11 +122,22 @@ class InventoryPage extends Component {
                                     <BsPlusCircle size={20} />
                                     <span className='me-3'> Create Category </span>
                                 </Button>
+
+                                <Button
+                                    className='btn-small mt-3 ms-3'
+                                    onClick={() => this.setState({
+
+                                    })}
+                                >
+                                    <BsListTask size={20} />
+                                    <span className='me-3'> Category List </span>
+                                </Button>
                             </div>
                         </div>
                     </div>
 
                     <div className='row'>
+                        { openCreateItem && (
                         <div className='col-md-2'>
                             <ItemCreateComponent 
                                 props={this.props} 
@@ -121,8 +145,9 @@ class InventoryPage extends Component {
                                 reload={() => this.loadingData('item')}
                             />
                         </div>
+                        )}
 
-                        <div className='col-md-10'>
+                        <div className={openCreateItem ? 'col-md-10' : 'col-md-12'}>
                             <ItemListTableComponent props={this.props} dataSource={items} />
 
                             <div className='row  mt-3'>
@@ -138,6 +163,10 @@ class InventoryPage extends Component {
                         </div>
                     </div>
                 </div>
+
+                { delModal && delModal.open === true && (
+                    <DeleteDialog props={this.props} reload={async () => await this.loadingData('item')} />           
+                )}
             </>
         )
     }

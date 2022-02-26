@@ -5,6 +5,7 @@ import { charasterReducer } from "./charaster.reducer";
 import { devcieReducer } from "./device.reducer";
 import { langReducer } from "./lang.reducer";
 import { numberFormatReducer } from "./numberFormat.reducer";
+import { openDelReducer } from "./openDelModal.reducer";
 import { toastReducer } from "./toast.reducer";
 
 export default combineReducers({
@@ -14,5 +15,6 @@ export default combineReducers({
     device: devcieReducer,
     numberFormat: numberFormatReducer,
     toast: toastReducer,
-    char: charasterReducer
+    char: charasterReducer,
+    delModal: openDelReducer
 });
