@@ -10,8 +10,6 @@ import { CreateCategoryComponent } from '../components/items/CreateCategoryCompo
 import { getCategories } from '../services/category.service';
 import { ItemListTableComponent } from '../components/items/ItemListTableComponent';
 import { getItems } from '../services/item.service';
-import { CategoryChartComponent } from '../components/charts/categoryChart';
-import { ItemActiveChartComponent } from '../components/charts/itemsActiveChart';
 import { DeleteDialog } from '../components/general/deleteDialog';
 import { ItemsChart } from '../utilities/items.chart';
 import { VerticalChart } from '../utilities/vertical.chart';
