@@ -32,10 +32,6 @@ export const VerticalChart = (({props, dataSource, type, title}) => {
             },
         },
     };
-    // let cat = [...new Set(dataSource.map(e=>e.category_title))];
-    // cat.map((e,i) => {
-
-    // })
     
 
     useEffect(() => {
