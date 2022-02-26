@@ -11,6 +11,7 @@ import { getCategories } from '../services/category.service';
 import { ItemListTableComponent } from '../components/items/ItemListTableComponent';
 import { getItems } from '../services/item.service';
 import { ItemsChart } from '../utilities/items.chart';
+import { VerticalChart } from '../utilities/vertical.chart';
 
 class InventoryPage extends Component {
 
@@ -137,6 +138,9 @@ class InventoryPage extends Component {
                                     <ItemsChart props={this.props} type={items.map(e => e.location)} title={'Location'} dataSource={items}/>
                                 </div>
                             </div>
+                            <div className='col mt-3'>
+                                    <VerticalChart props={this.props} type={items.map(e => e.model)} title={'Quantity & Price Chart'} dataSource={items}/>
+                             </div>
                         </div>
                     </div>
                 </div>

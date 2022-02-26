@@ -21,7 +21,6 @@ export const ItemsChart = (({ props, type, title, dataSource}) => {
                 const dataCount = type.filter((item => item === lbl)).length;
                 dataSet.push(dataCount);
             });
-            console.log(dataSource)
 
             const data = {
                 labels: labels.map((e) => {

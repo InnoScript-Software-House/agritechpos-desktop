@@ -50,6 +50,7 @@
     "@babel/core": "^7.16.5",
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-react": "^7.16.5",
+    "@faker-js/faker": "^6.0.0-alpha.7",
     "@reduxjs/toolkit": "^1.7.1",
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^10.2.0",
