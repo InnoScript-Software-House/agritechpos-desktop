@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
-import { delRequest } from '../../services/api.service';
+import { setOpenToastAction } from '../../redux/actions/toast.action';
+import { delRequest, postRequest } from '../../services/api.service';
 import { t, zawgyi } from '../../utilities/translation.utility';
 
 export const DeleteDialog = ({ props, reload }) => {
@@ -14,20 +15,39 @@ export const DeleteDialog = ({ props, reload }) => {
 
     const handlerException = (response) => {
         if(response && response.status === 0) {
+            dispatch(setOpenToastAction('Network Error', 'Please check your database connection', 'danger'));
+        }
+
+        if(response && (response.status !== 200 || response.status !== 201)) {
+            dispatch(setOpenToastAction('Item Delete', response.message, 'danger'));
             return null;
         }
+
         return response;
     }
 
     const closeModal = () => {
+        setIsOpen(false);
         dispatch(setOpenDelModal({open: false}));
     }
 
-    const confirmDelete = async (id, type) => {
-        const response = await delRequest(`${type}/${id}`);
+    const confirmDelete = async () => {
+        const response = await delRequest(`${delModal.type}/${delModal.id}`);
         handlerException(response);
-        setIsOpen(false);
+        closeModal();
         reload();
+    }
+
+    const multipleDeleted = async () => {
+        const requestBody = delModal.data ? delModal.data.map((value) => {
+            return value.id
+        }) : [];
+
+       const response = await postRequest(`${delModal.type}/delete`, { data: requestBody });
+       handlerException(response);
+       closeModal();
+       dispatch(setOpenToastAction('Deleted Items', 'Items are deleted', 'success'));
+       reload();
     }
 
     useEffect(() => {
@@ -53,7 +73,7 @@ export const DeleteDialog = ({ props, reload }) => {
             <Modal.Footer>
                 <Button 
                     className={`btn-small ${zawgyi(lang)}`}
-                    onClick={() => confirmDelete(delModal.id, delModal.type)}
+                    onClick={() => delModal.multiple ? multipleDeleted() : confirmDelete()}
                 > 
                     <span className={`${zawgyi(lang)}`}> Confirm </span> 
                 </Button>

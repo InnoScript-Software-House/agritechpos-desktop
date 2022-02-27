@@ -4,11 +4,14 @@ import { autocomplete } from '../../utilities/table.utility';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { ItemExportToExcel } from '../exports/itemExportComponent';
 import { BsCloudUpload, BsTrash } from 'react-icons/bs';
+import { useDispatch } from 'react-redux';
+import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 
 import '../../assets/css/components/table-header.css';
 
 export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeholder, filterResult, selectedRows }) => {
     const { lang } = props.reducer;
+    const dispatch = useDispatch();
 
     const [text, setText] = useState('');
     const [filterType, setFilterType] = useState(searchColumns[0]);
@@ -25,6 +28,17 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
         setFilterType(searchColumns[0]);
         setText('');
         filterResult(dataSource);
+    }
+
+    const deleteSelectedRows = () => {
+       dispatch(setOpenDelModal({
+           title: 'Item Delete',
+           message: 'Are you sure want to delete these items',
+           type: 'items',
+           multiple: true,
+           open: true,
+           data: selectedList
+       }))
     }
 
     useEffect(() => {
@@ -48,7 +62,7 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
 
                         <Button
                             className='btn-small ms-3'
-                            onClick={() => console.log()}
+                            onClick={() => deleteSelectedRows()}
                         >
                             <BsTrash size={20} />
                             <span> Delete Selected Items </span>
