@@ -85,6 +85,7 @@ class InventoryPage extends Component {
     render() {
         const { lang, delModal } = this.props.reducer;
         const { openEdit, categories, items, openCreateItem } = this.state;
+        const { history } = this.props;
         return(
             <>
                 <Navigation props={this.props} />
@@ -124,9 +125,7 @@ class InventoryPage extends Component {
 
                                 <Button
                                     className='btn-small mt-3 ms-3'
-                                    onClick={() => this.setState({
-
-                                    })}
+                                    onClick={() => history.push('/itemCategoryList')}
                                 >
                                     <BsListTask size={20} />
                                     <span className='me-3'> Category List </span>

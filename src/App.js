@@ -21,6 +21,8 @@ import FirstDevice from './pages/device/FirstDevice';
 import AccountPage from './pages/user/Account';
 import InventoryPage from './pages/Inventory';
 import EditItemPage from './pages/item/EditItem';
+import CategoryListPage from './pages/CategoryList';
+import EditCategoryPage from './pages/category/EditCategory';
 
 class App extends Component {
 
@@ -45,7 +47,10 @@ class App extends Component {
 
         <Route exact path={'/inventory'} component={InventoryPage} />
 
+        <Route exact path={'/itemCategoryList'} component={CategoryListPage} />
+
         <Route exact path={'/item/:id'} component={EditItemPage} />
+        <Route exact path={'/category/:id'} component={EditCategoryPage} />
       </HashRouter>
     );
   }
