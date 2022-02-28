@@ -173,6 +173,7 @@
     "input-create-description" : "Description",
     "input-category-name" : "Enter Category Name",
     "input-category-description" : "Enter Category Description",
+    "input-category-search": "Search Category",
     "category-error-empty": "Categroy name is required",
     "category-edit-title" : "Update Category",
     "category-update-btn" : "Update",

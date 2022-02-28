@@ -38,7 +38,6 @@ class CategoryListPage extends Component{
     }
 
     async componentDidMount() { 
-        console.log(this.props.reducer);
         await this.loadingData();
     }
 

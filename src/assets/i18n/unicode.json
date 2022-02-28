@@ -176,6 +176,7 @@
     "input-category-name" : "Enter Category Name",
     "input-category-description" : "Enter Category Description",
     "input-item-create-code": "Item Code",
+    "input-category-search": "Search Category",
     "item-code" : "Item Code",
     "item-table-title" : "Item List",
     "item-eng-name" : "English Name",

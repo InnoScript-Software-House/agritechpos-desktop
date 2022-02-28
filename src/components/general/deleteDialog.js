@@ -19,7 +19,7 @@ export const DeleteDialog = ({ props, reload }) => {
         }
 
         if(response && (response.status !== 200 || response.status !== 201)) {
-            return dispatch(setOpenToastAction(delModal.title, response.message, 'danger'));
+            return ;
        }
         return response;
     }

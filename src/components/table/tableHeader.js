@@ -9,7 +9,7 @@ import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 
 import '../../assets/css/components/table-header.css';
 
-export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeholder, filterResult, selectedRows }) => {
+export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, placeholder, filterResult, selectedRows }) => {
     const { lang } = props.reducer;
     const dispatch = useDispatch();
 
@@ -32,9 +32,9 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
 
     const deleteSelectedRows = () => {
        dispatch(setOpenDelModal({
-           title: 'Item Delete',
-           message: 'Are you sure want to delete these items',
-           type: 'items',
+           title: type+' Delete',
+           message: 'Are you sure want to delete these '+type,
+           type: type,
            multiple: true,
            open: true,
            data: selectedList
