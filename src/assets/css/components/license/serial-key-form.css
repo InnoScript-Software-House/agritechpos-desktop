@@ -1,5 +1,6 @@
 .serial-key-label {
     color: #01a3a6;
+    font-weight: 600;
 }
 
 .serial-key-input,
@@ -15,8 +16,12 @@
 .btn-serial-key-enter {
     height: 60px!important;
     border: 0px!important;
-}
-
-.serial-key-err-message {
-    color: red;
+    border-radius: 0px!important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: inherit!important;
+    line-height: initial!important;
+    padding: 0px;
 }

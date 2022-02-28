@@ -3,24 +3,23 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Language } from '../components/general/Language';
 import { t, zawgyi } from '../utilities/translation.utility';
-import { SerialKeyForm } from '../components/license/serialKeyForm';
-import { UserInformationForm } from '../components/license/userInformation';
-import { PlanForm } from '../components/license/planForm';
+import { SerialKeyComponent } from '../components/license/SerialKeyComponent';
+import { CustomerInformationComponent } from '../components/license/CustomerInformationComponent';
+import { PlanComponent } from '../components/license/PlanComponent';
 import { Footer } from '../components/general/Footer';
 import { Activation } from '../components/license/activation';
 import { ToastContainer } from "react-bootstrap";
 import { AppToast } from '../components/general/toasts';
-
-
-import '../assets/css/license.css';
 
 class LicensePage extends Component {
 
   constructor(props){
     super(props);
     this.state = {
-      serialNumber: null,
-      userInfo: null,
+      serialNumber: 'AAAA-AAAA-AAAA-AAAA-AAAA-AAAA',
+      userInfo: {
+        first_name: ""
+      },
       plan: null
     }
   }
@@ -74,61 +73,71 @@ class LicensePage extends Component {
     const { lang } = this.props.reducer; 
 
     return(
-      <>
-      <ToastContainer
-          className="app-toast-container"
-          position={'top-end'}
-        >
-          <AppToast props={this.props} />
-        </ToastContainer>
-        <div className='d-flex flex-row justify-content-end'>
-          <Language props={this.props} />
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col-md-12'>
+            <ToastContainer
+              className='app-toast-container'
+              position='top-end'
+            >
+              <AppToast props={this.props} />
+            </ToastContainer>
+
+            <div className='d-md-flex flex-md-row justify-content-end align-items-center'>
+              <Language props={this.props} />
+            </div>
+          </div>
         </div>
 
-        <div className='d-flex flex-row justify-content-between'>
-          <div className='col-5 d-flex flex-column justify-content-center'>
-            <img src="build/assets/images/side_image.jpeg" className='cover-image align-self-center mt-3' />
+        <div className='row mt-3'>
+          <div className='col-md-4'>
+            <img src="build/assets/images/side_image.jpeg" className='img-fluid' />
           </div>
 
-          <div className='col-7'>
-            <h3 className={`title m-3 ${zawgyi(lang)}`}> {t('title')} </h3>
+          <div className='col-md-8'>
+            <h3 className={`title ${zawgyi(lang)}`}> {t('title')} </h3>
 
             {!serialNumber && (
-              <SerialKeyForm 
-                lng={lang} 
+              <SerialKeyComponent 
+                props={this.props}
                 retriveSerialKey={(e) => this.getSerialKey(e)} 
               />
             )}
 
             {(serialNumber && !userInfo) && (
-              <UserInformationForm 
-                lng={lang} 
+              <CustomerInformationComponent 
+                props={this.props}
                 retriveUserInfo={(e) => this.getUserInfo(e)}
                 backStep={(e) => this.getBackStep(e)}
               />
             )}
 
             {(serialNumber && userInfo && !plan) && (
-              <PlanForm 
-                lng={lang}
+              <PlanComponent 
+                props={this.props}
                 retrivePlan={(e) => this.getPlan(e)}
                 backStep={(e) => this.getBackStep(e)}
               />
             )}
 
-            {(serialNumber && userInfo && plan) && (
-              <Activation 
-                lng={lang}
-                serial={serialNumber}
-                user={userInfo}
-                plan={plan}
-                backStep={(e) => this.getBackStep(e)}
-                history={this.props.history}
-              />
-            )}
           </div>
         </div>
-      </>
+      </div>
+      // <>
+
+      //       {(serialNumber && userInfo && plan) && (
+      //         <Activation 
+      //           lng={lang}
+      //           serial={serialNumber}
+      //           user={userInfo}
+      //           plan={plan}
+      //           backStep={(e) => this.getBackStep(e)}
+      //           history={this.props.history}
+      //         />
+      //       )}
+      //     </div>
+      //   </div>
+      // </>
     )
   }
 }

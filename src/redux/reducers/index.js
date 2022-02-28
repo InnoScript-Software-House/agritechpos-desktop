@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { accountReducer } from "./account.reducer";
 import { authReducer } from "./auth.reducer";
 import { charasterReducer } from "./charaster.reducer";
+import { configReducer } from "./config.reducer";
 import { devcieReducer } from "./device.reducer";
 import { langReducer } from "./lang.reducer";
 import { numberFormatReducer } from "./numberFormat.reducer";
@@ -16,5 +17,6 @@ export default combineReducers({
     numberFormat: numberFormatReducer,
     toast: toastReducer,
     char: charasterReducer,
-    delModal: openDelReducer
+    delModal: openDelReducer,
+    config: configReducer
 });

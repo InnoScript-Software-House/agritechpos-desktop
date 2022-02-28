@@ -1,4 +1,32 @@
 {   
+    "config-devicetype-description" : "Please choose device type (Laptop or PC) for software configuration.",
+    "config-devicetype-submit" : "Confirm",
+    "config-devicetype-set-success" : "device type is updated",
+    "config-networktype-description" : "Please choose network connection for database access.",
+
+    "license-key-required" : "License key are required",
+    "license-key-invalid" : "Invalid license key",
+    "license-key-submit" : "Submit",
+
+    "license-customer-description" : "Please fill customer information for license registeration process.",
+    "license-customer-form-title" : "Register's Customer Information",
+    "license-customer-first-name": "First Name",
+    "license-customer-last-name": "Last Name",
+    "license-customer-phone" : "Phone Number",
+    "license-customer-email" : "Email",
+    "license-customer-address" : "Address",
+    "license-customer-submit" : "Submit",
+    "license-customer-all-field-required" : "All field are required",
+
+    "license-plan-description" : "Please choose software plan information",
+
+    "toast-license-key" : "License Key",
+    "toast-license-customer" : "Customer Information",
+    "tost-configuration" : "Configuration",
+
+    "invalid-email-error" : "Invalid email address",
+    "invalid-phone-error" : "Invalid phone number",
+
     "dashboard-alert-shop-title": "Shop Information Need!",
     "dashboard-alert-shop-description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     "dashboard-alert-shop-btn": "Goto Shop Setting",
@@ -7,16 +35,10 @@
     "zawgyi": "Zawgyi",
     "english": "English",
     "title": "Agricultural Equipment POS Software",
-    "serial-description" : "To use the software, you need to enter a serial number and confirm. You can enter the serial number on the software CD.",
+    "serial-description" : "To use this software, you need to enter a serial number and confirm. You can find the serial number on the software CD.",
     "serial-key-enter": "Enter serial number",
     "serial-key-error": "Invalid serial number!",
-    "serial-key-submit": "Submit",
-    "user-description-title": "User Information",
-    "user-first-name": "First Name",
-    "user-last-name": "Last Name",
-    "user-phone" : "Phone Number",
-    "user-email": "Email",
-    "user-address": "Address",
+
     "user-info-empty-error": "All fields are requied",
     "user-info-phone-error" : "Invalid Phone number",
     "plan-info-title" : "Plan Information",

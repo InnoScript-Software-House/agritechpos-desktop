@@ -1,4 +1,31 @@
 {
+    "config-devicetype-description" : "ဆော့ဖ်ဝဲအသုံးပြုရန်အတွက် ကျေးဇူးပြု၍ စက်အမျိုးအစား (လက်ပ်တော့ သို့မဟုတ် PC) ကို ရွေးချယ်ပါ။",
+    "config-devicetype-submit" : "အတည်ပြုမည်",
+    "config-devicetype-set-success" : "စက်အမျိုးအစားရွေးချယ်မှုအောင်မြင်ပါသည်။",
+
+    "license-key-required": "လိုင်စင်ကီး လိုအပ်ပါသည်။",
+    "license-key-invalid" : "လိုင်စင်ကီး မမှန်ကန်ပါ",
+    "license-key-submit": "အတည်ပြုမည်",
+
+    "license-customer-description" : "လိုင်စင်မှတ်ပုံတင်ခြင်းအတွက် သုံးစွဲသူအချက်အလက်ကို ဖြည့်စွက်ပါ။",
+    "license-customer-form-title" : "မှတ်ပုံတင်သူ၏အချက်အလက်",
+    "license-customer-first-name": "နာမည် (ပထမ)",
+    "license-customer-last-name": "နာမည် (ဒုတိယ)",
+    "license-customer-phone" : "ဖုန်း",
+    "license-customer-email" : "အီးမေးလ်",
+    "license-customer-address" : "လိပ်စာ",
+    "license-customer-submit" : "အတည်ပြုမည်",
+    "license-customer-all-field-required" : "သုံးစွဲသူအချက်အလက်အားလုံးဖြည့်စွက်ရန်လိုအပ်ပါသည်။",
+
+    "license-plan-description" : "ကျေးဇူးပြု၍ ဆော့ဖ်ဝဲအစီအစဉ်အချက်အလက်ကို ရွေးချယ်ပါ။",
+
+    "toast-license-key" : "လိုင်စင်ကီး",
+    "toast-license-customer" : "သုံးစွဲသူအချက်အလက်",
+    "tost-configuration" : "စက်အမျိုးအစားရွေးချယ်မှု",
+
+    "invalid-email-error" : "အီးမေးလ်လိပ်စာမှန်ကန်မှုမရှိပါ",
+    "invalid-phone-error" : "ဖုန်းနံပါတ်မှန်ကန်မှုမရှိပါ",
+
     "dashboard-alert-shop-title": "Shop Information Need!",
     "dashboard-alert-shop-description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     "dashboard-alert-shop-btn": "Goto Shop Setting",
@@ -10,8 +37,6 @@
     "serial-description" : "ဆော့၀ဲအသုံးပြုနိုင်ရန် serial နံပါတ် ထည့်သွင်းအတည်ပြုရန် လိုအပ်ပါသည်။ ဆော့၀ဲ CD တွင် ပါရှိသည့် serial နံပါတ်အား ထည့်သွင်းအသုံးပြုနိုင်ပါသည်။",
     "serial-key-enter": "Serial number ထည့်ရန်",
     "serial-key-error": "serial နံပါတ် မှန်ကန်မှုမရှိပါ။",
-    "serial-key-submit": "အတည်ပြုမည်",
-    "user-description-title": "User Information",
     "user-first-name": "First Name",
     "user-last-name": "Last Name",
     "user-phone" : "Phone Number",
