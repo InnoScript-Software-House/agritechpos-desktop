@@ -121,7 +121,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                             </InputGroup>
                         </div>
 
-                        <div className="col-md-6">
+                        <div className="col-md-6 pe-3">
                             <div className="d-md-flex flex-md-column">
                                 <label className={`mb-2 title ${zawgyi(lang)}`}> {t('item-fix-amount')} </label>
                                 <label> Origin Price - {numeral(Number(item.price)).format('0,0')} MMK </label>
