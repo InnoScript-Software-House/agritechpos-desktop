@@ -24,13 +24,12 @@ export const ItemQRComponent = ({ props, item, reload }) => {
                 </Card.Title>
             </Card.Header>
             <Card.Body>
-                <div>
+                <div className='d-md-flex flex-md-column justify-content-between align-items-center'>
                     <QRCode 
-                    className=''
                     id={item.id}
                     className=''
                     value={`Model- ${item.model}, Name- ${item.eng_name}`} 
-                    size={172}
+                    size={140}
                     includeMargin
                     level='Q'
                     /> 

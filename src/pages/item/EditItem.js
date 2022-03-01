@@ -73,19 +73,13 @@ class EditItemPage extends Component {
                                 <EditItemSellPriceComponent props={this.props} item={item} reload={() => this.loadingData()} />
                             </div>
 
-                            <div className='col-md-4'>
-                                <div className='row-md-5'>
-                                    <div className='col-md-10'>
-                                        <div className='row-md'>
-                                            <div className='col d-md-flex flex-d-col justify-content-between align-items-center'>
-                                                <ItemQRComponent props={this.props} item={item} reload={() => this.loadingData()} />
-                                            </div>
-                                        </div>
-                                        <div className='row-md mt-3'>
-                                            <div className='col d-md-flex flex-d-col justify-content-between align-items-center'>
-                                                <ItemBarCodeComponent props={this.props} item={item} reload={() => this.loadingData()} />
-                                            </div>
-                                        </div>
+                            <div className='col-md-4 d-md-flex flex-d-row justify-content-between align-items-center'>
+                                <div className='col'>
+                                    <div className='col d-md-flex justify-content-between align-items-center pb-2'>
+                                        <ItemQRComponent props={this.props} item={item} reload={() => this.loadingData()} />
+                                    </div>
+                                    <div className='col d-md-flex justify-content-between align-items-center pt-2'>
+                                        <ItemBarCodeComponent props={this.props} item={item} reload={() => this.loadingData()} />
                                     </div>
                                 </div>
                             </div>
