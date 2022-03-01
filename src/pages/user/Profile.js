@@ -66,7 +66,7 @@ class ProfilePage extends Component {
       //   error: t('invalid-email-error')
       // });
   }
-  return this.props.openToast('Profile Update', 'Profile Update Successful', 'success')
+  return this.props.openToast('Profile Update', t('profile-update-successful'), 'success')
 
     this.setState({
       is_loading: true
@@ -100,7 +100,7 @@ class ProfilePage extends Component {
       //   password_error: t('profile-password-not-match')
       // });
     }
-    this.props.openToast('Change Password', 'Password Change Successfully', 'success');
+    this.props.openToast('Change Password', t('password-change-successfully'), 'success');
 
     this.setState({
       is_loading: true

@@ -59,14 +59,14 @@ export const EditShopFormComponent = ({ props, dataSource, retrive }) => {
         const response = await updateShop(requestBody);
 
         if(response.success === false) {
-            dispatch(setOpenToastAction('Shop Create', errr,'danger'));
+            dispatch(setOpenToastAction('Shop Create', error,'danger'));
             // setError(response.message);
             setLoading(false);
             return;
         }
 
         if(response) {
-            dispatch(setOpenToastAction('Shop Update', 'Update Shop Successfully','success'));
+            dispatch(setOpenToastAction('Shop Update', t('update-shop-successfully') ,'success'));
             setLoading(false);
             setError(null);
             retrive(response)

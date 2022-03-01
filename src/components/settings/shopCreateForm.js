@@ -59,7 +59,7 @@ export const CreateShopFormComponent = ({ props, retrive }) => {
         }
 
         if(response) {
-            dispatch(setOpenToastAction('Create Shop', 'Create Shop Successful', 'success'))
+            dispatch(setOpenToastAction('Create Shop', t('create-shop-successful'), 'success'))
             setLoading(false);
             setError(null);
             retrive(response)
