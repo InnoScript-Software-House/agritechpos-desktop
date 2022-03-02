@@ -24,8 +24,8 @@ export const ItemBarCodeComponent = ({ props, item, reload}) => {
                     format={"CODE128"}
                     displayValue={true}
                     fontSize={10}
-                    width={0.80}
-                    height={40}
+                    width={1}
+                    height={50}
                     margin={10}
                     textMargin={2}
                     value={`${item.model} - ${item.price}`} />

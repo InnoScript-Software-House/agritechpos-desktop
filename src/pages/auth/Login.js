@@ -25,6 +25,11 @@ class LoginPage extends Component {
         }
     }
 
+    quitDevice(){
+        const  quit = window.nativeApi.quit;
+        quit.quitApp();
+    }
+
     componentDidMount() {
     }
 
@@ -119,7 +124,12 @@ class LoginPage extends Component {
                             {t('login-btn-enter')}  
                         </Button>
 
-                        <p className={`login-error mt-3 ${zawgyi(lang)}`}> {err_message} </p>
+                        <Button
+                        onClick={() => this.quitDevice()}
+                        className={`mt-3 ms-3 ${zawgyi(lang)}`}
+                        >
+                            Quit
+                        </Button>
                     </div>
                 </div>
             </>

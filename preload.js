@@ -1,4 +1,4 @@
-const { ipcRenderer, contextBridge } = require('electron');
+const { ipcRenderer, contextBridge, app } = require('electron');
 const { device } = require('./src/node');
 
 contextBridge.exposeInMainWorld('nativeApi', {
@@ -10,6 +10,11 @@ contextBridge.exposeInMainWorld('nativeApi', {
     device: {
         get(data) {
             return data(device);
+        }
+    },
+    quit: {
+        quitApp(){
+            return ipcRenderer.invoke('quit-app');
         }
     }
 });
