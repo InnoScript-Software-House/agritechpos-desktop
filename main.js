@@ -1,5 +1,11 @@
-const { BrowserWindow, app, Menu } = require('electron');
+const { BrowserWindow, app, Menu, globalShortcut, ipcMain } = require('electron');
+
+
+ipcMain.handle('quit-app', () => {
+    app.quit();
+})
 const path = require('path');
+
 
 const isDev = !app.isPackaged;
 
@@ -23,14 +29,21 @@ let mainWindow = () => {
     let win = new BrowserWindow({
         width: 1800,
         height: 1000,
-        fullscreen: true,
         type: 'MainWindow',
+        frame: false,
+        fullscreen: true,
         ...browserWindowOptions
     });
 
-    win.loadFile('./index.html');
 
-    win.webContents.openDevTools()
+    if(!isDev){ 
+        globalShortcut.register('Ctrl+Shift+I', () => {
+            return null;
+        })
+    }
+
+
+    win.loadFile('./index.html');
     return win;
 }
 

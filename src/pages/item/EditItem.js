@@ -7,6 +7,8 @@ import { Navigation } from '../../components/general/Navigation';
 import { EditItemComponent } from '../../components/items/EditItemComponent';
 import { EditItemSellPriceComponent } from '../../components/items/EditItemSellPriceComponent';
 import { itemDetail } from '../../services/item.service';
+import { ItemQRComponent } from '../../components/items/ItemQRCode';
+import { ItemBarCodeComponent } from '../../components/items/ItemBarCode';
 
 class EditItemPage extends Component {
 
@@ -70,7 +72,18 @@ class EditItemPage extends Component {
                             <div className='col-md-4'> 
                                 <EditItemSellPriceComponent props={this.props} item={item} reload={() => this.loadingData()} />
                             </div>
-                        </div>
+
+                            <div className='col-md-4 d-md-flex flex-d-row justify-content-between align-items-center'>
+                                <div className='col'>
+                                    <div className='col d-md-flex justify-content-between align-items-center pb-2'>
+                                        <ItemQRComponent props={this.props} item={item} reload={() => this.loadingData()} />
+                                    </div>
+                                    <div className='col d-md-flex justify-content-between align-items-center pt-2'>
+                                        <ItemBarCodeComponent props={this.props} item={item} reload={() => this.loadingData()} />
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
                     )}
                 </div>
             </>
