@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { zawgyi, t } from '../../utilities/translation.utility';
 import { BsArrowUpRightSquare, BsTrash } from "react-icons/bs";
 import { useHistory } from 'react-router-dom';
+import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 
 export const categoryColumns = (props) => {
     const { lang } = props.reducer;
@@ -46,11 +47,12 @@ export const categoryColumns = (props) => {
                             className="icon-btn-outline ms-3" 
                             onClick={() => dispatch(setOpenDelModal({
                                 open: true,
-                                title: 'Item Delete',
-                                message: 'Are you sure to delete this item',
+                                title: 'Category Delete',
+                                message: 'Are you sure want to delete this category',
                                 id: row.id,
-                                type: 'items'
-                            }))}
+                                type: 'category'
+                            }
+                            ))}
                         />
                        </>
                )

@@ -101,7 +101,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             className={`${zawgyi(lang)}`}
-                            placeholder={`${t('item-code')}`}
+                            placeholder={`${t('input-item-create-code')}`}
                             value={code}
                             onChange={e => setCode(e.target.value)}
                         />

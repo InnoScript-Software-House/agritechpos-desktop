@@ -7,6 +7,7 @@ import { Navigation } from "../components/general/Navigation";
 import { getCategories } from '../services/category.service';
 import { CategoryListTableComponent } from '../components/items/CategoryListTableComponent';
 import { CreateCategoryComponent2 } from '../components/items/CreateCategory2';
+import { DeleteDialog } from '../components/general/deleteDialog';
 
 class CategoryListPage extends Component{
     constructor(props){
@@ -37,13 +38,13 @@ class CategoryListPage extends Component{
     }
 
     async componentDidMount() { 
-        console.log(this.props.reducer);
         await this.loadingData();
     }
 
     
     render() {
         const { categoryList, openCreateCategory } = this.state;
+        const { delModal, lang } = this.props.reducer;
         return( 
             <>
             <Navigation props={this.props} />
@@ -76,6 +77,11 @@ class CategoryListPage extends Component{
                     </div>
                 </div>
             </div>
+            {
+                delModal && delModal.open === true && (
+                    <DeleteDialog props={this.props} reload={async () => await this.loadingData()} />
+                )
+            }
             </>
         )
     }

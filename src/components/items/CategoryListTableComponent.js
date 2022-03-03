@@ -5,9 +5,26 @@ import { zawgyi, t } from '../../utilities/translation.utility';
 import { TableLoadingComponent } from "../table/tableLoading";
 import { categoryColumns } from "../columns/category.columns";
 import { paginationComponentOptions } from "../table/paginationOptions";
+import { TableHeaderComponent } from "../table/tableHeader";
+
+const searchColumns = [ 'name'];
 
 export const CategoryListTableComponent = ({ props, dataSource }) => {
     const { lang } = props.reducer;
+    const [tableLoading, setTableLoading] = useState(true);
+    const [categoryList, setCategoryList] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([]); 
+
+    const getFilterResult = (e) => {
+        setCategoryList(e);
+    }
+
+    useEffect(() => {
+        if(dataSource){
+            setCategoryList(dataSource);
+            setTableLoading(false);
+        }
+    },[dataSource]); 
 
 
     return(
@@ -21,17 +38,33 @@ export const CategoryListTableComponent = ({ props, dataSource }) => {
 
             <Card.Body>
                 <DataTable
+                subHeader={true}
+                subHeaderComponent={
+                    <TableHeaderComponent
+                            props={props} 
+                            type={'Category'}
+                            dataSource={dataSource} 
+                            searchColumns={searchColumns} 
+                            placeholder={t('input-category-search')}
+                            filterResult={e => getFilterResult(e)}
+                            selectedRows={selectedRows}
+                    />
+                }
+
                 fixedHeaderScrollHeight="400px"
                 fixedHeader
                 pagination
                 columns={categoryColumns(props)}
                 paginationComponentOptions={paginationComponentOptions}
-                data={dataSource}
+                data={categoryList}
                 dense
                 highlightOnHover
                 pointerOnHover
-                selectableRows
+                 progressPending={tableLoading}
                 progressComponent={<TableLoadingComponent />}
+                selectableRows={true}
+                selectableRowsHighlight={true}
+                onSelectedRowsChange={ e => setSelectedRows(e.selectedRows)}
                  />
             </Card.Body>
         </Card>
