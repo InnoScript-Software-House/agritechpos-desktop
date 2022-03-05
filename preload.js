@@ -19,5 +19,10 @@ contextBridge.exposeInMainWorld('nativeApi', {
         restart() {
             ipcRenderer.send('restart-app', true);
         }
+    },
+    quit: {
+        quitApp(){
+            return ipcRenderer.invoke('quit-app');
+        }
     }
 });

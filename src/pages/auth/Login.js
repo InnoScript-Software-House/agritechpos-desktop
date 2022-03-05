@@ -25,6 +25,11 @@ class LoginPage extends Component {
         }
     }
 
+    quitDevice(){
+        const  quit = window.nativeApi.quit;
+        quit.quitApp();
+    }
+
     componentDidMount() {
     }
 
@@ -34,9 +39,6 @@ class LoginPage extends Component {
 
         if(username === '' || password === '') {
             return this.props.openToast('Login', t('login-required'), 'danger');
-            // this.setState({
-            //     err_message: t('login-required')
-            // });
         }
 
         const requestBody = {
@@ -44,44 +46,35 @@ class LoginPage extends Component {
             password: password
         };
 
-        this.setState({
-            is_loading: true
-        });
-
         const response = await login(requestBody);
-        console.log(response);
 
         if(response.success === false) {
             this.props.openToast('Login', response.message, 'danger');
             this.setState({
                 is_loading: false,
             });
-            return 
-            // this.setState({
-            //     err_message: response.message,
-            //     is_loading: false
-            // });
+            return;
         }
 
        await this.props.setToken(response.access_token);
        await this.props.setAccount(response.account);
-    
-       history.push('/dashboard');
        
+       history.push('/dashboard');
     }
 
     render() {
-        const { username, password, is_loading, err_message } = this.state;
+        const { username, password, is_loading } = this.state;
         const { lang } = this.props.reducer;
         
         return (
             <>
                 <ToastContainer
-                className= 'app-toast-container'
-                position={'top-end'}
+                    className= 'app-toast-container'
+                    position={'top-end'}
                 >
                     <AppToast props={this.props} />
                 </ToastContainer>
+
                 <div className='d-flex flex-row justify-content-end'>
                     <Language props={this.props} />
                 </div>
@@ -119,7 +112,12 @@ class LoginPage extends Component {
                             {t('login-btn-enter')}  
                         </Button>
 
-                        <p className={`login-error mt-3 ${zawgyi(lang)}`}> {err_message} </p>
+                        <Button
+                            onClick={() => this.quitDevice()}
+                            className={`mt-3 ms-3 ${zawgyi(lang)}`}
+                        >
+                            Quit
+                        </Button>
                     </div>
                 </div>
             </>

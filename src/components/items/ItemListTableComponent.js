@@ -46,6 +46,7 @@ export const ItemListTableComponent = ({ props, dataSource }) => {
                     subHeaderComponent={
                         <TableHeaderComponent 
                             props={props} 
+                            type={'Items'}
                             dataSource={dataSource} 
                             searchColumns={searchColumns} 
                             placeholder={t('input-item-search')}

@@ -8,6 +8,7 @@ import axios from "axios";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 
 import '../../assets/css/components/activation.css';
+import { LICENSE } from "../../redux/actionTypes";
 
 export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
 
@@ -43,8 +44,9 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
             dispatch(setOpenToastAction(t('toast-license-key'), response.message, 'danger'));
             return;
         }
-
         axios.defaults.headers.common['license'] = response.token;
+        localStorage.setItem(LICENSE, response.token);
+        
         setLoading(false);
         history.push('/device/first');
     }

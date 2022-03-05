@@ -19,10 +19,8 @@ export const DeleteDialog = ({ props, reload }) => {
         }
 
         if(response && (response.status !== 200 || response.status !== 201)) {
-            dispatch(setOpenToastAction('Item Delete', response.message, 'danger'));
-            return null;
-        }
-
+            return ;
+       }
         return response;
     }
 
@@ -35,6 +33,7 @@ export const DeleteDialog = ({ props, reload }) => {
         const response = await delRequest(`${delModal.type}/${delModal.id}`);
         handlerException(response);
         closeModal();
+        dispatch(setOpenToastAction(delModal.title, delModal.type+' deleted Successfully'), 'success');
         reload();
     }
 
@@ -46,7 +45,7 @@ export const DeleteDialog = ({ props, reload }) => {
        const response = await postRequest(`${delModal.type}/delete`, { data: requestBody });
        handlerException(response);
        closeModal();
-       dispatch(setOpenToastAction('Deleted Items', 'Items are deleted', 'success'));
+       dispatch(setOpenToastAction(delModal.title, delModal.type+' deleted Successfully'), 'success');
        reload();
     }
 

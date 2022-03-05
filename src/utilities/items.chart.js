@@ -23,18 +23,20 @@ export const ItemsChart = (({ props, type, title, dataSource}) => {
             });
 
             const data = {
-                labels: labels.map((e) => {
-                    switch (e){
-                        case true : e='Disabled';
-                        case false : e = ' Active';
-                        default : return e;
+                labels: labels.map((e) => { 
+                    if(e===true){
+                        return e = 'Active';
                     }
+                    else if(e === false){
+                        return e = 'Disable';
+                    }
+                    else return e;
                 }),
                 datasets: [
                     {
                         label: '# of labels',
                         data: dataSet,
-                        backgroundColor: ['rgba(135, 186, 235, 1)', 'rgba(235, 44, 43, 1)',...generateColor(labels)],
+                        backgroundColor: ['rgba(235, 44, 43, 1)','rgba(43, 235, 44, 1)','rgba(43, 44, 235)',...generateColor(labels)],
                         borderWidth: 1,
                     }
                 ]

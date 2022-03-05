@@ -12,6 +12,7 @@ import { ItemListTableComponent } from '../components/items/ItemListTableCompone
 import { getItems } from '../services/item.service';
 import { DeleteDialog } from '../components/general/deleteDialog';
 import { ItemsChart } from '../utilities/items.chart';
+import { VerticalChart } from '../utilities/vertical.chart';
 
 class InventoryPage extends Component {
 
@@ -84,6 +85,7 @@ class InventoryPage extends Component {
     render() {
         const { lang, delModal } = this.props.reducer;
         const { openEdit, categories, items, openCreateItem } = this.state;
+        const { history } = this.props;
         return(
             <>
                 <Navigation props={this.props} />
@@ -123,9 +125,7 @@ class InventoryPage extends Component {
 
                                 <Button
                                     className='btn-small mt-3 ms-3'
-                                    onClick={() => this.setState({
-
-                                    })}
+                                    onClick={() => history.push('/itemCategoryList')}
                                 >
                                     <BsListTask size={20} />
                                     <span className='me-3'> Category List </span>
@@ -161,6 +161,9 @@ class InventoryPage extends Component {
                                     <ItemsChart props={this.props} type={items.map(e => e.location)} title={'Location'} dataSource={items}/>
                                 </div>
                             </div>
+                            <div className='col mt-3'>
+                                    <VerticalChart props={this.props} type={items.map(e => e.model)} title={'Quantity & Price Chart'} dataSource={items}/>
+                             </div>
                         </div>
                     </div>
                 </div>
