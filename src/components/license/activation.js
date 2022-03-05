@@ -29,8 +29,6 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
         num_device: plan.device
     }
 
-    console.log(requestBody);
-
     const save = async () => {
         setLoading(true);
 
