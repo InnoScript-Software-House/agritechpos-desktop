@@ -1,47 +1,42 @@
 import React, { Component } from 'react'
-import { ToastContainer } from 'react-bootstrap';
+import { Button, ToastContainer } from 'react-bootstrap';
+import { BsArrowClockwise, BsCheck2Square } from 'react-icons/bs';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { DatabaseURLComponent } from '../components/configurations/DatabaseURLComponent';
 import { DeviceTypeComponent } from '../components/configurations/DeviceTypeComponent';
 import { NetworkTypeComponent } from '../components/configurations/NetworkTypeComponent';
 import { Language } from '../components/general/Language';
 import { AppToast } from '../components/general/toasts';
 import { t, zawgyi } from '../utilities/translation.utility';
 
+const configNavigations = [
+    // {
+    //     title: t('config-nav-device'),
+    //     component: 'DeviceTypeComponent'
+    // },
+    // {
+    //     title: t('config-nav-network'),
+    //     component: 'NetworkTypeComponent'
+    // },
+    {
+        title: t('config-nav-database-url'),
+        component: 'DatabaseURLComponent'
+    }
+]
+
 class ConfigurationPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            openComponent: null
+            openComponent: 'DatabaseURLComponent'
         }
     }
 
-    updateState(componentName) {
-        this.setState({
-            openComponent: componentName
-        });
-    }
-
-    checkConfig() {
-        const { config } = this.props.reducer;
-        console.log('Configuration', config);
-
-        if(config && config.device_type === null) {
-            return this.updateState('DeviceTypeComponent');
-        }
-
-        if(config && config.network_type === null) {
-            return this.updateState('NetworkTypeComponent');
-        }
-    }
-
-    refresh() {
-        this.checkConfig();
-    }
-
-    componentDidMount() {
-        this.checkConfig();
+    restart() {
+        const { app } = window.nativeApi;
+        app.restart();
     }
 
     render() {
@@ -70,16 +65,49 @@ class ConfigurationPage extends Component {
                         <img src="build/assets/images/side_image.jpeg" className='img-fluid' />
                     </div>
 
-                    <div className='col-md-8'>
-                        <h3 className={`title ${zawgyi(lang)}`}> {t('title')} </h3>
+                <div className='col-md-8'>
+                        <h3 className={`title mb-3 pb-3 ${zawgyi(lang)}`}> {t('title')} </h3>
 
-                        {openComponent === 'DeviceTypeComponent' && (
-                            <DeviceTypeComponent props={this.props} reload={() => this.checkConfig()} />
-                        )}
+                        {/* <Button
+                            className='btn btn-small'
+                            onClick={() => this.restart()}
+                        >
+                            <BsArrowClockwise size={30} /> Restart
+                        </Button> */}
 
-                        {openComponent === 'NetworkTypeComponent' && (
-                            <NetworkTypeComponent props={this.props} reload={() => this.checkConfig()} />
-                        )}
+                        <div className='row mt-3 pt-3'>
+                            {/* <div className='col-md-4'>
+                                <ul className='config-nav-list'>
+                                    {configNavigations.map((value, index) => {
+                                        return(
+                                            <li 
+                                                key={`config_nav_id_${index}`}  
+                                                onClick={() => this.setState({
+                                                    openComponent: value.component
+                                                })}
+                                            > 
+                                                <BsCheck2Square size={20} />
+                                                <span className={`${zawgyi(lang)}`}> {value.title} </span>
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                            </div> */}
+
+                            <div className='col-md-8'>
+                                {openComponent === 'DeviceTypeComponent' && (
+                                    <DeviceTypeComponent props={this.props} />
+                                )}
+
+                                {openComponent === 'NetworkTypeComponent' && (
+                                    <NetworkTypeComponent props={this.props} />
+                                )}
+
+                                {openComponent === 'DatabaseURLComponent' && (
+                                    <DatabaseURLComponent props={this.props} />
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

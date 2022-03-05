@@ -16,15 +16,10 @@ class LicensePage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      serialNumber: 'AAAA-AAAA-AAAA-AAAA-AAAA-AAAA',
-      userInfo: {
-        first_name: ""
-      },
+      serialNumber: null,
+      userInfo: null,
       plan: null
     }
-  }
-
-  componentDidMount() {
   }
 
   getSerialKey(serialKey) {
@@ -40,6 +35,7 @@ class LicensePage extends Component {
   }
 
   getPlan(planData) {
+    console.log(planData);
     this.setState({
       plan: planData
     });
@@ -120,24 +116,19 @@ class LicensePage extends Component {
               />
             )}
 
+            {(serialNumber && userInfo && plan) && (
+              <Activation 
+                lng={lang}
+                serial={serialNumber}
+                user={userInfo}
+                plan={plan}
+                backStep={(e) => this.getBackStep(e)}
+                history={this.props.history}
+              />
+            )}
           </div>
         </div>
       </div>
-      // <>
-
-      //       {(serialNumber && userInfo && plan) && (
-      //         <Activation 
-      //           lng={lang}
-      //           serial={serialNumber}
-      //           user={userInfo}
-      //           plan={plan}
-      //           backStep={(e) => this.getBackStep(e)}
-      //           history={this.props.history}
-      //         />
-      //       )}
-      //     </div>
-      //   </div>
-      // </>
     )
   }
 }

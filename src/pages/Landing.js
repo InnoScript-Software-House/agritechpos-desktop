@@ -7,11 +7,12 @@ import { DEVICE_VALUE, LICENSE } from '../redux/actionTypes';
 import { checkLicense } from '../services/license.service.js';
 import { checkFirstUser } from '../services/user.service';
 import axios from 'axios';
-
-import '../assets/css/landing/index.css';
 import { getFirstDevice } from '../services/device.service';
 import { defineMacAndIP } from '../services/utility.service';
 import { setOpenToastAction } from '../redux/actions/toast.action';
+
+import '../assets/css/landing/index.css';
+import { t } from '../utilities/translation.utility';
 
 class LandingPage extends Component {
 
@@ -26,21 +27,41 @@ class LandingPage extends Component {
         const { history } = this.props;
         const { config } = this.props.reducer;
 
-        if(config.device_type === null) {
+        if(config.api_url === null) {
             history.push('/configuration');
             return;
         }
+
+        axios.defaults.baseURL = `http://${config.api_url}/api`;
+
+        return true;
     }
 
     async checkLicenseData () {
+
         const { history } = this.props;
         const { setToast } = this.props.reducer;
 
         const response = await checkLicense();
 
         if(response && response.success === false) {
-            setToast('License Error', 'Invalid License', 'danger');
+            setToast(t('toast-license-key'), response.message, 'danger');
             return null;
+        }
+
+        if (response === null) {
+            history.push('/error/0');
+            return;
+        }
+
+        if (response && response.message === 'licnese is expired') {
+            history.push('/error/expired');
+            return;
+        }
+
+        if (response && response.message === 'unknown error') {
+            history.push('/error/unknown');
+            return;
         }
 
         if(response && response.length === 0) {
@@ -48,52 +69,40 @@ class LandingPage extends Component {
             return;
         }
 
+        if (response && response.length > 0) {
+            localStorage.setItem(LICENSE, response.token);
+            axios.defaults.headers.common["license"] = response[0].token;
+        }
+
+        const firstDevice = await getFirstDevice();
+
+        if (firstDevice.length === 0) {
+            history.push('/device/first');
+            return;
+        }
+
+        const firstUser = await checkFirstUser();
+
+        if (firstUser && firstUser.status === 404) {
+            history.push('/user/first');
+            return;
+        } else {
+            history.push('/login');
+            return;
+        }
         return;
     }
 
     componentDidMount() {
         const isConfig = this.checkConfig();
-        //this.checkLicenseData();
+
+        if(isConfig) {
+            this.checkLicenseData();
+        }
+
     }
 
     // async componentDidMount() {
-    //     this.loadingData();
-
-    //     const { history } = this.props;
-    //     const response = await checkLicense(this.props);
-
-    //     if (response === null) {
-    //         history.push('/error/0');
-    //         return;
-    //     }
-
-    //     if (response && response.message === 'licnese is expired') {
-    //         history.push('/error/expired');
-    //         return;
-    //     }
-
-    //     if (response && response.message === 'unknown error') {
-    //         history.push('/error/unknown');
-    //         return;
-    //     }
-
-    //     if (response && response.length === 0) {
-    //         history.push('/license');
-    //         return;
-    //     }
-
-    //     if (response && response.length > 0) {
-    //         localStorage.setItem(LICENSE, response[0].token);
-    //         axios.defaults.headers.common["license"] = response[0].token;
-    //     }
-
-    //     const firstDevice = await getFirstDevice();
-
-    //     if (firstDevice.length === 0) {
-    //         history.push('/device/first');
-    //         return;
-    //     }
-
     //     const { device } = window.nativeApi;
     //     device.get((result) => {
     //         const networkInterfaces = result.networkInterfaces();
@@ -105,20 +114,12 @@ class LandingPage extends Component {
 
     //     const firstUser = await checkFirstUser();
 
-    //     if (firstUser && firstUser.status === 404) {
-    //         history.push('/user/first');
-    //         return;
-    //     } else {
-    //         history.push('/login');
-    //         return;
-    //     }
+
     // }
 
     render() {
         const { is_loading } = this.state;
-        const { config } = this.props.reducer;
 
-        console.log(config);
         return (
             <>
                 {is_loading && (

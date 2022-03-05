@@ -233,3 +233,24 @@ input[type="number"]:focus,
 .btn-secondary {
   background-color: #6c757d!important;
 }
+
+.config-input {
+  width: 300px!important;
+}
+
+.config-input-500 {
+  width: 500px!important;
+}
+
+.config-nav-list {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.config-nav-list > li {
+  cursor: pointer;
+  color: #01a3a6;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
