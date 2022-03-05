@@ -1,4 +1,53 @@
 {
+    "config-nav-device" : "စက်အမျိုးအစား",
+    "config-devicetype-description" : "ဆော့ဖ်ဝဲအသုံးပြုရန်အတွက် စက်အမျိုးအစား (လက်ပ်တော့ သို့မဟုတ် PC) ကို ရွေးချယ်ပါ။",
+    "config-devicetype-set-success" : "စက်အမျိုးအစားရွေးချယ်မှုအောင်မြင်ပါသည်။",
+
+    "config-nav-network" : "ကွန်ရက်ချိတ်ဆက်မှု",
+    "config-networktype-description" : "ကွန်ရက်ချိတ်ဆက်မှုကို ရွေးချယ်ပါ။",
+    "config-networktype-info" : "ကွန်ရက်ချိတ်ဆက်မှုအချက်အလက်များ",
+    "config-networktype-success" : "ကွန်ရက်ချိတ်ဆက်မှုအချက်များ ပြင်ဆင်မှုအောင်မြင်ပါသည်",
+
+    "config-nav-database-url" : "Database URL",
+    "config-database-url-submit" : "အတည်ပြုမည်",
+    "config-database-url-placehoder" : "database ip address ထည့်ရန်",
+    "config-database-url-description" : "database နှင့်ချိတ်ဆက်ရန်အတွက် ip address ထည့်သွင်းပေးရန်လိုအပ်ပါသည်",
+    "config-database-url-empty-error" : "IP လိပ်စာ လိုအပ်သည်။",
+    "config-database-url-success" : "database နှင့်ချိတ်ဆက်ရန် ပြင်ဆင်မှုအောင်မြင်ပါသည်",
+
+    "license-key-required": "လိုင်စင်ကီး လိုအပ်ပါသည်။",
+    "license-key-invalid" : "လိုင်စင်ကီး မမှန်ကန်ပါ",
+    "license-key-submit": "အတည်ပြုမည်",
+
+    "license-customer-description" : "လိုင်စင်မှတ်ပုံတင်ခြင်းအတွက် သုံးစွဲသူအချက်အလက်ကို ဖြည့်စွက်ပါ။",
+    "license-customer-form-title" : "မှတ်ပုံတင်သူ၏အချက်အလက်",
+    "license-customer-first-name": "နာမည် (ပထမ)",
+    "license-customer-last-name": "နာမည် (ဒုတိယ)",
+    "license-customer-phone" : "ဖုန်း",
+    "license-customer-email" : "အီးမေးလ်",
+    "license-customer-address" : "လိပ်စာ",
+    "license-customer-submit" : "အတည်ပြုမည်",
+    "license-customer-all-field-required" : "သုံးစွဲသူအချက်အလက်အားလုံးဖြည့်စွက်ရန်လိုအပ်ပါသည်။",
+
+    "license-plan-description" : "ဆော့ဖ်ဝဲအသုံးပြုမည့် ကာလသက်တမ်းနှင့် စက်အလုံးအရေအတွက်ကို ရွေးချယ်ပါ။",
+    "license-plan-info-title" : "ကာလသက်တမ်းနှင့် စက်အလုံးအရေအတွက်",
+    "license-plan-duration" : "ဆော့ဖ်ဝဲအသုံးပြုမည့် ကာလ",
+    "license-plan-device" : "အသုံးပြုမည့်စက်အရေအတွက်",
+    "license-plan-activation-date" : "စတင်အသုံးပြုမည့်ရက်",
+    "licnese-plan-submit" : "အတည်ပြုမည်",
+
+    "license-active-invalid" : "လိုင်စင်နံပါတ် မှန်ကန်မှုမရှိပါ",
+    "license-active-title" : "မှတ်ပုံတင်ခြင်း",
+
+    "toast-license-key" : "လိုင်စင်ကီး",
+    "toast-license-customer" : "သုံးစွဲသူအချက်အလက်",
+    "tost-configuration" : "ဆော့၀ဲလ် ဆက်တင်များ ချိန်ညှိခြင်း",
+
+    "invalid-email-error" : "အီးမေးလ်လိပ်စာမှန်ကန်မှုမရှိပါ",
+    "invalid-phone-error" : "ဖုန်းနံပါတ်မှန်ကန်မှုမရှိပါ",
+
+    "unit-year" : "နှစ်",
+
     "dashboard-alert-shop-title": "Shop Information Need!",
     "dashboard-alert-shop-description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     "dashboard-alert-shop-btn": "Goto Shop Setting",
@@ -10,8 +59,6 @@
     "serial-description" : "ဆော့၀ဲအသုံးပြုနိုင်ရန် serial နံပါတ် ထည့်သွင်းအတည်ပြုရန် လိုအပ်ပါသည်။ ဆော့၀ဲ CD တွင် ပါရှိသည့် serial နံပါတ်အား ထည့်သွင်းအသုံးပြုနိုင်ပါသည်။",
     "serial-key-enter": "Serial number ထည့်ရန်",
     "serial-key-error": "serial နံပါတ် မှန်ကန်မှုမရှိပါ။",
-    "serial-key-submit": "အတည်ပြုမည်",
-    "user-description-title": "User Information",
     "user-first-name": "First Name",
     "user-last-name": "Last Name",
     "user-phone" : "Phone Number",
@@ -19,7 +66,7 @@
     "user-address": "Address",
     "user-info-empty-error": "All fields are requied",
     "user-info-phone-error" : "Invalid Phone number",
-    "plan-info-title" : "Plan Information",
+
     "error-server-network-title": "Server Netwrok Error",
     "error-server-network-message": "Please check you server status. When server status is not open, server connection error will occur.",
     "error-resource-not-found-title": "Resource Not Found",

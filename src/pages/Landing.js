@@ -3,14 +3,16 @@ import { withRouter } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { setLangAction } from '../redux/actions/lang.action';
-import { DEVICE_VALUE, LICENSE } from '../redux/actionTypes';
+import { DEVICE_VALUE, LICENSE, SET_ACCEASS_TOEKN, SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from '../redux/actionTypes';
 import { checkLicense } from '../services/license.service.js';
 import { checkFirstUser } from '../services/user.service';
 import axios from 'axios';
-
-import '../assets/css/landing/index.css';
 import { getFirstDevice } from '../services/device.service';
 import { defineMacAndIP } from '../services/utility.service';
+import { setOpenToastAction } from '../redux/actions/toast.action';
+
+import '../assets/css/landing/index.css';
+import { t } from '../utilities/translation.utility';
 
 class LandingPage extends Component {
 
@@ -21,9 +23,31 @@ class LandingPage extends Component {
         }
     }
 
-    async componentDidMount() {
+    checkConfig() {
         const { history } = this.props;
-        const response = await checkLicense(this.props);
+        const { config } = this.props.reducer;
+
+        if(config.api_url === null) {
+            history.push('/configuration');
+            return;
+        }
+
+        axios.defaults.baseURL = `http://${config.api_url}/api`;
+
+        return true;
+    }
+
+    async checkLicenseData () {
+
+        const { history } = this.props;
+        const { setToast } = this.props.reducer;
+
+        const response = await checkLicense();
+
+        if(response && response.success === false) {
+            setToast(t('toast-license-key'), response.message, 'danger');
+            return null;
+        }
 
         if (response === null) {
             history.push('/error/0');
@@ -40,15 +64,13 @@ class LandingPage extends Component {
             return;
         }
 
-        if (response && response.length === 0) {
+        if(response && response.length === 0) {
             history.push('/license');
             return;
         }
 
-        if (response && response.length > 0) {
-            localStorage.setItem(LICENSE, response[0].token);
-            axios.defaults.headers.common["license"] = response[0].token;
-        }
+        localStorage.setItem(LICENSE, response.token);
+        axios.defaults.headers.common["license"] = response.token;
 
         const firstDevice = await getFirstDevice();
 
@@ -57,14 +79,11 @@ class LandingPage extends Component {
             return;
         }
 
-        const { device } = window.nativeApi;
-        device.get((result) => {
-            const networkInterfaces = result.networkInterfaces();
-            const getMacAndIp = defineMacAndIP(networkInterfaces);
-            axios.defaults.headers.common['ip'] = getMacAndIp.address;
-            axios.defaults.headers.common['mac'] = getMacAndIp.mac;
-            localStorage.setItem(DEVICE_VALUE, JSON.stringify(getMacAndIp));
-        });
+        localStorage.setItem(SET_NETWORK_ADDRESS, firstDevice.ip);
+        localStorage.setItem(SET_NETWORK_MAC, firstDevice.mac);
+
+        axios.defaults.headers.common["ip"] = firstDevice.ip;
+        axios.defaults.headers.common['mac'] = firstDevice.mac;
 
         const firstUser = await checkFirstUser();
 
@@ -75,6 +94,16 @@ class LandingPage extends Component {
             history.push('/login');
             return;
         }
+        return;
+    }
+
+    componentDidMount() {
+        const isConfig = this.checkConfig();
+
+        if(isConfig) {
+            this.checkLicenseData();
+        }
+
     }
 
     render() {
@@ -99,7 +128,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setLang: (value) => dispatch(setLangAction(value))
+    setLang: (value) => dispatch(setLangAction(value)),
+    setToast: (title, message, status) => dispatch(setOpenToastAction(title, message, status))
 });
 
 export default connect(

@@ -57,7 +57,12 @@ if(isDev) {
 
 app.whenReady().then(() => {
     const contents = mainWindow();
-    contents.webContents.on('did-finish-load', () => {
-        contents.webContents.send('get-device-info', true);
-    });
 });
+
+ipcMain.on('restart-app', () => {
+    app.quit();
+});
+
+ipcMain.handle('quit-app', () => {
+    app.quit();
+})
