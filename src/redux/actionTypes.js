@@ -20,3 +20,5 @@ export const CHAR_VALUE = 'CHAR_VALUE';
 
 export const SET_OPEN_DEL_MODAL = 'SET_OPEN_DEL_MODAL';
 export const OPEN_DEL_MODAL_VALUE = 'OPEN_DEL_MODAL_VALUE';
+
+export const ADD_CART = 'ADD_CART';

@@ -39,6 +39,10 @@ export const CreateCategoryComponent2 = ({props, reload}) => {
         reload();
     }
 
+    useEffect(() => {
+        
+    })
+
     return (
         <>
         <Card className="mt3">

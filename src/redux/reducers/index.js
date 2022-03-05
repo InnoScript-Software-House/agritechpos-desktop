@@ -6,6 +6,7 @@ import { devcieReducer } from "./device.reducer";
 import { langReducer } from "./lang.reducer";
 import { numberFormatReducer } from "./numberFormat.reducer";
 import { openDelReducer } from "./openDelModal.reducer";
+import { saleReducer } from "./sale.reducer";
 import { toastReducer } from "./toast.reducer";
 
 export default combineReducers({
@@ -16,5 +17,6 @@ export default combineReducers({
     numberFormat: numberFormatReducer,
     toast: toastReducer,
     char: charasterReducer,
-    delModal: openDelReducer
+    delModal: openDelReducer,
+    cartReducer: saleReducer
 });

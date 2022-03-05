@@ -2,21 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { autocomplete } from '../../utilities/table.utility';
 import { t, zawgyi } from '../../utilities/translation.utility';
-import { ItemExportToExcel } from '../exports/itemExportComponent';
 import { BsCloudUpload, BsTrash } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
-import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 
 import '../../assets/css/components/table-header.css';
 
-export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, placeholder, filterResult, selectedRows }) => {
+export const SaleTableHeaderComponent = ({ type, props, dataSource, searchColumns, placeholder, filterResult, categories }) => {
     const { lang } = props.reducer;
-    const dispatch = useDispatch();
 
     const [text, setText] = useState('');
     const [filterType, setFilterType] = useState(searchColumns[0]);
     const [openExportSetting, setOpenExportSetting] = useState(false);
-    const [selectedList, setSelectedList] = useState([]);
+    const [selectCategory, setSelectCategory] = useState('');
+    const [categoryItems, setCategoryItems] = useState([]);
+
 
     const autoSearch = (text) => {
         const result = autocomplete(dataSource, text, filterType);
@@ -30,45 +29,46 @@ export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, p
         filterResult(dataSource);
     }
 
-    const deleteSelectedRows = () => {
-       dispatch(setOpenDelModal({
-           title: type+' Delete',
-           message: 'Are you sure want to delete these '+type,
-           type: type,
-           multiple: true,
-           open: true,
-           data: selectedList
-       }))
+    const calValue = (initialValue = []) => {
+        initialValue.push(categories.map( e => e.name));
+        setSelectCategory(initialValue[0][0]);
+        console.log(selectCategory);
     }
 
     useEffect(() => {
-        if(selectedRows) {
-            setSelectedList(selectedRows);
-        }
-    },[selectedRows]);
+        if(categories){
+            calValue();
 
+        }
+    },[categories])
+
+    const categoryItemList = (categoryName) => {
+        const a = [];
+            a.push(dataSource.filter((item, index) => {
+            item.category === categoryName;
+        }));
+        setCategoryItems(a);
+    }
     return(
         <div className='table-header mb-2'>
             <div className='table-header-left'>
-                {selectedRows.length > 0 && (
-                    <div className='d-md-flex flex-md-row justifiy-content-start align-items-center'>
-                        <Button 
-                            className='btn-small'
-                            onClick={() => setOpenExportSetting(true)}
-                        >  
-                            <BsCloudUpload size={20} />
-                            <span className={`${zawgyi(lang)}`}> {t('export-excel-setting-btn')} </span>
-                        </Button>
+                <InputGroup>
+                    <FormControl
+                    as={'select'}
+                    placeholder="select category"
+                    value={selectCategory}
+                    onChange={(e) => {
+                        setSelectCategory(e.target.value);
+                    }}
+                    >
 
-                        <Button
-                            className='btn-small ms-3'
-                            onClick={() => deleteSelectedRows()}
-                        >
-                            <BsTrash size={20} />
-                            <span> Delete Selected Items </span>
-                        </Button>
-                    </div>
-                )}
+                        {selectCategory? categories.map((category, index) => {
+                        return (
+                            <option key={`category id ${index}`}>{category.name}</option>
+                        )
+                    }): []}
+                    </FormControl>
+                </InputGroup>
             </div>
 
             <InputGroup className='table-header-right'>

@@ -23,6 +23,7 @@ import InventoryPage from './pages/Inventory';
 import EditItemPage from './pages/item/EditItem';
 import CategoryListPage from './pages/CategoryList';
 import EditCategoryPage from './pages/category/EditCategory';
+import SalePage from './pages/Sale';
 
 class App extends Component {
 
@@ -46,6 +47,8 @@ class App extends Component {
         <Route exact path={'/account'} component={AccountPage} />
 
         <Route exact path={'/inventory'} component={InventoryPage} />
+
+        <Route exact path={'/sale'} component={SalePage} />
 
         <Route exact path={'/itemCategoryList'} component={CategoryListPage} />
 

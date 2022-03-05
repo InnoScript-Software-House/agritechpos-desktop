@@ -39,7 +39,7 @@ export const categoryColumns = (props) => {
                         <BsArrowUpRightSquare 
                             size={20} 
                             className="icon-btn-outline"
-                            onClick={() => history.push(`/category/:${row.id}`)}
+                            onClick={() => history.push(`/category/${row.id}`)}
                         />
     
                         <BsTrash 

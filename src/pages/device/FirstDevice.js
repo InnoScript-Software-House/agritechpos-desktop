@@ -126,7 +126,7 @@ class FirstDevice extends Component {
               onChange={(e) => this.setState({
                 ip: e.target.value
               })}
-            >{ip}</FormControl>
+            />
 
             <FormControl
               className={`me-3 ${zawgyi(lang)}`}
@@ -136,7 +136,7 @@ class FirstDevice extends Component {
               onChange={(e) => this.setState({
                 mac: e.target.value
               })}
-            >{mac}</FormControl>
+            />
 
             <FormControl
               className={`me-3 ${zawgyi(lang)}`}

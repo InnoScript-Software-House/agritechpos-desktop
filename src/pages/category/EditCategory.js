@@ -22,7 +22,7 @@ class EditCategoryPage extends Component {
             this.props.openToast('Edit Category', response.message, 'danger');
             return
         }
-        return this.props.openToast('Edit Category', 'Category Update Successful', 'success');
+        return;
     }
 
     async loadingData(){
@@ -40,7 +40,6 @@ class EditCategoryPage extends Component {
         await this.loadingData();
     }
 
-
     render(){
         const { category, is_loading } = this.state;
         const { history } = this.props;
@@ -51,7 +50,7 @@ class EditCategoryPage extends Component {
                 <div className='row mt-1'>
                     <div className='col-md-12 d-md-flex flex-md-row justify-content-between align-items-center'>
                         <div className='mb-2 mt-2'>
-                            <BsArrowLeftCircle size={30} className="btn-icon" onClick={() => history.push('/categoryList')} />
+                            <BsArrowLeftCircle size={30} className="btn-icon" onClick={() => history.push('/itemCategoryList')} />
                         </div>
                     </div>
                 </div>
