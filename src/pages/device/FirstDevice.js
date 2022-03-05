@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -12,6 +10,7 @@ import { ToastContainer } from "react-bootstrap";
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { checkNetworkConnection } from '../../utilities/networkConnection';
 import axios from 'axios';
+import { SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from '../../redux/actionTypes';
 
 import '../../assets/css/first-device.css';
 
@@ -27,13 +26,16 @@ class FirstDevice extends Component {
     }
   }
 
-  componentDidMount() {
+  loadingData() {
     const device = checkNetworkConnection();
 
     if(device.wifi) {
       this.setState({
         ip: device.wifi.address,
         mac: device.wifi.mac
+      }, () => {
+        localStorage.setItem(SET_NETWORK_ADDRESS, device.wifi.address);
+        localStorage.setItem(SET_NETWORK_MAC, device.wifi.mac);
       });
       return;
     }
@@ -42,8 +44,17 @@ class FirstDevice extends Component {
       this.setState({
         ip: device.localhost.address,
         mac: device.localhost.mac
+      }, () => {
+        localStorage.setItem(SET_NETWORK_ADDRESS, device.localhost.address);
+        localStorage.setItem(SET_NETWORK_MAC, device.localhost.mac);
       });
     }
+
+    return;
+  }
+
+  componentDidMount() {
+    this.loadingData();
   }
 
   async create() {
@@ -124,7 +135,7 @@ class FirstDevice extends Component {
               onChange={(e) => this.setState({
                 ip: e.target.value
               })}
-            >{ip}</FormControl>
+            />
 
             <FormControl
               className={`me-3 ${zawgyi(lang)}`}
@@ -134,7 +145,7 @@ class FirstDevice extends Component {
               onChange={(e) => this.setState({
                 mac: e.target.value
               })}
-            >{mac}</FormControl>
+            />
 
             <FormControl
               className={`me-3 ${zawgyi(lang)}`}
@@ -147,7 +158,7 @@ class FirstDevice extends Component {
             />
 
             <Button onClick={() => this.create()}> {t('btn-frist-device-create')} </Button>
-          </InputGroup>
+            </InputGroup>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { setLangAction } from '../redux/actions/lang.action';
-import { DEVICE_VALUE, LICENSE } from '../redux/actionTypes';
+import { DEVICE_VALUE, LICENSE, SET_ACCEASS_TOEKN, SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from '../redux/actionTypes';
 import { checkLicense } from '../services/license.service.js';
 import { checkFirstUser } from '../services/user.service';
 import axios from 'axios';
@@ -69,10 +69,8 @@ class LandingPage extends Component {
             return;
         }
 
-        if (response && response.length > 0) {
-            localStorage.setItem(LICENSE, response.token);
-            axios.defaults.headers.common["license"] = response[0].token;
-        }
+        localStorage.setItem(LICENSE, response.token);
+        axios.defaults.headers.common["license"] = response.token;
 
         const firstDevice = await getFirstDevice();
 
@@ -80,6 +78,12 @@ class LandingPage extends Component {
             history.push('/device/first');
             return;
         }
+
+        localStorage.setItem(SET_NETWORK_ADDRESS, firstDevice.ip);
+        localStorage.setItem(SET_NETWORK_MAC, firstDevice.mac);
+
+        axios.defaults.headers.common["ip"] = firstDevice.ip;
+        axios.defaults.headers.common['mac'] = firstDevice.mac;
 
         const firstUser = await checkFirstUser();
 
@@ -101,21 +105,6 @@ class LandingPage extends Component {
         }
 
     }
-
-    // async componentDidMount() {
-    //     const { device } = window.nativeApi;
-    //     device.get((result) => {
-    //         const networkInterfaces = result.networkInterfaces();
-    //         const getMacAndIp = defineMacAndIP(networkInterfaces);
-    //         axios.defaults.headers.common['ip'] = getMacAndIp.address;
-    //         axios.defaults.headers.common['mac'] = getMacAndIp.mac;
-    //         localStorage.setItem(DEVICE_VALUE, JSON.stringify(getMacAndIp));
-    //     });
-
-    //     const firstUser = await checkFirstUser();
-
-
-    // }
 
     render() {
         const { is_loading } = this.state;

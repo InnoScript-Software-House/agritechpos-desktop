@@ -1,4 +1,9 @@
 const { BrowserWindow, app, Menu, globalShortcut, ipcMain } = require('electron');
+
+
+ipcMain.handle('quit-app', () => {
+    app.quit();
+})
 const path = require('path');
 
 
@@ -24,7 +29,6 @@ let mainWindow = () => {
     let win = new BrowserWindow({
         width: 1800,
         height: 1000,
-        fullscreen: false,
         type: 'MainWindow',
         frame: false,
         fullscreen: true,
