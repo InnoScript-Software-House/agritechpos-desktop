@@ -1,9 +1,4 @@
 const { BrowserWindow, app, Menu, globalShortcut, ipcMain } = require('electron');
-
-
-ipcMain.handle('quit-app', () => {
-    app.quit();
-})
 const path = require('path');
 
 
@@ -29,6 +24,7 @@ let mainWindow = () => {
     let win = new BrowserWindow({
         width: 1800,
         height: 1000,
+        fullscreen: false,
         type: 'MainWindow',
         frame: false,
         fullscreen: true,
@@ -57,7 +53,12 @@ if(isDev) {
 
 app.whenReady().then(() => {
     const contents = mainWindow();
-    contents.webContents.on('did-finish-load', () => {
-        contents.webContents.send('get-device-info', true);
-    });
 });
+
+ipcMain.on('restart-app', () => {
+    app.quit();
+});
+
+ipcMain.handle('quit-app', () => {
+    app.quit();
+})

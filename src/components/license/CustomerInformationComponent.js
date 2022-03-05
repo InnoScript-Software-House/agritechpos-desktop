@@ -4,9 +4,13 @@ import { t, zawgyi } from "../../utilities/translation.utility";
 import { ArrowLeft } from "react-bootstrap-icons";
 import { useDispatch } from 'react-redux';
 import { setOpenToastAction } from "../../redux/actions/toast.action";
-import '../../assets/css/components/user-register-info-form.css';
 
-export const UserInformationForm = ({ lng, retriveUserInfo, backStep }) => {
+import '../../assets/css/components/license/user-register-info-form.css';
+
+export const CustomerInformationComponent = ({ props, retriveUserInfo, backStep }) => {
+
+    const { lang } = props.reducer;
+    const dispatch = useDispatch();
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -14,29 +18,24 @@ export const UserInformationForm = ({ lng, retriveUserInfo, backStep }) => {
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
 
-    const [err, setErr] = useState(null);
-    const dispatch = useDispatch();
-    const checkphone = /^(\+?(95)|[09])\d{10}/g;
-
-    var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const checkPhone = /^(\+?(95)|[09])\d{10}/g;
+    const checkEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     const submit = () => {
         if(firstName === '' || lastName === '' || email === '' || phone === '' || address === '') {
-            dispatch(setOpenToastAction('User Info',t('user-info-empty-error'),'danger'));
+            dispatch(setOpenToastAction(t('toast-license-customer'),t('license-customer-all-field-required'),'danger'));
             return;
         }
 
-        if(!pattern.test(email)){
-            dispatch(setOpenToastAction('User Info',t('invalid-email-error'),'danger'));
-            return
+        if(!checkEmail.test(email)){
+            dispatch(setOpenToastAction(t('toast-license-customer'),t('invalid-email-error'),'danger'));
+            return;
         }
 
-        if(!checkphone.test(phone)){
-            dispatch(setOpenToastAction('User Info',t('Invalid Phone Number'),'danger'));
-            return
+        if(!checkPhone.test(phone)){
+            dispatch(setOpenToastAction(t('toast-license-customer'),t('invalid-phone-error'),'danger'));
+            return;
         }
-
-        setErr(null);
 
         const userInfo = {
             first_name: firstName,
@@ -51,85 +50,84 @@ export const UserInformationForm = ({ lng, retriveUserInfo, backStep }) => {
     }
 
     return (
-        <div className="flex-row m-2">
-            <p className={`${zawgyi(lng)}`}> {t('demo-text')} </p>
+        <div className="d-md-flex flex-md-column"> 
+            <p className={`mt-3 ${zawgyi(lang)}`}> {t('license-customer-description')} </p>
 
-            <div className="d-flex flex-column">
+            <div className="d-md-flex flex-md-column">
                 <ArrowLeft className="back-arrow" size={40} onClick={(e) => backStep('serial-key')} />
-                <label className={`user-label mb-3 mt-3 ${zawgyi(lng)}`}> {t('user-description-title')} </label>
+                <label className={`user-label mb-3 mt-3 ${zawgyi(lang)}`}> {t('license-customer-form-title')} </label>
             </div>
-            
-            <div className="d-flex flex-column">
-                <div className="d-flex flex-row justify-content-between mb-3">
+
+            <div className="d-md-flex flex-md-column">
+                <div className="d-md-flex flex-md-row justify-content-between mb-3">
                     <InputGroup className="input-between me-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             required={true}
                             value={firstName}
-                            placeholder={t('user-first-name')}
+                            placeholder={t('license-customer-first-name')}
                             onChange={(e) => setFirstName(e.target.value)}
                         />
                     </InputGroup>
 
                     <InputGroup className="input-between ms-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             required={true}
                             value={lastName}
-                            placeholder={t('user-last-name')}
+                            placeholder={t('license-customer-last-name')}
                             onChange={(e) => setLastName(e.target.value)}
                         />
                     </InputGroup>
                 </div>
 
-                <div className="d-flex flex-row justify-content-between mb-3">
+                <div className="d-md-flex flex-md-row justify-content-between mb-3">
                     <InputGroup className="input-between me-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             required={true}
                             value={phone}
-                            placeholder={t('user-phone')}
+                            placeholder={t('license-customer-phone')}
                             onChange={(e) => setPhone(e.target.value)}
                         />
                     </InputGroup>
 
                     <InputGroup className="input-between ms-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="email"
                             required={true}
                             value={email}
-                            placeholder={t('user-email')}
+                            placeholder={t('license-customer-email')}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </InputGroup>
                 </div>
 
-                <div className="d-flex flex-row justify-content-between mb-3">
+                <div className="d-md-flex flex-md-row justify-content-between mb-3">
                     <InputGroup className="address-input me-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             as="textarea"
                             rows={3}
                             required={true}
                             value={address}
-                            placeholder={t('user-address')}
+                            placeholder={t('license-customer-address')}
                             onChange={(e) => setAddress(e.target.value)}
                         />
                     </InputGroup>
                 </div>
 
-            </div>
-
-            <div className="d-flex flex-row">
                 <Button 
-                    className={`${zawgyi(lng)}`} 
+                    className={`${zawgyi(lang)}`} 
                     onClick={() => submit()}
                 > 
-                    {t('serial-key-submit')} 
+                    {t('license-customer-submit')} 
                 </Button>
             </div>
-
-            {/* { err && (<label className={`serial-key-err-message mt-3 mb-3 ${zawgyi(lng)}`}> {err} </label>)} */}
-            
         </div>
     )
 }

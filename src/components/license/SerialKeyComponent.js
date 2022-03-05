@@ -1,19 +1,15 @@
-/**
- * Developer                    - Aung Htet Paing
- * Start Date                   - 25 Dec 2021
- * Phone                        - 09421038123, 09758276201
- * Email                        - aunghtetpaing.info@gmail.com
-**/
-
 import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { t, zawgyi } from "../../utilities/translation.utility";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { useDispatch } from 'react-redux';
 
-import '../../assets/css/components/serial-key-form.css';
+import '../../assets/css/components/license/serial-key-form.css';
 
-export const SerialKeyForm = ({ lng, retriveSerialKey }) => {
+export const SerialKeyComponent = ({ props, retriveSerialKey }) => {
+
+    const { lang } = props.reducer;
+    const dispatch = useDispatch();
 
     const [key01, setKey01] = useState('');
     const [key02, setKey02] = useState('');
@@ -22,38 +18,29 @@ export const SerialKeyForm = ({ lng, retriveSerialKey }) => {
     const [key05, setKey05] = useState('');
     const [key06, setKey06] = useState('');
 
-    const [err, setErr] = useState(null);
-
     const submit = () => {
         if(key01 === '' || key02 === '' || key03 === '' || key04 === '' || key05 === '' || key06 === '') {
-            dispatch(setOpenToastAction('Create Item', 'Invalid Serial Key', 'danger'));
+            dispatch(setOpenToastAction(t('toast-license-key'), t('license-key-required'), 'danger'));
             return;
         }
 
         if(key01.length < 4 || key02.length < 4 || key03.length < 4 || key04.length < 4 || key05.length < 4 || key06.length < 4) {
-            dispatch(setOpenToastAction('Create Item', 'Invalid Serial Key', 'danger'));
+            dispatch(setOpenToastAction(t('toast-license-key'), t('license-key-invalid'), 'danger'));
             return;
         }
 
-        setErr(null);
-
         const serialNumber = `${key01}-${key02}-${key03}-${key04}-${key05}-${key06}`;
 
-        /**
-         * Need to validate serial key process
-         * .... proesss
-        */
-
-         retriveSerialKey(serialNumber);
-        
+        retriveSerialKey(serialNumber);
     }
 
     return (
-        <div className="flex-row m-2">
-            <p className={`${zawgyi(lng)}`}> {t('serial-description')}</p>
-            
-            <label className={`serial-key-label mb-3 mt-3 ${zawgyi(lng)}`}> {t('serial-key-enter')} </label>
-            <div className="d-flex flex-row">
+        <div className="d-md-flex flex-md-column">
+            <p className={`mt-3 ${zawgyi(lang)}`}> {t('serial-description')}</p>
+
+            <label className={`serial-key-label mb-3 mt-3 ${zawgyi(lang)}`}> {t('serial-key-enter')} </label>
+
+            <div className="d-md-flex flex-md-row">
                 <InputGroup className="serial-key-input">
                     <FormControl
                         type="text"
@@ -64,7 +51,6 @@ export const SerialKeyForm = ({ lng, retriveSerialKey }) => {
                         onChange={(e) => setKey01(e.target.value)}
                     />
                 </InputGroup>
-
                 <InputGroup className="serial-key-input">
                     <FormControl
                         type="text"
@@ -121,15 +107,12 @@ export const SerialKeyForm = ({ lng, retriveSerialKey }) => {
                 </InputGroup>
 
                 <Button 
-                    className={`btn-serial-key-enter ${zawgyi(lng)}`} 
+                    className={`btn-serial-key-enter ${zawgyi(lang)}`} 
                     onClick={() => submit()}
                 > 
-                    {t('serial-key-submit')} 
+                    <span className={`${zawgyi(lang)}`}> {t('license-key-submit')} </span> 
                 </Button>
             </div>
-
-            { err && (<label className={`serial-key-err-message mt-3 mb-3 ${zawgyi(lng)}`}> {err} </label>)}
-            
         </div>
     )
 }

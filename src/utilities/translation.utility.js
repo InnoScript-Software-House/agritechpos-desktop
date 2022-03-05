@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import enTranslation from '../assets/i18n/en.json';
 import unicodeTranslation   from '../assets/i18n/unicode.json';
 import zawgyiTranslation from '../assets/i18n/zawgyi.json';
+import { env } from '../environment';
 import { LANG_VALUE } from '../redux/actionTypes';
 
 export const zawgyi = (lng) => {
@@ -23,7 +24,7 @@ i18n.init({
     },
     lng: getLng,
     fallbackLng: getLng,
-    debug: true,
+    debug: env === 0 ? true : false,
     interpolation: {
         escapeValue: false
     }

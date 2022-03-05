@@ -4,9 +4,10 @@ import { Toast } from "react-bootstrap";
 import { BsClock } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { setCloseToastAction } from "../../redux/actions/toast.action";
+import { zawgyi } from "../../utilities/translation.utility";
 
 export const AppToast = ({props}) => {
-    const { toast } = props.reducer;
+    const { toast, lang } = props.reducer;
     const status = toast.status === 'danger' ? 'danger' : toast.status === 'success' ? 'success' : toast.status === 'warning' ? 'warning' : 'info';
     const dispatch = useDispatch();
 
@@ -22,10 +23,10 @@ export const AppToast = ({props}) => {
             autohide={closeToast}
         >
             <Toast.Header 
-                className={`d-md-flex flex-row justify-content-between align-items-center toast-${status}`}
+                className={`d-md-flex flex-row justify-content-between align-items-center toast-${status} ${zawgyi(lang)}`}
                 closeButton={true}
             >
-                <strong> {toast.title} </strong>
+                <strong className={`${zawgyi(lang)}`}> {toast.title} </strong>
             </Toast.Header>
 
             <Toast.Body className="d-md-flex flex-md-column">
@@ -33,7 +34,7 @@ export const AppToast = ({props}) => {
                     <BsClock className="me-1"/> 
                     <small> {moment().format('DD-MM-Y HH:mm:ss')} </small>
                 </div>
-                <p> {toast.message}</p>
+                <p className={`mt-3 ${zawgyi(lang)}`}> {toast.message}</p>
             </Toast.Body>
         </Toast>
     )

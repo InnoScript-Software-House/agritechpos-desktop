@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Route, HashRouter } from 'react-router-dom';
 import history from './utilities/histroy';
 
-/** Auth Routes */
+import ConfigurationPage from './pages/Configuration';
+
 import LoginPage from './pages/auth/Login';
 import LogoutPage from './pages/auth/Logout';
 
@@ -24,6 +25,8 @@ import EditItemPage from './pages/item/EditItem';
 import CategoryListPage from './pages/CategoryList';
 import EditCategoryPage from './pages/category/EditCategory';
 
+import './assets/css/theme.css';
+
 class App extends Component {
 
   render() {
@@ -31,6 +34,8 @@ class App extends Component {
     return(
       <HashRouter history={history}>
         <Route exact path={'/'} component={LandingPage} />
+        
+        <Route exact path={'/configuration'} component={ConfigurationPage} />
         <Route exact path={'/license'} component={LicensePage} />
         <Route exact path={'/dashboard'} component={DashboardPage} />
         <Route exact path={'/error/:status'} component={ErrorPage} />

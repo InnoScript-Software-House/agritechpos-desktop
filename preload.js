@@ -10,6 +10,14 @@ contextBridge.exposeInMainWorld('nativeApi', {
     device: {
         get(data) {
             return data(device);
+        },
+        platform(data) {
+            return data(device.platform());
+        }
+    },
+    app: {
+        restart() {
+            ipcRenderer.send('restart-app', true);
         }
     },
     quit: {
