@@ -34,22 +34,11 @@ export const EditCategoryComponent = ({ props, category, reload}) => {
         return dispatch(setOpenToastAction('Update Category', 'Updated Successfully', 'success'));
     };
 
-    const updateCategory = async () => {
+    const update = async () => {
         const requestBody = {
             name: name,
             description: description
         }
-
-        const fields = Object.keys(requestBody);
-        fields.map((field) => {
-            if(requestBody[field] === editCategory[field]){
-                delete requestBody[field];
-            }
-        });
-        
-        if(Object.keys(requestBody).length > 0){
-            setLoadingData(true);
-            setLoading(true);
 
             const response = await updateCategory(id, requestBody);
             httpHandler(response);
@@ -57,7 +46,6 @@ export const EditCategoryComponent = ({ props, category, reload}) => {
             setLoadingData(false);
             setLoading(false);
             reload();
-        }
         return;
     }
 
@@ -67,7 +55,7 @@ export const EditCategoryComponent = ({ props, category, reload}) => {
             setData();
             setLoadingData(false);
         }
-    })
+    }, [category]);
 
     return(
         <>
@@ -96,7 +84,7 @@ export const EditCategoryComponent = ({ props, category, reload}) => {
                             type="text"
                             className={`${zawgyi(lang)}`}
                             placeholder={`${t('input-category-description')}`}
-                            value={description}
+                            value={description ? description : ''}
                             onChange={e => setDescription(e.target.value)}
                         />
                     </InputGroup>
@@ -108,7 +96,7 @@ export const EditCategoryComponent = ({ props, category, reload}) => {
                     <Button 
                         className={`btn-small w-full ${zawgyi(lang)}`} 
                             disabled={loading}
-                            onClick={() => updateCategory()}
+                            onClick={() => update()}
                         >
                             {t('category-update-btn')}
                     </Button>
