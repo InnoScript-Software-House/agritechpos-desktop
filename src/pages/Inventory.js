@@ -76,7 +76,6 @@ class InventoryPage extends Component {
     }
 
     async componentDidMount() { 
-        console.log(this.props.reducer);
         await this.loadingData('category');
         await this.loadingData('item');
     }
