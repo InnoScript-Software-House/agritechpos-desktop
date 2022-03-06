@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
-import { Spinner } from 'react-bootstrap';
+import { Button, Card, Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { setLangAction } from '../redux/actions/lang.action';
-import { DEVICE_VALUE, LICENSE, SET_ACCEASS_TOEKN, SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from '../redux/actionTypes';
+import { LICENSE, SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from '../redux/actionTypes';
 import { checkLicense } from '../services/license.service.js';
 import { checkFirstUser } from '../services/user.service';
 import axios from 'axios';
 import { getFirstDevice } from '../services/device.service';
-import { defineMacAndIP } from '../services/utility.service';
 import { setOpenToastAction } from '../redux/actions/toast.action';
+import { t } from '../utilities/translation.utility';
+import { checkNetworkConnection } from '../utilities/networkConnection';
 
 import '../assets/css/landing/index.css';
-import { t } from '../utilities/translation.utility';
+import CardHeader from 'react-bootstrap/esm/CardHeader';
 
 class LandingPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            is_loading: true
+            is_loading: true,
+            is_message: null
         }
     }
 
@@ -82,6 +84,30 @@ class LandingPage extends Component {
         localStorage.setItem(SET_NETWORK_ADDRESS, firstDevice.ip);
         localStorage.setItem(SET_NETWORK_MAC, firstDevice.mac);
 
+        const checkNetwork = checkNetworkConnection();
+
+        if(checkNetwork.wifi && checkNetwork.wifi.address !== firstDevice.ip) {
+            this.setState({
+                is_message: {
+                    title: 'Network Error [Wifi]',
+                    message: "Incorrect IP address. Please check your wifi connection to connect database",
+                },
+                is_loading: false
+            });
+            return;
+        }
+
+        if(!checkNetwork.wifi && checkNetwork.localhost && checkNetwork.localhost.address !== firstDevice.ip) {
+            this.setState({
+                is_message: {
+                    title: 'Network Connection Error [Localhost]',
+                    message: "Incorrect IP address. Please check your localhost network connection to connect database",
+                },
+                is_loading: false
+            });
+            return;
+        }
+
         axios.defaults.headers.common["ip"] = firstDevice.ip;
         axios.defaults.headers.common['mac'] = firstDevice.mac;
 
@@ -94,7 +120,11 @@ class LandingPage extends Component {
             history.push('/login');
             return;
         }
-        return;
+    }
+
+    quitDevice() {
+        const  quit = window.nativeApi.quit;
+        quit.quitApp();
     }
 
     componentDidMount() {
@@ -107,7 +137,7 @@ class LandingPage extends Component {
     }
 
     render() {
-        const { is_loading } = this.state;
+        const { is_loading, is_message } = this.state;
 
         return (
             <>
@@ -116,6 +146,28 @@ class LandingPage extends Component {
                         <Spinner animation="border" role="status">
                             <span className="visually-hidden"> Loading... </span>
                         </Spinner>
+                    </div>
+                )}
+
+                {is_message && (
+                    <div className='container-fluid'>
+                        <div className='container'>
+                            <div className='col-md-12 mt-3'>
+                                <Card>
+                                    <Card.Header>
+                                        <Card.Title> { is_message.title } </Card.Title>
+                                    </Card.Header>
+
+                                    <Card.Body>
+                                        <p> { is_message.message } </p>
+                                    </Card.Body>
+
+                                    <Card.Footer>
+                                        <Button onClick={() => this.quitDevice()}> Quit </Button>
+                                    </Card.Footer>
+                                </Card>
+                            </div>
+                        </div>
                     </div>
                 )}
             </>

@@ -22,7 +22,7 @@ contextBridge.exposeInMainWorld('nativeApi', {
     },
     quit: {
         quitApp(){
-            return ipcRenderer.invoke('quit-app');
+            return ipcRenderer.send('quit-app');
         }
     }
 });
