@@ -1,6 +1,6 @@
 import numeral from "numeral";
 import React, { useEffect, useState } from "react";
-import { Badge, Button, Card, FormControl, InputGroup, ToastHeader } from "react-bootstrap";
+import { Badge, Button, Card, FormControl, InputGroup } from "react-bootstrap";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
@@ -30,15 +30,6 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
         setStatus(item.active ? 1 : 0)
     }
 
-    const httpHandler = (response) => {
-        if(response && response.success === false) {
-            dispatch(setOpenToastAction(tostHeader, response.message, 'danger'));
-            setLoading(false);
-            setLoadingData(false);
-            return;
-        }
-    }
-
     const update = async () => {
         const requestBody = {
             percentage: percentage,
@@ -48,10 +39,17 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
         setLoadingData(true);
 
         const response = await updateItem(id, requestBody);
-        httpHandler(response);
+
+        if(response && response.success === false) {
+            dispatch(setOpenToastAction(t('toast-item'), response.message, 'danger'));
+            setLoading(false);
+            setLoadingData(false);
+            return;
+        }
+
         setLoadingData(false);
         setLoading(false);
-        dispatch(setOpenToastAction(tostHeader, 'Item sell price is updated!', 'success'));
+        dispatch(setOpenToastAction(t('toast-item'), t('toast-item-sell-price-updte-success'), 'success'));
         reload();
         return;
     }
@@ -64,9 +62,16 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
         setLoading(true);
 
         const response = await updateItem(id, requestBody);
-        httpHandler(response);
+
+        if(response && response.success === false) {
+            dispatch(setOpenToastAction(t('toast-item'), response.message, 'danger'));
+            setLoading(false);
+            setLoadingData(false);
+            return;
+        }
+
         setLoading(false);
-        dispatch(setOpenToastAction(tostHeader, 'Item publish status is updated!', 'success'));
+        dispatch(setOpenToastAction(t('toast-item'), t('toast-item-sell-price-updte-success'), 'success'));
         reload();
         return;
     }
@@ -84,7 +89,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
             <Card>
                 <Card.Header>
                     <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center"> 
-                        <span className={`${zawgyi(lang)}`}> {t('item-edit-percentage')} </span>
+                        <span className={`title ${zawgyi(lang)}`}> {t('item-edit-percentage-title')} </span>
                         <BsArrowCounterclockwise size={20} className="btn-icon" onClick={() => reload()} />
                     </Card.Title>
                 </Card.Header>
@@ -100,16 +105,16 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                     <Card.Body className="d-md-flex flex-md-row">
                         <div className="col-md-6 pe-3">
                             <div className="d-md-flex flex-md-column">
-                                <label className={`mb-2 title ${zawgyi(lang)}`}> {t('item-percentage')} </label>
-                                <label> Origin Price - { numeral(Number(item.price)).format('0,0') } MMK </label>
-                                <label> Percentage - { Number(percentage)} % </label>
-                                <label> Sell Price - { numeral(Number(item.price) + ((Number(item.price) * Number(percentage)) / 100)).format('0,0') } MMK </label>
+                                <label className={`mb-2 title ${zawgyi(lang)}`}> {t('table-col-sell-percentage')} </label>
+                                <label> {t('table-col-sell-price')} - <span className="ms-3"> { numeral(Number(item.price)).format('0,0') } MMK </span> </label>
+                                <label> {t('table-col-sell-percentage')} - <span className="ms-3"> { Number(percentage)} </span> </label>
+                                <label> {t('table-col-sell-price-total')} - <span className="ms-3"> { numeral(Number(item.price) + ((Number(item.price) * Number(percentage)) / 100)).format('0,0') } MMK </span> </label>
                             </div>
 
                             <InputGroup className="d-md-flex flex-md-column mt-3">
                                 <FormControl
                                     className={`w-full ${zawgyi(lang)}`}
-                                    placeholder={t('item-percentage')}
+                                    placeholder={t('input-item-percentage')}
                                     type="number"
                                     maxLength={3}
                                     minLength={1}
@@ -123,16 +128,16 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
 
                         <div className="col-md-6 pe-3">
                             <div className="d-md-flex flex-md-column">
-                                <label className={`mb-2 title ${zawgyi(lang)}`}> {t('item-fix-amount')} </label>
-                                <label> Origin Price - {numeral(Number(item.price)).format('0,0')} MMK </label>
-                                <label> Fix Amount - {fix_amount} MMK </label>
-                                <label> Sell Price - {numeral(Number(item.price) + Number(fix_amount)).format('0,0')} MMK </label>
+                                <label className={`mb-2 title ${zawgyi(lang)}`}> {t('input-item-fix-amount')} </label>
+                                <label> {t('table-col-sell-price')} - <span className="ms-3"> {numeral(Number(item.price)).format('0,0')} MMK </span> </label>
+                                <label> {t('table-col-sell-fix-amount')} - <span className="ms-3"> {fix_amount} MMK </span> </label>
+                                <label> {t('table-col-sell-price-total')} - <span className="ms-3"> {numeral(Number(item.price) + Number(fix_amount)).format('0,0')} MMK </span> </label>
                             </div>
 
                             <InputGroup className="d-md-flex flex-md-column mt-3">
                                 <FormControl
                                     className={`w-full ${zawgyi(lang)}`}
-                                    placeholder={t('item-fix-amount')}
+                                    placeholder={t('input-item-fix-amount')}
                                     type="number"
                                     value={fix_amount}
                                     onChange={e => setFixAmount(e.target.value)}
@@ -149,7 +154,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                             onClick={() => update()}
                             disabled={loading}
                         > 
-                            {t('item-update-btn')} 
+                            {t('btn-update')} 
                         </Button>
                     </Card.Footer>
                 )}
@@ -158,7 +163,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
             <Card className="mt-3">
                 <Card.Header>
                     <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center"> 
-                        <span className={`${zawgyi(lang)}`}> {t('item-status')} </span>
+                        <span className={`title ${zawgyi(lang)}`}> {t('table-active')} </span>
                         <Badge bg={item.active ? 'success' : 'danger'}>
                             { item.active ? 'Published' : 'Unpublished'}
                         </Badge>
@@ -167,7 +172,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
 
                 <Card.Body>
                     <InputGroup className="d-md-flex flex-md-row justify-content-start align-items-center">
-                        <label className={`me-3 pe-3 ${zawgyi(lang)}`}> {t('item-change-status')} </label>
+                        <label className={`me-3 pe-3 ${zawgyi(lang)}`}> {t('table-active')} </label>
                         <FormControl
                             className="ms-3 pe-3"
                             as="select"
@@ -186,7 +191,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                         onClick={() => updateStatus()}
                         disabled={loading}
                     > 
-                        {t('item-update-btn')}
+                        {t('btn-update')}
                     </Button>
                 </Card.Footer>
             </Card>

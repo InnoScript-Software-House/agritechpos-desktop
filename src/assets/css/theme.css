@@ -41,7 +41,6 @@ body {
 
 /* Form, Input, Button */
 .btn {
-  height: 50px;
   border-radius: 0px;
   color: #fff;
   font-size: large;
@@ -51,6 +50,10 @@ body {
 
 .btn-primary {
   background-color: #4ca6aa !important;
+}
+
+.btn-danger {
+  background-color: #dc3545 !important;
 }
 
 .btn-search {

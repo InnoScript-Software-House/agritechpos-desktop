@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 import { ACCESS_TOKEN, LICENSE, SET_DATABASE_URL, SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from "../redux/actionTypes";
 import history from "../utilities/histroy";
 
@@ -10,6 +11,8 @@ axios.defaults.headers.common['Authorization'] = localStorage.getItem(ACCESS_TOK
 
 const httpHandler = (response) => {
     if(response.status === 401) {
+        history.push('/logout');
+        window.refresh();
         return {
             ...response.data,
             status: response.status

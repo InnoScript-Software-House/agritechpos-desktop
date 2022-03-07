@@ -16,7 +16,7 @@ class LogoutPage extends Component {
 
     async componentDidMount() {
         const { history } = this.props;
-        await logout();
+        //await logout();
         localStorage.removeItem(SET_ACCEASS_TOEKN);
 
         this.setState({

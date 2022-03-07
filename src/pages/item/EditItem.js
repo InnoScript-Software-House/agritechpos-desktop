@@ -73,8 +73,8 @@ class EditItemPage extends Component {
                             </div>
 
                             <div className='col-md-5'>
-                                <ItemQRComponent item={item} />
-                                <ItemBarCodeComponent item={item} />
+                                <ItemQRComponent props={this.props} item={item} />
+                                <ItemBarCodeComponent props={this.props} item={item} />
                             </div>
                     </div>
                     )}

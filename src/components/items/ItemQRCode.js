@@ -1,15 +1,17 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import { Card } from 'react-bootstrap';
+import { zawgyi, t } from '../../utilities/translation.utility';
 
-export const ItemQRComponent = ({ item }) => {
- 
+export const ItemQRComponent = ({ item, props }) => {
+    
+    const { lang } = props.reducer;
     return(
         <>
             <Card>
                 <Card.Header>
                     <Card.Title className="d-md-flex flex-md-row">
-                        <span> QR Code </span>
+                        <span className='title'> QR Code </span>
                     </Card.Title>
                 </Card.Header>
 
@@ -25,12 +27,12 @@ export const ItemQRComponent = ({ item }) => {
                         />
 
                         <div className='d-md-flex flex-md-column'>
-                            <label> Item Name (English) - {item.eng_name} </label>
-                            <label> Item Name (Myanmar) - {item.mm_name} </label>
-                            <label> Code - {item.code} </label>
-                            <label> Model - {item.model} </label>
-                            <label> Category - {item.category ? item.category.name : '----'} </label>
-                            <label> Location - {item.location} </label>
+                            <label className={`${zawgyi(lang)}`}> {t('input-item-eng-name')} - <span className="ms-3"> {item.eng_name} </span> </label>
+                            <label className={`${zawgyi(lang)}`}> {t('input-item-mm-name')} - <span className="ms-3"> {item.mm_name} </span> </label>
+                            <label className={`${zawgyi(lang)}`}> {t('input-item-code')} - <span className="ms-3"> {item.code} </span> </label>
+                            <label className={`${zawgyi(lang)}`}> {t('input-item-model')} - <span className="ms-3"> {item.model} </span> </label>
+                            <label className={`${zawgyi(lang)}`}> {t('table-col-category')} - <span className="ms-3"> {item.category ? item.category.name : '----'} </span> </label>
+                            <label className={`${zawgyi(lang)}`}> {t('input-item-location')} - <span className="ms-3"> {item.location} </span> </label>
                         </div>
                     </div>
                 </Card.Body>

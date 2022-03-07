@@ -43,9 +43,9 @@ export const CreateCategoryComponent = ({ props, open, handler, reload }) => {
         return;
     }
 
-    // useEffect(() => {
-    //     setShow(open);
-    // },[open]);
+    useEffect(() => {
+        setShow(open);
+    },[open]);
 
     return(
         <Modal

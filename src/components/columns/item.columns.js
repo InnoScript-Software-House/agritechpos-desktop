@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "react-bootstrap";
 import { BsArrowUpRightSquare, BsTrash } from "react-icons/bs";
 import { useDispatch } from "react-redux";
@@ -10,15 +10,25 @@ import { zawgyi, t } from "../../utilities/translation.utility";
 const numeral = require('numeral');
 
 export const itemColumns = (props) => {
+
     const { lang, numberFormat, char } = props.reducer;
+    const { url } = props.match;
+
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const [type, setType] = useState('');
 
     const num = (value) => {
         return changeNumberFormat(value, numberFormat, char);
     }
 
-    return [
+    useEffect(() => {
+        const getUrlType = url.split('/')[1];
+        setType(getUrlType);
+    }, []);
+
+    const columns = [
         {   
             name: <span className='datatable-header'> # </span>,
             selector: (row, index) => index + 1,
@@ -26,67 +36,79 @@ export const itemColumns = (props) => {
             width: "50px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-code')} </span>,
-            selector: row => row.code,
-            sortable: true,
-        },
-        {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-eng-name')} </span>,
-            selector: row => row.eng_name,
-            sortable: true,
-        },
-        {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-mm-name')} </span>,
-            selector: row => row.mm_name,
-            sortable: true,
-        },
-        {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-category')} </span>,
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-col-category')} </span>,
             selector: row => row.category_title,
             sortable: true,
+            width: "200px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-model')} </span>,
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('input-item-code')} </span>,
+            selector: row => row.code,
+            sortable: true,
+            width: "200px"
+        },
+        {
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('input-item-eng-name')} </span>,
+            selector: row => row.eng_name,
+            sortable: true,
+            width: "200px"
+        },
+        {
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('input-item-mm-name')} </span>,
+            selector: row => row.mm_name,
+            sortable: true,
+            width: "200px"
+        },
+        {
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('input-item-model')} </span>,
             selector: row => row.model,
             sortable: true,
+            width: "200px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-qty')} </span>,
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('input-item-qty')} </span>,
             selector: row => numeral(row.qty).format('0,0'),
             sortable: true,
+            width: "200px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-price')} (MMK) </span>,
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('input-item-price')} (MMK) </span>,
             selector: row => num(row.price),
             sortable: true,
+            width: "200px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-total-price')} (MMK)</span>,
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-col-sell-price')} (MMK)</span>,
             selector: row => numeral(row.price * row.qty).format('0,0'),
             sortable: true,
+            width: "200px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-sell-percentage')} </span>,
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-col-sell-percentage')} </span>,
             selector: row => row.percentage,
             sortable: true,
+            width: "200px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-sell-fix-amount')} (MMK) </span>,
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-col-sell-fix-amount')} (MMK) </span>,
             selector: row => numeral(Number(row.fix_amount)).format('0,0'),
             sortable: true,
+            width: "200px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-location')} </span>,
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('input-item-location')} </span>,
             selector: row => row.location,
             sortable: true,
+            width: "200px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-status')} </span>,
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-active')} </span>,
             selector: row => <Badge bg={row.active ? 'success' : 'danger'}> {row.active ? 'Publish' : 'Unpublished'} </Badge>,
             sortable: true,
+            width: "200px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('item-option')} </span>,
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-option')} </span>,
             selector: (row) => {
                return(
                    <>
@@ -101,8 +123,8 @@ export const itemColumns = (props) => {
                         className="icon-btn-outline ms-3" 
                         onClick={() => dispatch(setOpenDelModal({
                             open: true,
-                            title: 'Item Delete',
-                            message: 'Are you sure to delete this item',
+                            title: t('modal-delete-title'),
+                            message: t('modal-delete-message'),
                             id: row.id,
                             type: 'items'
                         }))}
@@ -111,7 +133,12 @@ export const itemColumns = (props) => {
                )
             },
             sortable: true,
+            width: "200px"
         }
-    
-    ]
+    ];
+
+    if(type === 'category') {
+        delete columns[1];
+    }
+    return columns;
 }
