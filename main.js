@@ -1,9 +1,5 @@
 const { BrowserWindow, app, Menu, globalShortcut, ipcMain } = require('electron');
 
-
-ipcMain.handle('quit-app', () => {
-    app.quit();
-})
 const path = require('path');
 
 

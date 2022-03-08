@@ -100,6 +100,7 @@ class ProfilePage extends Component {
       //   password_error: t('profile-password-not-match')
       // });
     }
+    
     this.props.openToast('Change Password', 'Password Change Successfully', 'success');
 
     this.setState({
