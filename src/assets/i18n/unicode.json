@@ -1,4 +1,13 @@
 {
+    "nav-sale": "အရောင်း",
+    "nav-dashboard": "အချက်အလက်များ",
+    "nav-setting": "ထိန်းချုပ်ခြင်းများ",
+    "nav-profile": "ကိုယ်ရေးအကျဉ်း",
+    "nav-shop": "ဆိုင်",
+    "nav-account": "အကောင့်",
+    "nav-inventory": "သိုလှောင်ရုံ",
+    "nav-logout": "ထွက်မည်",
+
     "config-nav-device" : "စက်အမျိုးအစား",
     "config-devicetype-description" : "ဆော့ဖ်ဝဲအသုံးပြုရန်အတွက် စက်အမျိုးအစား (လက်ပ်တော့ သို့မဟုတ် PC) ကို ရွေးချယ်ပါ။",
     "config-devicetype-set-success" : "စက်အမျိုးအစားရွေးချယ်မှုအောင်မြင်ပါသည်။",
@@ -50,6 +59,8 @@
     "category-table-title" : "ပစ္စည်းအမျိုးအစားစာရင်း",
     "category-update-title" : "ပစ္စည်းအမျိုးအစားပြင်ဆင်ရန်",
 
+    "sell-cart" : "အရောင်းပစ္စည်းစာရင်း",
+
     "table-col-name" : "နာမည်",
     "table-col-qty" : "အရေအတွက်",
     "table-col-description" : "ဖော်ပြချက်",
@@ -73,11 +84,14 @@
     "toast-license-customer" : "သုံးစွဲသူအချက်အလက်",
     "tost-configuration" : "ဆော့၀ဲလ် ဆက်တင်များ ချိန်ညှိခြင်း",
     "toast-delete-success" : "အချက်အလက်များ ဖျက်သိမ်းမှုအောင်မြင်ပါသည်",
+    "toast-sell" : "အရောင်း",
 
     "invalid-email-error" : "အီးမေးလ်လိပ်စာမှန်ကန်မှုမရှိပါ",
     "invalid-phone-error" : "ဖုန်းနံပါတ်မှန်ကန်မှုမရှိပါ",
     "valitation-category-name-empty" : "ပစ္စည်းအမျိုးအစားအမည် လိုအပ်ပါသည်။",
     "valitation-item-name-empty" : "ပစ္စည်းအမည် လိုအပ်ပါသည်",
+    "validation-sell-qty-zero" : "ပစ္စည်းအရေအတွက် မှန်ကန်မှုမရှိပါ",
+    "validation-sell-item-exit" : "Item already exist",
 
     "input-category-name" : "ပစ္စည်းအမျိုးအစားအမည်",
     "input-category-description" : "ပစ္စည်းအမျိုးအစား ဖော်ပြချက်",
@@ -94,6 +108,10 @@
     "input-item-location": "နေရာ",
     "input-item-percentage" : "အရောင်းရာခိုင်နှုန်း",
     "input-item-fix-amount" : "အရောင်းတန်ဖိုးအသေ",
+    "input-select-category-all" : "အားလုံး",
+    "input-item-number" : "အရေအတွက်",
+    "input-item-name" : "နာမည်", 
+    "input-item-sell-price" : "ရောင်းစျေး",
 
     "btn-create" : "ထည့်သွင်းမည်",
     "btn-save" : "သိမ်းမည်",
@@ -105,13 +123,18 @@
     "btn-delete" : "ဖျက်သိမ်းမည်", 
     "btn-item-create-hide": "ပစ္စည်းစာရင်းအသစ်သွင်းသည့်ဖောင်ဖွင့်မည်",
     "btn-item-create-show" : "ပစ္စည်းစာရင်းအသစ်သွင်းသည့်ဖောင်ပိတ်မည်",
+    "btn-cart" : "အရောင်းစာရင်းထဲထည့်မည်",
 
     "modal-delete-title" : "အချက်အလက်များဖျက်ခြင်း",
     "modal-delete-message" : "အချက်အလက်များဖျက်ရန် သေချာပါသလား",
 
     "alert-category-delete-title" : "ပစ္စည်းအမျိုးအစားဖျက်သိမ်းခြင်းနှင့်ပက်သက်သည့် သတိပေးချက်",
     "alert-category-delete" : "ပစ္စည်းအမျိုးအစားကို အသုံးပြုပြီးပါက ပစ္စည်းအမျိုးအစားအား ဖျက်သိမ်းရန် မရနိုင်ပါ",
+
     "unit-year" : "နှစ်",
+    "percentage" : "ရာခိုင်နှုန်း",
+    "fix-amount" : "ရောင်းစျေးအသေ",
+    "total-price" : "စုစုပေါင်း",
 
     "dashboard-alert-shop-title": "Shop Information Need!",
     "dashboard-alert-shop-description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -175,14 +198,7 @@
     "number-spec-edit-title": "Update Number Specification",
     "number-spec-set-number-label": "Target Specification Number",
     "number-spec-input-setchar": "Enter Character",
-    "nav-sale": "Sale",
-    "nav-dashboard": "Dashboard",
-    "nav-setting": "Setting",
-    "nav-profile": "Profile",
-    "nav-shop": "Shop",
-    "nav-account": "Account",
-    "nav-inventory": "Inventroy",
-    "nav-logout": "Logout",
+
     "setting-shop": "Shop",
     "profile-title": "User Information",
     "profile-name": "Account Name",

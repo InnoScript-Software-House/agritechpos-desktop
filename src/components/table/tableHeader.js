@@ -105,13 +105,13 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
                 </Button>
             </InputGroup>
 
-           {openExportSetting && (
+            {openExportSetting && (
                 <ItemExportToExcel 
                     props={props} 
                     open={openExportSetting} 
                     close={e => setOpenExportSetting(e)}
                 />
-           )}
+            )}
         </div>
     )
 }

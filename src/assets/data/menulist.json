@@ -21,13 +21,13 @@
     },
     {
         "id": 5,
-        "label": "nav-setting",
-        "url": "/setting"
+        "label": "nav-profile",
+        "url": "/profile"
     },
     {
         "id": 6,
-        "label": "nav-profile",
-        "url": "/profile"
+        "label": "nav-setting",
+        "url": "/setting"
     },
     {
         "id": 7,

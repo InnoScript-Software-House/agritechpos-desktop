@@ -1,4 +1,13 @@
 {   
+    "nav-sale": "Sale",
+    "nav-dashboard": "Dashboard",
+    "nav-setting": "Setting",
+    "nav-profile": "Profile",
+    "nav-shop": "Shop",
+    "nav-inventory": "Inventroy",
+    "nav-logout": "Logout",
+    "nav-account": "Account",
+
     "config-nav-device" : "Device Type",
     "config-devicetype-description" : "Please choose device type (Laptop or PC) for software configuration.",
     "config-devicetype-set-success" : "Device type is updated",
@@ -50,8 +59,11 @@
     "category-table-title" : "Category List",
     "category-update-title" : "Update Category",
 
+    "sell-cart" : "Cart Items",
+
     "toast-category" : "Category",
     "toast-item" : "Item",
+    "toast-sell" : "Sell",
     "toast-category-create-success" : "New category is created",
     "toast-category-update-success" : "Category is updated",
     "toast-item-update-success" : "Item is updated",
@@ -79,6 +91,8 @@
     "invalid-phone-error" : "Invalid phone number",
     "valitation-category-name-empty" : "Item category name is required",
     "valitation-item-name-empty" : "Item name is required",
+    "validation-sell-qty-zero" : "Invalid Item Count",
+    "validation-sell-item-exit" : "Item is already exist",
 
     "input-category-name" : "Category name",
     "input-category-description" : "Category description",
@@ -95,6 +109,10 @@
     "input-item-location": "Location",
     "input-item-percentage" : "Sell percentage",
     "input-item-fix-amount" : "Fix Amount",
+    "input-select-category-all" : "All",
+    "input-item-number" : "Qty",
+    "input-item-name" : "Name", 
+    "input-item-sell-price" : "Sell price",
 
     "btn-create" : "Create",
     "btn-save" : "Save",
@@ -106,13 +124,18 @@
     "btn-delete": "Delete",
     "btn-item-create-hide": "Hide Create Item",
     "btn-item-create-show" : "Show Create Item",
+    "btn-cart" : "Add List",
 
     "modal-delete-title" : "Delete Record",
     "modal-delete-message" : "Are you sure to delete record",
     
     "alert-category-delete-title" : "Warning for delete category",
     "alert-category-delete" : "Once the item type is used, the item type cannot be delete",
+
     "unit-year" : "Year",
+    "percentage" : "Percentage",
+    "fix-amount" : "Fix Amount",
+    "total-price" : "Total",
 
     "dashboard-alert-shop-title": "Shop Information Need!",
     "dashboard-alert-shop-description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -171,14 +194,7 @@
     "number-spec-edit-title": "Update Number Specification",
     "number-spec-set-number-label": "Target Specification Number",
     "number-spec-input-setchar": "Enter Character",
-    "nav-sale": "Sale",
-    "nav-dashboard": "Dashboard",
-    "nav-setting": "Setting",
-    "nav-profile": "Profile",
-    "nav-shop": "Shop",
-    "nav-inventory": "Inventroy",
-    "nav-logout": "Logout",
-    "nav-account": "Account",
+
     "setting-shop": "Shop",
     "profile-title": "User Information",
     "profile-name": "Account Name",

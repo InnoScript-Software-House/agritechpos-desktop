@@ -1,4 +1,13 @@
 {
+    "nav-sale": "အေရာင္း",
+    "nav-dashboard": "အခ်က္အလက္မ်ား",
+    "nav-setting": "ထိန္းခ်ဳပ္ျခင္းမ်ား",
+    "nav-profile": "ကိုယ္ေရးအက်ဥ္း",
+    "nav-shop": "ဆိုင္",
+    "nav-account": "အေကာင့္",
+    "nav-inventory": "သိုေလွာင္႐ုံ",
+    "nav-logout": "ထြက္မည္",
+
     "config-nav-device" : "စက္အမ်ိဳးအစား",
     "config-devicetype-description" : "ေဆာ့ဖ္ဝဲအသုံးျပဳရန္အတြက္ စက္အမ်ိဳးအစား (လက္ပ္ေတာ့ သို႔မဟုတ္ PC) ကို ေ႐ြးခ်ယ္ပါ။",
     "config-devicetype-set-success" : "စက္အမ်ိဳးအစားေ႐ြးခ်ယ္မႈေအာင္ျမင္ပါသည္။",
@@ -50,6 +59,8 @@
     "category-table-title" : "ပစၥည္းအမ်ိဳးအစားစာရင္း",
     "category-update-title" : "ပစၥည္းအမ်ိဳးအစားျပင္ဆင္ရန္",
 
+    "sell-cart" : "အေရာင္းပစၥည္းစာရင္း",
+
     "table-col-name" : "နာမည္",
     "table-col-qty" : "အေရအတြက္",
     "table-col-description" : "ေဖာ္ျပခ်က္",
@@ -73,11 +84,14 @@
     "toast-license-customer" : "သုံးစြဲသူအခ်က္အလက္",
     "tost-configuration" : "ေဆာ့၀ဲလ္ ဆက္တင္မ်ား ခ်ိန္ညႇိျခင္း",
     "toast-delete-success" : "အခ်က္အလက္မ်ား ဖ်က္သိမ္းမႈေအာင္ျမင္ပါသည္",
+    "toast-sell" : "အေရာင္း",
 
     "invalid-email-error" : "အီးေမးလ္လိပ္စာမွန္ကန္မႈမရွိပါ",
     "invalid-phone-error" : "ဖုန္းနံပါတ္မွန္ကန္မႈမရွိပါ",
     "valitation-category-name-empty" : "ပစၥည္းအမ်ိဳးအစားအမည္ လိုအပ္ပါသည္",
     "valitation-item-name-empty" : "ပစၥည္းအမည္ လိုအပ္ပါသည္",
+    "validation-sell-qty-zero" : "ပစၥည္းအေရအတြက္ မွန္ကန္မႈမရွိပါ",
+    "validation-sell-item-exit" : "Item already exist",
 
     "input-category-name" : "ပစၥည္းအမ်ိဳးအစားအမည္",
     "input-category-description" : "ပစၥည္းအမ်ိဳးအစားအမည္ ေဖာ္ျပခ်က္",
@@ -94,6 +108,10 @@
     "input-item-location": "ေနရာ",
     "input-item-percentage" : "အေရာင္းရာခိုင္ႏႈန္း",
     "input-item-fix-amount" : "အေရာင္းတန္ဖိုးအေသ",
+    "input-select-category-all" : "အားလုံး",
+    "input-item-number": "အေရအတြက္",
+    "input-item-name" : "နာမည္", 
+    "input-item-sell-price" : "ေရာင္းေစ်း",
 
     "btn-create" : "ထည့္သြင္းမည္",
     "btn-save" : "သိမ္းမည္",
@@ -105,6 +123,7 @@
     "btn-delete" : "ဖ်က္သိမ္းမည္", 
     "btn-item-create-hide": "ပစၥည္းစာရင္းအသစ္သြင္းသည့္ေဖာင္ဖြင့္မည္",
     "btn-item-create-show" : "ပစၥည္းစာရင္းအသစ္သြင္းသည့္ေဖာင္ပိတ္မည္",
+    "btn-cart" : "အေရာင္းစာရင္းထဲထည့္မည္",
 
     "modal-delete-title" : "အခ်က္အလက္မ်ားဖ်က္ျခင္း",
     "modal-delete-message" : "အခ်က္အလက္မ်ားဖ်က္ရန္ ေသခ်ာပါသလား",
@@ -113,6 +132,9 @@
     "alert-category-delete" : "ပစၥည္းအမ်ိဳးအစားကို အသုံးျပဳၿပီးပါက ပစၥည္းအမ်ိဳးအစားအား ဖ်က္သိမ္းရန္ မရႏိုင္ပါ",
 
     "unit-year" : "ႏွစ္",
+    "percentage" : "ရာခိုင္ႏႈန္း",
+    "fix-amount" : "ေရာင္းေစ်းအေသ",
+    "total-price" : "စုစုေပါင္း",
 
     "dashboard-alert-shop-title": "Shop Information Need!",
     "dashboard-alert-shop-description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -176,14 +198,7 @@
     "number-spec-edit-title": "Update Number Specification",
     "number-spec-set-number-label": "Target Specification Number",
     "number-spec-input-setchar": "Enter Character",
-    "nav-sale": "Sale",
-    "nav-dashboard": "Dashboard",
-    "nav-setting": "Setting",
-    "nav-profile": "Profile",
-    "nav-shop": "Shop",
-    "nav-logout": "Logout",
-    "nav-account": "Account",
-    "nav-inventory": "Inventroy",
+
     "setting-shop": "Shop",
     "user-title": "User Information",
     "profile-title": "User Information",

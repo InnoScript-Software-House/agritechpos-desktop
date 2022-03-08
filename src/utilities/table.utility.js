@@ -17,13 +17,11 @@ export const autocomplete = (dataSource, text, columnName) => {
         if(Number(result[columnName])) {
             filterText = result[columnName].toString();
             if(filterText.includes(textString)) {
-                console.log(result)
                 return result;
             }
         }
 
         if(filterText.toLowerCase().includes(textString.toLowerCase())) {
-            console.log(result)
             return result;
         }
 

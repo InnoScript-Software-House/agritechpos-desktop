@@ -8,6 +8,7 @@ import { langReducer } from "./lang.reducer";
 import { numberFormatReducer } from "./numberFormat.reducer";
 import { openDelReducer } from "./openDelModal.reducer";
 import { saleReducer } from "./sale.reducer";
+import { sellPriceReducer } from "./sellprice.reducer";
 import { toastReducer } from "./toast.reducer";
 
 export default combineReducers({
@@ -20,5 +21,6 @@ export default combineReducers({
     char: charasterReducer,
     delModal: openDelReducer,
     cartReducer: saleReducer,
-    config: configReducer
+    config: configReducer,
+    sellPrice: sellPriceReducer
 });
