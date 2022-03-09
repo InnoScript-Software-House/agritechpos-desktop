@@ -9,7 +9,7 @@ import { zawgyi, t } from "../../utilities/translation.utility";
 
 const numeral = require('numeral');
 
-export const itemColumns = (props) => {
+export const sellItemColumns = (props) => {
 
     const { lang, numberFormat, char } = props.reducer;
     const { url } = props.match;
@@ -34,12 +34,6 @@ export const itemColumns = (props) => {
             selector: (row, index) => index + 1,
             sortable: true,
             width: "50px"
-        },
-        {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-col-category')} </span>,
-            selector: row => row.category_title,
-            sortable: true,
-            width: "200px"
         },
         {
             name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('input-item-code')} </span>,
@@ -98,40 +92,6 @@ export const itemColumns = (props) => {
         {
             name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('input-item-location')} </span>,
             selector: row => row.location,
-            sortable: true,
-            width: "200px"
-        },
-        {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-active')} </span>,
-            selector: row => <Badge bg={row.active ? 'success' : 'danger'}> {row.active ? 'Publish' : 'Unpublished'} </Badge>,
-            sortable: true,
-            width: "200px"
-        },
-        {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-option')} </span>,
-            selector: (row) => {
-               return(
-                   <>
-                    <BsArrowUpRightSquare 
-                        size={20} 
-                        className="icon-btn-outline"
-                        onClick={() => history.push(`/item/${row.id}`)}
-                    />
-
-                    <BsTrash 
-                        size={20} 
-                        className="icon-btn-outline ms-3" 
-                        onClick={() => dispatch(setOpenDelModal({
-                            open: true,
-                            title: t('modal-delete-title'),
-                            message: t('modal-delete-message'),
-                            id: row.id,
-                            type: 'items'
-                        }))}
-                    />
-                   </>
-               )
-            },
             sortable: true,
             width: "200px"
         }

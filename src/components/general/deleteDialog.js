@@ -13,17 +13,6 @@ export const DeleteDialog = ({ props, reload }) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const handlerException = (response) => {
-        if(response && response.status === 0) {
-            dispatch(setOpenToastAction('Network Error', 'Please check your database connection', 'danger'));
-        }
-
-        if(response && (response.status !== 200 || response.status !== 201)) {
-            return ;
-       }
-        return response;
-    }
-
     const closeModal = () => {
         setIsOpen(false);
         dispatch(setOpenDelModal({open: false}));
@@ -31,10 +20,16 @@ export const DeleteDialog = ({ props, reload }) => {
 
     const confirmDelete = async () => {
         const response = await delRequest(`${delModal.type}/${delModal.id}`);
-        handlerException(response);
+        if(response && response.success === false) {
+            dispatch(setOpenToastAction(t('toast-item'), response.message, 'danger'));
+            closeModal();
+            return;
+        }
+
         closeModal();
-        dispatch(setOpenToastAction(delModal.title, delModal.type+' deleted Successfully'), 'success');
+        dispatch(setOpenToastAction(delModal.title, t('toast-delete-success'), 'success'));
         reload();
+        return;
     }
 
     const multipleDeleted = async () => {
@@ -42,11 +37,17 @@ export const DeleteDialog = ({ props, reload }) => {
             return value.id
         }) : [];
 
-       const response = await postRequest(`${delModal.type}/delete`, { data: requestBody });
-       handlerException(response);
-       closeModal();
-       dispatch(setOpenToastAction(delModal.title, delModal.type+' deleted Successfully'), 'success');
-       reload();
+        const response = await postRequest(`${delModal.type}/delete`, { data: requestBody });
+        if(response && response.success === false) {
+            dispatch(setOpenToastAction(t('toast-item'), response.message, 'danger'));
+            closeModal();
+            return;
+        }
+
+        closeModal();
+        dispatch(setOpenToastAction(delModal.title, t('toast-delete-success'), 'success'));
+        reload();
+        return;
     }
 
     useEffect(() => {
@@ -56,9 +57,7 @@ export const DeleteDialog = ({ props, reload }) => {
     }, [delModal]);
 
     return(
-        <Modal
-            show={isOpen}
-        >
+        <Modal show={isOpen}>
             <Modal.Header>
                 <Modal.Title>
                     <span className={`${zawgyi(lang)}`}> {delModal.title} </span>
@@ -74,12 +73,13 @@ export const DeleteDialog = ({ props, reload }) => {
                     className={`btn-small ${zawgyi(lang)}`}
                     onClick={() => delModal.multiple ? multipleDeleted() : confirmDelete()}
                 > 
-                    <span className={`${zawgyi(lang)}`}> Confirm </span> 
+                    {t('btn-confirm')}
                 </Button>
+                
                 <Button 
                     className={`btn-small btn-secondary ${zawgyi(lang)}`}
                     onClick={() => closeModal()}
-                > Close 
+                > {t('btn-close')} 
                 </Button>
             </Modal.Footer>
         </Modal>

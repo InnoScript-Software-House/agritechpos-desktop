@@ -56,7 +56,7 @@
     "copy-webpack-plugin": "^10.2.0",
     "css-loader": "^6.5.1",
     "electron": "^16.0.7",
-    "electron-builder": "^22.14.5",
+    "electron-builder": "^22.14.13",
     "electron-packager": "^15.4.0",
     "electron-reload": "^2.0.0-alpha.1",
     "express": "^4.17.2",
@@ -85,7 +85,6 @@
     "react-bootstrap-icons": "^1.7.2",
     "react-chartjs-2": "^4.0.1",
     "react-data-table-component": "^7.4.6",
-    "react-data-table-component-with-filter": "^7.4.5",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.15.3",
     "react-icons": "^4.3.1",
@@ -94,6 +93,7 @@
     "react-router-dom": "^5.0.0",
     "redux": "^4.1.2",
     "sequelize": "^6.13.0",
+    "wine": "^0.9.13",
     "xlsx": "^0.18.2"
   }
 }

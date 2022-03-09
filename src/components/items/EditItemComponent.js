@@ -35,15 +35,6 @@ export const EditItemComponent = ({ props, item, reload }) => {
         setItemLocation(item.location);
     }
 
-    const httpHandler = (response) => {
-        if(response && response.success === false) {
-            dispatch(setOpenToastAction('Edit Item', response.message, 'danger'));
-            setLoading(false);
-            setLoadingData(false);
-            return;
-        }
-    }
-
     const update = async () => {
         const requestBody = {
             code: code,
@@ -68,8 +59,15 @@ export const EditItemComponent = ({ props, item, reload }) => {
             setLoading(true);
 
             const response = await updateItem(id, requestBody);
-            httpHandler(response);
-            dispatch(setOpenToastAction('Update Item', 'Item is updated!', 'success'));
+
+            if(response && response.success === false) {
+                dispatch(setOpenToastAction(t('toast-item'), response.message, 'danger'));
+                setLoading(false);
+                setLoadingData(false);
+                return;
+            }
+
+            dispatch(setOpenToastAction(t('toast-item'), t('toast-item-update-success'), 'success'));
             setLoadingData(false);
             setLoading(false);
             reload();
@@ -90,7 +88,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
         <Card>
             <Card.Header>
                 <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center"> 
-                    <span className={`${zawgyi(lang)}`}> {t('item-edit-title')} </span>
+                    <span className={`title ${zawgyi(lang)}`}> {t('item-edit-title')} </span>
                     <BsArrowCounterclockwise size={20} className="btn-icon" onClick={() => setData()} />
                 </Card.Title>
             </Card.Header>
@@ -101,7 +99,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             className={`${zawgyi(lang)}`}
-                            placeholder={`${t('item-code')}`}
+                            placeholder={`${t('input-item-code')}`}
                             value={code}
                             onChange={e => setCode(e.target.value)}
                         />
@@ -111,7 +109,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-eng-name')}`}
+                            placeholder={`${t('input-item-eng-name')}`}
                             value={eng_name}
                             onChange={e => setEnName(e.target.value)}
                         />
@@ -121,7 +119,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-mm-name')}`}
+                            placeholder={`${t('input-item-mm-name')}`}
                             value={mm_name}
                             onChange={e => setMMName(e.target.value)}
                         />
@@ -131,7 +129,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-model')}`}
+                            placeholder={`${t('input-item-model')}`}
                             value={model}
                             onChange={e => setModel(e.target.value)}
                         />
@@ -141,7 +139,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="number"
                             className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-qty')}`}
+                            placeholder={`${t('input-item-qty')}`}
                             value={qty}
                             onChange={e => setQty(e.target.value)}
                         />
@@ -151,7 +149,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-price')}`}
+                            placeholder={`${t('input-item-price')}`}
                             value={price}
                             onChange={e => setPrice(e.target.value)}
                         />
@@ -161,7 +159,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-location')}`}
+                            placeholder={`${t('input-item-location')}`}
                             value={itemLocation}
                             onChange={e => setItemLocation(e.target.value)}
                         />
@@ -176,7 +174,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                             disabled={loading}
                             onClick={() => update()}
                         >
-                            {t('item-update-btn')}
+                            {t('btn-update')}
                     </Button>
                 </Card.Footer>
             )}

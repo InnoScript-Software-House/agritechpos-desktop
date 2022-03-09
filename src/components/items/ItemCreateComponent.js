@@ -23,17 +23,9 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
 
     const dispatch = useDispatch();
 
-    const httpHandler = (response) => {
-        if(response && response.success === false) {
-            dispatch(setOpenToastAction('Create Item', response.message, 'danger'));
-            setBtnLoading(false);
-            return;
-        }
-    }
-
     const itemSave = async () => {
         if(eng_name === '') {
-            dispatch(setOpenToastAction('Item Create', t('create-item-name-empty'), 'danger'));
+            dispatch(setOpenToastAction(t('toast-item'), t('valitation-item-name-empty'), 'danger'));
             return;
         }
 
@@ -50,8 +42,12 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
 
         setBtnLoading(true);
 
-        const saved = await saveItem(requestBody);
-        httpHandler(saved);
+        const response = await saveItem(requestBody);
+        if(response && response.success === false) {
+            dispatch(setOpenToastAction(t('toast-item'), response.message, 'danger'));
+            setBtnLoading(false);
+            return;
+        }
         setBtnLoading(false);
         reload();
     }
@@ -68,7 +64,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
         <Card className='mt-3'>
             <Card.Header>
                 <Card.Title>
-                    <span className={`${zawgyi(lang)} card-title`}> {t('create-item-title')} </span>
+                    <span className={`${zawgyi(lang)} title`}> {t('item-create-title')} </span>
                 </Card.Title>
             </Card.Header>
 
@@ -93,7 +89,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         <FormControl
                             className={`${zawgyi(lang)}`}
                             type="text"
-                            placeholder={`${t('input-item-create-code')}`}
+                            placeholder={`${t('input-item-code')}`}
                             value={code}
                             onChange={e => setCode(e.target.value)}
                         />
@@ -103,7 +99,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         <FormControl
                             className={`${zawgyi(lang)}`}
                             type="text"
-                            placeholder={`${t('input-item-create-eng-name')}`}
+                            placeholder={`${t('input-item-eng-name')}`}
                             value={eng_name}
                             onChange={e => setEngName(e.target.value)}
                         />
@@ -113,7 +109,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         <FormControl
                             className={`${zawgyi(lang)}`}
                             type="text"
-                            placeholder={`${t('input-item-create-mm-name')}`}
+                            placeholder={`${t('input-item-mm-name')}`}
                             value={mm_name}
                             onChange={e => setMName(e.target.value)}
                         />
@@ -123,7 +119,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         <FormControl
                             className={`${zawgyi(lang)}`}
                             type="text"
-                            placeholder={`${t('input-item-create-model')}`}
+                            placeholder={`${t('input-item-model')}`}
                             value={model}
                             onChange={e => setModel(e.target.value)}
                         />
@@ -133,7 +129,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         <FormControl
                             className={`${zawgyi(lang)}`}
                             type="number"
-                            placeholder={`${t('input-item-create-qty')}`}
+                            placeholder={`${t('input-item-qty')}`}
                             value={qty}
                             onChange={e => setQty(e.target.value)}
                         />
@@ -143,7 +139,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         <FormControl
                             className={`${zawgyi(lang)}`}
                             type="text"
-                            placeholder={`${t('input-item-create-price')}`}
+                            placeholder={`${t('input-item-price')}`}
                             value={price}
                             onChange={e => setPrice(e.target.value)}
                         />
@@ -153,7 +149,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         <FormControl
                             className={`${zawgyi(lang)}`}
                             type="text"
-                            placeholder={`${t('input-item-create-location')}`}
+                            placeholder={`${t('input-item-location')}`}
                             value={location}
                             onChange={e => setLocation(e.target.value)}
                         />
@@ -167,7 +163,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     onClick={() => itemSave()}
                     disabled={btnLoading}
                 >
-                    {t('item-save')}
+                    {t('btn-save')}
                 </Button>
             </Card.Footer>
         </Card>

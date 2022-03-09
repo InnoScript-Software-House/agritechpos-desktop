@@ -9,7 +9,7 @@ import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 
 import '../../assets/css/components/table-header.css';
 
-export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, placeholder, filterResult, selectedRows }) => {
+export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeholder, filterResult, selectedRows }) => {
     const { lang } = props.reducer;
     const dispatch = useDispatch();
 
@@ -32,9 +32,9 @@ export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, p
 
     const deleteSelectedRows = () => {
        dispatch(setOpenDelModal({
-           title: type+' Delete',
-           message: 'Are you sure want to delete these '+type,
-           type: type,
+           title: t('modal-delete-title'),
+           message: t('modal-delete-message'),
+           type: 'items',
            multiple: true,
            open: true,
            data: selectedList
@@ -52,20 +52,20 @@ export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, p
             <div className='table-header-left'>
                 {selectedRows.length > 0 && (
                     <div className='d-md-flex flex-md-row justifiy-content-start align-items-center'>
-                        <Button 
+                        {/* <Button 
                             className='btn-small'
                             onClick={() => setOpenExportSetting(true)}
                         >  
                             <BsCloudUpload size={20} />
                             <span className={`${zawgyi(lang)}`}> {t('export-excel-setting-btn')} </span>
-                        </Button>
+                        </Button> */}
 
                         <Button
                             className='btn-small ms-3'
                             onClick={() => deleteSelectedRows()}
                         >
                             <BsTrash size={20} />
-                            <span> Delete Selected Items </span>
+                            <span className={`${zawgyi(lang)}`}> {t('btn-delete-all')} </span>
                         </Button>
                     </div>
                 )}
@@ -101,17 +101,17 @@ export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, p
                     className={`btn-small ${zawgyi(lang)}`}
                     onClick={() => reset()}
                 > 
-                    {t('btn-table-search-reset')} 
+                    {t('btn-reset')} 
                 </Button>
             </InputGroup>
 
-           {openExportSetting && (
+            {openExportSetting && (
                 <ItemExportToExcel 
                     props={props} 
                     open={openExportSetting} 
                     close={e => setOpenExportSetting(e)}
                 />
-           )}
+            )}
         </div>
     )
 }

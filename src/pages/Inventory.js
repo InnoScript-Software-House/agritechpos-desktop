@@ -13,6 +13,7 @@ import { getItems } from '../services/item.service';
 import { DeleteDialog } from '../components/general/deleteDialog';
 import { ItemsChart } from '../utilities/items.chart';
 import { VerticalChart } from '../utilities/vertical.chart';
+import { t } from '../utilities/translation.utility';
 
 class InventoryPage extends Component {
 
@@ -76,15 +77,14 @@ class InventoryPage extends Component {
     }
 
     async componentDidMount() { 
-        console.log(this.props.reducer);
         await this.loadingData('category');
         await this.loadingData('item');
     }
     
 
     render() {
-        const { lang, delModal } = this.props.reducer;
-        const { openEdit, categories, items, openCreateItem } = this.state;
+        const { delModal } = this.props.reducer;
+        const { categories, items, openCreateItem, openCreateCategory } = this.state;
         const { history } = this.props;
         return(
             <>
@@ -92,9 +92,9 @@ class InventoryPage extends Component {
 
                 <CreateCategoryComponent 
                     props={this.props} 
-                    open={openEdit} 
+                    open={openCreateCategory} 
                     handler={(e) => this.setState({ 
-                        openEdit: e
+                        openCreateCategory: e
                     })}
                     reload={() => this.loadingData('category')}
                 />
@@ -110,25 +110,15 @@ class InventoryPage extends Component {
                                     })}
                                 >
                                     {openCreateItem ? (<BsEyeSlash size={20} />) :  <BsEye size={20} />}
-                                    <span className='me-3'> {openCreateItem ? 'Hide Create Item' : 'Show Create Item'} </span>
-                                </Button>
-
-                                <Button 
-                                    className='btn-small mt-3' 
-                                    onClick={() => this.setState({
-                                        openEdit: true
-                                    })}
-                                >
-                                    <BsPlusCircle size={20} />
-                                    <span className='me-3'> Create Category </span>
+                                    <span className='me-3'> {openCreateItem ? t('btn-item-create-hide') : t('btn-item-create-show')} </span>
                                 </Button>
 
                                 <Button
                                     className='btn-small mt-3 ms-3'
-                                    onClick={() => history.push('/itemCategoryList')}
+                                    onClick={() => history.push('/category')}
                                 >
                                     <BsListTask size={20} />
-                                    <span className='me-3'> Category List </span>
+                                    <span className='me-3'> {t('category-table-title')} </span>
                                 </Button>
                             </div>
                         </div>
@@ -148,7 +138,7 @@ class InventoryPage extends Component {
                         <div className={openCreateItem ? 'col-md-10' : 'col-md-12'}>
                             <ItemListTableComponent props={this.props} dataSource={items} />
 
-                            <div className='row  mt-3'>
+                            {/* <div className='row  mt-3'>
                                 <div className='col-md-3'>
                                     <ItemsChart props={this.props} type={items.map(e => e.category_title)} title={'Item Categories'} dataSource={items}/>
                                 </div>
@@ -160,10 +150,11 @@ class InventoryPage extends Component {
                                 <div className='col-md-3'>
                                     <ItemsChart props={this.props} type={items.map(e => e.location)} title={'Location'} dataSource={items}/>
                                 </div>
-                            </div>
-                            <div className='col mt-3'>
+                            </div> */}
+
+                            {/* <div className='col mt-3'>
                                     <VerticalChart props={this.props} type={items.map(e => e.model)} title={'Quantity & Price Chart'} dataSource={items}/>
-                             </div>
+                             </div> */}
                         </div>
                     </div>
                 </div>

@@ -48,15 +48,15 @@ export const ChangeNumberFormatBtn = ({ props }) => {
 
     return(
         <div className="d-md-flex flex-md-column justify-content-start align-items-center">
-            <label className={`${lang} me-3`}> {t('btn-change-number-format-label')} </label>
+            <label className={`${lang} me-3`}> {t('number-format-title')} </label>
             <InputGroup className='select-input-group'>
                 <FormSelect 
                     className={zawgyi(lang)}
                     onChange={(e) => changeNumberFormat(e.target.value)}
                     defaultValue={format}
                 >
-                    <option value='number'> Number </option>
-                    <option value='character'> Character </option>
+                    <option value='number'> {t('input-number-format-select-number')} </option>
+                    <option value='character'> {t('input-number-format-select-character')} </option>
                 </FormSelect>
             </InputGroup>
         </div>

@@ -4,7 +4,6 @@ const path = require('path');
 
 
 const isDev = !app.isPackaged;
-
 let webPreferences = {
     nodeIntegration: true,
     nodeIntegrationInWorker: true,
@@ -59,6 +58,6 @@ ipcMain.on('restart-app', () => {
     app.quit();
 });
 
-ipcMain.handle('quit-app', () => {
+ipcMain.on('quit-app', () => {
     app.quit();
 })

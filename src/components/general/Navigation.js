@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Toast, ToastContainer} from "react-bootstrap";
+import { Button, ToastContainer} from "react-bootstrap";
 import { Language } from "./Language";
 import { t, zawgyi } from "../../utilities/translation.utility";
 import * as menulist from '../../assets/data/menulist.json';
+import { AppToast } from "./toasts";
 
 import '../../assets/css/components/navigation.css';
-import { AppToast, ErrorToast } from "./toasts";
 
 export const Navigation = ({props}) => {
 
