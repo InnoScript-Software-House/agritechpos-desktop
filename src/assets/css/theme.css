@@ -269,3 +269,8 @@ input[type="number"]:focus,
 .cart-item-table-hash-width {
   width: 50px;
 }
+
+.dropdown-wrapper {
+  max-height: 100px;
+  overflow-y: scroll;
+}

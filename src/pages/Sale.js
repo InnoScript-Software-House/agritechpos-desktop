@@ -1,18 +1,19 @@
 import { remove, set } from "lodash";
 import moment from "moment";
 import numeral from "numeral";
-import React, { Component} from "react";
-import { Button, Card, FormControl, InputGroup } from "react-bootstrap";
+import React, { Component, useState} from "react";
+import { Button, Card, Dropdown, Form, FormControl, InputGroup } from "react-bootstrap";
 import { BsTrash } from "react-icons/bs";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { AutoCompleteDropDown } from "../components/general/autoCompleteDropDown";
 import { Navigation } from "../components/general/Navigation";
 import { SaleItemListTableComponent } from "../components/sale/SaleItemListTableComponent";
 import { setOpenToastAction } from "../redux/actions/toast.action";
 import { categoryDetail, getCategories } from "../services/category.service";
 import { getItems } from "../services/item.service";
 import { t } from "../utilities/translation.utility";
-
+  
 class SalePage extends Component {
     constructor(props){
         super(props);
@@ -24,9 +25,13 @@ class SalePage extends Component {
             name: '',
             model: '',
             code: '',
-            qty: 0,
+            qty: '',
+            price: '',
+            discount: 0,
+            pay_amount: 0,
             cartItems: [],
-            total: 0
+            total: '',
+            items: []
         };
     };
 
@@ -35,11 +40,23 @@ class SalePage extends Component {
             name: '',
             model: '',
             code: '',
-            qty: 0
+            qty: '',
+            price: ''
         })
     }
 
     async loadingData() {
+        const { openToast } = this.props;
+        const response = await getItems();
+
+        if(response && response.success === false) {
+            openToast('Add to card', response.message, 'danger');
+            return;
+        }
+
+        this.setState({
+            items: response
+        });
     }
 
     autoSearch(e) {
@@ -71,54 +88,81 @@ class SalePage extends Component {
         return;
     }
 
-    itemSearch(e, type) {
+    getSelectedItem(e) {
+        this.setState({
+            name: e.eng_name,
+            model: e.model,
+            code: e.code,
+            price: e.price
+        });
     }
 
-    addCart() {
-        const { name, model, code, qty, cartItems } = this.state;
-        const { openToast } = this.props;
+    addCart(key) {
+        if( key === 'Enter') {
+            const { name, model, code, qty, price, cartItems } = this.state;
+            const { openToast } = this.props;
 
-        if(name === '' || model === '' || code === '' || qty === '') {
-            openToast('Add to card', 'All fields are required', 'danger');
-            return;
-        }
-
-        const isExistItem = cartItems.filter((item) => {
-            if(item.name === name || item.code === code || item.model === model) {
-                return item;
+            if(name === '' || model === '' || code === '') {
+                openToast('Add to card', 'All fields are required', 'danger');
+                return;
             }
-        });
+    
+            if(Number(qty) === 0 || Number(qty) < 0) {
+                openToast('Add to card', 'Invalid item qty', 'danger');
+                return;
+            }
 
-        if(isExistItem.length > 0) {
-            openToast('Add to card', 'Item is already exist', 'danger');
-            return;
+            const isExistItem = cartItems.filter((item) => {
+                if(item.name === name || item.code === code || item.model === model) {
+                    return item;
+                }
+            });
+
+            if(isExistItem.length > 0) {
+                openToast('Add to card', 'Item is already exist', 'danger');
+                return;
+            }
+
+            const item = {
+                name: name,
+                model: model,
+                code: code,
+                qty: qty,
+                price: price,
+                total: Number(qty) * Number(price)
+            }
+
+            let addItem = cartItems;
+
+            addItem.push(item);
+    
+            let total = 0;
+    
+            addItem.map((item) => {
+                total =+ item.total + total;
+            });
+
+            this.reset();
+    
+            this.setState({
+                cartItem: addItem,
+                total: total
+            });
         }
-        
-        const price = 3000;
 
-        const item = {
-            name: name,
-            model: model,
-            code: code,
-            qty: qty,
-            price: price,
-            total: Number(qty) * Number(price)
+        return;
+    }
+
+    getDiscount(e) {
+        const { cartItems } = this.state;
+
+        if(cartItems.length > 0) {
+            this.setState({
+                discount: e
+            });
         }
 
-        let addItem = cartItems;
-
-        addItem.push(item);
-
-        let total = 0;
-
-        addItem.map((item) => {
-            total =+ item.total + total;
-        });
-
-        this.setState({
-            cartItem: addItem,
-            total: total
-        });
+        return;
     }
     
 
@@ -127,7 +171,7 @@ class SalePage extends Component {
     }
 
     render(){
-        const { customerSearch, customerName, customerPhone, customerAddress, name, model, code, qty, cartItems, total } = this.state;
+        const { customerSearch, customerName, customerPhone, customerAddress, name, model, code, qty, cartItems, items, total, price, discount, pay_amount } = this.state;
         return(
             <>
                 <Navigation props={this.props} />
@@ -216,73 +260,94 @@ class SalePage extends Component {
                                                             <td className="cart-item-table-with"> {item.qty} </td>
                                                             <td className="cart-item-table-with"> {numeral(item.price).format('0,0')} MMK </td>
                                                             <td className="cart-item-table-with"> 
-                                                                <span className="me-3"> {numeral(item.total).format('0,0')}  MMK </span>
-                                                                <BsTrash className="btn-icon" size={20} onClick={() => this.removeItem(item)} />
+                                                                <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                                                                    <span className="me-3"> {numeral(item.total).format('0,0')}  MMK </span>
+                                                                    <BsTrash className="btn-icon" size={20} onClick={() => this.removeItem(item)} />
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     )
                                                 })}
-                                                <tr>
-                                                    <td className="cart-item-table-hash-width"> # </td>
-                                                    <td className="cart-item-table-with"> 
-                                                        <InputGroup>
-                                                            <FormControl 
-                                                                type="text"
-                                                                placeholder="Search Item Name"
-                                                                value={name}
-                                                                onChange={(e) => this.setState({ name: e.target.value})}
-                                                            />
-                                                        </InputGroup>
-                                                    </td>
-
-                                                    <td className="cart-item-table-with"> 
-                                                        <InputGroup>
-                                                            <FormControl 
-                                                                type="text"
-                                                                placeholder="Search Item Model"
-                                                                value={model}
-                                                                onChange={(e) => this.setState({ model: e.target.value})}
-                                                            />
-                                                        </InputGroup>
-                                                    </td>
-
-                                                    <td className="cart-item-table-with"> 
-                                                        <InputGroup>
-                                                            <FormControl 
-                                                                type="text"
-                                                                placeholder="Search Item code"
-                                                                value={code}
-                                                                onChange={(e) => this.setState({ code: e.target.value})}
-                                                            />
-                                                        </InputGroup>
-                                                    </td>
-
-                                                    <td className="cart-item-table-with"> 
-                                                        <InputGroup>
-                                                            <FormControl 
-                                                                type="text"
-                                                                placeholder="Qty"
-                                                                value={qty}
-                                                                onChange={(e) => this.setState({ qty: e.target.value})}
-                                                            />
-                                                        </InputGroup>
-                                                    </td>
-
-                                                    <td colSpan="2" className="cart-item-table-with">
-                                                        <Button 
-                                                            className="btn btn-small"
-                                                            onClick={() => this.addCart()}
-                                                        > Add Item 
-                                                        </Button>
-                                                    </td>
-                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                                        <div className="">
+                                            <InputGroup>
+                                                <FormControl 
+                                                    type="number"
+                                                    placeholder="Discount Amount"
+                                                    value={discount}
+                                                    onChange={(e) => this.getDiscount(e.target.value)}
+                                                />
+                                            </InputGroup>
+
+                                            <InputGroup>
+                                                <FormControl 
+                                                    type="number"
+                                                    placeholder="Pay Amount"
+                                                    value={pay_amount}
+                                                    onChange={(e) => this.getDiscount(e.target.value)}
+                                                />
+                                            </InputGroup>
+                                        </div>
+
+                                        <div className="mt-3">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td> <h3 className="me-3"> TOTAL </h3> </td>
+                                                            <td> <h3 className="me-3 ms-3"> {numeral(total).format('0,0')} </h3></td>
+                                                            <td> <h3 className="ms-3"> MMK </h3> </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td> <h3 className="me-3"> DISCOUNT </h3> </td>
+                                                            <td> <h3 className="me-3 ms-3"> {numeral(discount).format('0,0')} </h3> </td>
+                                                            <td> <h3 className="ms-3"> MMK </h3> </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td> <h3 className="me-3"> NET AMOUNT </h3> </td>
+                                                            <td> <h3 className="me-3 ms-3"> {numeral((total - discount)).format('0,0')} </h3> </td>
+                                                            <td> <h3 className="ms-3"> MMK </h3> </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                    </div>              
                                 </Card.Body>
 
                                 <Card.Footer>
-                                    <h3> Total - {numeral(total).format('0,0')} </h3>
+                                    <div className="d-md-flex flex-md-row align-items-start">
+                                            <AutoCompleteDropDown 
+                                                dataSource={items} 
+                                                inputOption={
+                                                    {
+                                                        type: "text",
+                                                        placeholder: 'Enter item code',
+                                                        search_name: 'code'
+                                                    }} 
+                                                chooseItem={(e) => this.getSelectedItem(e)}
+                                            />
+
+                                            <InputGroup>
+                                                <FormControl 
+                                                    type="number" 
+                                                    placeholder="qty" 
+                                                    value={qty} 
+                                                    onChange={(e) => this.setState({ qty: e.target.value})}
+                                                    onKeyPress={(e) => this.addCart(e.code)}
+                                                />
+
+                                                <FormControl placeholder="Name" value={name} disabled={true} />
+                                                <FormControl placeholder="Model" value={model} disabled={true} />
+                                                <FormControl placeholder="Code" value={code} disabled={true} />
+                                                <FormControl placeholder="Qty" value={qty} disabled={true} />
+                                                <FormControl placeholder="Price" value={price} disabled={true} />
+                                            </InputGroup>
+                                    </div>
                                 </Card.Footer>
                             </Card>
                         </div>
