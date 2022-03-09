@@ -30,6 +30,15 @@ class SalePage extends Component {
         };
     };
 
+    reset() {
+        this.setState({
+            name: '',
+            model: '',
+            code: '',
+            qty: 0
+        })
+    }
+
     async loadingData() {
     }
 
@@ -66,8 +75,22 @@ class SalePage extends Component {
     }
 
     addCart() {
-        const {name, model, code, qty, cartItems } = this.state;
+        const { name, model, code, qty, cartItems } = this.state;
+        const { openToast } = this.props;
+
         if(name === '' || model === '' || code === '' || qty === '') {
+            openToast('Add to card', 'All fields are required', 'danger');
+            return;
+        }
+
+        const isExistItem = cartItems.filter((item) => {
+            if(item.name === name || item.code === code || item.model === model) {
+                return item;
+            }
+        });
+
+        if(isExistItem.length > 0) {
+            openToast('Add to card', 'Item is already exist', 'danger');
             return;
         }
         
@@ -191,9 +214,9 @@ class SalePage extends Component {
                                                             <td className="cart-item-table-with"> {item.model} </td>
                                                             <td className="cart-item-table-with"> {item.code} </td>
                                                             <td className="cart-item-table-with"> {item.qty} </td>
-                                                            <td className="cart-item-table-with"> {numeral(item.price).format('0,0')} </td>
+                                                            <td className="cart-item-table-with"> {numeral(item.price).format('0,0')} MMK </td>
                                                             <td className="cart-item-table-with"> 
-                                                                <span className="me-3"> {numeral(item.total).format('0,0')}  </span>
+                                                                <span className="me-3"> {numeral(item.total).format('0,0')}  MMK </span>
                                                                 <BsTrash className="btn-icon" size={20} onClick={() => this.removeItem(item)} />
                                                             </td>
                                                         </tr>
