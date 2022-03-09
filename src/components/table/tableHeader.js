@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
-import { autocomplete } from '../../utilities/table.utility';
+import { autocomplete, calculatePercentageAmount } from '../../utilities/table.utility';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { ItemExportToExcel } from '../exports/itemExportComponent';
 import { BsCloudUpload, BsTrash } from 'react-icons/bs';
@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 
 import '../../assets/css/components/table-header.css';
+import { setOpenToastAction } from '../../redux/actions/toast.action';
 
 export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeholder, filterResult, selectedRows }) => {
     const { lang } = props.reducer;
@@ -17,6 +18,9 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
     const [filterType, setFilterType] = useState(searchColumns[0]);
     const [openExportSetting, setOpenExportSetting] = useState(false);
     const [selectedList, setSelectedList] = useState([]);
+    const [ symbol, setSymbol ] = useState('+');
+    const [ calPercentage, setCalPercentage ] = useState('');
+    const [percentChange, setPercentChange] = useState(false);
 
     const autoSearch = (text) => {
         const result = autocomplete(dataSource, text, filterType);
@@ -39,6 +43,18 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
            open: true,
            data: selectedList
        }))
+    }
+
+    const changePercentage = (amount) => {
+       if(/^(\+?\-?)\d{1,2}/.test(calPercentage)){ 
+        const result = calculatePercentageAmount(dataSource, amount);
+        setPercentChange(false);
+        dispatch(setOpenToastAction('Update All percentage ', 'Change Percentage Successfully', 'success'));
+        console.log(result);
+        return;
+       }
+       dispatch(setOpenToastAction('Update All percentage ', 'Invalid Input', 'danger'));
+       return;
     }
 
     useEffect(() => {
@@ -72,6 +88,31 @@ export const TableHeaderComponent = ({ props, dataSource, searchColumns, placeho
             </div>
 
             <InputGroup className='table-header-right'>
+                {/* <FormControl
+                    className={`select-input-group`}
+                    as={'select'}
+                    value={symbol}
+                    onChange={(e) => setSymbol(e.target.value)}
+                >
+                    <option> + </option>
+                    <option> - </option>
+                </FormControl> */}
+
+                <FormControl
+                    className={`input-small ${zawgyi(lang)}`}
+                    type='text'
+                    value={calPercentage}
+                    onChange={(e) => {
+                        setCalPercentage(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                        if(e.key === 'Enter'){
+                            setPercentChange(true);
+                            changePercentage(calPercentage); 
+                            setCalPercentage('');
+                        }
+                    }}
+                />
                 <FormControl
                     className={`input-small ${zawgyi(lang)}`}
                     type='text'

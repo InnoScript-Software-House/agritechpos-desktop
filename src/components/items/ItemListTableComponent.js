@@ -51,6 +51,7 @@ export const ItemListTableComponent = ({ props, dataSource }) => {
                             placeholder={t('input-item-search')}
                             filterResult={e => getFilterResult(e)}
                             selectedRows={selectedRows}
+
                         />
                     }
                     pagination

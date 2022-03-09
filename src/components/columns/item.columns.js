@@ -90,8 +90,8 @@ export const itemColumns = (props) => {
             width: "200px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-col-sell-fix-amount')} (MMK) </span>,
-            selector: row => numeral(Number(row.fix_amount)).format('0,0'),
+            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('sell-price')} (MMK) </span>,
+            selector: row =>  Number(row.price) + (Number(row.price) * Number((row.percentage/100))),
             sortable: true,
             width: "200px"
         },

@@ -12,7 +12,10 @@ const searchColumns = [
     'code', 'eng_name', 'mm_name', 'location', 'model'
 ];
 
-export const CategoryDetailItemListTableComponent = ({ props, category }) => {
+export const CategoryDetailItemListTableComponent = ({ props, category, categoryItemDetail }) => {
+
+    const itemslist = categoryItemDetail.filter(e => e.name === category.name);
+    console.log(itemslist[0].items);
 
     const { lang } = props.reducer;
     
@@ -26,7 +29,7 @@ export const CategoryDetailItemListTableComponent = ({ props, category }) => {
 
     useEffect(() => {
         if(category) {
-            setItems(category.items);
+            setItems(itemslist[0].items);
         }
         setLoading(false);
     }, [category]);

@@ -13,7 +13,7 @@ export const SaleTableHeaderComponent = ({ type, props, dataSource, searchColumn
     const [text, setText] = useState('');
     const [filterType, setFilterType] = useState(searchColumns[0]);
     const [openExportSetting, setOpenExportSetting] = useState(false);
-    const [selectCategory, setSelectCategory] = useState('');
+    const [selectCategory   , setSelectCategory] = useState('');
     const [categoryItems, setCategoryItems] = useState([]);
 
 

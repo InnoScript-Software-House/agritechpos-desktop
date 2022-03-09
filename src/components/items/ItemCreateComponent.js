@@ -20,6 +20,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
     const [price, setPrice] = useState(0);
     const [location, setLocation] = useState('');
     const [code, setCode] = useState('');
+    const [percentage, setPercentage] = useState(0);
 
     const dispatch = useDispatch();
 
@@ -37,7 +38,8 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
             price: price,
             location: location,
             category_id: category,
-            code: code
+            code: code,
+            percentage: percentage
         }
 
         setBtnLoading(true);
@@ -125,25 +127,56 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
 
-                    <InputGroup className="mb-3">
-                        <FormControl
-                            className={`${zawgyi(lang)}`}
-                            type="number"
-                            placeholder={`${t('input-item-qty')}`}
-                            value={qty}
-                            onChange={e => setQty(e.target.value)}
-                        />
-                    </InputGroup>
+                    <div className="d-flex flex-column">
+                        <div className="row mb-1">
+                            <span>{t('input-item-qty')}</span>
+                        </div>
+                        <div className="row">
+                            <InputGroup className="mb-3">
+                                <FormControl
+                                    className={`${zawgyi(lang)}`}
+                                    type="number"
+                                    placeholder={`${t('input-item-qty')}`}
+                                    value={qty}
+                                    onChange={e => setQty(e.target.value)}
+                                />
+                            </InputGroup>
+                        </div>
+                    </div>
 
-                    <InputGroup className="mb-3">
-                        <FormControl
-                            className={`${zawgyi(lang)}`}
-                            type="text"
-                            placeholder={`${t('input-item-price')}`}
-                            value={price}
-                            onChange={e => setPrice(e.target.value)}
-                        />
-                    </InputGroup>
+                    <div className="d-flex flex-column">
+                        <div className="row mb-1">
+                            <span>{t('input-item-price')}</span>
+                        </div>
+                        <div className="row">
+                            <InputGroup className="mb-3">
+                                <FormControl
+                                    className={`${zawgyi(lang)}`}
+                                    type="text"
+                                    placeholder={`${t('input-item-price')}`}
+                                    value={price}
+                                    onChange={e => setPrice(e.target.value)}
+                                />
+                            </InputGroup>
+                        </div>
+                    </div>
+
+                    <div className="d-flex flex-column">
+                        <div className="row mb-1">
+                            <span>{t('input-item-percentage')}</span>
+                        </div>
+                        <div className="row">
+                            <InputGroup className="mb-3">
+                                <FormControl
+                                    className={`${zawgyi(lang)}`}
+                                    type="number"
+                                    placeholder={`${t('input-percentage')}`}
+                                    value={percentage}
+                                    onChange={e => setPercentage(e.target.value)}
+                                />
+                            </InputGroup>
+                        </div>
+                    </div>
 
                     <InputGroup className="mb-3">
                         <FormControl

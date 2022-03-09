@@ -5,6 +5,7 @@ import { BsArrowCounterclockwise } from 'react-icons/bs';
 import { useDispatch } from "react-redux";
 import { updateCategory } from "../../services/category.service";
 import { setOpenDelModal } from "../../redux/actions/openDelModal.action";
+import { setOpenToastAction } from "../../redux/actions/toast.action";
 
 export const EditCategoryComponent = ({ props, category, reload}) => {
     
@@ -108,7 +109,7 @@ export const EditCategoryComponent = ({ props, category, reload}) => {
                         {t('btn-update')}
                     </Button>
 
-                    {category && category.items.length === 0 && (
+                    {category && category.length === 0 && (
                         <Button 
                             className={`btn-small btn-danger w-full mt-1 ${zawgyi(lang)}`} 
                             disabled={loading}

@@ -102,18 +102,19 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                 )}
 
                 { !loadingData && (
-                    <Card.Body className="d-md-flex flex-md-row">
-                        <div className="col-md-6 pe-3">
-                            <div className="d-md-flex flex-md-column">
+                    <Card.Body className="d-md-flex flex-md-column">
+                        <div className="row-md-6 pe-3">
+                            <div className="d-md-flex flex-md-column align-items-center">
                                 <label className={`mb-2 title ${zawgyi(lang)}`}> {t('table-col-sell-percentage')} </label>
                                 <label> {t('table-col-sell-price')} - <span className="ms-3"> { numeral(Number(item.price)).format('0,0') } MMK </span> </label>
                                 <label> {t('table-col-sell-percentage')} - <span className="ms-3"> { Number(percentage)} </span> </label>
                                 <label> {t('table-col-sell-price-total')} - <span className="ms-3"> { numeral(Number(item.price) + ((Number(item.price) * Number(percentage)) / 100)).format('0,0') } MMK </span> </label>
                             </div>
 
-                            <InputGroup className="d-md-flex flex-md-column mt-3">
+                            <InputGroup className="d-md-flex flex-md-row mt-3 justify-content-center align-items-center">
+                                <div className="col-md-6">
                                 <FormControl
-                                    className={`w-full ${zawgyi(lang)}`}
+                                    className={`${zawgyi(lang)}`}
                                     placeholder={t('input-item-percentage')}
                                     type="number"
                                     maxLength={3}
@@ -123,10 +124,11 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                                     value={percentage}
                                     onChange={e => setPercentage(e.target.value)}
                                 /> 
+                                </div>
                             </InputGroup>
                         </div>
 
-                        <div className="col-md-6 pe-3">
+                        {/* <div className="col-md-6 pe-3">
                             <div className="d-md-flex flex-md-column">
                                 <label className={`mb-2 title ${zawgyi(lang)}`}> {t('input-item-fix-amount')} </label>
                                 <label> {t('table-col-sell-price')} - <span className="ms-3"> {numeral(Number(item.price)).format('0,0')} MMK </span> </label>
@@ -143,7 +145,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                                     onChange={e => setFixAmount(e.target.value)}
                                 /> 
                             </InputGroup>
-                        </div>
+                        </div> */}
                     </Card.Body>
                 )}
 

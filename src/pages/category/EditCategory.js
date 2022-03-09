@@ -2,7 +2,7 @@ import React,{ Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Navigation } from '../../components/general/Navigation';
-import { categoryDetail } from '../../services/category.service';
+import { categoryDetail, getCategories } from '../../services/category.service';
 import { setOpenToastAction } from '../../redux/actions/toast.action'
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { EditCategoryComponent } from '../../components/category/EditCategoryComponent';
@@ -17,7 +17,8 @@ class EditCategoryPage extends Component {
         super(props);
         this.state = {
             loading: true,
-            category: null
+            category: null,
+            categoryItemDetailList: null
         };
     };
 
@@ -34,9 +35,20 @@ class EditCategoryPage extends Component {
             return;
         }
 
+        const getCategoryItemDetail = await getCategories();
+
+        if(getCategoryItemDetail && getCategoryItemDetail.success === false){
+            this.props.openToast(t('toast-category'), getCategoryItemDetail.message, 'danger');
+            this.setState({
+                loading: false
+            })
+            return;
+        }
+
         this.setState({
             loading: false,
-            category: response
+            category: response,
+            categoryItemDetailList: getCategoryItemDetail
         });
     };
 
@@ -45,7 +57,7 @@ class EditCategoryPage extends Component {
     }
 
     render(){
-        const { category, loading } = this.state;
+        const { category, loading, categoryItemDetailList } = this.state;
         const { history } = this.props;
         const { delModal, lang } = this.props.reducer;
         return(
@@ -79,7 +91,7 @@ class EditCategoryPage extends Component {
                                 </div>
 
                                 <div className='col-md-9'>
-                                    <CategoryDetailItemListTableComponent props={this.props} category={category} />
+                                    <CategoryDetailItemListTableComponent props={this.props} category={category} categoryItemDetail={categoryItemDetailList}/>
                                 </div>
                             </div>
                         )

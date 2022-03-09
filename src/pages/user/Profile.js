@@ -6,10 +6,12 @@ import { getProfile } from '../../services/user.service';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
+import { editUser } from '../../services/user.service';
+import { changePassword } from '../../services/user.service';
 
 import '../../assets/css/profile.css';
 
-const checkphone = /^(\+?(95)|[09])\d{10}/g;
+const checkphone = /^(\+?(95)|[09])\d{9}/g;
 
 var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -29,6 +31,13 @@ class ProfilePage extends Component {
       error: null,
       password_error: null
     }
+  }
+
+  httpHandler(response){
+    if(response && response.success === false) {
+      return this.props.openToast('Profile Update', response.message, 'danger');
+    }
+    return response;
   }
 
   async componentDidMount() {
@@ -66,22 +75,29 @@ class ProfilePage extends Component {
       //   error: t('invalid-email-error')
       // });
   }
-  return this.props.openToast('Profile Update', 'Profile Update Successful', 'success')
 
     this.setState({
       is_loading: true
-    });
+    })
 
-    const response = await getProfile();
+    const requestBody = {
+      name: update_name,
+      phone: update_phone,
+      email: update_email
+    }
+
+    const response = await editUser(this.state.user.id, requestBody);
+
+    this.httpHandler(response);
+
+    const getUpdateUser = await getProfile();
 
     this.setState({
-      user: response,
-      update_name: response.name,
-      update_email: response.email,
-      update_phone: response.phone,
       is_loading: false,
-      error: null
-    });
+      user: getUpdateUser
+    })
+
+    return this.props.openToast('Profile Update', 'Profile Update Successful', 'success')
   }
 
   async changePassword() {
@@ -100,8 +116,6 @@ class ProfilePage extends Component {
       //   password_error: t('profile-password-not-match')
       // });
     }
-    
-    this.props.openToast('Change Password', 'Password Change Successfully', 'success');
 
     this.setState({
       is_loading: true
@@ -109,10 +123,20 @@ class ProfilePage extends Component {
 
     //** Change API call process */
 
+    const requestBody = {
+      password: current_password,
+      newPassword: new_password
+    }
+
+    const response = await changePassword(this.state.user.id, requestBody);
+    this.httpHandler(response);
+
     this.setState({
       is_loading: false,
       password_error: null
-    })
+    });
+
+    return this.props.openToast('Change Password', 'Password Change Successfully', 'success');
   }
 
   render() {

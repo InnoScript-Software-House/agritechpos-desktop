@@ -38,3 +38,8 @@ export const delUser = async (id) => {
     const response = await delRequest(`${url}/${id}`);
     return handlerException(response);
 }
+
+export const changePassword = async (id, requestBody) => {
+    const response = await putRequest(`${url}/psw/${id}`, requestBody);
+    return handlerException(response);
+}
