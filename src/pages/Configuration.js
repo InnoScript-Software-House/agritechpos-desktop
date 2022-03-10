@@ -53,10 +53,6 @@ class ConfigurationPage extends Component {
                         >
                             <AppToast props={this.props} />
                         </ToastContainer>
-
-                        <div className='d-md-flex flex-md-row justify-content-end align-items-center'>
-                            <Language props={this.props} />
-                        </div>
                     </div>
                 </div>
 
@@ -66,46 +62,10 @@ class ConfigurationPage extends Component {
                     </div>
 
                 <div className='col-md-8'>
-                        <h3 className={`title mb-3 pb-3 ${zawgyi(lang)}`}> {t('title')} </h3>
-
-                        {/* <Button
-                            className='btn btn-small'
-                            onClick={() => this.restart()}
-                        >
-                            <BsArrowClockwise size={30} /> Restart
-                        </Button> */}
-
+                        <h3 className="title mb-3 pb-3"> Agricultural Equipment POS Software </h3>
                         <div className='row mt-3 pt-3'>
-                            {/* <div className='col-md-4'>
-                                <ul className='config-nav-list'>
-                                    {configNavigations.map((value, index) => {
-                                        return(
-                                            <li 
-                                                key={`config_nav_id_${index}`}  
-                                                onClick={() => this.setState({
-                                                    openComponent: value.component
-                                                })}
-                                            > 
-                                                <BsCheck2Square size={20} />
-                                                <span className={`${zawgyi(lang)}`}> {value.title} </span>
-                                            </li>
-                                        )
-                                    })}
-                                </ul>
-                            </div> */}
-
                             <div className='col-md-8'>
-                                {openComponent === 'DeviceTypeComponent' && (
-                                    <DeviceTypeComponent props={this.props} />
-                                )}
-
-                                {openComponent === 'NetworkTypeComponent' && (
-                                    <NetworkTypeComponent props={this.props} />
-                                )}
-
-                                {openComponent === 'DatabaseURLComponent' && (
-                                    <DatabaseURLComponent props={this.props} />
-                                )}
+                                <DatabaseURLComponent props={this.props} />
                             </div>
                         </div>
                     </div>
