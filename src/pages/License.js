@@ -13,8 +13,8 @@ class LicensePage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      serialNumber: 'sss',
-      userInfo: 'sss',
+      serialNumber: null,
+      userInfo: null,
       plan: null
     }
   }

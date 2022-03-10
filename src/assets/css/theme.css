@@ -134,7 +134,8 @@ input[type="number"]:focus,
   box-shadow: initial !important;
 }
 
-.err {
+.err,
+.error-message {
   color: red;
 }
 

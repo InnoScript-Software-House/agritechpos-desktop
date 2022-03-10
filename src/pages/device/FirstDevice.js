@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Language } from '../../components/general/Language';
-import { t, zawgyi } from '../../utilities/translation.utility';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { createFirstDevice } from '../../services/device.service';
 import { AppToast } from '../../components/general/toasts';
 import { ToastContainer } from "react-bootstrap";
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { checkNetworkConnection } from '../../utilities/networkConnection';
-import axios from 'axios';
 import { SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from '../../redux/actionTypes';
-
-import '../../assets/css/first-device.css';
+import axios from 'axios';
 
 class FirstDevice extends Component {
 
@@ -62,7 +58,7 @@ class FirstDevice extends Component {
     const { history } = this.props;
 
     if(name === '' || ip === '' || mac === '') {
-      this.props.openToast('Device Information',t('first-device-empty'),'danger');
+      this.props.openToast('Device Information', 'All fields are required','danger');
       return;
     }
 
@@ -86,8 +82,8 @@ class FirstDevice extends Component {
   }
 
   render() {
-    const { lang } = this.props.reducer;
     const { name, ip, mac, note } = this.state;
+
     return (
       <div className='container-fluid'>
         <div className='row'>
@@ -100,27 +96,19 @@ class FirstDevice extends Component {
         </div>
 
         <div className='row'>
-          <div className='col-md-12'>
-            <div className='d-md-flex flex-md-row justify-content-end'>
-              <Language props={this.props} />
-            </div>
-          </div>
-        </div>
-
-        <div className='row'>
-          <div className='col-md-4'>
+          <div className='col-md-4 mt-3'>
             <img src="build/assets/images/side_image.jpeg" className='img-fluid' />
           </div>
 
           <div className='col-md-8'>
-            <h3 className={`title m-3 ${zawgyi(lang)}`}> {t('first-device-title')} </h3>
-            <p className={`m-3 ${zawgyi(lang)}`}> {t('first-device-description')} </p>
+            <h3 className="title m-3"> Create New Device </h3>
+            <p className="m-3"> create new device for first times user </p>
 
             <InputGroup className='p-3'>
             <FormControl
-              className={`me-3 ${zawgyi(lang)}`}
+              className="me-3"
               type="text"
-              placeholder={t('first-device-name')}
+              placeholder="Device Name"
               value={name}
               onChange={(e) => this.setState({
                 name: e.target.value
@@ -128,9 +116,9 @@ class FirstDevice extends Component {
             />
 
             <FormControl
-              className={`me-3 ${zawgyi(lang)}`}
+              className="me-3"
               type="text"
-              placeholder={t('first-device-ip')}
+              placeholder="IP Address"
               value={ip}
               onChange={(e) => this.setState({
                 ip: e.target.value
@@ -138,9 +126,9 @@ class FirstDevice extends Component {
             />
 
             <FormControl
-              className={`me-3 ${zawgyi(lang)}`}
+              className="me-3"
               type="text"
-              placeholder={t('first-device-mac')}
+              placeholder="MAC Address"
               value={mac}
               onChange={(e) => this.setState({
                 mac: e.target.value
@@ -148,16 +136,16 @@ class FirstDevice extends Component {
             />
 
             <FormControl
-              className={`me-3 ${zawgyi(lang)}`}
+              className="me-3"
               type="text"
-              placeholder={t('first-device-note')}
+              placeholder="Note"
               value={note}
               onChange={(e) => this.setState({
                 ip: e.target.value
               })}
             />
 
-            <Button onClick={() => this.create()}> {t('btn-frist-device-create')} </Button>
+            <Button onClick={() => this.create()}> Submit </Button>
             </InputGroup>
           </div>
         </div>
@@ -172,7 +160,6 @@ const mapStateToProps = (state) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
-    setLang: (value) => dispatch(setLangAction(value)),
     openToast: (title, message, method) => dispatch(setOpenToastAction(title, message, method))
 });
   
