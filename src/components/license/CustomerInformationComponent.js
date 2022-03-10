@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { t, zawgyi } from "../../utilities/translation.utility";
 import { ArrowLeft } from "react-bootstrap-icons";
 import { useDispatch } from 'react-redux';
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 
-import '../../assets/css/components/license/user-register-info-form.css';
+export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
 
-export const CustomerInformationComponent = ({ props, retriveUserInfo, backStep }) => {
-
-    const { lang } = props.reducer;
     const dispatch = useDispatch();
 
     const [firstName, setFirstName] = useState('');
@@ -23,17 +19,17 @@ export const CustomerInformationComponent = ({ props, retriveUserInfo, backStep 
 
     const submit = () => {
         if(firstName === '' || lastName === '' || email === '' || phone === '' || address === '') {
-            dispatch(setOpenToastAction(t('toast-license-customer'),t('license-customer-all-field-required'),'danger'));
+            dispatch(setOpenToastAction('User Registeration','All fields are requried','danger'));
             return;
         }
 
         if(!checkEmail.test(email)){
-            dispatch(setOpenToastAction(t('toast-license-customer'),t('invalid-email-error'),'danger'));
+            dispatch(setOpenToastAction('User Registeration','Invalid email address','danger'));
             return;
         }
 
         if(!checkPhone.test(phone)){
-            dispatch(setOpenToastAction(t('toast-license-customer'),t('invalid-phone-error'),'danger'));
+            dispatch(setOpenToastAction('User Registeration','Invalid phone number','danger'));
             return;
         }
 
@@ -51,33 +47,31 @@ export const CustomerInformationComponent = ({ props, retriveUserInfo, backStep 
 
     return (
         <div className="d-md-flex flex-md-column"> 
-            <p className={`mt-3 ${zawgyi(lang)}`}> {t('license-customer-description')} </p>
+            <p className="mt-3"> Please fill customer information for license registeration process. </p>
 
             <div className="d-md-flex flex-md-column">
                 <ArrowLeft className="back-arrow" size={40} onClick={(e) => backStep('serial-key')} />
-                <label className={`user-label mb-3 mt-3 ${zawgyi(lang)}`}> {t('license-customer-form-title')} </label>
+                <label className="user-label mb-3 mt-3"> Customer Information </label>
             </div>
 
             <div className="d-md-flex flex-md-column">
                 <div className="d-md-flex flex-md-row justify-content-between mb-3">
                     <InputGroup className="input-between me-3">
                         <FormControl
-                            className={`${zawgyi(lang)}`}
                             type="text"
                             required={true}
                             value={firstName}
-                            placeholder={t('license-customer-first-name')}
+                            placeholder="First Name"
                             onChange={(e) => setFirstName(e.target.value)}
                         />
                     </InputGroup>
 
                     <InputGroup className="input-between ms-3">
                         <FormControl
-                            className={`${zawgyi(lang)}`}
                             type="text"
                             required={true}
                             value={lastName}
-                            placeholder={t('license-customer-last-name')}
+                            placeholder="Last Name"
                             onChange={(e) => setLastName(e.target.value)}
                         />
                     </InputGroup>
@@ -86,22 +80,20 @@ export const CustomerInformationComponent = ({ props, retriveUserInfo, backStep 
                 <div className="d-md-flex flex-md-row justify-content-between mb-3">
                     <InputGroup className="input-between me-3">
                         <FormControl
-                            className={`${zawgyi(lang)}`}
                             type="text"
                             required={true}
                             value={phone}
-                            placeholder={t('license-customer-phone')}
+                            placeholder="Phone"
                             onChange={(e) => setPhone(e.target.value)}
                         />
                     </InputGroup>
 
                     <InputGroup className="input-between ms-3">
                         <FormControl
-                            className={`${zawgyi(lang)}`}
                             type="email"
                             required={true}
                             value={email}
-                            placeholder={t('license-customer-email')}
+                            placeholder="Email"
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </InputGroup>
@@ -110,23 +102,17 @@ export const CustomerInformationComponent = ({ props, retriveUserInfo, backStep 
                 <div className="d-md-flex flex-md-row justify-content-between mb-3">
                     <InputGroup className="address-input me-3">
                         <FormControl
-                            className={`${zawgyi(lang)}`}
                             as="textarea"
                             rows={3}
                             required={true}
                             value={address}
-                            placeholder={t('license-customer-address')}
+                            placeholder="Address"
                             onChange={(e) => setAddress(e.target.value)}
                         />
                     </InputGroup>
                 </div>
 
-                <Button 
-                    className={`${zawgyi(lang)}`} 
-                    onClick={() => submit()}
-                > 
-                    {t('license-customer-submit')} 
-                </Button>
+                <Button onClick={() => submit()}> Submit </Button>
             </div>
         </div>
     )

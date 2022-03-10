@@ -1,16 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { t, zawgyi } from "../../utilities/translation.utility";
 import { ArrowLeft } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { activatedLicense, storeLicense } from "../../services/license.service.js";
 import axios from "axios";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
-
-import '../../assets/css/components/activation.css';
 import { LICENSE } from "../../redux/actionTypes";
 
-export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
+export const Activation = ({ serial, user, plan, backStep, history }) => {
 
     const dispatch = useDispatch();
 
@@ -41,7 +38,7 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
         const response = await storeLicense(requestBody);
 
         if(response && response.success === false) {
-            dispatch(setOpenToastAction(t('toast-license-key'), response.message, 'danger'));
+            dispatch(setOpenToastAction('Activation', response.message, 'danger'));
             return;
         }
         axios.defaults.headers.common['license'] = response.token;
@@ -55,7 +52,7 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
         const response = await activatedLicense(requestBody);
 
         if(response && response.success === false) {
-            dispatch(setOpenToastAction(t('toast-license-key'), t('license-active-invalid'), 'danger'));
+            dispatch(setOpenToastAction('Activation', 'Invalid license key', 'danger'));
             return;
         }
         setEncKey(response.license_token);
@@ -69,8 +66,8 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
     return (
         <div className="d-md-md-flex flex-md-row m-2">
             <div className="d-md-md-flex flex-md-column">
-                <ArrowLeft className="back-arrow me-3" size={40} onClick={(e) => backStep('plan')} />
-                <label className={`user-label mb-3 mt-3 ${zawgyi(lng)}`}> {t('license-active-title')} </label>
+                <ArrowLeft className="back-arrow me-3" size={40} onClick={() => backStep('plan')} />
+                <label className="user-label mb-3 mt-3"> License Activiation </label>
             </div>
             
             <div className="d-md-md-flex flex-md-column">
@@ -78,42 +75,42 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
                 <div className="d-md-flex flex-md-row justify-content-between mb-3">
                     <div className="col-md-6">
                         <div className="d-md-flex">
-                            <label className={`info-label ${zawgyi(lng)}`}> {t('label-serial-number')} </label>
+                            <label className="info-label"> Serial Number </label>
                             <span className="info-text me-3"> {serial} </span>
                         </div>
 
                         <div className="d-md-flex mt-3">
-                            <label className={`info-label ${zawgyi(lng)}`}> Register Name </label>
+                            <label className="info-label"> Register Name </label>
                             <span className="info-text me-3"> {user.display_name} </span>
                         </div>
 
                         <div className="d-md-flex">
-                            <label className={`info-label ${zawgyi(lng)}`}> Phone </label>
+                            <label className="info-label"> Phone </label>
                             <span className="info-text me-3"> {user.phone} </span>
                         </div>
 
                         <div className="d-md-flex">
-                            <label className={`info-label ${zawgyi(lng)}`}> Email </label>
+                            <label className="info-label"> Email </label>
                             <span className="info-text me-3"> {user.email} </span>
                         </div>
 
                         <div className="d-md-flex">
-                            <label className={`info-label ${zawgyi(lng)}`}> Address </label>
+                            <label className="info-label"> Address </label>
                             <span className="info-text me-3"> {user.address} </span>
                         </div>
 
                         <div className="d-md-flex mt-3">
-                            <label className={`info-label ${zawgyi(lng)}`}> {t('license-plan-activation-date')} </label>
+                            <label className="info-label"> Activation Date </label>
                             <span className="info-text me-3"> {plan.activated_at} </span>
                         </div>
 
                         <div className="d-md-flex">
-                            <label className={`info-label ${zawgyi(lng)}`}> {t('license-plan-duration')} </label>
-                            <span className="info-text me-3"> {plan.duration} {t('unit-year')} </span>
+                            <label className="info-label"> Plan Duration </label>
+                            <span className="info-text me-3"> {plan.duration} Year </span>
                         </div>
 
                         <div className="d-md-flex">
-                            <label className={`info-label ${zawgyi(lng)}`}> {t('license-plan-device')} </label>
+                            <label className="info-label"> Devices </label>
                             <span className="info-text me-3"> {plan.device} </span>
                         </div>
                     </div>
@@ -129,7 +126,6 @@ export const Activation = ({ lng, serial, user, plan, backStep, history }) => {
                 </div>
             )}
             </div>
-
         </div>
     )
 }

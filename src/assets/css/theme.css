@@ -274,3 +274,71 @@ input[type="number"]:focus,
   max-height: 100px;
   overflow-y: scroll;
 }
+
+/** License Key **/
+.serial-key-label {
+  color: #01a3a6;
+  font-weight: 600;
+}
+
+.serial-key-input,
+.serial-key-input > input {
+  width: 110px!important;
+}
+
+.serial-key-input > input {
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.btn-serial-key-enter {
+  height: 60px!important;
+  border: 0px!important;
+  border-radius: 0px!important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: inherit!important;
+  line-height: initial!important;
+  padding: 0px;
+}
+
+/** License Key - User Information **/
+.user-label {
+  color: #01a3a6;
+}
+
+.input-between {
+  height: 50px;
+}
+
+.back-arrow {
+  color: #01a3a6;
+  cursor: pointer;
+}
+
+/** License Key - Plan Information **/
+.select-device {
+  border-radius: 0px!important;
+}
+
+.select-device:focus {
+  outline: none !important;
+  box-shadow: 0 0 0px rgba(0,0,0,0)!important;
+}
+
+.btn-plan-enter {
+  margin-top: 30px;
+  height: inherit!important;
+}
+
+/** License Key - Activiation **/
+.info-label {
+  width: 200px;
+  color: #474747;
+}
+
+.info-text {
+  color: #474747;
+}

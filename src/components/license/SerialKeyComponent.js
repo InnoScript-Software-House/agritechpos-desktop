@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { t, zawgyi } from "../../utilities/translation.utility";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { useDispatch } from 'react-redux';
 
-import '../../assets/css/components/license/serial-key-form.css';
+export const SerialKeyComponent = ({ retriveSerialKey }) => {
 
-export const SerialKeyComponent = ({ props, retriveSerialKey }) => {
-
-    const { lang } = props.reducer;
     const dispatch = useDispatch();
 
     const [key01, setKey01] = useState('');
@@ -20,12 +16,12 @@ export const SerialKeyComponent = ({ props, retriveSerialKey }) => {
 
     const submit = () => {
         if(key01 === '' || key02 === '' || key03 === '' || key04 === '' || key05 === '' || key06 === '') {
-            dispatch(setOpenToastAction(t('toast-license-key'), t('license-key-required'), 'danger'));
+            dispatch(setOpenToastAction('License Key', 'License key is required', 'danger'));
             return;
         }
 
         if(key01.length < 4 || key02.length < 4 || key03.length < 4 || key04.length < 4 || key05.length < 4 || key06.length < 4) {
-            dispatch(setOpenToastAction(t('toast-license-key'), t('license-key-invalid'), 'danger'));
+            dispatch(setOpenToastAction('License Key', 'Invalid license key', 'danger'));
             return;
         }
 
@@ -36,9 +32,11 @@ export const SerialKeyComponent = ({ props, retriveSerialKey }) => {
 
     return (
         <div className="d-md-flex flex-md-column">
-            <p className={`mt-3 ${zawgyi(lang)}`}> {t('serial-description')}</p>
+            <p className="mt-3">
+                To use this software, you need to enter a serial number and confirm. You can find the serial number on the software CD.
+            </p>
 
-            <label className={`serial-key-label mb-3 mt-3 ${zawgyi(lang)}`}> {t('serial-key-enter')} </label>
+            <label className="serial-key-label mb-3 mt-3"> License Key </label>
 
             <div className="d-md-flex flex-md-row">
                 <InputGroup className="serial-key-input">
@@ -51,6 +49,7 @@ export const SerialKeyComponent = ({ props, retriveSerialKey }) => {
                         onChange={(e) => setKey01(e.target.value)}
                     />
                 </InputGroup>
+
                 <InputGroup className="serial-key-input">
                     <FormControl
                         type="text"
@@ -106,12 +105,7 @@ export const SerialKeyComponent = ({ props, retriveSerialKey }) => {
                     />
                 </InputGroup>
 
-                <Button 
-                    className={`btn-serial-key-enter ${zawgyi(lang)}`} 
-                    onClick={() => submit()}
-                > 
-                    <span className={`${zawgyi(lang)}`}> {t('license-key-submit')} </span> 
-                </Button>
+                <Button className="btn-serial-key-enter" onClick={() => submit()}> Submit </Button>
             </div>
         </div>
     )

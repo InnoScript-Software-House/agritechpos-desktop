@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Language } from '../components/general/Language';
-import { t, zawgyi } from '../utilities/translation.utility';
 import { SerialKeyComponent } from '../components/license/SerialKeyComponent';
 import { CustomerInformationComponent } from '../components/license/CustomerInformationComponent';
 import { PlanComponent } from '../components/license/PlanComponent';
-import { Footer } from '../components/general/Footer';
 import { Activation } from '../components/license/activation';
 import { ToastContainer } from "react-bootstrap";
 import { AppToast } from '../components/general/toasts';
@@ -16,8 +13,8 @@ class LicensePage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      serialNumber: null,
-      userInfo: null,
+      serialNumber: 'sss',
+      userInfo: 'sss',
       plan: null
     }
   }
@@ -78,10 +75,6 @@ class LicensePage extends Component {
             >
               <AppToast props={this.props} />
             </ToastContainer>
-
-            <div className='d-md-flex flex-md-row justify-content-end align-items-center'>
-              <Language props={this.props} />
-            </div>
           </div>
         </div>
 
@@ -91,18 +84,16 @@ class LicensePage extends Component {
           </div>
 
           <div className='col-md-8'>
-            <h3 className={`title ${zawgyi(lang)}`}> {t('title')} </h3>
+            <h3 className="title"> Agricultural Equipment POS Software </h3>
 
             {!serialNumber && (
               <SerialKeyComponent 
-                props={this.props}
                 retriveSerialKey={(e) => this.getSerialKey(e)} 
               />
             )}
 
             {(serialNumber && !userInfo) && (
               <CustomerInformationComponent 
-                props={this.props}
                 retriveUserInfo={(e) => this.getUserInfo(e)}
                 backStep={(e) => this.getBackStep(e)}
               />
@@ -110,7 +101,6 @@ class LicensePage extends Component {
 
             {(serialNumber && userInfo && !plan) && (
               <PlanComponent 
-                props={this.props}
                 retrivePlan={(e) => this.getPlan(e)}
                 backStep={(e) => this.getBackStep(e)}
               />
@@ -118,7 +108,6 @@ class LicensePage extends Component {
 
             {(serialNumber && userInfo && plan) && (
               <Activation 
-                lng={lang}
                 serial={serialNumber}
                 user={userInfo}
                 plan={plan}

@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { t, zawgyi } from "../../utilities/translation.utility";
 import { ArrowLeft } from "react-bootstrap-icons";
 import { useDispatch } from 'react-redux';
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 
-import '../../assets/css/components/license.css';
-
-export const PlanComponent = ({ props, retrivePlan, backStep }) => {
-
-    const { lang } = props.reducer;
+export const PlanComponent = ({ retrivePlan, backStep }) => {
 
     const [activation, setActivation] = useState('');
     const [duration, setDuration] = useState(1);
@@ -35,7 +30,7 @@ export const PlanComponent = ({ props, retrivePlan, backStep }) => {
 
     const submit = () => {
         if(activation === '' || duration === '' || device === '') {
-            dispatch(setOpenToastAction('Plan',t('user-info-empty-error'),'danger'));
+            dispatch(setOpenToastAction('Plan','All fields are required','danger'));
             return;
         }
         
@@ -50,16 +45,16 @@ export const PlanComponent = ({ props, retrivePlan, backStep }) => {
 
     return (
         <div className="d-md-flex flex-md-column">
-            <p className={`mt-3 ${zawgyi(lang)}`}> {t('license-plan-description')} </p>
+            <p className="mt-3"> Please choose software plan and number of device information </p>
 
             <div className="d-flex flex-column">
                 <ArrowLeft className="back-arrow" size={40} onClick={(e) => backStep('user-info')} />
-                <label className={`plan-label mb-3 mt-3 ${zawgyi(lang)}`}> {t('license-plan-info-title')} </label>
+                <label className="plan-label mb-3 mt-3">  Plan Information </label>
             </div>
 
             <div className="d-flex flex-row justify-content-start mb-3">
                 <Form.Group className="me-3">
-                    <Form.Label className={`${zawgyi(lang)}`}> {t('input-activation-date')} </Form.Label>
+                    <Form.Label> Activation Date </Form.Label>
                     <Form.Control
                         type="date"
                         value={activation}
@@ -68,7 +63,7 @@ export const PlanComponent = ({ props, retrivePlan, backStep }) => {
                 </Form.Group>
 
                 <Form.Group className="me-3">
-                    <Form.Label className={`${zawgyi(lang)}`}> {t('input-duration')} </Form.Label>
+                    <Form.Label> Duration (Year) </Form.Label>
                     <Form.Control 
                         className="select-device"
                         as="select"
@@ -84,7 +79,7 @@ export const PlanComponent = ({ props, retrivePlan, backStep }) => {
                 </Form.Group>
 
                 <Form.Group className="me-3">
-                    <Form.Label className={`${zawgyi(lang)}`}> {t('input-number-of-device')} </Form.Label>
+                    <Form.Label> Use Device </Form.Label>
                     <Form.Control
                         className="select-device"
                         as="select"
@@ -100,12 +95,7 @@ export const PlanComponent = ({ props, retrivePlan, backStep }) => {
                 </Form.Group>
 
                 <Form.Group className="me-3">
-                    <Button 
-                        className="btn-plan-enter ms-3"
-                        onClick={() => submit()}
-                    > 
-                        <span className={`${zawgyi(lang)}`}> {t('licnese-plan-submit')}  </span>
-                    </Button>
+                    <Button className="btn-plan-enter ms-3" onClick={() => submit()}> Submit </Button>
                 </Form.Group>
             </div>
         </div>

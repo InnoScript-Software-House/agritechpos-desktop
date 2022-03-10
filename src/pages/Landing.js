@@ -34,7 +34,6 @@ class LandingPage extends Component {
         }
 
         axios.defaults.baseURL = `http://${config.api_url}/api`;
-
         return true;
     }
 
@@ -46,7 +45,7 @@ class LandingPage extends Component {
         const response = await checkLicense();
 
         if(response && response.success === false) {
-            setToast(t('toast-license-key'), response.message, 'danger');
+            setToast('License', response.message, 'danger');
             return null;
         }
 
