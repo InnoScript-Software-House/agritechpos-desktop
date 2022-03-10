@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
-import { Language } from '../../components/general/Language';
-import { t, zawgyi } from '../../utilities/translation.utility';
 import { createAccount } from '../../services/user.service';
 import { ToastContainer } from "react-bootstrap";
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { AppToast } from '../../components/general/toasts'
-
-import '../../assets/css/first-user-register.css';
 
 var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const checkphone = /^(\+?(95)|[09])\d{10}/g;
@@ -37,19 +33,19 @@ class FirstUserRegisterPage extends Component {
         const { history } = this.props;
 
         if(account_name === '' || phone === '' || email === '' || password === '' || confirm_password === '') {
-            return this.props.openToast('First User Account', t('first-user-error-message'), 'danger');
+            return this.props.openToast('User Account', 'All fields are required', 'danger');
         }
 
         if(password !== confirm_password) {
-            return this.props.openToast('First User Account', t('first-user-error-confirm-password'), 'danger');
+            return this.props.openToast('User Account', 'Password does not match', 'danger');
         }
 
         if(!pattern.test(email)){
-            return this.props.openToast('First User Account', t('invalid-email-error'), 'danger');
+            return this.props.openToast('User Account', 'Invalid email address', 'danger');
         }
 
         if(!checkphone.test(phone)){
-            return this.props.openToast('First User Account', 'Invalid phone number', 'danger');
+            return this.props.openToast('User Account', 'Invalid phone number', 'danger');
         }
 
         const resquestBody = {
@@ -66,7 +62,7 @@ class FirstUserRegisterPage extends Component {
         const response = await createAccount(resquestBody);
 
         if(response.success === false) {
-            this.props.openToast('First User Account', response.message, 'danger');
+            this.props.openToast('User Account', response.message, 'danger');
             return this.setState({
                 is_loading: false
             });
@@ -83,7 +79,6 @@ class FirstUserRegisterPage extends Component {
 
     render() {
         const { is_loading, account_name, phone, email, password, confirm_password } = this.state;
-        const { lang } = this.props.reducer; 
 
         return (
             <div className='container-fluid'>
@@ -97,30 +92,22 @@ class FirstUserRegisterPage extends Component {
                 </div>
 
                 <div className='row'>
-                    <div className='col-md-12'>
-                        <div className='d-md-flex flex-row justify-content-end'>
-                            <Language props={this.props} />
-                        </div>
-                    </div>
-                </div>
-
-                <div className='row'>
-                    <div className='col-md-4'>
+                    <div className='col-md-4 mt-3'>
                         <img src="build/assets/images/side_image.jpeg" className='img-fluid' />
                     </div>
 
                     <div className='col-md-8'>
-                        <h3 className={`title m-3 ${zawgyi(lang)}`}> {t('first-user-title')} </h3>
-                        <p className={`m-3 ${zawgyi(lang)}`}> {t('first-user-description')} </p>
+                        <h3 className="title m-3"> Create User Account </h3>
+                        <p className="m-3"> create user account for first times user. This account can login into software. </p>
 
                         <div className='d-md-flex flex-md-row justify-content-between'>
                             <div className='col-md-12 d-flex flex-column justify-content-center'>
                                 <InputGroup className="p-3">
                                     <FormControl
-                                        className={`me-3 ${zawgyi(lang)}`}
+                                        className="me-3"
                                         type="text"
                                         required={true}
-                                        placeholder={t('first-user-name')}
+                                        placeholder="Account Name"
                                         value={account_name}
                                         onChange={(e) => this.setState({
                                             account_name: e.target.value
@@ -128,10 +115,10 @@ class FirstUserRegisterPage extends Component {
                                     />
 
                                     <FormControl
-                                        className={`me-3 ${zawgyi(lang)}`}
+                                        className="me-3"
                                         type="text"
                                         required={true}
-                                        placeholder={t('first-user-phone')}
+                                        placeholder="Phone"
                                         value={phone}
                                         onChange={(e) => this.setState({
                                             phone: e.target.value
@@ -139,10 +126,10 @@ class FirstUserRegisterPage extends Component {
                                     />
 
                                     <FormControl
-                                        className={`me-3 ${zawgyi(lang)}`}
+                                        className="me-3"
                                         type="text"
                                         required={true}
-                                        placeholder={t('first-user-email')}
+                                        placeholder="Email"
                                         value={email}
                                         onChange={(e) => this.setState({
                                             email: e.target.value
@@ -152,10 +139,10 @@ class FirstUserRegisterPage extends Component {
 
                                 <InputGroup className="p-3">
                                     <FormControl
-                                        className={`me-3 ${zawgyi(lang)}`}
+                                        className="me-3"
                                         type="password"
                                         required={true}
-                                        placeholder={t('first-user-password')}
+                                        placeholder="Password"
                                         value={password}
                                         onChange={(e) => this.setState({
                                             password: e.target.value
@@ -163,10 +150,10 @@ class FirstUserRegisterPage extends Component {
                                     />
 
                                     <FormControl
-                                        className={`me-3 ${zawgyi(lang)}`}
+                                        className="me-3"
                                         type="password"
                                         required={true}
-                                        placeholder={t('first-user-reenter-password')}
+                                        placeholder="Confirm password"
                                         value={confirm_password}
                                         onChange={(e) => this.setState({
                                             confirm_password: e.target.value
@@ -175,13 +162,7 @@ class FirstUserRegisterPage extends Component {
                                 </InputGroup>
                                 
                                 <InputGroup className='p-3'>
-                                    <Button
-                                        className={`${zawgyi(lang)}`}
-                                        disabled={is_loading}
-                                        onClick={() => this.createAccount()}
-                                    > 
-                                        {t('first-user-btn-create')}
-                                    </Button>
+                                    <Button disabled={is_loading} onClick={() => this.createAccount()}> Create Account </Button>
                                 </InputGroup>
                             </div>
                         </div>
@@ -191,7 +172,6 @@ class FirstUserRegisterPage extends Component {
         )
     }
 }
-
 
 const mapStateToProps = (state) => ({
     reducer: state

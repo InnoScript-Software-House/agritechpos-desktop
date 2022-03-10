@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { Button, Card, Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { setLangAction } from '../redux/actions/lang.action';
 import { LICENSE, SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from '../redux/actionTypes';
 import { checkLicense } from '../services/license.service.js';
 import { checkFirstUser } from '../services/user.service';
 import axios from 'axios';
 import { getFirstDevice } from '../services/device.service';
 import { setOpenToastAction } from '../redux/actions/toast.action';
-import { t } from '../utilities/translation.utility';
 import { checkNetworkConnection } from '../utilities/networkConnection';
-
-import '../assets/css/landing/index.css';
 
 class LandingPage extends Component {
 
@@ -178,7 +174,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setLang: (value) => dispatch(setLangAction(value)),
     setToast: (title, message, status) => dispatch(setOpenToastAction(title, message, status))
 });
 
