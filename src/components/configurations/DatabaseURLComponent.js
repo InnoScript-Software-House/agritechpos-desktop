@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { setDatabaseUrl } from "../../redux/actions/config.action";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 
-export const DatabaseURLComponent = ({ props }) => {
+export const DatabaseURLComponent = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();

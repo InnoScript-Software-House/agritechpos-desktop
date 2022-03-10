@@ -13,7 +13,6 @@ import { t } from '../utilities/translation.utility';
 import { checkNetworkConnection } from '../utilities/networkConnection';
 
 import '../assets/css/landing/index.css';
-import CardHeader from 'react-bootstrap/esm/CardHeader';
 
 class LandingPage extends Component {
 

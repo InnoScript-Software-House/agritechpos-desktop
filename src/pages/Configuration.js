@@ -1,48 +1,18 @@
 import React, { Component } from 'react'
-import { Button, ToastContainer } from 'react-bootstrap';
-import { BsArrowClockwise, BsCheck2Square } from 'react-icons/bs';
+import { ToastContainer } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { DatabaseURLComponent } from '../components/configurations/DatabaseURLComponent';
-import { DeviceTypeComponent } from '../components/configurations/DeviceTypeComponent';
-import { NetworkTypeComponent } from '../components/configurations/NetworkTypeComponent';
-import { Language } from '../components/general/Language';
 import { AppToast } from '../components/general/toasts';
-import { t, zawgyi } from '../utilities/translation.utility';
 
-const configNavigations = [
-    // {
-    //     title: t('config-nav-device'),
-    //     component: 'DeviceTypeComponent'
-    // },
-    // {
-    //     title: t('config-nav-network'),
-    //     component: 'NetworkTypeComponent'
-    // },
-    {
-        title: t('config-nav-database-url'),
-        component: 'DatabaseURLComponent'
-    }
-]
 
 class ConfigurationPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            openComponent: 'DatabaseURLComponent'
-        }
-    }
-
-    restart() {
-        const { app } = window.nativeApi;
-        app.restart();
     }
 
     render() {
-        const { lang } = this.props.reducer;
-        const { openComponent } = this.state;
-
         return (
             <div className='container-fluid'>
                 <div className='row'>
@@ -65,7 +35,7 @@ class ConfigurationPage extends Component {
                         <h3 className="title mb-3 pb-3"> Agricultural Equipment POS Software </h3>
                         <div className='row mt-3 pt-3'>
                             <div className='col-md-8'>
-                                <DatabaseURLComponent props={this.props} />
+                                <DatabaseURLComponent />
                             </div>
                         </div>
                     </div>
@@ -75,13 +45,11 @@ class ConfigurationPage extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => ({
     reducer: state
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setLang: (value) => dispatch(setLangAction(value)),
     setToast: (title, message, status) => dispatch(setOpenToastAction(title, message, status))
 });
 
