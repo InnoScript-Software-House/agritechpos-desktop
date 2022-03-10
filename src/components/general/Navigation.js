@@ -1,16 +1,19 @@
 import React from "react";
 import { Button, ToastContainer} from "react-bootstrap";
-import { Language } from "./Language";
-import { t, zawgyi } from "../../utilities/translation.utility";
-import * as menulist from '../../assets/data/menulist.json';
 import { AppToast } from "./toasts";
 
-import '../../assets/css/components/navigation.css';
+const menus = [
+    { label: "Dashboard", url: "/dashboard"},
+    { label: "Sale", url: "/sale"},
+    { label: "Inventory", url: "/inventory"},
+    { label: "Report", url: "/report"},
+    { label: "Profile", url: "/profile"},
+    { label: "Account", url: "/account"},
+    { label: "Setting", url: "/setting"},
+    { label: "Logout", url: "/logout"}
+];
 
 export const Navigation = ({props}) => {
-
-    const menus = menulist.default;
-    const { lang } = props.reducer;
     const { history } = props;
 
     return(
@@ -19,23 +22,15 @@ export const Navigation = ({props}) => {
                 <AppToast props={props} />
             </ToastContainer>
 
-            <div className="d-flex flex-row justify-content-between navigation-wrapper">
-                <div className="d-flex flex-row justify-content-start align-items-center">
+            <div className="d-md-flex flex-md-row justify-content-between navigation-wrapper">
+                <div className="d-md-flex flex-md-row justify-content-start align-items-center mt-3 mb-3">
                     {menus.map((menu, index) => {
                         return(
-                            <Button
-                                className={`btn-nav ms-2 ${zawgyi(lang)}`}
-                                key={`btn_id_${index}`}
-                                onClick={() => history.push(menu.url)}
-                            >
-                                {t(menu.label)} 
+                            <Button className="btn-nav ms-2" key={`btn_id_${index}`} onClick={() => history.push(menu.url)}>
+                               {menu.label}
                             </Button>
                         )
                     })}
-                </div>
-
-                <div className="lang-overwrite">
-                    <Language props={props}/>
                 </div>
             </div>
         </>

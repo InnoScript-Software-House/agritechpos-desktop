@@ -344,3 +344,18 @@ input[type="number"]:focus,
 .info-text {
   color: #474747;
 }
+
+
+/** Navigation **/
+.navigation-wrapper {
+  width: 100%;
+  background-color: #4CA6AA;
+}
+
+.btn-nav {
+  border: 1px solid rgb(220, 220, 220)!important;
+}
+
+.btn-nav:hover {
+  border: 1px solid rgb(255, 255, 255)!important;
+}
