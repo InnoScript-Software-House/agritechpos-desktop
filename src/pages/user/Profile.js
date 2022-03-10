@@ -29,7 +29,7 @@ class ProfilePage extends Component {
       new_password: '',
       confirm_password: '',
       error: null,
-      password_error: null
+      password_error: null,
     }
   }
 
@@ -75,15 +75,21 @@ class ProfilePage extends Component {
       //   error: t('invalid-email-error')
       // });
   }
-
-    this.setState({
-      is_loading: true
-    })
-
     const requestBody = {
-      name: update_name,
+      name: update_name, 
       phone: update_phone,
       email: update_email
+    }
+
+    if(this.state.user.name === requestBody.name) {
+      delete requestBody.name;
+    }
+    if(this.state.user.phone === requestBody.phone){
+      delete requestBody.phone;
+    }
+
+    if(this.state.user.email === requestBody.email){
+      delete requestBody.email;
     }
 
     const response = await editUser(this.state.user.id, requestBody);

@@ -31,7 +31,8 @@ class SalePage extends Component {
             pay_amount: 0,
             cartItems: [],
             total: '',
-            items: []
+            items: [],
+            payBtn: false
         };
     };
 
@@ -164,6 +165,15 @@ class SalePage extends Component {
 
         return;
     }
+
+    payNow(){
+        const { history } = this.props;
+        this.setState({
+            payBtn: true
+        })
+        history.push('/invoiceReport');
+        console.log('pay now')
+    }
     
 
     async componentDidMount(){
@@ -233,7 +243,7 @@ class SalePage extends Component {
                                                 })}
                                             />
                                         </InputGroup>
-                                    </div>
+                                    </div>  
 
                                     <div className="table-responsive">
                                         <table className="table">
@@ -315,6 +325,11 @@ class SalePage extends Component {
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <div className="d-flex flex-row justify-content-end align-items-center">
+                                                    <Button onClick={() => this.payNow()}>
+                                                        Pay Now
+                                                    </Button>
+                                                </div>
                                         </div>
                                     </div>              
                                 </Card.Body>
