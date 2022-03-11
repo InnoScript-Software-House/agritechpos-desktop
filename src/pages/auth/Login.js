@@ -81,8 +81,8 @@ class LoginPage extends Component {
 
                 <div className='col-md-8'>
                         <h3 className="title mb-3 pb-3"> Agricultural Equipment POS Software </h3>
-                        <div className='row mt-3 pt-3'>
-                            <div className='col-md-8'>
+                        <div className='d-md-flex flex-md-column justify-content-center align-items-start'>
+                            <div className='col-md-4'>
                                 <h3 className="title mt-3"> Login Account </h3>
 
                                 <InputGroup className='mt-3'>
@@ -104,8 +104,8 @@ class LoginPage extends Component {
                                 </InputGroup>
 
                                 <InputGroup className='mt-3'>
-                                    <Button disabled={is_loading} onClick={() => this.login()}> Login </Button>
-                                    <Button onClick={() => this.quitDevice()} className="ms-3"> Quit </Button>
+                                    <Button disabled={is_loading} onClick={() => this.login()} className="btn btn-small"> Login </Button>
+                                    <Button onClick={() => this.quitDevice()} className="btn btn-small"> Quit </Button>
                                 </InputGroup>
                             </div>
                         </div>

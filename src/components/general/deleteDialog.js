@@ -21,13 +21,13 @@ export const DeleteDialog = ({ props, reload }) => {
     const confirmDelete = async () => {
         const response = await delRequest(`${delModal.type}/${delModal.id}`);
         if(response && response.success === false) {
-            dispatch(setOpenToastAction(t('toast-item'), response.message, 'danger'));
+            dispatch(setOpenToastAction('Delete Record', response.message, 'danger'));
             closeModal();
             return;
         }
 
         closeModal();
-        dispatch(setOpenToastAction(delModal.title, t('toast-delete-success'), 'success'));
+        dispatch(setOpenToastAction(delModal.title, 'Records are deleted', 'success'));
         reload();
         return;
     }
@@ -39,13 +39,13 @@ export const DeleteDialog = ({ props, reload }) => {
 
         const response = await postRequest(`${delModal.type}/delete`, { data: requestBody });
         if(response && response.success === false) {
-            dispatch(setOpenToastAction(t('toast-item'), response.message, 'danger'));
+            dispatch(setOpenToastAction('Delete Record', response.message, 'danger'));
             closeModal();
             return;
         }
 
         closeModal();
-        dispatch(setOpenToastAction(delModal.title, t('toast-delete-success'), 'success'));
+        dispatch(setOpenToastAction(delModal.title, 'Records are deleted', 'success'));
         reload();
         return;
     }
@@ -59,28 +59,16 @@ export const DeleteDialog = ({ props, reload }) => {
     return(
         <Modal show={isOpen}>
             <Modal.Header>
-                <Modal.Title>
-                    <span className={`${zawgyi(lang)}`}> {delModal.title} </span>
-                </Modal.Title>
+                <Modal.Title> {delModal.title} </Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
-                <p className={`${zawgyi(lang)}`}> {delModal.message} </p>
+                <p> {delModal.message} </p>
             </Modal.Body>
 
             <Modal.Footer>
-                <Button 
-                    className={`btn-small ${zawgyi(lang)}`}
-                    onClick={() => delModal.multiple ? multipleDeleted() : confirmDelete()}
-                > 
-                    {t('btn-confirm')}
-                </Button>
-                
-                <Button 
-                    className={`btn-small btn-secondary ${zawgyi(lang)}`}
-                    onClick={() => closeModal()}
-                > {t('btn-close')} 
-                </Button>
+                <Button className="btn-small" onClick={() => delModal.multiple ? multipleDeleted() : confirmDelete()}> Confirm </Button>
+                <Button className="btn-small btn-secondary" onClick={() => closeModal()}> Close </Button>
             </Modal.Footer>
         </Modal>
     )

@@ -22,7 +22,7 @@ export const CreateCategoryComponent = ({ props, open, handler, reload }) => {
 
     const createCategory = async () => {
         if(name === '') {
-            dispatch(setOpenToastAction('Create Category', t('category-error-empty'), 'danger'));
+            dispatch(setOpenToastAction('Create Category', 'Name field is required', 'danger'));
             return;
         }
 

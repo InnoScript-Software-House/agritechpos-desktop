@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { Button, Card, FormControl, InputGroup } from "react-bootstrap";
+import { Button, Card, FormControl, FormLabel, InputGroup } from "react-bootstrap";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { updateItem } from "../../services/item.service";
-import { t, zawgyi } from "../../utilities/translation.utility";
 import { LoadingComponent } from "../general/Loading";
 
 export const EditItemComponent = ({ props, item, reload }) => {
 
-    const { lang } = props.reducer;
     const { id } = props.match.params;
     const dispatch = useDispatch();
 
@@ -61,13 +59,13 @@ export const EditItemComponent = ({ props, item, reload }) => {
             const response = await updateItem(id, requestBody);
 
             if(response && response.success === false) {
-                dispatch(setOpenToastAction(t('toast-item'), response.message, 'danger'));
+                dispatch(setOpenToastAction('Item Update', response.message, 'danger'));
                 setLoading(false);
                 setLoadingData(false);
                 return;
             }
 
-            dispatch(setOpenToastAction(t('toast-item'), t('toast-item-update-success'), 'success'));
+            dispatch(setOpenToastAction('Item Update', 'Item is updated', 'success'));
             setLoadingData(false);
             setLoading(false);
             reload();
@@ -88,78 +86,78 @@ export const EditItemComponent = ({ props, item, reload }) => {
         <Card>
             <Card.Header>
                 <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center"> 
-                    <span className={`title ${zawgyi(lang)}`}> {t('item-edit-title')} </span>
+                    <span className="title"> Update Item </span>
                     <BsArrowCounterclockwise size={20} className="btn-icon" onClick={() => setData()} />
                 </Card.Title>
             </Card.Header>
 
             { editItem && !loadingData && (
                 <Card.Body>
+                    <FormLabel> Material Code </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-code')}`}
+                            placeholder="Material Code"
                             value={code}
                             onChange={e => setCode(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> English Name </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-eng-name')}`}
+                            placeholder="English Name"
                             value={eng_name}
                             onChange={e => setEnName(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> Myanmar Name </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-mm-name')}`}
+                            placeholder="Myanmar Name"
                             value={mm_name}
                             onChange={e => setMMName(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> Model </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-model')}`}
+                            placeholder="Model"
                             value={model}
                             onChange={e => setModel(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> Qty </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="number"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-qty')}`}
+                            placeholder="Qty"
                             value={qty}
                             onChange={e => setQty(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> Price </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-price')}`}
+                            placeholder="Price"
                             value={price}
                             onChange={e => setPrice(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> Location </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-location')}`}
+                            placeholder="Location"
                             value={itemLocation}
                             onChange={e => setItemLocation(e.target.value)}
                         />
@@ -170,11 +168,11 @@ export const EditItemComponent = ({ props, item, reload }) => {
             {editItem && !loadingData && (
                 <Card.Footer>
                     <Button 
-                        className={`btn-small w-full ${zawgyi(lang)}`} 
+                        className="btn-small w-full"
                             disabled={loading}
                             onClick={() => update()}
                         >
-                            {t('btn-update')}
+                           Update
                     </Button>
                 </Card.Footer>
             )}

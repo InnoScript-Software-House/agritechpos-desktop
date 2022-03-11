@@ -1,11 +1,9 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import { Card } from 'react-bootstrap';
-import { zawgyi, t } from '../../utilities/translation.utility';
 
-export const ItemQRComponent = ({ item, props }) => {
+export const ItemQRComponent = ({ item }) => {
     
-    const { lang } = props.reducer;
     return(
         <>
             <Card>
@@ -27,12 +25,12 @@ export const ItemQRComponent = ({ item, props }) => {
                         />
 
                         <div className='d-md-flex flex-md-column'>
-                            <label className={`${zawgyi(lang)}`}> {t('input-item-eng-name')} - <span className="ms-3"> {item.eng_name} </span> </label>
-                            <label className={`${zawgyi(lang)}`}> {t('input-item-mm-name')} - <span className="ms-3"> {item.mm_name} </span> </label>
-                            <label className={`${zawgyi(lang)}`}> {t('input-item-code')} - <span className="ms-3"> {item.code} </span> </label>
-                            <label className={`${zawgyi(lang)}`}> {t('input-item-model')} - <span className="ms-3"> {item.model} </span> </label>
-                            <label className={`${zawgyi(lang)}`}> {t('table-col-category')} - <span className="ms-3"> {item.category ? item.category.name : '----'} </span> </label>
-                            <label className={`${zawgyi(lang)}`}> {t('input-item-location')} - <span className="ms-3"> {item.location} </span> </label>
+                            <label> English Name - <span className="ms-3"> {item.eng_name} </span> </label>
+                            <label> Myanamr Name - <span className="ms-3"> {item.mm_name} </span> </label>
+                            <label> Material Code - <span className="ms-3"> {item.code} </span> </label>
+                            <label> Model - <span className="ms-3"> {item.model} </span> </label>
+                            <label> Category - <span className="ms-3"> {item.category ? item.category.name : '----'} </span> </label>
+                            <label> Location - <span className="ms-3"> {item.location} </span> </label>
                         </div>
                     </div>
                 </Card.Body>

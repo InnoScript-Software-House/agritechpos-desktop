@@ -5,34 +5,31 @@ import { setNumberFormatAction } from "../../redux/actions/numberFormat.action";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { getNumberSpecList } from "../../services/numberSpecification.service";
 import { setCharAction } from '../../redux/actions/charaster.action';
-import { t, zawgyi } from "../../utilities/translation.utility";
 
 export const ChangeNumberFormatBtn = ({ props }) => {
-    const { lang, numberFormat } = props.reducer;
+    const { numberFormat } = props.reducer;
 
     const [format, setFormat] = useState(numberFormat);
     const dispatch = useDispatch();
 
-    const httpHandler = (response) => {
+    const fetchData = async () => {
+        const response = await getNumberSpecList();
         if(response && response.success === false) {
             dispatch(setOpenToastAction('Number Specification', response.message));
+            return;
         }
 
         return response;
     }
 
-    const fetchData = async () => {
-        const numberList = await getNumberSpecList();
-        return httpHandler(numberList);
-    }
-
     const changeNumberFormat = async (value) => {
         if(value === 'character') {
             const data = await fetchData();
+
             const nullValue = data.filter(value => value.set_char === null);
 
             if(nullValue.length !== 0) {
-               dispatch(setOpenToastAction('Number Specification', t('num-spec-use-error'), 'danger'));
+               dispatch(setOpenToastAction('Number Specification', "Number charaster set can't be used, Please check number specification setting", 'danger'));
                setFormat(numberFormat);
                return;
             }
@@ -48,15 +45,14 @@ export const ChangeNumberFormatBtn = ({ props }) => {
 
     return(
         <div className="d-md-flex flex-md-column justify-content-start align-items-center">
-            <label className={`${lang} me-3`}> {t('number-format-title')} </label>
+            <label className="me-3"> Change Number Format </label>
             <InputGroup className='select-input-group'>
                 <FormSelect 
-                    className={zawgyi(lang)}
                     onChange={(e) => changeNumberFormat(e.target.value)}
                     defaultValue={format}
                 >
-                    <option value='number'> {t('input-number-format-select-number')} </option>
-                    <option value='character'> {t('input-number-format-select-character')} </option>
+                    <option value='number'> Number </option>
+                    <option value='character'> Character </option>
                 </FormSelect>
             </InputGroup>
         </div>

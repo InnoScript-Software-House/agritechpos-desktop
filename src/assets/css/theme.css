@@ -359,3 +359,24 @@ input[type="number"]:focus,
 .btn-nav:hover {
   border: 1px solid rgb(255, 255, 255)!important;
 }
+
+/** Item Table Header **/
+.table-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-body > header {
+  padding: 0px!important;
+}
+
+.table-header-right {
+  width: 500px!important;
+}
+
+.table-header-left {
+  width: 500px!important;
+}

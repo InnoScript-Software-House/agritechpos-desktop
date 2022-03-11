@@ -19,21 +19,15 @@ class EditItemPage extends Component {
         }
     }
 
-    httpHandler (response) {
-        if(response && response.success === false) {
-            this.setState({
-                error: response.message,
-                is_loading: false
-            });
-            return;
-        }
-    }
-
     async loadingData() {
         const { id } = this.props.match.params;
+        const { openToast } = this.props;
 
         const response = await itemDetail(id);
-        this.httpHandler(response);
+        if(response && response.success === false) {
+            openToast('Item Update', response.message, 'danger');
+            return;
+        }
 
         this.setState({
             is_loading: false,
@@ -73,8 +67,8 @@ class EditItemPage extends Component {
                             </div>
 
                             <div className='col-md-5'>
-                                <ItemQRComponent props={this.props} item={item} />
-                                <ItemBarCodeComponent props={this.props} item={item} />
+                                <ItemQRComponent item={item} />
+                                <ItemBarCodeComponent item={item} />
                             </div>
                     </div>
                     )}
@@ -89,6 +83,7 @@ const mapStateToProps = (state) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
+    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
 });
   
 export default connect(
