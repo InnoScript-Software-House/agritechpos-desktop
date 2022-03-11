@@ -35,3 +35,5 @@ export const SET_NETWORK_MAC = 'SET_NETWORK_MAC';
 export const SET_DATABASE_URL = 'SET_DATABASE_URL';
 
 export const SET_SELL_PRICE = 'SET_SELL_PRICE';
+
+export const SET_INVOICE = 'SET_INVOICE';

@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { AutoCompleteDropDown } from "../components/general/autoCompleteDropDown";
 import { Navigation } from "../components/general/Navigation";
 import { SaleItemListTableComponent } from "../components/sale/SaleItemListTableComponent";
+import { setInvoiceAction } from "../redux/actions/invoice.action";
 import { setOpenToastAction } from "../redux/actions/toast.action";
 import { categoryDetail, getCategories } from "../services/category.service";
 import { getItems } from "../services/item.service";
@@ -22,6 +23,7 @@ class SalePage extends Component {
             customerName: '',
             customerAddress: '',
             customerSearch: '',
+            customerPhone: '',
             name: '',
             model: '',
             code: '',
@@ -168,11 +170,28 @@ class SalePage extends Component {
 
     payNow(){
         const { history } = this.props;
+        if(this.state.cartItems.length > 0){
+            this.setState({
+                payBtn: true
+            });
+            let iData = {
+                invoice_id: this.state.invoice_id,
+                customer_name: this.state.customerName,
+                customer_phone: this.state.customerPhone,
+                customer_address: this.state.customerAddress,
+                bought_items: this.state.cartItems.map(e => e),
+                total: this.state.total,
+                discount: this.state.discount,
+                netAmount: this.state.total - this.state.discount
+            };
+            this.props.setInvoice(iData);
+            history.push('/invoiceReport');
+        };
         this.setState({
-            payBtn: true
-        })
-        history.push('/invoiceReport');
-        console.log('pay now')
+            payBtn: false
+        });
+        return;
+
     }
     
 
@@ -326,7 +345,7 @@ class SalePage extends Component {
                                                     </tbody>
                                                 </table>
                                                 <div className="d-flex flex-row justify-content-end align-items-center">
-                                                    <Button onClick={() => this.payNow()}>
+                                                    <Button onClick={() => this.payNow()} disabled={this.state.payBtn}>
                                                         Pay Now
                                                     </Button>
                                                 </div>
@@ -378,7 +397,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
+    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme)),
+    setInvoice: (data) => dispatch(setInvoiceAction(data))
 });
 
 

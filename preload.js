@@ -24,5 +24,13 @@ contextBridge.exposeInMainWorld('nativeApi', {
         quitApp(){
             return ipcRenderer.send('quit-app');
         }
-    }
+    },
+    printComponent: async (url, callback) => {
+        let response = await ipcRenderer.invoke('printComponent', url);
+        callback(response);
+    },
+    previewComponent: async (url, callBack) => {
+        let response = await ipcRenderer.invoke('previewComponent', url);
+        callBack(response);
+    },
 });
