@@ -13,8 +13,6 @@ import { Navigation } from '../components/general/Navigation';
 import { NumberSpecificationComponent } from '../components/settings/numberSpecification';
 import { DeviceComponent } from '../components/settings/device';
 
-import '../assets/css/setting.css';
-
 class SettingPage extends Component {
 
     constructor(props) {
@@ -52,16 +50,18 @@ class SettingPage extends Component {
             <>
                 <Navigation props={this.props} />
 
-                <div className='d-md-flex flex-row'>
-                    <div className='col-md-2'>
-                        <SideBarComponent props={this.props} getComponent={e => this.selectedComponent(e) }/>
+                <div className='container-fluid'>
+                    <div className='row'>
+                        <div className='g-0 col-md-2'>
+                            <SideBarComponent getComponent={e => this.selectedComponent(e) }/>
+                        </div>
+
+                        <div className='col-md-10'>
+                            {openComponent && openComponent === 'ShopComponent' && (<ShopComponent props={this.props} />)}
+                            {openComponent && openComponent === 'NumberSpecificationComponent' && (<NumberSpecificationComponent props={this.props} />)}
+                            {openComponent && openComponent === 'DeviceComponent' && (<DeviceComponent props={this.props} />)}
+                        </div>
                     </div>
-
-                    {openComponent && openComponent === 'ShopComponent' && (<ShopComponent props={this.props} />)}
-
-                    {openComponent && openComponent === 'NumberSpecificationComponent' && (<NumberSpecificationComponent props={this.props} />)}
-
-                    {openComponent && openComponent === 'DeviceComponent' && (<DeviceComponent props={this.props} />)}
                 </div>
             </>
         )

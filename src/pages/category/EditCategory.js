@@ -2,14 +2,12 @@ import React,{ Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Navigation } from '../../components/general/Navigation';
-import { categoryDetail, getCategories } from '../../services/category.service';
+import { categoryDetail } from '../../services/category.service';
 import { setOpenToastAction } from '../../redux/actions/toast.action'
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { EditCategoryComponent } from '../../components/category/EditCategoryComponent';
 import { CategoryDetailItemListTableComponent } from '../../components/category/CategoryDetailItemListTableComponent';
 import { DeleteDialog } from '../../components/general/deleteDialog';
-import { Alert } from 'react-bootstrap';
-import { t, zawgyi } from '../../utilities/translation.utility';
 
 class EditCategoryPage extends Component {
 
@@ -18,7 +16,7 @@ class EditCategoryPage extends Component {
         this.state = {
             loading: true,
             category: null,
-            categoryItemDetailList: null
+            items: []
         };
     };
 
@@ -28,17 +26,7 @@ class EditCategoryPage extends Component {
         const response = await categoryDetail(id);
 
         if(response && response.success === false){
-            this.props.openToast(t('toast-category'), response.message, 'danger');
-            this.setState({
-                loading: false
-            })
-            return;
-        }
-
-        const getCategoryItemDetail = await getCategories();
-
-        if(getCategoryItemDetail && getCategoryItemDetail.success === false){
-            this.props.openToast(t('toast-category'), getCategoryItemDetail.message, 'danger');
+            this.props.openToast('Category', response.message, 'danger');
             this.setState({
                 loading: false
             })
@@ -48,7 +36,7 @@ class EditCategoryPage extends Component {
         this.setState({
             loading: false,
             category: response,
-            categoryItemDetailList: getCategoryItemDetail
+            items: response.items
         });
     };
 
@@ -57,9 +45,9 @@ class EditCategoryPage extends Component {
     }
 
     render(){
-        const { category, loading, categoryItemDetailList } = this.state;
+        const { category, loading, items } = this.state;
         const { history } = this.props;
-        const { delModal, lang } = this.props.reducer;
+        const { delModal } = this.props.reducer;
         return(
             <>
                 <Navigation props={this.props} />
@@ -73,25 +61,23 @@ class EditCategoryPage extends Component {
                         </div>
                     </div>
 
-                    <div className='row mt-1'>
-                        <div className='col-md-12'>
-                            <Alert
-                                variant="warning"
-                            >
-                                <Alert.Heading className={`${zawgyi(lang)}`}> {t('alert-category-delete-title')} </Alert.Heading>
-                                <p className={`${zawgyi(lang)}`}> {t('alert-category-delete')} </p>
-                            </Alert>
-                        </div>
-                    </div>
-
                     {!loading && (
                             <div className='row mt-1'>
                                 <div className='col-md-3'>
-                                    <EditCategoryComponent props={this.props} category={category} reload={() => this.loadingData()} />
+                                    <EditCategoryComponent 
+                                        props={this.props} 
+                                        category={category} 
+                                        isDelete={items.length > 0 ? false : true} 
+                                        reload={() => this.loadingData()} 
+                                    />
                                 </div>
 
                                 <div className='col-md-9'>
-                                    <CategoryDetailItemListTableComponent props={this.props} category={category} categoryItemDetail={categoryItemDetailList}/>
+                                    <CategoryDetailItemListTableComponent 
+                                        props={this.props} 
+                                        category={category} 
+                                        items={items}
+                                    />
                                 </div>
                             </div>
                         )
@@ -113,6 +99,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
 });
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps

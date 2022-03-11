@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
-import { autocomplete, calculatePercentageAmount } from '../../utilities/table.utility';
+import { autocomplete } from '../../utilities/table.utility';
 import { BsTrash } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
-import { getItems, updatePercentage } from '../../services/item.service';
+import { updatePercentage } from '../../services/item.service';
 
-export const TableHeaderComponent = ({ dataSource, searchColumns, placeholder, filterResult, selectedRows, reload }) => {
+export const TableHeaderComponent = ({ dataSource, searchColumns, placeholder, filterResult, selectedRows, reload, type }) => {
     const dispatch = useDispatch();
 
     const [text, setText] = useState('');
     const [filterType, setFilterType] = useState(searchColumns[0]);
     const [selectedList, setSelectedList] = useState([]);
-    const [ calPercentage, setCalPercentage ] = useState('');
+    const [calPercentage, setCalPercentage] = useState('');
 
     const autoSearch = (text) => {
         const result = autocomplete(dataSource, text, filterType);
@@ -28,14 +28,14 @@ export const TableHeaderComponent = ({ dataSource, searchColumns, placeholder, f
     }
 
     const deleteSelectedRows = () => {
-       dispatch(setOpenDelModal({
+        dispatch(setOpenDelModal({
            title: "Delete Record",
            message: "Are you sure to delete record",
-           type: 'items',
+           type: type,
            multiple: true,
            open: true,
            data: selectedList
-       }))
+        }));
     }
 
     const changePercentage = async (amount) => {
@@ -84,20 +84,23 @@ export const TableHeaderComponent = ({ dataSource, searchColumns, placeholder, f
             </div>
 
             <InputGroup className='table-header-right'>
-                <FormControl
-                    className="input-small"
-                    type='number'
-                    placeholder="Change Items %"
-                    value={calPercentage}
-                    onChange={(e) => {
-                        setCalPercentage(e.target.value);
-                    }}
-                    onKeyPress={(e) => {
-                        if(e.code === 'Enter') {
-                            changePercentage(e.target.value);
-                        }
-                    }}
-                />
+                {type === 'Items' && (
+                    <FormControl
+                        className="input-small"
+                        type='number'
+                        placeholder="Change Items %"
+                        value={calPercentage}
+                        onChange={(e) => {
+                            setCalPercentage(e.target.value);
+                        }}
+                        onKeyPress={(e) => {
+                            if(e.code === 'Enter') {
+                                changePercentage(e.target.value);
+                            }
+                        }}
+                    />
+                )}
+
                 <FormControl
                     className="input-small"
                     type='text'
@@ -118,7 +121,7 @@ export const TableHeaderComponent = ({ dataSource, searchColumns, placeholder, f
                 >
                     {searchColumns.map((filter, index) => {
                         return(
-                             <option key={`filter_column_id_${index}`}> {filter} </option>
+                            <option key={`filter_column_id_${index}`}> {filter} </option>
                         )
                     })}
                 </FormControl>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
-import { t, zawgyi } from '../../utilities/translation.utility';
+import { t } from '../../utilities/translation.utility';
 import { itemColumns } from '../columns/item.columns';
 import { ChangeNumberFormatBtn } from '../general/changeNumberFormatBtn';
 import { paginationComponentOptions } from '../table/paginationOptions';
@@ -12,14 +12,9 @@ const searchColumns = [
     'code', 'eng_name', 'mm_name', 'location', 'model'
 ];
 
-export const CategoryDetailItemListTableComponent = ({ props, category, categoryItemDetail }) => {
+export const CategoryDetailItemListTableComponent = ({ props, items }) => {
 
-    const itemslist = categoryItemDetail.filter(e => e.name === category.name);
-    console.log(itemslist[0].items);
-
-    const { lang } = props.reducer;
-    
-    const [items, setItems] = useState([]);
+    const [itemList, setItemList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [ selectedRows, setSelectedRows] = useState([]);
 
@@ -28,17 +23,17 @@ export const CategoryDetailItemListTableComponent = ({ props, category, category
     }
 
     useEffect(() => {
-        if(category) {
-            setItems(itemslist[0].items);
+        if(items) {
+            setItemList(items);
         }
         setLoading(false);
-    }, [category]);
+    }, [items]);
 
     return(
         <Card>
             <Card.Header>
                 <div className="d-md-flex flex-md-row justify-content-between">
-                    <span className={`card-title ${zawgyi(lang)}`}> {t('item-list-title')} </span>
+                    <span className="card-title"> Item List </span>
                     <ChangeNumberFormatBtn props={props} />
                 </div>
             </Card.Header>
@@ -50,7 +45,7 @@ export const CategoryDetailItemListTableComponent = ({ props, category, category
                         <TableHeaderComponent 
                             props={props} 
                             type={'Items'}
-                            dataSource={items} 
+                            dataSource={itemList} 
                             searchColumns={searchColumns} 
                             placeholder={t('input-item-search')}
                             filterResult={e => getFilterResult(e)}

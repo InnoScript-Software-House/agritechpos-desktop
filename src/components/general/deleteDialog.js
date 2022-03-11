@@ -4,11 +4,10 @@ import { useDispatch } from 'react-redux';
 import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { delRequest, postRequest } from '../../services/api.service';
-import { t, zawgyi } from '../../utilities/translation.utility';
 
 export const DeleteDialog = ({ props, reload }) => {
 
-    const { lang, delModal } = props.reducer;
+    const { delModal } = props.reducer;
     const dispatch = useDispatch();
 
     const [isOpen, setIsOpen] = useState(false);

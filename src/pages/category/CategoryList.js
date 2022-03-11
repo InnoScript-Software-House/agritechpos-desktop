@@ -66,7 +66,7 @@ class CategoryListPage extends Component{
 
                     <div className='row'>
                         <div className='col-md-3'>
-                            <CreateCategoryComponent props={this.props} reload={() => this.loadingData()} />
+                            <CreateCategoryComponent reload={() => this.loadingData()} />
                         </div>
 
                         <div className='col-md-9'>

@@ -1,13 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { zawgyi, t } from '../../utilities/translation.utility';
 import { BsArrowUpRightSquare } from "react-icons/bs";
 import { useHistory } from 'react-router-dom';
 
-export const categoryColumns = (props) => {
-    const { lang } = props.reducer;
-
-    const dispatch = useDispatch();
+export const categoryColumns = () => {
     const history = useHistory();
 
     return [
@@ -18,21 +13,16 @@ export const categoryColumns = (props) => {
             width: "50px"
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}>{t('table-col-name')}</span>,
+            name: <span className="datatable-header"> Category Name </span>,
             selector: row => row.name,
             sortable: true
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}>{t('table-col-qty')}</span>,
-            selector: row => row.items.length,
-            sortable: true
-        },
-        {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}>{t('table-col-description')}</span>,
+            name: <span className="datatable-header"> Description </span>,
             selector: row => row.description,
         },
         {
-            name: <span className={`datatable-header ${zawgyi(lang)}`}> {t('table-option')} </span>,
+            name: <span className="datatable-header"> Option </span>,
             selector: (row) => {
                 return(
                     <BsArrowUpRightSquare 

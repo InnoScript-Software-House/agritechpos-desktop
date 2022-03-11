@@ -3,12 +3,8 @@ import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { saveCategory } from '../../services/category.service';
-import { t, zawgyi } from '../../utilities/translation.utility';
 
-export const CreateCategoryComponent = ({ props, reload }) => {
-
-    const { lang } = props.reducer;
-
+export const CreateCategoryComponent = ({ reload }) => {
     const dispatch = useDispatch();
 
     const [name, setName] = useState('');
@@ -23,7 +19,7 @@ export const CreateCategoryComponent = ({ props, reload }) => {
 
     const createCategory = async () => {
         if(name === '') {
-            dispatch(setOpenToastAction(t('toast-category'), t('valitation-category-name-empty'), 'danger'));
+            dispatch(setOpenToastAction('Create Category','category name is required', 'danger'));
             return;
         }
 
@@ -37,12 +33,12 @@ export const CreateCategoryComponent = ({ props, reload }) => {
         const response = await saveCategory(requestBody);
 
         if(response && response.success === false) {
-            dispatch(setOpenToastAction(t('toast-category'), response.message, 'danger'));
+            dispatch(setOpenToastAction('Create Category', response.message, 'danger'));
             setLoading(false);
             return;
         }
 
-        dispatch(setOpenToastAction(t('toast-category'), t('toast-category-create-success'), 'success'));
+        dispatch(setOpenToastAction('Create Category', 'category is updated', 'success'));
         setLoading(false);
         reset();
         reload(true);
@@ -53,16 +49,15 @@ export const CreateCategoryComponent = ({ props, reload }) => {
         <Card className='mt-3'>
         <Card.Header>
             <Card.Title>
-                <span className={`title ${zawgyi(lang)}`}> {t('category-create-title')} </span>
+                <span className="title"> Create Category </span>
             </Card.Title>
         </Card.Header>
 
         <Card.Body>
             <InputGroup className="mb-3">
                 <FormControl 
-                    className={`${zawgyi(lang)}`}
                     type='text'
-                    placeholder={t('input-category-name')}
+                    placeholder="Category Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
@@ -70,20 +65,19 @@ export const CreateCategoryComponent = ({ props, reload }) => {
 
             <InputGroup className="mb-3">
                 <FormControl 
-                    className={`${zawgyi(lang)}`}
                     type='text'
-                    placeholder={t('input-category-description')}
+                    placeholder="Description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </InputGroup>
 
             <Button
-                className={`btn btn-samll ${zawgyi(lang)}`}
+                className="btn btn-samll"
                 disabled={loading}
                 onClick={() => createCategory()}
             > 
-                {t('btn-create')} 
+                Create
             </Button>
         </Card.Body>
     </Card>

@@ -1,111 +1,67 @@
 
-import React, { useCallback, useEffect, useState } from 'react';
-import { Badge, Button, Card, FormControl, InputGroup, Table } from 'react-bootstrap';
-import { t, zawgyi } from '../../utilities/translation.utility';
+import React, { useEffect, useState } from 'react';
+import { Card } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
-import { BsArrowUpRightSquare, BsTrash } from 'react-icons/bs';
+import { TableHeaderComponent } from '../table/tableHeader';
+import { TableLoadingComponent } from '../table/tableLoading';
+import { accountColumns } from '../columns/account.columns';
+import { paginationComponentOptions } from '../table/paginationOptions';
 
-import '../../assets/css/components/account-list.css';
-import { delUser, getUsers } from '../../services/user.service';
-import { setOpenToastAction } from '../../redux/actions/toast.action';
-import { useDispatch } from 'react-redux';
+const searchColumns = [
+    'name', 'phone', 'email'
+];
 
-const SubHeaderComponent = () => {
-    return(
-        <div>
-            <InputGroup className='input-group-search'>
-                <FormControl
-                    type='text'
-                    placeholder='အရောင်းစာရေးနာမည်/ဖုန်းနံပါတ်ဖြင့် ရှာဖွေရန်'
-                />
+export const AccountList = ({ dataSource, reload, selectedEdit }) => {
 
-                <Button className='btn-search'> ရှာဖွေမည် </Button>
-            </InputGroup>
-        </div>
-    )
-}
+    const [ tableLoading, setTableLoading ] = useState(true);
+    const [ itemList, setItemList] = useState([]);
+    const [ selectedRows, setSelectedRows] = useState([]);
 
-export const AccountList = ({ props, dataSource, reload, edit }) => {
-    const { lang } = props.reducer;
-    const [error, setError] = useState(null);
-
-    const paginationComponentOptions = {
-        noRowsPerPage: false,
-        rowsPerPageText: t('table-viewed-record'),
-        rangeSeparatorText: t('table-total-record'),
-        selectAllRowsItem: false,
-    };
-
-    const columns = [
-        {
-            name: t('user-table-name'),
-            selector: row => row.name,
-            sortable: true,
-        },
-        {
-            name: t('user-table-phone'),
-            selector: row => row.phone,
-            sortable: true,
-        },
-        {
-            name: t('user-table-email'),
-            selector: row => row.email,
-            sortable: true,
-        },
-        {
-            name: t('user-table-active'),
-            selector: row => {
-                return(
-                    <Badge bg={row.active ? 'success' : 'danger'}> {row.active ? 'Active' : 'Block'} </Badge>
-                )
-            },
-            sortable: true,
-        },
-        {
-            name: t('option'),
-            selector: row => {
-                return(
-                    <div className='d-flex flex-row'>
-                        <BsArrowUpRightSquare size={20} className="btn-icon" onClick={() => edit(row)}/>
-                        <BsTrash size={20} className="btn-icon ms-3" onClick={() => deleteUser(row.id)} />
-                    </div>
-                )
-            }
-        }
-    ];
-    
-    const deleteUser = async (id) => {
-        const response = await delUser(id);
-
-        if(response && response.success === false) {
-            dispatch(setOpenToastAction('Delete Account', err, 'danger'));
-            return;
-        }
-
-        reload(true);
-        setError(null);
-        return;
+    const getFilterResult = (e) => {
+        setItemList(e);
     }
 
+    useEffect(() => {
+        if(dataSource) {
+            setItemList(dataSource);
+            setTableLoading(false);
+        }
+    }, [dataSource]);
+
     return(
-        <div className='d-md-flex flex-row'>
-            <div className='col-md-12 p-2'>
-                <Card className='p-2'>
-                    <Card.Title className='p-2'>
-                        <span className={`${zawgyi(lang)}`}> {t('account-list-title')} </span>
-                    </Card.Title>
+        <div className='d-md-flex flex-md-row'>
+            <div className='col-md-12'>
+                <Card>
+                    <Card.Header>
+                        <Card.Title className='p-2'>
+                            <span> Account List </span>
+                        </Card.Title>
+                    </Card.Header>
 
                     <Card.Body>
                         <DataTable
-                            className='user-table'
                             subHeader={true}
-                            subHeaderComponent={<SubHeaderComponent />}
+                            subHeaderComponent={
+                                <TableHeaderComponent 
+                                    type='auth'
+                                    dataSource={dataSource} 
+                                    searchColumns={searchColumns} 
+                                    placeholder="Search user account"
+                                    filterResult={e => getFilterResult(e)}
+                                    selectedRows={selectedRows}
+                                    reload={(e) => reload(e)}
+                                />
+                            }
                             pagination
                             fixedHeader
                             fixedHeaderScrollHeight="400px"
-                            columns={columns}
-                            data={dataSource}
+                            columns={accountColumns((edit) => {
+                                selectedEdit(edit);
+                            })}
+                            data={itemList}
                             paginationComponentOptions={paginationComponentOptions}
+                            progressPending={tableLoading}
+                            progressComponent={<TableLoadingComponent />}
                             dense
                             highlightOnHover
                             pointerOnHover

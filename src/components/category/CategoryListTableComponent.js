@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import DataTable from "react-data-table-component";
-import { zawgyi, t } from '../../utilities/translation.utility';
 import { TableLoadingComponent } from "../table/tableLoading";
 import { categoryColumns } from "../columns/category.columns";
 import { paginationComponentOptions } from "../table/paginationOptions";
@@ -11,7 +10,6 @@ const searchColumns = ['name'];
 
 export const CategoryListTableComponent = ({ props, dataSource }) => {
 
-    const { lang } = props.reducer;
     const [tableLoading, setTableLoading] = useState(true);
     const [categoryList, setCategoryList] = useState([]);
     const [selectedRows, setSelectedRows] = useState([]); 
@@ -32,7 +30,7 @@ export const CategoryListTableComponent = ({ props, dataSource }) => {
         <Card className="mt-3">
             <Card.Header>
                 <Card.Title>
-                    <span className={`title ${zawgyi(lang)}`}> {t('category-table-title')} </span>
+                    <span className="title"> Category List </span>
                 </Card.Title> 
             </Card.Header>
 
@@ -45,7 +43,7 @@ export const CategoryListTableComponent = ({ props, dataSource }) => {
                             type={'Category'}
                             dataSource={dataSource} 
                             searchColumns={searchColumns} 
-                            placeholder={t('input-category-search')}
+                            placeholder="Category Search"
                             filterResult={e => getFilterResult(e)}
                             selectedRows={selectedRows}
                         />
@@ -53,7 +51,7 @@ export const CategoryListTableComponent = ({ props, dataSource }) => {
                     fixedHeaderScrollHeight="400px"
                     fixedHeader
                     pagination
-                    columns={categoryColumns(props)}
+                    columns={categoryColumns()}
                     paginationComponentOptions={paginationComponentOptions}
                     data={categoryList}
                     dense

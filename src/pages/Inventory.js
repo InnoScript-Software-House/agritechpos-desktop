@@ -132,7 +132,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
 });
-  
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
