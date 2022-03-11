@@ -1,27 +1,26 @@
-import { remove, set } from "lodash";
 import moment from "moment";
 import numeral from "numeral";
-import React, { Component, useState} from "react";
-import { Button, Card, Dropdown, Form, FormControl, InputGroup } from "react-bootstrap";
+import React, { Component} from "react";
+import { Button, Card, FormControl, InputGroup } from "react-bootstrap";
 import { BsTrash } from "react-icons/bs";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AutoCompleteDropDown } from "../components/general/autoCompleteDropDown";
 import { Navigation } from "../components/general/Navigation";
-import { SaleItemListTableComponent } from "../components/sale/SaleItemListTableComponent";
 import { setOpenToastAction } from "../redux/actions/toast.action";
-import { categoryDetail, getCategories } from "../services/category.service";
+import { getCustomerList } from "../services/customer.service";
+import { createInvoice } from "../services/invoice.service";
 import { getItems } from "../services/item.service";
-import { t } from "../utilities/translation.utility";
   
 class SalePage extends Component {
     constructor(props){
         super(props);
         this.state = {
-            invoice_id: moment().unix(),
+            customers: [],
+            suggestions: [],
             customerName: '',
             customerAddress: '',
-            customerSearch: '',
+            customerPhone: '',
             name: '',
             model: '',
             code: '',
@@ -54,15 +53,25 @@ class SalePage extends Component {
             openToast('Add to card', response.message, 'danger');
             return;
         }
+        
+        const customer = await getCustomerList();
+        if(customer && customer.success === false) {
+            openToast('Customer', customer.message, 'danger');
+            return;
+        }
 
         this.setState({
-            items: response
+            items: response,
+            customers: customer
         });
     }
 
     autoSearch(e) {
+        const { customers } = this.state;
+        const suggestionResult = customers.filter((customer) => customer.name.toLowerCase().startsWith(e.toLowerCase()));
         this.setState({
-            customerSearch: e
+            suggestions: suggestionResult,
+            customerName: e
         });
     }
 
@@ -166,13 +175,45 @@ class SalePage extends Component {
         return;
     }
 
+    getCustomer(e) {
+        this.setState({
+            customerName: e.name,
+            customerPhone: e.phone ? e.phone : '',
+            customerAddress: e.address ? e.address : ''
+        });
+    }
+
+    async saveInvoice() {
+        const { customerAddress, customerName, customerPhone, total, discount, cartItems } = this.state;
+        const { openToast } = this.props;
+
+        const requestBody = {
+            customer_name: customerName !== '' ? customerName : null,
+            customer_phone: customerPhone !== '' ? customerPhone : null,
+            customer_address: customerAddress !== '' ? customerAddress : null,
+            customer_email : null,
+            total_amount: total,
+            discount: discount,
+            invoice_data: cartItems,
+            cash_back: 0,
+            invoice_id: moment().unix()
+            
+        }
+        const response = await createInvoice(requestBody);
+
+        if(response && response.success === false) {
+            openToast('Customer', response.message, 'danger');
+            return;
+        }
+    }
+
     payNow(){
         const { history } = this.props;
-        this.setState({
-            payBtn: true
-        })
-        history.push('/invoiceReport');
-        console.log('pay now')
+        this.saveInvoice();
+        // this.setState({
+        //     payBtn: true
+        // });
+        // history.push('/invoiceReport');
     }
     
 
@@ -181,7 +222,7 @@ class SalePage extends Component {
     }
 
     render(){
-        const { customerSearch, customerName, customerPhone, customerAddress, name, model, code, qty, cartItems, items, total, price, discount, pay_amount } = this.state;
+        const { customers, customerName, customerPhone, customerAddress, name, model, code, qty, cartItems, items, total, price, discount, pay_amount } = this.state;
         return(
             <>
                 <Navigation props={this.props} />
@@ -194,15 +235,16 @@ class SalePage extends Component {
                                     <Card.Title className="title">
                                         <div className="d-md-flex flex-md-row justify-content-between align-item-center">
                                             <span>  INVOICE  </span>
-                                            <InputGroup className="card-header-search">
-                                                <FormControl 
-                                                    type="text"
-                                                    placeholder="Search Customer By Name"
-                                                    value={customerSearch}
-                                                    onChange={(e) => this.autoSearch(e.target.value)}
-                                                />
-                                                <Button className="btn btn-samll"> Choose Customer </Button>
-                                            </InputGroup>
+                                            <AutoCompleteDropDown 
+                                                dataSource={customers} 
+                                                inputOption={
+                                                    {
+                                                        type: "text",
+                                                        placeholder: 'Enter Customer Name',
+                                                        search_name: 'name'
+                                                    }} 
+                                                chooseItem={(e) => this.getCustomer(e)}
+                                            />
                                         </div>
                                     </Card.Title>
                                 </Card.Header>
@@ -282,7 +324,7 @@ class SalePage extends Component {
                                         </table>
                                     </div>
 
-                                    <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                                    <div className="d-md-flex flex-md-row justify-content-between align-items-center mb-3">
                                         <div className="">
                                             <InputGroup>
                                                 <FormControl 
@@ -303,25 +345,25 @@ class SalePage extends Component {
                                             </InputGroup>
                                         </div>
 
-                                        <div className="mt-3">
+                                        <div className="mt-3 mb-3">
                                                 <table>
                                                     <tbody>
                                                         <tr>
-                                                            <td> <h3 className="me-3"> TOTAL </h3> </td>
-                                                            <td> <h3 className="me-3 ms-3"> {numeral(total).format('0,0')} </h3></td>
-                                                            <td> <h3 className="ms-3"> MMK </h3> </td>
+                                                            <td> <h4 className="me-3"> TOTAL </h4> </td>
+                                                            <td> <h4 className="me-3 ms-3"> {numeral(total).format('0,0')} </h4></td>
+                                                            <td> <h4 className="ms-3"> MMK </h4> </td>
                                                         </tr>
 
                                                         <tr>
-                                                            <td> <h3 className="me-3"> DISCOUNT </h3> </td>
-                                                            <td> <h3 className="me-3 ms-3"> {numeral(discount).format('0,0')} </h3> </td>
-                                                            <td> <h3 className="ms-3"> MMK </h3> </td>
+                                                            <td> <h4 className="me-3"> DISCOUNT </h4> </td>
+                                                            <td> <h4 className="me-3 ms-3"> {numeral(discount).format('0,0')} </h4> </td>
+                                                            <td> <h4 className="ms-3"> MMK </h4> </td>
                                                         </tr>
 
                                                         <tr>
-                                                            <td> <h3 className="me-3"> NET AMOUNT </h3> </td>
-                                                            <td> <h3 className="me-3 ms-3"> {numeral((total - discount)).format('0,0')} </h3> </td>
-                                                            <td> <h3 className="ms-3"> MMK </h3> </td>
+                                                            <td> <h4 className="me-3"> NET AMOUNT </h4> </td>
+                                                            <td> <h4 className="me-3 ms-3"> {numeral((total - discount)).format('0,0')} </h4> </td>
+                                                            <td> <h4 className="ms-3"> MMK </h4> </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

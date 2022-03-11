@@ -6,7 +6,7 @@ const menus = [
     { label: "Dashboard", url: "/dashboard"},
     { label: "Sale", url: "/sale"},
     { label: "Inventory", url: "/inventory"},
-    { label: "Report", url: "/report"},
+    { label: "Invoice", url: "/invoice"},
     { label: "Profile", url: "/profile"},
     { label: "Account", url: "/account"},
     { label: "Setting", url: "/setting"},

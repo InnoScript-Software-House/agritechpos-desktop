@@ -56,7 +56,7 @@ class SettingPage extends Component {
                             <SideBarComponent getComponent={e => this.selectedComponent(e) }/>
                         </div>
 
-                        <div className='col-md-10'>
+                        <div className='col-md-10 mt-3'>
                             {openComponent && openComponent === 'ShopComponent' && (<ShopComponent props={this.props} />)}
                             {openComponent && openComponent === 'NumberSpecificationComponent' && (<NumberSpecificationComponent props={this.props} />)}
                             {openComponent && openComponent === 'DeviceComponent' && (<DeviceComponent props={this.props} />)}

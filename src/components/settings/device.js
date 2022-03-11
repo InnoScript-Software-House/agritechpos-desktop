@@ -3,12 +3,13 @@ import { CreateeDeviceComponent } from "./createDevice";
 import { getDevices } from "../../services/device.service";
 import { getDevice } from "../../services/license.service";
 import { DeviceListComponent } from "./deviceList";
+import { useDispatch } from "react-redux";
+import { setOpenToastAction } from "../../redux/actions/toast.action";
 
 export const DeviceComponent = ({ props }) => {
-    const { lang } = props.reducer;
+    const dispatch = useDispatch();
 
     const [devices, setDevices] = useState([]);
-    const [error, setError] = useState(null);
     const [disable, setDisable] = useState(false);
 
     const refresh = (e) => {
@@ -19,20 +20,25 @@ export const DeviceComponent = ({ props }) => {
 
     const fetchApi = useCallback(async() => {
         const response = await getDevices();
-        const regInfo = await getDevice();
 
-        if((response && response.success === false) || (regInfo && regInfo.success === false)) {
-            setError(response.message);
+        if((response && response.success === false)) {
+            dispatch(setOpenToastAction('Device List', response.messsage, 'danger'));
             return;
         }
 
-        const limit = Number(regInfo.plan.device);
+        const regInfo = await getDevice();
+
+        if((regInfo && regInfo.success === false)) {
+            dispatch(setOpenToastAction('Licnese', regInfo.messsage, 'danger'));
+            return;
+        }
+
+        const limit = Number(regInfo.num_device);
 
         if(limit <= response.length) {
             setDisable(true);
         }
 
-        setError(null);
         setDevices(response);
         return;
     },[]);
@@ -42,9 +48,12 @@ export const DeviceComponent = ({ props }) => {
     }, [fetchApi]);
 
     return(
-        <div className="col-md-10 p-1">
-            <div className="d-md-flex flex-md-row">
-                <CreateeDeviceComponent props={props} disable={disable} reload={(e) => refresh(e)} />
+        <div className="row">
+            <div className="col-md-4">
+                <CreateeDeviceComponent disable={disable} reload={(e) => refresh(e)} />
+            </div>
+
+            <div className="col-md-8">
                 <DeviceListComponent props={props} dataSource={devices} reload={e => refresh(e)} />
             </div>
         </div>

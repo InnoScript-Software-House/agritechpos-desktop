@@ -141,7 +141,7 @@ class FirstDevice extends Component {
               placeholder="Note"
               value={note}
               onChange={(e) => this.setState({
-                ip: e.target.value
+                note: e.target.value
               })}
             />
 

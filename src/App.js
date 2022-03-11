@@ -20,6 +20,7 @@ import CategoryListPage from './pages/category/CategoryList';
 import EditCategoryPage from './pages/category/EditCategory';
 import SalePage from './pages/Sale';
 import { InvoiceReportPage } from './components/sale/invoiceReport';
+import InvociePage from './pages/Invoice';
 
 import './assets/css/theme.css';
 
@@ -53,6 +54,7 @@ class App extends Component {
         <Route exact path={'/category/:id'} component={EditCategoryPage} />
 
         <Route exact path={'/invoiceReport'} component={InvoiceReportPage} />
+        <Route exact path={'/invoice'} component={InvociePage} />
 
         <Route exact path={'/sale'} component={SalePage} />
       </HashRouter>
