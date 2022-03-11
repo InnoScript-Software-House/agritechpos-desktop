@@ -7,6 +7,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { AutoCompleteDropDown } from "../components/general/autoCompleteDropDown";
 import { Navigation } from "../components/general/Navigation";
+<<<<<<< HEAD
+=======
+import { SaleItemListTableComponent } from "../components/sale/SaleItemListTableComponent";
+import { setInvoiceAction } from "../redux/actions/invoice.action";
+>>>>>>> ef4954f7e507384f2e7e2e42a93bcd1b69507b6d
 import { setOpenToastAction } from "../redux/actions/toast.action";
 import { getCustomerList } from "../services/customer.service";
 import { createInvoice } from "../services/invoice.service";
@@ -20,6 +25,10 @@ class SalePage extends Component {
             suggestions: [],
             customerName: '',
             customerAddress: '',
+<<<<<<< HEAD
+=======
+            customerSearch: '',
+>>>>>>> ef4954f7e507384f2e7e2e42a93bcd1b69507b6d
             customerPhone: '',
             name: '',
             model: '',
@@ -368,7 +377,7 @@ class SalePage extends Component {
                                                     </tbody>
                                                 </table>
                                                 <div className="d-flex flex-row justify-content-end align-items-center">
-                                                    <Button onClick={() => this.payNow()}>
+                                                    <Button onClick={() => this.payNow()} disabled={this.state.payBtn}>
                                                         Pay Now
                                                     </Button>
                                                 </div>
@@ -420,7 +429,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
+    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme)),
+    setInvoice: (data) => dispatch(setInvoiceAction(data))
 });
 
 

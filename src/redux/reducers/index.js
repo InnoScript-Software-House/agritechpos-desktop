@@ -10,6 +10,7 @@ import { openDelReducer } from "./openDelModal.reducer";
 import { saleReducer } from "./sale.reducer";
 import { sellPriceReducer } from "./sellprice.reducer";
 import { toastReducer } from "./toast.reducer";
+import { invoiceReducer } from "./invoice.reducer";
 
 export default combineReducers({
     auth: authReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
     delModal: openDelReducer,
     cartReducer: saleReducer,
     config: configReducer,
-    sellPrice: sellPriceReducer
+    sellPrice: sellPriceReducer,
+    invoice: invoiceReducer
 });
