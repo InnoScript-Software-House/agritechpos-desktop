@@ -172,7 +172,7 @@ class SalePage extends Component {
                 cartItem: addItem,
                 total: total
             });
-        }e
+        }
 
         return;
     }

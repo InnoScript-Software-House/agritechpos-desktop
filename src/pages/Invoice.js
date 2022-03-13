@@ -3,19 +3,50 @@ import { Card, FormControl, FormLabel, InputGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Navigation } from '../components/general/Navigation';
+import { setOpenToastAction } from '../redux/actions/toast.action';
+import { getInvoice } from '../services/invoice.service';
+import DataTable from "react-data-table-component";
+import { invoiceColumns } from './invoice/invoiceColumns';
+import { TableLoadingComponent } from '../components/table/tableLoading';
+import { InvoiceDataComponent } from '../components/invoice/invoiceData';
 
 class InvoicePage extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             start_date: '',
-            end_date: ''
+            end_date: '',
+            invoices: [],
+            tableloading: true,
+            invoiceDatas: null,
         }
     }
 
+    async loadingData() {
+        const response = await getInvoice();
+        if(response && response.success === false){
+           return this.props.openToast('Invoice', response.message, 'danger');
+        }
+        console.log(response);
+        this.setState({
+            invoices: response,
+            tableloading: false
+        });
+    }
+
+    invoiceDataHandler(event){
+        this.setState({
+            invoiceDatas: event
+        })
+        console.log(event)
+    }
+
+    async componentDidMount(){
+        await this.loadingData();
+    }
+
     render() {
-        const { start_date, end_date } = this.state; 
+        const { start_date, end_date, invoices, tableloading, invoiceDatas } = this.state; 
         return (
             <>
                 <Navigation props={this.props} />
@@ -45,7 +76,27 @@ class InvoicePage extends Component {
                                         />
                                     </div>
                                 </Card.Header>
+                                <Card.Body>
+                                    <DataTable
+                                        dense
+                                        progressPending={tableloading}
+                                        progressComponent={<TableLoadingComponent />}
+                                        data = {invoices}
+                                        columns={invoiceColumns(this.props)}
+                                        highlightOnHover
+                                        pointerOnHover
+                                        selectableRows={true}
+                                        selectableRowsHighlight={true}
+                                        onSelectedRowsChange={(e) => 
+                                            this.invoiceDataHandler(e.selectedRows)
+                                        }
+                                        selectableRowsSingle={true}
+                                    />
+                                </Card.Body>
                             </Card>
+                        </div>
+                        <div className='col-md-7'>
+                            <InvoiceDataComponent props={this.props} invoiceDetail={this.state.invoiceDatas}/>
                         </div>
                     </div>
                 </div>
@@ -61,6 +112,7 @@ const mapStateToProps = (state) => ({
   });
   
   const mapDispatchToProps = (dispatch) => ({
+      openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
   });
   
   export default connect(
