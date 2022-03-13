@@ -1,7 +1,7 @@
 import moment from "moment";
 import numeral from "numeral";
 import React, { Component} from "react";
-import { Button, Card, FormControl, InputGroup } from "react-bootstrap";
+import { Button, Card, FormControl, FormLabel, InputGroup } from "react-bootstrap";
 import { BsTrash } from "react-icons/bs";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { setOpenToastAction } from "../redux/actions/toast.action";
 import { getCustomerList } from "../services/customer.service";
 import { createInvoice } from "../services/invoice.service";
 import { getItems } from "../services/item.service";
+import { setInvoiceAction } from "../redux/actions/invoice.action";
   
 class SalePage extends Component {
     constructor(props){
@@ -26,12 +27,15 @@ class SalePage extends Component {
             code: '',
             qty: '',
             price: '',
+            totalQty: 0,
             discount: 0,
             pay_amount: 0,
             cartItems: [],
             total: '',
             items: [],
-            payBtn: false
+            payBtn: false,
+            percentage: 0,
+            sell_price: 0
         };
     };
 
@@ -103,13 +107,16 @@ class SalePage extends Component {
             name: e.eng_name,
             model: e.model,
             code: e.code,
-            price: e.price
+            price: e.price,
+            totalQty: e.qty,
+            percentage: e.percentage,
+            sell_price: ((Number(e.price) * Number(e.percentage)) / 100) + Number(e.price)
         });
     }
 
     addCart(key) {
         if( key === 'Enter') {
-            const { name, model, code, qty, price, cartItems } = this.state;
+            const { name, model, code, qty, price, cartItems, totalQty, percentage, sell_price } = this.state;
             const { openToast } = this.props;
 
             if(name === '' || model === '' || code === '') {
@@ -123,7 +130,7 @@ class SalePage extends Component {
             }
 
             const isExistItem = cartItems.filter((item) => {
-                if(item.name === name || item.code === code || item.model === model) {
+                if(item.code === code) {
                     return item;
                 }
             });
@@ -133,13 +140,20 @@ class SalePage extends Component {
                 return;
             }
 
+            if(qty > totalQty) {
+                openToast('Add to card', 'Item is not enough', 'danger');
+                return;
+            }
+
             const item = {
                 name: name,
                 model: model,
                 code: code,
                 qty: qty,
                 price: price,
-                total: Number(qty) * Number(price)
+                percentage: percentage,
+                sell_price: sell_price,
+                total: Number(qty) * Number(sell_price)
             }
 
             let addItem = cartItems;
@@ -149,7 +163,7 @@ class SalePage extends Component {
             let total = 0;
     
             addItem.map((item) => {
-                total =+ item.total + total;
+                total =+ Number(item.total) + Number(total);
             });
 
             this.reset();
@@ -158,7 +172,7 @@ class SalePage extends Component {
                 cartItem: addItem,
                 total: total
             });
-        }
+        }e
 
         return;
     }
@@ -196,8 +210,6 @@ class SalePage extends Component {
             discount: discount,
             invoice_data: cartItems,
             cash_back: 0,
-            invoice_id: moment().unix()
-            
         }
         const response = await createInvoice(requestBody);
 
@@ -209,20 +221,35 @@ class SalePage extends Component {
 
     payNow(){
         const { history } = this.props;
-        this.saveInvoice();
-        // this.setState({
-        //     payBtn: true
-        // });
-        // history.push('/invoiceReport');
+        if(this.state.cartItems.length > 0){
+            this.setState({
+                payBtn: true
+            });
+            let iData = {
+                invoice_id: this.state.invoice_id,
+                customer_name: this.state.customerName,
+                customer_phone: this.state.customerPhone,
+                customer_address: this.state.customerAddress,
+                bought_items: this.state.cartItems.map(e => e),
+                total: this.state.total,
+                discount: this.state.discount,
+                netAmount: this.state.total - this.state.discount
+            };
+            this.props.setInvoice(iData);
+            history.push('/invoiceReport');
+        };
+        this.setState({
+            payBtn: false
+        });
+        return;
     }
     
-
     async componentDidMount(){
         await this.loadingData();
     }
 
     render(){
-        const { customers, customerName, customerPhone, customerAddress, name, model, code, qty, cartItems, items, total, price, discount, pay_amount } = this.state;
+        const { customers, customerName, customerPhone, customerAddress, name, model, code, qty, cartItems, items, total, price, discount, pay_amount, percentage } = this.state;
         return(
             <>
                 <Navigation props={this.props} />
@@ -310,10 +337,10 @@ class SalePage extends Component {
                                                             <td className="cart-item-table-with"> {item.model} </td>
                                                             <td className="cart-item-table-with"> {item.code} </td>
                                                             <td className="cart-item-table-with"> {item.qty} </td>
-                                                            <td className="cart-item-table-with"> {numeral(item.price).format('0,0')} MMK </td>
+                                                            <td className="cart-item-table-with"> {numeral(item.sell_price).format('0,0')} MMK </td>
                                                             <td className="cart-item-table-with"> 
                                                                 <div className="d-md-flex flex-md-row justify-content-between align-items-center">
-                                                                    <span className="me-3"> {numeral(item.total).format('0,0')}  MMK </span>
+                                                                    <span className="me-3"> { numeral(Number(item.sell_price) * Number(item.qty)).format('0,0')} MMK</span>
                                                                     <BsTrash className="btn-icon" size={20} onClick={() => this.removeItem(item)} />
                                                                 </div>
                                                             </td>
@@ -326,20 +353,12 @@ class SalePage extends Component {
 
                                     <div className="d-md-flex flex-md-row justify-content-between align-items-center mb-3">
                                         <div className="">
+                                            <FormLabel> Discount </FormLabel>
                                             <InputGroup>
                                                 <FormControl 
                                                     type="number"
                                                     placeholder="Discount Amount"
                                                     value={discount}
-                                                    onChange={(e) => this.getDiscount(e.target.value)}
-                                                />
-                                            </InputGroup>
-
-                                            <InputGroup>
-                                                <FormControl 
-                                                    type="number"
-                                                    placeholder="Pay Amount"
-                                                    value={pay_amount}
                                                     onChange={(e) => this.getDiscount(e.target.value)}
                                                 />
                                             </InputGroup>

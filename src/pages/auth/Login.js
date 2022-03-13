@@ -55,7 +55,7 @@ class LoginPage extends Component {
        await this.props.setToken(response.access_token);
        await this.props.setAccount(response.account);
        
-       history.push('/dashboard');
+       history.push('/sale');
     }
 
     render() {

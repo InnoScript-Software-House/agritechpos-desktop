@@ -732,3 +732,31 @@ margin-bottom: 10px;
   color: red;
   font-weight: 900;
 }
+
+/** Invocie Report **/
+
+.line {
+  border-bottom: 1px solid #000;
+}
+
+.bg-clear {
+  background-color: #fff;
+  height: 100vh;
+}
+
+.w-200 {
+  width: 200px;
+}
+
+.paid-img {
+  width: 250px;
+  transform: rotate(-26deg);
+}
+
+.btn-print-full {
+  width: 100%!important;
+}
+
+.display {
+  display: none!important;
+}

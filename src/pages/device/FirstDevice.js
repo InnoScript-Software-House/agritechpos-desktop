@@ -24,7 +24,8 @@ class FirstDevice extends Component {
 
   loadingData() {
     const device = checkNetworkConnection();
-
+    console.log(device);
+    
     if(device.wifi) {
       this.setState({
         ip: device.wifi.address,

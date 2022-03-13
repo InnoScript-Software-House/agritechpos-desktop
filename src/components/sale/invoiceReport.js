@@ -1,136 +1,201 @@
-import React from "react";
-import { Card, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { getShop } from "../../services/shop.service";
+import { setOpenToastAction } from "../../redux/actions/toast.action";
+import moment from "moment";
+import numeral from "numeral";
+import { createInvoice, getInvoice } from "../../services/invoice.service";
+import { useHistory } from "react-router-dom";
 import { BsArrowLeftCircle } from 'react-icons/bs';
-import { useHistory, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
  
 export const InvoiceReportPage = () => {
-    const location = useLocation();
+
+    const dispatch = useDispatch();
     const history = useHistory();
-    const invoice_id = useSelector((state) => state.invoice.invoice_id);
-    const name = useSelector((state) => state.invoice.customer_name);
-    const phone = useSelector((state) => state.invoice.customer_phone);
-    const address = useSelector((state) => state.invoice.customer_address);
-    const sellItems = useSelector((state) => state.invoice.bought_items);
-    const totalAmount = useSelector((state) => state.invoice.total);
-    const discount = useSelector((state) => state.invoice.discount);
-    const netAmount = useSelector((state) => state.invoice.netAmount);
 
-    const handleClick = () => {
-        history.push('/sale');
+    const [shop, setShop] = useState(null);
+    const [invoice, setInvoice] = useState(null);
+    const [invoiceId, setInvoiceId] = useState('');
+    const [display, setDisplay] = useState('');
+
+    const saveInvoice = async () => {
+        if(invoice) {
+            const requestBody = {
+                customer_name: invoice.customer_name !== '' ? invoice.customer_name : null,
+                customer_phone: invoice.customer_phone !== '' ? invoice.customer_phone : null,
+                customer_address: invoice.customer_address !== '' ? invoice.customer_address : null,
+                customer_email : null,
+                total_amount: invoice.total,
+                discount: invoice.discount,
+                invoice_data: invoice.bought_items,
+                cash_back: 0,
+                invoice_id: invoiceId
+            }
+
+            const response = await createInvoice(requestBody);
+
+            if(response && response.success === false) {
+                dispatch(setOpenToastAction('Invoice', response.message, 'danger'));
+                return;
+            }
+
+            localStorage.removeItem('INVOICE');
+            history.push('/sale');
+        }
     }
 
-    const handlePrint = (target) => {
-        return new Promise(() => {
-            console.log('forwarding print request to the main process...');
+    const print = () => {
+        const { print } = window.nativeApi;
+
+        setDisplay('display');
+        print.invoice();
+        print.reload((data) => {
+            if(data === true) {
+                saveInvoice();
+            }
+        });
+    }
+
+    useEffect(async () => {
+        const shopinfo = await getShop();
+
+        if(shopinfo && shopinfo.success === false) {
+            dispatch(setOpenToastAction('Shop', shopinfo.success, 'danger'));
+            return;
+        }
+
+        setShop(shopinfo);
+
+        const iData = JSON.parse(localStorage.getItem('INVOICE'));
+        setInvoice(iData);
+
+        const invoiceResponse = await getInvoice();
+
+        if(invoiceResponse && invoiceResponse.success === false) {
+            dispatch(setOpenToastAction('Invoice', invoiceResponse.success, 'danger'));
+            return;
+        }
+
+        const lastInvoice = invoiceResponse.length > 0  ? invoiceResponse[invoiceResponse.length - 1] : 0;
+        let ivId = 1;
+
+        if(lastInvoice.invoice_id) {
+            ivId = Number(lastInvoice.invoice_id) + 1;
+        } 
         
-            let data = target.contentWindow.document.documentElement.outerHTML;
+        let invoice_id = '';
 
-            var blob = new Blob([data], { type: 'text/html' });
-            var url = URL.createObjectURL(blob);
-        
-            window.electronAPI.printComponent(url, (response) => {
-             console.log('Main: ', response);
-            });
-           });
-        history.push('/sale');
-    }
+        for(let x=ivId.toString().length; x<6; x++) {
+            invoice_id += '0';
+        }
 
-    const handlepreview = () => {
-        console.log(location.pathname);
-    }
+        invoice_id += ivId;
 
+        setInvoiceId(invoice_id);
+        saveInvoice();
+
+    },[]);
 
     return (
-        <>
-        <div className='mb-2 mt-2'>
-            <BsArrowLeftCircle size={30} className="btn-icon" onClick={() => handleClick()} />
-        </div>
-        <div id="divtoprint">
-        <Card>
-            <Card.Header>
-                <Card.Title>
-                    <span> Invoice {invoice_id}</span>
-                </Card.Title>
-            </Card.Header>
-            <Card.Body>
-                    <div className="d-md-flex flex-md-row justify-content-center align-items-center">
-                            <div className="col-md-6 mb-3">
-                                    <h5>Customer Name - {name}</h5>
-                            </div>
-                            <div className="col-md-6 mb-3">
-                                    <h5>Phone No - {phone}</h5>
-                            </div>
-                    </div>
-                    <div className="d-flex flex-col justify-content-start align-items-center mb-3">
-                        <h5>Address - {address}</h5>
-                    </div>
-
-                    <div className="d-flex flex-row justify-content-center align-items-center mb-3 table-responsive">
-                        <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Item Model</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    sellItems.length > 0 && sellItems.map((item, i) => {
-                                        return(
-                                        <tr key={`bought items id ${i}`}>
-                                            <td className="cart-item-table-hash-width"> {i + 1} </td>
-                                            <td className="cart-item-table-with"> {item.name} </td> 
-                                            <td className="cart-item-table-with"> {item.model} </td>
-                                            <td className="cart-item-table-with"> {item.price} </td>
-                                            <td className="cart-item-table-with"> {item.qty} </td>
-                                            <td className="cart-item-table-with"> {item.price * item.qty} </td>
-                                        </tr>
-                                        )
-                                    })
-                                    
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-            </Card.Body>
-            <Card.Footer>
-            <div className="d-flex flex-row justify-content-end mt-3">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td> <h3 className="me-3"> TOTAL </h3> </td>
-                            <td> <h3 className="me-3 ms-3"> {totalAmount} </h3></td>
-                            <td> <h3 className="ms-3"> MMK </h3> </td>
-                        </tr>
-
-                        <tr>
-                            <td> <h3 className="me-3"> DISCOUNT </h3> </td>
-                            <td> <h3 className="me-3 ms-3"> {discount} </h3> </td>
-                            <td> <h3 className="ms-3"> MMK </h3> </td>
-                        </tr>
-
-                        <tr>
-                            <td> <h3 className="me-3"> NET AMOUNT </h3> </td>
-                            <td> <h3 className="me-3 ms-3"> {netAmount} </h3> </td>
-                            <td> <h3 className="ms-3"> MMK </h3> </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div className="container-fluid bg-clear">
+            <div className="row">
+                <div className="d-md-flex flex-md-row justify-content-start mt-3">
+                <BsArrowLeftCircle size={30} className={`btn-icon ${display}`} onClick={() => history.push('/sale')} />
+                </div>
             </div>
-            </Card.Footer>
-        </Card>
+
+            <div className="row">
+                { shop && invoice && (
+                    <>
+                        <div className="col-md-12 d-md-flex flex-md-row justify-content-between align-items-center mt-3 line mb-3">
+                            <div className="ps-3">
+                                <h3> {shop.name} - {shop.description} </h3>
+                                <p> {shop.address} </p>
+                            </div>
+
+                            <div className="d-md-flex flex-md-column pe-3">
+                                <span> Phone - {shop.phone} </span>
+                                <span> Email - {shop.email} </span>
+                            </div>
+                        </div>
+
+                        <div className="col-md-12 mt-3 ps-3">
+                            <div className="d-md-flex flex-row justify-content-between align-items-center mb-3">
+                                <div className="invoice-info">
+                                    <h2> INVOICE - AT{invoiceId} </h2>
+                                    <span> Date - {moment().format('Y-MM-DD')} </span>
+                                </div>
+
+                                <div className="customer-info">
+                                    <div className="pe-3">
+                                        <h4> Customer Name : {invoice.customer_name} </h4>
+                                        <h4> Phone Number : {invoice.customer_phone} </h4>
+                                        <h4> Address : {invoice.customer_address} </h4>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <table className="table mb-3 pb-3">
+                                <thead>
+                                    <tr>
+                                        <th> Material Code </th>
+                                        <th> Name </th>
+                                        <th> Model </th>
+                                        <th> Qty </th>
+                                        <th> Price </th>
+                                        <th> Total </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {invoice.bought_items.length > 0 && invoice.bought_items.map((value, index) => {
+                                        return(
+                                            <tr key={`item_id_${index}`}>
+                                                <td> {value.code} </td>
+                                                <td> {value.name} </td>
+                                                <td> {value.model} </td>
+                                                <td> {value.qty} </td>
+                                                <td> {numeral(( ((Number(value.price) * Number(value.percentage)) / 100) + Number(value.price))).format('0,0')} MMK </td>
+                                                <td> {numeral(((((Number(value.price) * Number(value.percentage)) / 100) + Number(value.price)) * Number(value.qty))).format('0,0')} MMK </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+
+                            <div className="d-md-flex flex-md-row justify-content-between align-items-center mt-3 pt-3">
+                                {/* <div className="">
+                                    <img className="paid-img align-self-end" src="build/assets/images/paid.png" />
+                                </div> */}
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td className="w-200"> <h4> TOTAL </h4> </td>
+                                            <td className="w-200"> <h4> {numeral(invoice.total).format('0,0')} MMK </h4></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="w-200"> <h4> DISCOUNT </h4> </td>
+                                            <td className="w-200"> <h4> {numeral(invoice.discount).format('0,0')} MMK </h4></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="w-200"> <h4> NET AMOUNT </h4> </td>
+                                            <td className="w-200"> <h4> {numeral(invoice.netAmount).format('0,0')} MMK </h4></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colSpan={2}> 
+                                                <Button className={`btn btn-print-full mt-3 ${display}`} onClick={() => print()}> Print </Button>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
         </div>
-        <div className="d-flex flex-row justify-content-center mt-3">
-            <Button
-                onClick={() => handlePrint(HTMLDivElement)}>
-                Print
-             </Button>
-        </div>
-        </>
     )
 }

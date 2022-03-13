@@ -45,7 +45,7 @@ export const Activation = ({ serial, user, plan, backStep, history }) => {
         localStorage.setItem(LICENSE, response.token);
         
         setLoading(false);
-        history.push('/device/first');
+        history.push('/');
     }
 
     const checkActivated = useCallback(async() => {

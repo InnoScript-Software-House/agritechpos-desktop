@@ -25,12 +25,14 @@ contextBridge.exposeInMainWorld('nativeApi', {
             return ipcRenderer.send('quit-app');
         }
     },
-    printComponent: async (url, callback) => {
-        let response = await ipcRenderer.invoke('printComponent', url);
-        callback(response);
-    },
-    previewComponent: async (url, callBack) => {
-        let response = await ipcRenderer.invoke('previewComponent', url);
-        callBack(response);
-    },
+    print: {
+        invoice() {
+            return ipcRenderer.send('print-invoice');
+        },
+        reload(data) {
+            return ipcRenderer.on('reload', (event, res) => {
+                return data(res);
+            });
+        }
+    }
 });

@@ -18,6 +18,9 @@ export const checkNetworkConnection = () => {
         ethernet: null
     };
     const getNetworkInterfaces = get((device) => {
+        const networkDevices = device.networkDevices();
+        console.log(networkDevices);
+        
         return device.networkInterfaces();
     });
 
