@@ -9,6 +9,7 @@ import DataTable from "react-data-table-component";
 import { invoiceColumns } from './invoice/invoiceColumns';
 import { TableLoadingComponent } from '../components/table/tableLoading';
 import { InvoiceDataComponent } from '../components/invoice/invoiceData';
+import { InvoiceTableHeader } from '../components/table/invoiceTableHeader';
 
 class InvoicePage extends Component {
     constructor(props) {
@@ -34,11 +35,16 @@ class InvoicePage extends Component {
         });
     }
 
+    getFilter(e){
+        this.setState({
+            invoices: e,
+        });
+    }
+
     invoiceDataHandler(event){
         this.setState({
             invoiceDatas: event
-        })
-        console.log(event)
+        });
     }
 
     async componentDidMount(){
@@ -53,7 +59,7 @@ class InvoicePage extends Component {
 
                 <div className='container-fluid'>
                     <div className='row mt-3'>
-                        <div className='col-md-4'>
+                        <div className='col-md-5'>
                             <Card>
                                 <Card.Header className='d-md-flex flex-md-row justify-content-between align-items-center'>
                                     <div className='d-md-flex flex-md-column'>
@@ -78,6 +84,12 @@ class InvoicePage extends Component {
                                 </Card.Header>
                                 <Card.Body>
                                     <DataTable
+                                        subHeader
+                                        subHeaderComponent={
+                                            <InvoiceTableHeader
+                                            filterResult ={e => this.getFilter(e)}
+                                            data={invoices}
+                                             />}
                                         dense
                                         progressPending={tableloading}
                                         progressComponent={<TableLoadingComponent />}

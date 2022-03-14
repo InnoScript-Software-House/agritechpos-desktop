@@ -13,7 +13,14 @@ export const InvoiceDataComponent = ({props, invoiceDetail }) => {
     const [discount, setDiscount] = useState(0);
     const [netAmount, setNetAmount] = useState(0);
 
-    console.log(invoiceData && invoiceData.map(e => e.total))
+    const inportData = () => {
+            const iData = invoiceDetail && JSON.parse(invoiceDetail[0].invoice_data);
+            if(iData){
+            const total = iData.map(e => e.total);
+            setTotalAmount(total.reduce((a, b) => a + b, 0));
+            setInVoiceData(iData);
+            }
+    }
 
 
     useEffect(async () => {
@@ -25,8 +32,7 @@ export const InvoiceDataComponent = ({props, invoiceDetail }) => {
         }
         setShop(shopinfo);
         setInvoice(invoiceDetail && invoiceDetail[0]);
-        setInVoiceData(invoiceDetail && JSON.parse(invoiceDetail[0].invoice_data));
-
+        inportData();
 
     },[invoiceDetail]);
 
@@ -57,7 +63,7 @@ export const InvoiceDataComponent = ({props, invoiceDetail }) => {
                             <div className="d-md-flex flex-row justify-content-between align-items-center mb-3">
                                 <div className="invoice-info">
                                     <h2> INVOICE - AT{invoice.invoice_id} </h2>
-                                    <span> Date - {moment(invoice.created_at).format('DD,MM,YY')} </span>
+                                    <span> Date - {moment(invoice.created_at).format('DD,MM,YYYY')} </span>
                                 </div>
 
                                 <div className="customer-info">
