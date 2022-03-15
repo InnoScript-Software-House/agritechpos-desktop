@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import DataTable from "react-data-table-component";
-import { zawgyi, t } from '../../utilities/translation.utility';
 import { itemColumns } from "../columns/item.columns";
 import { ChangeNumberFormatBtn } from "../general/changeNumberFormatBtn";
 import { paginationComponentOptions } from "../table/paginationOptions";
@@ -12,8 +11,7 @@ const searchColumns = [
     'code', 'eng_name', 'mm_name', 'category_title', 'location', 'model'
 ];
 
-export const ItemListTableComponent = ({ props, dataSource }) => {
-    const { lang } = props.reducer;
+export const ItemListTableComponent = ({ props, dataSource, reload }) => {
 
     const [ tableLoading, setTableLoading ] = useState(true);
     const [ itemList, setItemList] = useState([]);
@@ -34,10 +32,9 @@ export const ItemListTableComponent = ({ props, dataSource }) => {
         <Card className="mt-3">
             <Card.Header>
                 <div className="d-md-flex flex-md-row justify-content-between">
-                    <span className={`card-title ${zawgyi(lang)}`}> {t('item-table-title')} </span>
+                    <span className="title"> Item List </span>
                     <ChangeNumberFormatBtn props={props} />
                 </div>
-                
             </Card.Header>
 
             <Card.Body>
@@ -45,13 +42,14 @@ export const ItemListTableComponent = ({ props, dataSource }) => {
                     subHeader={true}
                     subHeaderComponent={
                         <TableHeaderComponent 
-                            props={props} 
                             type={'Items'}
                             dataSource={dataSource} 
                             searchColumns={searchColumns} 
-                            placeholder={t('input-item-search')}
+                            placeholder="Search Item"
                             filterResult={e => getFilterResult(e)}
                             selectedRows={selectedRows}
+                            reload={(e) => reload(e)}
+
                         />
                     }
                     pagination

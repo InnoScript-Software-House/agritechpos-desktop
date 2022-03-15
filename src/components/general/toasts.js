@@ -33,7 +33,7 @@ export const AppToast = ({props}) => {
                     <BsClock className="me-1"/> 
                     <small> {moment().format('DD-MM-Y HH:mm:ss')} </small>
                 </div>
-                <p> {toast.message}</p>
+                <p className="mt-3"> {toast.message}</p>
             </Toast.Body>
         </Toast>
     )

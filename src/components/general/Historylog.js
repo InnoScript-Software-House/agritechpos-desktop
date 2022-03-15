@@ -1,21 +1,16 @@
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Badge, Button, Card, Table } from 'react-bootstrap';
-import { t, zawgyi } from '../../utilities/translation.utility';
+import { Badge, Button, Card } from 'react-bootstrap';
 import { BsArrowCounterclockwise, BsClock } from 'react-icons/bs';
 import { getHistoryLog } from '../../services/historylog.servcie';
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
 
-import '../../assets/css/components/historylog.css';
-
-export const HistoryLog = ({ props, title }) => {
-    const { lang } = props;
-    const { account } = props.reducer;
+export const HistoryLog = ({ title }) => {
 
     const [historyRecord, setHistoryRecord] = useState([]);
     const [page, setPage] = useState(1);
-    const [error, setError] = useState(null);
     const [more, setMore] = useState(true);
+    const [error, setError] = useState('');
 
     const refresh = () => {
         setPage(1);
@@ -60,12 +55,14 @@ export const HistoryLog = ({ props, title }) => {
 
     return(
         <Card className='ms-1'>
-            <Card.Title className={`m-2 d-md-flex flex-row justify-content-between number-spec-info-title ${zawgyi(lang)}`}> 
-                <span className={`${zawgyi(lang)}`}> {t(title)} </span> 
-                <div className='icon-btn' onClick={() => refresh()}>
-                    <BsArrowCounterclockwise size={20} />
-                </div>
-            </Card.Title>
+            <Card.Header>
+                <Card.Title className="m-2 d-md-flex flex-row justify-content-between number-spec-info-title"> 
+                    <span> {title} </span> 
+                    <div className='icon-btn' onClick={() => refresh()}>
+                        <BsArrowCounterclockwise size={20} />
+                    </div>
+                </Card.Title>
+            </Card.Header>
 
             <Card.Body>
                 <div className='history-list-wrapper'>

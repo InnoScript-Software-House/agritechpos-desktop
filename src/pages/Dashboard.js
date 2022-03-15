@@ -40,7 +40,10 @@ class DashboardPage extends Component {
         return (
             <>
                 <Navigation props={this.props} />
-                <DashboardNotiCompoment props={this.props} notification={notification} />
+                <DashboardNotiCompoment 
+                    props={this.props} 
+                    notification={notification} 
+                />
             </>
         )
     }

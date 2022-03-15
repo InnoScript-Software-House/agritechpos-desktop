@@ -10,11 +10,29 @@ contextBridge.exposeInMainWorld('nativeApi', {
     device: {
         get(data) {
             return data(device);
+        },
+        platform(data) {
+            return data(device.platform());
+        }
+    },
+    app: {
+        restart() {
+            ipcRenderer.send('restart-app', true);
         }
     },
     quit: {
         quitApp(){
-            return ipcRenderer.invoke('quit-app');
+            return ipcRenderer.send('quit-app');
+        }
+    },
+    print: {
+        invoice() {
+            return ipcRenderer.send('print-invoice');
+        },
+        reload(data) {
+            return ipcRenderer.on('reload', (event, res) => {
+                return data(res);
+            });
         }
     }
 });

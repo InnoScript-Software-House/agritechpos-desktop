@@ -11,13 +11,13 @@
     },
     {
         "id": 3,
-        "label": "nav-account",
-        "url": "/account"
+        "label": "nav-sale",
+        "url": "/sale"
     },
     {
         "id": 4,
-        "label": "nav-setting",
-        "url": "/setting"
+        "label": "nav-account",
+        "url": "/account"
     },
     {
         "id": 5,
@@ -26,6 +26,11 @@
     },
     {
         "id": 6,
+        "label": "nav-setting",
+        "url": "/setting"
+    },
+    {
+        "id": 7,
         "label": "nav-logout",
         "url": "/logout"
     }

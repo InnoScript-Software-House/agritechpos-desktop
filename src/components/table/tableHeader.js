@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { autocomplete } from '../../utilities/table.utility';
-import { t, zawgyi } from '../../utilities/translation.utility';
-import { ItemExportToExcel } from '../exports/itemExportComponent';
-import { BsCloudUpload, BsTrash } from 'react-icons/bs';
+import { BsTrash } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
+import { setOpenToastAction } from '../../redux/actions/toast.action';
+import { updatePercentage } from '../../services/item.service';
 
-import '../../assets/css/components/table-header.css';
-
-export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, placeholder, filterResult, selectedRows }) => {
-    const { lang } = props.reducer;
+export const TableHeaderComponent = ({ dataSource, searchColumns, placeholder, filterResult, selectedRows, reload, type }) => {
     const dispatch = useDispatch();
 
     const [text, setText] = useState('');
     const [filterType, setFilterType] = useState(searchColumns[0]);
-    const [openExportSetting, setOpenExportSetting] = useState(false);
     const [selectedList, setSelectedList] = useState([]);
+    const [calPercentage, setCalPercentage] = useState('');
 
     const autoSearch = (text) => {
         const result = autocomplete(dataSource, text, filterType);
@@ -31,14 +28,37 @@ export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, p
     }
 
     const deleteSelectedRows = () => {
-       dispatch(setOpenDelModal({
-           title: type+' Delete',
-           message: 'Are you sure want to delete these '+type,
+        dispatch(setOpenDelModal({
+           title: "Delete Record",
+           message: "Are you sure to delete record",
            type: type,
            multiple: true,
            open: true,
            data: selectedList
-       }))
+        }));
+    }
+
+    const changePercentage = async (amount) => {
+
+        if(amount === '' || Number(amount) === 0) {
+            dispatch(setOpenToastAction('Update percentage ', 'Invalid percentage', 'danger'));
+            return;
+        }
+        
+        let requestBody = {
+            type: Number(amount) < 0 ? 'decrement' : 'increment',
+            amount: Math.abs(amount)
+        }
+
+        const response = await updatePercentage(requestBody);
+        if(response && response.success === false) {
+            dispatch(setOpenToastAction('Update percentage', response.message, 'danger'));
+            return;
+        }
+
+        setCalPercentage('');
+        reload(true);
+        return;
     }
 
     useEffect(() => {
@@ -48,32 +68,41 @@ export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, p
     },[selectedRows]);
 
     return(
-        <div className='table-header mb-3'>
+        <div className='table-header mb-2'>
             <div className='table-header-left'>
                 {selectedRows.length > 0 && (
                     <div className='d-md-flex flex-md-row justifiy-content-start align-items-center'>
-                        <Button 
-                            className='btn-small'
-                            onClick={() => setOpenExportSetting(true)}
-                        >  
-                            <BsCloudUpload size={20} />
-                            <span className={`${zawgyi(lang)}`}> {t('export-excel-setting-btn')} </span>
-                        </Button>
-
                         <Button
                             className='btn-small ms-3'
                             onClick={() => deleteSelectedRows()}
                         >
                             <BsTrash size={20} />
-                            <span> Delete Selected Items </span>
+                            <span> Delete All </span>
                         </Button>
                     </div>
                 )}
             </div>
 
             <InputGroup className='table-header-right'>
+                {type === 'Items' && (
+                    <FormControl
+                        className="input-small"
+                        type='number'
+                        placeholder="Change Items %"
+                        value={calPercentage}
+                        onChange={(e) => {
+                            setCalPercentage(e.target.value);
+                        }}
+                        onKeyPress={(e) => {
+                            if(e.code === 'Enter') {
+                                changePercentage(e.target.value);
+                            }
+                        }}
+                    />
+                )}
+
                 <FormControl
-                    className={`input-small ${zawgyi(lang)}`}
+                    className="input-small"
                     type='text'
                     placeholder={placeholder}
                     value={text}
@@ -81,7 +110,7 @@ export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, p
                 />
 
                 <FormControl
-                    className={`select-input-group ${zawgyi(lang)}`}
+                    className="select-input-group"
                     as={'select'}
                     value={filterType}
                     onChange={(e) => {
@@ -92,26 +121,13 @@ export const TableHeaderComponent = ({ type, props, dataSource, searchColumns, p
                 >
                     {searchColumns.map((filter, index) => {
                         return(
-                             <option key={`filter_column_id_${index}`}> {filter} </option>
+                            <option key={`filter_column_id_${index}`}> {filter} </option>
                         )
                     })}
                 </FormControl>
                     
-                <Button 
-                    className={`btn-small ${zawgyi(lang)}`}
-                    onClick={() => reset()}
-                > 
-                    {t('btn-table-search-reset')} 
-                </Button>
+                <Button className="btn-small" onClick={() => reset()}> Reset </Button>
             </InputGroup>
-
-           {openExportSetting && (
-                <ItemExportToExcel 
-                    props={props} 
-                    open={openExportSetting} 
-                    close={e => setOpenExportSetting(e)}
-                />
-           )}
         </div>
     )
 }

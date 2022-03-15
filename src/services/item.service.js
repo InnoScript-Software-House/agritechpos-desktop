@@ -28,3 +28,8 @@ export const updateItem = async (id, requestBody) => {
     const response = await putRequest(`${url}/${id}`, requestBody);
     return handlerException(response);
 }
+
+export const updatePercentage = async (requestBody) => {
+    const response = await postRequest(`${url}/percentage`, requestBody);
+    return handlerException(response);
+}

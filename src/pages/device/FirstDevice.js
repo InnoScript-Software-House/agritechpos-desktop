@@ -1,17 +1,13 @@
-
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Language } from '../../components/general/Language';
-
-import '../../assets/css/first-device.css';
-import { t, zawgyi } from '../../utilities/translation.utility';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { createFirstDevice } from '../../services/device.service';
 import { AppToast } from '../../components/general/toasts';
 import { ToastContainer } from "react-bootstrap";
 import { setOpenToastAction } from '../../redux/actions/toast.action';
+import { checkNetworkConnection } from '../../utilities/networkConnection';
+import { SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from '../../redux/actionTypes';
 import axios from 'axios';
 
 class FirstDevice extends Component {
@@ -23,25 +19,39 @@ class FirstDevice extends Component {
       ip: '',
       mac: '',
       note: '',
-      error: ''
     }
   }
 
+  loadingData() {
+    const device = checkNetworkConnection();
+    console.log(device);
+    
+    if(device.wifi) {
+      this.setState({
+        ip: device.wifi.address,
+        mac: device.wifi.mac
+      }, () => {
+        localStorage.setItem(SET_NETWORK_ADDRESS, device.wifi.address);
+        localStorage.setItem(SET_NETWORK_MAC, device.wifi.mac);
+      });
+      return;
+    }
+
+    if(device.localhost) {
+      this.setState({
+        ip: device.localhost.address,
+        mac: device.localhost.mac
+      }, () => {
+        localStorage.setItem(SET_NETWORK_ADDRESS, device.localhost.address);
+        localStorage.setItem(SET_NETWORK_MAC, device.localhost.mac);
+      });
+    }
+
+    return;
+  }
+
   componentDidMount() {
-    const { get } = window.nativeApi.device;
-    get((device) => {
-      const networkInterface = device.networkInterfaces();
-      console.log(networkInterface);
-      
-      if(networkInterface.wlp2s0) {
-        const info = networkInterface.wlp2s0[0];
-        this.setState({
-          ip: info.address,
-          mac: info.mac,
-          name: device.userInfo().username
-        })
-      }
-    })
+    this.loadingData();
   }
 
   async create() {
@@ -49,10 +59,8 @@ class FirstDevice extends Component {
     const { history } = this.props;
 
     if(name === '' || ip === '' || mac === '') {
-      this.props.openToast('Device Information',t('first-device-empty'),'danger');
-      // this.setState({
-      //   error: t('first-device-empty')
-      // });
+      this.props.openToast('Device Information', 'All fields are required','danger');
+      return;
     }
 
     const requestBody = {
@@ -66,52 +74,42 @@ class FirstDevice extends Component {
     
     if(response.success === false) {
       this.props.openToast('Device Information', response.message, 'danger');
-      // this.setState({
-      //   error: response.message
-      // });
-
       return;
     }
 
     axios.defaults.headers.common['ip'] = ip;
     axios.defaults.headers.common['mac'] = mac;
-    
-    this.setState({
-      error: null
-    });
-
     history.push('/');
   }
 
   render() {
-    const { lang } = this.props.reducer;
-    const { name, ip, mac, note, error } = this.state;
-    return (
-     <>
-     <ToastContainer
-          className="app-toast-container"
-          position={'top-end'}
-        >
-          <AppToast props={this.props} />
-        </ToastContainer>
-      <div className='d-md-flex flex-row justify-content-end'>
-        <Language props={this.props} />
-      </div>
+    const { name, ip, mac, note } = this.state;
 
-      <div className='d-md-flex flex-row justify-content-between'>
-        <div className='col-md-5 d-md-flex flex-column justify-content-center'>
-          <img src="build/assets/images/side_image.jpeg" className='cover-image align-self-center mt-3' />
+    return (
+      <div className='container-fluid'>
+        <div className='row'>
+          <ToastContainer
+            className="app-toast-container"
+            position={'top-end'}
+          >
+            <AppToast props={this.props} />
+          </ToastContainer>
         </div>
 
-        <div className='col-md-7 d-md-flex flex-column justify-content-start'>
-          <h3 className={`title m-3 ${zawgyi(lang)}`}> {t('first-device-title')} </h3>
-          <p className={`m-3 ${zawgyi(lang)}`}> {t('first-device-description')} </p>
-          
-          <InputGroup className='p-3'>
+        <div className='row'>
+          <div className='col-md-4 mt-3'>
+            <img src="build/assets/images/side_image.jpeg" className='img-fluid' />
+          </div>
+
+          <div className='col-md-8'>
+            <h3 className="title m-3"> Create New Device </h3>
+            <p className="m-3"> create new device for first times user </p>
+
+            <InputGroup className='p-3'>
             <FormControl
-              className={`me-3 ${zawgyi(lang)}`}
+              className="me-3"
               type="text"
-              placeholder={t('first-device-name')}
+              placeholder="Device Name"
               value={name}
               onChange={(e) => this.setState({
                 name: e.target.value
@@ -119,42 +117,40 @@ class FirstDevice extends Component {
             />
 
             <FormControl
-              className={`me-3 ${zawgyi(lang)}`}
+              className="me-3"
               type="text"
-              placeholder={t('first-device-ip')}
+              placeholder="IP Address"
               value={ip}
-              onChange={(e) => this.setState({
-                ip: e.target.value
-              })}
-            >{ip}</FormControl>
-
-            <FormControl
-              className={`me-3 ${zawgyi(lang)}`}
-              type="text"
-              placeholder={t('first-device-mac')}
-              value={mac}
-              onChange={(e) => this.setState({
-                mac: e.target.value
-              })}
-            >{mac}</FormControl>
-
-            <FormControl
-              className={`me-3 ${zawgyi(lang)}`}
-              type="text"
-              placeholder={t('first-device-note')}
-              value={note}
               onChange={(e) => this.setState({
                 ip: e.target.value
               })}
             />
 
-            <Button onClick={() => this.create()}> {t('btn-frist-device-create')} </Button>
-          </InputGroup>
+            <FormControl
+              className="me-3"
+              type="text"
+              placeholder="MAC Address"
+              value={mac}
+              onChange={(e) => this.setState({
+                mac: e.target.value
+              })}
+            />
 
-          {/* {error && (<span className='error-message ms-3'> {error}</span>)} */}
+            <FormControl
+              className="me-3"
+              type="text"
+              placeholder="Note"
+              value={note}
+              onChange={(e) => this.setState({
+                note: e.target.value
+              })}
+            />
+
+            <Button onClick={() => this.create()}> Submit </Button>
+            </InputGroup>
+          </div>
         </div>
       </div>
-     </>
 
     )
   }
@@ -165,7 +161,6 @@ const mapStateToProps = (state) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
-    setLang: (value) => dispatch(setLangAction(value)),
     openToast: (title, message, method) => dispatch(setOpenToastAction(title, message, method))
 });
   

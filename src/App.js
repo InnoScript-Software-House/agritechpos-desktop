@@ -2,27 +2,29 @@ import React, { Component } from 'react';
 import { Route, HashRouter } from 'react-router-dom';
 import history from './utilities/histroy';
 
-/** Auth Routes */
+import ConfigurationPage from './pages/Configuration';
 import LoginPage from './pages/auth/Login';
 import LogoutPage from './pages/auth/Logout';
-
-/** General Routes */
 import DashboardPage from './pages/Dashboard';
 import LandingPage from './pages/Landing';
 import LicensePage from './pages/License';
 import ErrorPage from './pages/Error';
-
-/** User Routes */
 import FirstUserRegisterPage from './pages/user/FirstUserRegister';
 import ProfilePage from './pages/user/Profile';
-
 import SettingPage from './pages/Setting';
 import FirstDevice from './pages/device/FirstDevice';
 import AccountPage from './pages/user/Account';
 import InventoryPage from './pages/Inventory';
 import EditItemPage from './pages/item/EditItem';
-import CategoryListPage from './pages/CategoryList';
+import CategoryListPage from './pages/category/CategoryList';
 import EditCategoryPage from './pages/category/EditCategory';
+import SalePage from './pages/Sale';
+import { InvoiceReportPage } from './components/sale/invoiceReport';
+import InvociePage from './pages/Invoice';
+import CustomerPage from './pages/customer/Customer';
+import EditCustomerPage from './components/customer/EditCustomer';
+
+import './assets/css/theme.css';
 
 class App extends Component {
 
@@ -31,6 +33,8 @@ class App extends Component {
     return(
       <HashRouter history={history}>
         <Route exact path={'/'} component={LandingPage} />
+        
+        <Route exact path={'/configuration'} component={ConfigurationPage} />
         <Route exact path={'/license'} component={LicensePage} />
         <Route exact path={'/dashboard'} component={DashboardPage} />
         <Route exact path={'/error/:status'} component={ErrorPage} />
@@ -46,11 +50,18 @@ class App extends Component {
         <Route exact path={'/account'} component={AccountPage} />
 
         <Route exact path={'/inventory'} component={InventoryPage} />
-
-        <Route exact path={'/itemCategoryList'} component={CategoryListPage} />
-
         <Route exact path={'/item/:id'} component={EditItemPage} />
+
+        <Route exact path={'/category'} component={CategoryListPage} />
         <Route exact path={'/category/:id'} component={EditCategoryPage} />
+
+        <Route exact path={'/invoiceReport'} component={InvoiceReportPage} />
+        <Route exact path={'/invoice'} component={InvociePage} />
+
+        <Route exact path={'/sale'} component={SalePage} />
+
+        <Route exact path={'/customer'} component={CustomerPage} />
+        <Route exact path={'/editcustomer/:id'} component={EditCustomerPage} />
       </HashRouter>
     );
   }

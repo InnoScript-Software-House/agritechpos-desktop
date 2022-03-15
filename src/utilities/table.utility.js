@@ -1,4 +1,5 @@
 
+
 export const autocomplete = (dataSource, text, columnName) => {
     const textString = text;
 
@@ -17,13 +18,11 @@ export const autocomplete = (dataSource, text, columnName) => {
         if(Number(result[columnName])) {
             filterText = result[columnName].toString();
             if(filterText.includes(textString)) {
-                console.log(result)
                 return result;
             }
         }
 
         if(filterText.toLowerCase().includes(textString.toLowerCase())) {
-            console.log(result)
             return result;
         }
 
@@ -32,4 +31,15 @@ export const autocomplete = (dataSource, text, columnName) => {
     return filterResult;
     
 
+}
+
+export const calculatePercentageAmount = (dataSource, percentageValue) => {
+    let resultTable = [];
+    resultTable = dataSource;
+     const result = resultTable.map(e => e.percentage = Number(e.percentage) + Number(percentageValue));
+        const requestBody = {
+            percentage: result.map(e => e)
+        }
+        // Api Update For All percentage.
+    return result;
 }

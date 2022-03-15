@@ -1,4 +1,4 @@
-import { getRequest, postRequest } from "./api.service";
+import { getRequest, postRequest, putRequest } from "./api.service";
 
 const url = 'category';
 
@@ -25,6 +25,6 @@ export const categoryDetail = async (id) => {
 }
 
 export const updateCategory = async (id, requestBody) => {
-    const response = await postRequest(`${url}/${id}`, requestBody);
+    const response = await putRequest(`${url}/${id}`, requestBody);
     return handlerException(response);
 }

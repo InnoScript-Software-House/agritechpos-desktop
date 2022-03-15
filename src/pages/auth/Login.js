@@ -2,16 +2,12 @@ import React, { Component } from 'react';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Language } from '../../components/general/Language';
-import { t, zawgyi } from '../../utilities/translation.utility';
 import { login } from '../../services/auth.service';
 import { setTokenAction } from '../../redux/actions/auth.action';
 import { setAccountAction } from '../../redux/actions/account.action';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { AppToast } from '../../components/general/toasts';
 import { ToastContainer } from 'react-bootstrap';
-
-import '../../assets/css/login.css';
 
 class LoginPage extends Component {
 
@@ -38,10 +34,7 @@ class LoginPage extends Component {
         const { history } = this.props;
 
         if(username === '' || password === '') {
-            return this.props.openToast('Login', t('login-required'), 'danger');
-            // this.setState({
-            //     err_message: t('login-required')
-            // });
+            return this.props.openToast('Login', 'Username and password is required', 'danger');
         }
 
         const requestBody = {
@@ -49,90 +42,76 @@ class LoginPage extends Component {
             password: password
         };
 
-        this.setState({
-            is_loading: true
-        });
-
         const response = await login(requestBody);
-        console.log(response);
 
         if(response.success === false) {
             this.props.openToast('Login', response.message, 'danger');
             this.setState({
                 is_loading: false,
             });
-            return 
-            // this.setState({
-            //     err_message: response.message,
-            //     is_loading: false
-            // });
+            return;
         }
 
        await this.props.setToken(response.access_token);
        await this.props.setAccount(response.account);
-    
-       history.push('/dashboard');
        
+       history.push('/sale');
     }
 
     render() {
-        const { username, password, is_loading, err_message } = this.state;
-        const { lang } = this.props.reducer;
+        const { username, password, is_loading } = this.state;
         
         return (
-            <>
-                <ToastContainer
-                className= 'app-toast-container'
-                position={'top-end'}
-                >
-                    <AppToast props={this.props} />
-                </ToastContainer>
-                <div className='d-flex flex-row justify-content-end'>
-                    <Language props={this.props} />
-                </div>
-
-                <div className='d-flex flex-column'>
-                    <img className='login-logo align-self-center' src='build/assets/images/logo.png' alt='kubota' />
-
-                    <div className='col-3 align-self-center'>
-                        <h3 className={`login-title mt-3 ${zawgyi(lang)}`}> {t('login-title')} </h3>
-                        <InputGroup className='mt-3'>
-                            <FormControl
-                                className={`${zawgyi(lang)}`}
-                                type="text"
-                                placeholder={t('login-input-username')}
-                                value={username}
-                                onChange={e => this.setState({ username: e.target.value})}
-                            />
-                        </InputGroup>
-
-                        <InputGroup className='mt-3'>
-                            <FormControl
-                                className={`${zawgyi(lang)}`}
-                                type="password"
-                                placeholder={t('login-input-password')}
-                                value={password}
-                                onChange={e => this.setState({ password: e.target.value})}
-                            />
-                        </InputGroup>
-
-                        <Button
-                            className={`mt-3 ${zawgyi(lang)}`}
-                            disabled={is_loading}
-                            onClick={() => this.login()}
-                        > 
-                            {t('login-btn-enter')}  
-                        </Button>
-
-                        <Button
-                        onClick={() => this.quitDevice()}
-                        className={`mt-3 ms-3 ${zawgyi(lang)}`}
+            <div className='container-fluid'>
+                <div className='row'>
+                    <div className='col-md-12'>
+                        <ToastContainer
+                            className='app-toast-container'
+                            position='top-end'
                         >
-                            Quit
-                        </Button>
+                            <AppToast props={this.props} />
+                        </ToastContainer>
                     </div>
                 </div>
-            </>
+
+                <div className='row mt-3'>
+                    <div className='col-md-4'>
+                        <img src="build/assets/images/side_image.jpeg" className='img-fluid' />
+                    </div>
+
+                <div className='col-md-8'>
+                        <h3 className="title mb-3 pb-3"> Agricultural Equipment POS Software </h3>
+                        <div className='d-md-flex flex-md-column justify-content-center align-items-start'>
+                            <div className='col-md-4'>
+                                <h3 className="title mt-3"> Login Account </h3>
+
+                                <InputGroup className='mt-3'>
+                                    <FormControl
+                                        type="text"
+                                        placeholder="username"
+                                        value={username}
+                                        onChange={e => this.setState({ username: e.target.value})}
+                                    />
+                                </InputGroup>
+
+                                <InputGroup className='mt-3'>
+                                    <FormControl
+                                        type="password"
+                                        placeholder="password"
+                                        value={password}
+                                        onChange={e => this.setState({ password: e.target.value})}
+                                    />
+                                </InputGroup>
+
+                                <InputGroup className='mt-3'>
+                                    <Button disabled={is_loading} onClick={() => this.login()} className="btn btn-small"> Login </Button>
+                                    <Button onClick={() => this.quitDevice()} className="btn btn-small"> Quit </Button>
+                                </InputGroup>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         )
     }
 }

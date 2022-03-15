@@ -1,14 +1,22 @@
 const { BrowserWindow, app, Menu, globalShortcut, ipcMain } = require('electron');
 
-
-ipcMain.handle('quit-app', () => {
-    app.quit();
-})
 const path = require('path');
+
+const printOptions = {
+    silent: false,
+    pageSize: 'A4',
+    printBackground: false,
+    color: false,
+    margin: {
+        marginType: 'printableArea',
+    },
+    landscape: false,
+    pagesPerSheet: 1,
+    collate: false,
+};
 
 
 const isDev = !app.isPackaged;
-
 let webPreferences = {
     nodeIntegration: true,
     nodeIntegrationInWorker: true,
@@ -24,6 +32,7 @@ let browserWindowOptions = {
 }
 
 let menuHide = new Menu();
+let curentWindow = null;
 
 let mainWindow = () => {
     let win = new BrowserWindow({
@@ -36,11 +45,11 @@ let mainWindow = () => {
     });
 
 
-    if(!isDev){ 
-        globalShortcut.register('Ctrl+Shift+I', () => {
-            return null;
-        })
-    }
+    // if(!isDev){ 
+    //     globalShortcut.register('Ctrl+Shift+I', () => {
+    //         return null;
+    //     })
+    // }
 
 
     win.loadFile('./index.html');
@@ -56,8 +65,35 @@ if(isDev) {
 
 
 app.whenReady().then(() => {
-    const contents = mainWindow();
-    contents.webContents.on('did-finish-load', () => {
-        contents.webContents.send('get-device-info', true);
-    });
+    curentWindow = mainWindow();
 });
+
+ipcMain.on('restart-app', () => {
+    app.quit();
+});
+
+ipcMain.on('quit-app', () => {
+    app.quit();
+});
+
+ipcMain.on('print-invoice', () => {
+    var options = {
+        silent: false,
+        printBackground: true,
+        color: true,
+        margin: {
+            marginType: 'printableArea'
+        },
+        landscape: false,
+        pagesPerSheet: 1,
+        collate: false,
+        copies: 1,
+        header: 'Header of the Page',
+        footer: 'Footer of the Page'
+    }
+    
+    curentWindow.webContents.print(options, (success, failureReason) => {
+        curentWindow.webContents.send('reload', true);
+    })
+});
+

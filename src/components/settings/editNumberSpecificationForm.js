@@ -1,14 +1,10 @@
-import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Badge, Button, Card, FormControl, InputGroup, Table } from 'react-bootstrap';
-import { t, zawgyi } from '../../utilities/translation.utility';
-import { getNumberSpecList, updateChar } from '../../services/numberSpecification.service';
+import { Card, FormControl, InputGroup } from 'react-bootstrap';
+import { updateChar } from '../../services/numberSpecification.service';
 import { BsArrowCounterclockwise } from "react-icons/bs";
 
-import '../../assets/css/components/number-specification.css';
-
 export const EditNumberSpecificationForm = ({ props, dataSource, reload }) => {
-    const { lang } = props.reducer;
+    
     const [numList, setNumList] = useState([]);
     const [error, setError] = useState(null);
     const [update, setUpdate] = useState(false);
@@ -52,40 +48,38 @@ export const EditNumberSpecificationForm = ({ props, dataSource, reload }) => {
     },[update]);
 
     return(
-        <div className='d-md-flex flex-column ms-1'>
-            <Card>
-                <Card.Title 
-                    className='p-2 d-md-flex flex-row justify-content-between number-spec-info-title'
-                > 
-                    <span className={`${zawgyi(lang)}`}> {t('number-spec-edit-title')} </span>
-                    <div className='icon-btn' onClick={() => reloadApi()}>
-                        <BsArrowCounterclockwise size={20} />
-                    </div>
+        <Card>
+            <Card.Header>
+                <Card.Title className='d-md-flex flex-md-row justify-content-between number-spec-info-title'> 
+                <span> Edit Number Specification</span>
+                <div className='icon-btn' onClick={() => reloadApi()}>
+                    <BsArrowCounterclockwise size={20} />
+                </div>
                 </Card.Title>
-                
-                <Card.Body>
-                    <Card.Text className={`char-error ${zawgyi(lang)}`}> {error} </Card.Text>
-                        {numList && numList.map((numSpec, index) => {
-                            return(
-                                <InputGroup
-                                    className='mb-3 align-items-center'
-                                    key={`input_id_${index}`}
-                                >
-                                    <label> {`${t('number-spec-set-number-label')} - (${numSpec.set_number})`} </label>
+            </Card.Header>
 
-                                    <FormControl 
-                                        className={`ms-1 ${zawgyi(lang)}`}
-                                        type='text'
-                                        placeholder={t('number-spec-input-setchar')}
-                                        value={numSpec.set_char || ''}
-                                        onChange={(e) => handleChange(index, numSpec.id, e)}
-                                        maxLength={1}
-                                    />
-                                </InputGroup>
-                            )
-                        })}
-                </Card.Body>
-            </Card>
-        </div>
+            <Card.Body>
+                <Card.Text className="char-error"> {error} </Card.Text>
+                {numList && numList.map((numSpec, index) => {
+                    return(
+                        <InputGroup
+                            className='mb-3 align-items-center'
+                            key={`input_id_${index}`}
+                        >
+                            <label> Target Specification Number - ({numSpec.set_number}) </label>
+
+                            <FormControl 
+                                className="ms-1"
+                                type='text'
+                                placeholder="Enter Character"
+                                value={numSpec.set_char || ''}
+                                onChange={(e) => handleChange(index, numSpec.id, e)}
+                                maxLength={1}
+                            />
+                        </InputGroup>
+                    )
+                })}
+        </Card.Body>
+    </Card>
     )
 }

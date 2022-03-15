@@ -5,34 +5,38 @@ import { Navigation } from '../../components/general/Navigation';
 import { categoryDetail } from '../../services/category.service';
 import { setOpenToastAction } from '../../redux/actions/toast.action'
 import { BsArrowLeftCircle } from 'react-icons/bs';
-import { EditCategoryComponent } from '../../components/items/EditCategoryComponent';
+import { EditCategoryComponent } from '../../components/category/EditCategoryComponent';
+import { CategoryDetailItemListTableComponent } from '../../components/category/CategoryDetailItemListTableComponent';
+import { DeleteDialog } from '../../components/general/deleteDialog';
 
 class EditCategoryPage extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            is_loading: true,
-            category: null
+            loading: true,
+            category: null,
+            items: []
         };
     };
 
-    httpHandler (response) {
-        if(response && response.success === false){
-            this.props.openToast('Edit Category', response.message, 'danger');
-            return
-        }
-        return this.props.openToast('Edit Category', 'Category Update Successful', 'success');
-    }
-
     async loadingData(){
         const { id } = this.props.match.params;
+
         const response = await categoryDetail(id);
-        this.httpHandler(response);
+
+        if(response && response.success === false){
+            this.props.openToast('Category', response.message, 'danger');
+            this.setState({
+                loading: false
+            })
+            return;
+        }
 
         this.setState({
-            is_loading: false,
-            category: response
+            loading: false,
+            category: response,
+            items: response.items
         });
     };
 
@@ -40,31 +44,49 @@ class EditCategoryPage extends Component {
         await this.loadingData();
     }
 
-
     render(){
-        const { category, is_loading } = this.state;
+        const { category, loading, items } = this.state;
         const { history } = this.props;
+        const { delModal } = this.props.reducer;
         return(
             <>
-            <Navigation props={this.props} />
-            <div className='container-fluid'>
-                <div className='row mt-1'>
-                    <div className='col-md-12 d-md-flex flex-md-row justify-content-between align-items-center'>
-                        <div className='mb-2 mt-2'>
-                            <BsArrowLeftCircle size={30} className="btn-icon" onClick={() => history.push('/categoryList')} />
-                        </div>
-                    </div>
-                </div>
-                {
-                    !is_loading && (
-                        <div className='row mt-1'>
-                            <div className='col-md-4'>
-                                <EditCategoryComponent props={this.props} category={category} reload={() => this.loadingData()} />
+                <Navigation props={this.props} />
+
+                <div className='container-fluid'>
+                    <div className='row mt-1'>
+                        <div className='col-md-12 d-md-flex flex-md-row justify-content-between align-items-center'>
+                            <div className='mb-2 mt-2'>
+                                <BsArrowLeftCircle size={30} className="btn-icon" onClick={() => history.push('/category')} />
                             </div>
                         </div>
-                    )
-                }
-            </div>
+                    </div>
+
+                    {!loading && (
+                            <div className='row mt-1'>
+                                <div className='col-md-3'>
+                                    <EditCategoryComponent 
+                                        props={this.props} 
+                                        category={category} 
+                                        isDelete={items.length > 0 ? false : true} 
+                                        reload={() => this.loadingData()} 
+                                    />
+                                </div>
+
+                                <div className='col-md-9'>
+                                    <CategoryDetailItemListTableComponent 
+                                        props={this.props} 
+                                        category={category} 
+                                        items={items}
+                                    />
+                                </div>
+                            </div>
+                        )
+                    }
+                </div>
+
+                {delModal && delModal.open === true && (
+                    <DeleteDialog props={this.props} reload={async () => this.props.history.push('/category')} />           
+                )}
             </>
         )
     }
@@ -77,6 +99,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
 });
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps

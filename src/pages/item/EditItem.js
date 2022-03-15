@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -20,21 +19,15 @@ class EditItemPage extends Component {
         }
     }
 
-    httpHandler (response) {
-        if(response && response.success === false) {
-            this.setState({
-                error: response.message,
-                is_loading: false
-            });
-            return;
-        }
-    }
-
     async loadingData() {
         const { id } = this.props.match.params;
+        const { openToast } = this.props;
 
         const response = await itemDetail(id);
-        this.httpHandler(response);
+        if(response && response.success === false) {
+            openToast('Item Update', response.message, 'danger');
+            return;
+        }
 
         this.setState({
             is_loading: false,
@@ -65,7 +58,7 @@ class EditItemPage extends Component {
 
                     {!is_loading && (
                         <div className='row mt-1'>
-                            <div className='col-md-2'>
+                            <div className='col-md-3'>
                                 <EditItemComponent props={this.props} item={item} reload={() => this.loadingData()} />
                             </div>
 
@@ -73,15 +66,9 @@ class EditItemPage extends Component {
                                 <EditItemSellPriceComponent props={this.props} item={item} reload={() => this.loadingData()} />
                             </div>
 
-                            <div className='col-md-4 d-md-flex flex-d-row justify-content-between align-items-center'>
-                                <div className='col'>
-                                    <div className='col d-md-flex justify-content-between align-items-center pb-2'>
-                                        <ItemQRComponent props={this.props} item={item} reload={() => this.loadingData()} />
-                                    </div>
-                                    <div className='col d-md-flex justify-content-between align-items-center pt-2'>
-                                        <ItemBarCodeComponent props={this.props} item={item} reload={() => this.loadingData()} />
-                                    </div>
-                                </div>
+                            <div className='col-md-5'>
+                                <ItemQRComponent item={item} />
+                                <ItemBarCodeComponent item={item} />
                             </div>
                     </div>
                     )}
@@ -96,6 +83,7 @@ const mapStateToProps = (state) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
+    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
 });
   
 export default connect(
