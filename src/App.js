@@ -5,7 +5,7 @@ import history from './utilities/histroy';
 import ConfigurationPage from './pages/Configuration';
 import LoginPage from './pages/auth/Login';
 import LogoutPage from './pages/auth/Logout';
-import DashboardPage from './pages/Dashboard';
+import DashboardPage from './pages/dashboard/Dashboard';
 import LandingPage from './pages/Landing';
 import LicensePage from './pages/License';
 import ErrorPage from './pages/Error';

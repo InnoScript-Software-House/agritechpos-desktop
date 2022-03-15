@@ -34,7 +34,6 @@ export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
                 <Card.Header>
                     <div className='d-md-flex flex-md-row justify-content-between'>
                         <span className='title'>Customer List</span>
-                        <ChangeNumberFormatBtn props={props} />
                     </div>
                 </Card.Header>
 

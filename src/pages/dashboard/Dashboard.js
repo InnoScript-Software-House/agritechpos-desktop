@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { DashboardNotiCompoment } from '../components/dashboard/notification';
-import { Navigation } from '../components/general/Navigation';
-import { getShop } from '../services/shop.service';
+import { DashboardNotiCompoment } from '../../components/dashboard/notification';
+import { Navigation } from '../../components/general/Navigation';
+import { getShop } from '../../services/shop.service';
 
 class DashboardPage extends Component {
 
