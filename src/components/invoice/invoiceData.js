@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { getShop } from "../../services/shop.service";
 import moment from "moment";
 import numeral from "numeral";
@@ -12,12 +12,15 @@ export const InvoiceDataComponent = ({props, invoiceDetail }) => {
     const [totalAmount, setTotalAmount] = useState(0);
     const [discount, setDiscount] = useState(0);
     const [netAmount, setNetAmount] = useState(0);
+    const [display, setDisplay] = useState('');
+    console.log(invoiceDetail);
 
-    const inportData = () => {
+    const importData = () => {
             const iData = invoiceDetail && JSON.parse(invoiceDetail[0].invoice_data);
             if(iData){
             const total = iData.map(e => e.total);
             setTotalAmount(total.reduce((a, b) => a + b, 0));
+            setNetAmount(total.reduce((a, b) => a + b, 0) - discount);
             setInVoiceData(iData);
             }
     }
@@ -32,7 +35,7 @@ export const InvoiceDataComponent = ({props, invoiceDetail }) => {
         }
         setShop(shopinfo);
         setInvoice(invoiceDetail && invoiceDetail[0]);
-        inportData();
+        importData();   
 
     },[invoiceDetail]);
 
@@ -41,7 +44,7 @@ export const InvoiceDataComponent = ({props, invoiceDetail }) => {
         <Card>
             <Card.Header>
                 <Card.Title>
-                    <span>Saved Invoices</span>
+                        <span>Saved Invoices</span>
                 </Card.Title>
             </Card.Header>
             <Card.Body>{
