@@ -760,3 +760,12 @@ margin-bottom: 10px;
 .display {
   display: none!important;
 }
+
+/* countcard */
+.countcardbody{
+  background-color: #17A2B8;
+}
+
+.countcardfooter{
+  background-color: #148A9D!important;
+}

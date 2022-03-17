@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { DashboardNotiCompoment } from '../../components/dashboard/notification';
+import { CountCard } from '../../components/general/CountCard';
 import { Navigation } from '../../components/general/Navigation';
 import { getShop } from '../../services/shop.service';
 
@@ -40,6 +41,7 @@ class DashboardPage extends Component {
         return (
             <>
                 <Navigation props={this.props} />
+                <CountCard />
                 <DashboardNotiCompoment 
                     props={this.props} 
                     notification={notification} 
