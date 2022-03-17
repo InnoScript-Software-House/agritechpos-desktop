@@ -12,16 +12,16 @@ import { getCustomerList } from "../services/customer.service";
 import { createInvoice } from "../services/invoice.service";
 import { getItems } from "../services/item.service";
 import { setInvoiceAction } from "../redux/actions/invoice.action";
+import { CustomerComponent } from "../components/sale/customerComponent";
+import { SaleVoucherInputComponent } from "../components/sale/saleVoucherInputComponent";
   
 class SalePage extends Component {
     constructor(props){
         super(props);
         this.state = {
+            customer: null,
             customers: [],
             suggestions: [],
-            customerName: '',
-            customerAddress: '',
-            customerPhone: '',
             name: '',
             model: '',
             code: '',
@@ -58,15 +58,15 @@ class SalePage extends Component {
             return;
         }
         
-        const customer = await getCustomerList();
-        if(customer && customer.success === false) {
-            openToast('Customer', customer.message, 'danger');
+        const customers = await getCustomerList();
+        if(customers && customers.success === false) {
+            openToast('Customer', customers.message, 'danger');
             return;
         }
 
         this.setState({
             items: response,
-            customers: customer
+            customers: customers
         });
     }
 
@@ -103,15 +103,6 @@ class SalePage extends Component {
     }
 
     getSelectedItem(e) {
-        this.setState({
-            name: e.eng_name,
-            model: e.model,
-            code: e.code,
-            price: e.price,
-            totalQty: e.qty,
-            percentage: e.percentage,
-            sell_price: ((Number(e.price) * Number(e.percentage)) / 100) + Number(e.price)
-        });
     }
 
     addCart(key) {
@@ -190,11 +181,13 @@ class SalePage extends Component {
     }
 
     getCustomer(e) {
-        this.setState({
-            customerName: e.name,
-            customerPhone: e.phone ? e.phone : '',
-            customerAddress: e.address ? e.address : ''
-        });
+        const customer = {
+            name: e.name,
+            phone: e.phone,
+            email: e.email,
+            address: e.address
+        }
+        this.setState({ customer: customer });
     }
 
     async saveInvoice() {
@@ -249,14 +242,15 @@ class SalePage extends Component {
     }
 
     render(){
-        const { customers, customerName, customerPhone, customerAddress, name, model, code, qty, cartItems, items, total, price, discount, pay_amount, percentage } = this.state;
+        const { customer, customers, name, model, code, qty, cartItems, items, total, price, discount, pay_amount, percentage } = this.state;
+
         return(
             <>
                 <Navigation props={this.props} />
 
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-12">customer
                             <Card className="mt-3">
                                 <Card.Header>
                                     <Card.Title className="title">
@@ -279,39 +273,7 @@ class SalePage extends Component {
                                 <Card.Body>
                                     <div className="d-md-flex flex-column mb-3">
                                         <h3 className="mb-3"> INVOICE </h3>
-
-                                        <InputGroup>
-                                            <FormControl 
-                                                className="me-3"
-                                                type="text"
-                                                placeholder="Enter Customer Name"
-                                                value={customerName}
-                                                onChange={(e) => this.setState({
-                                                    customerName: e.target.value
-                                                })}
-                                            />
-
-                                            <FormControl 
-                                                className="me-3"
-                                                type="text"
-                                                placeholder="Enter Customer Phone Number"
-                                                value={customerPhone}
-                                                onChange={(e) => this.setState({
-                                                    customerPhone: e.target.value
-                                                })}
-                                            />
-                                        </InputGroup>
-
-                                        <InputGroup className="mt-3">
-                                            <FormControl
-                                                as={'textarea'}
-                                                placeholder="Enter Customer Address"
-                                                value={customerAddress}
-                                                onChange={(e) => this.setState({
-                                                    customerAddress: e.target.value
-                                                })}
-                                            />
-                                        </InputGroup>
+                                        <CustomerComponent input={customer} retrive={(e) => this.setState({ customer: e })} />
                                     </div>  
 
                                     <div className="table-responsive">
@@ -396,34 +358,7 @@ class SalePage extends Component {
                                 </Card.Body>
 
                                 <Card.Footer>
-                                    <div className="d-md-flex flex-md-row align-items-start">
-                                            <AutoCompleteDropDown 
-                                                dataSource={items} 
-                                                inputOption={
-                                                    {
-                                                        type: "text",
-                                                        placeholder: 'Enter item code',
-                                                        search_name: 'code'
-                                                    }} 
-                                                chooseItem={(e) => this.getSelectedItem(e)}
-                                            />
-
-                                            <InputGroup>
-                                                <FormControl 
-                                                    type="number" 
-                                                    placeholder="qty" 
-                                                    value={qty} 
-                                                    onChange={(e) => this.setState({ qty: e.target.value})}
-                                                    onKeyPress={(e) => this.addCart(e.code)}
-                                                />
-
-                                                <FormControl placeholder="Name" value={name} disabled={true} />
-                                                <FormControl placeholder="Model" value={model} disabled={true} />
-                                                <FormControl placeholder="Code" value={code} disabled={true} />
-                                                <FormControl placeholder="Qty" value={qty} disabled={true} />
-                                                <FormControl placeholder="Price" value={price} disabled={true} />
-                                            </InputGroup>
-                                    </div>
+                                    <SaleVoucherInputComponent dataSource={items} />
                                 </Card.Footer>
                             </Card>
                         </div>
