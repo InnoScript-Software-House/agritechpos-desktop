@@ -1,4 +1,8 @@
 {
+    "invoice" : "ေဘာင္ခ်ာ",
+    "input-customer-name-search" : "ေစ်းဝယ္သူအမည္ျဖင့္ရွာရန္",
+    "input-customer-name" : "ေစ်းဝယ္သူအမည္ထည့္ရန္",
+
     "nav-sale": "အေရာင္း",
     "nav-dashboard": "အခ်က္အလက္မ်ား",
     "nav-setting": "ထိန္းခ်ဳပ္ျခင္းမ်ား",

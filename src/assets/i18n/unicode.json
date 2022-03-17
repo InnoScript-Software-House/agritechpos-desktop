@@ -1,4 +1,8 @@
 {
+    "invoice" : "ဘောင်ချာ",
+    "input-customer-name-search" : "စျေးဝယ်သူအမည်ဖြင့်ရှာရန်",
+    "input-customer-name" : "စျေးဝယ်သူအမည်ထည့်ရန်",
+
     "nav-sale": "အရောင်း",
     "nav-dashboard": "အချက်အလက်များ",
     "nav-setting": "ထိန်းချုပ်ခြင်းများ",

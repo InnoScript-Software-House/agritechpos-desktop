@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FormControl, InputGroup } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { t, zawgyi } from "../../utilities/translation.utility";
 
 export const CustomerComponent = ({ input, retrive }) => {
 
@@ -7,6 +9,8 @@ export const CustomerComponent = ({ input, retrive }) => {
     const [customerPhone, setCustomerPhone] = useState('');
     const [customerEmail, setCustomerEmail] = useState('');
     const [customerAddress, setCustomerAddress] = useState('');
+
+    const lang = useSelector(state => state.lang);
 
     const updateCustomerInfo = (e, type) => {
         let customer = {
@@ -38,9 +42,9 @@ export const CustomerComponent = ({ input, retrive }) => {
         <>
             <InputGroup>
                 <FormControl 
-                    className="me-3"
+                    className={`${zawgyi(lang)} me-3`}
                     type="text"
-                    placeholder="Enter Customer Name"
+                    placeholder={t('input-customer-name')}
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'name')}
