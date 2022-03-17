@@ -29,6 +29,9 @@ contextBridge.exposeInMainWorld('nativeApi', {
         invoice() {
             return ipcRenderer.send('print-invoice');
         },
+        targetComponent(){
+            return ipcRenderer.send('print-target-component');
+        },
         reload(data) {
             return ipcRenderer.on('reload', (event, res) => {
                 return data(res);
