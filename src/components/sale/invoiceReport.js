@@ -46,7 +46,6 @@ export const InvoiceReportPage = () => {
                 dispatch(setOpenToastAction('Invoice', response.message, 'danger'));
                 return;
             }
-
             return;
         }
 

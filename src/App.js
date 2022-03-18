@@ -26,6 +26,8 @@ import EditCustomerPage from './components/customer/EditCustomer';
 
 import './assets/css/theme.css';
 import Invoice from './pages/Invoice';
+import CreditPage from './pages/Credit';
+import Repayment from './components/repayment/Repayment';
 
 class App extends Component {
 
@@ -58,6 +60,9 @@ class App extends Component {
 
         <Route exact path={'/invoiceReport'} component={InvoiceReportPage} />
         <Route exact path={'/invoice'} component={InvociePage} />
+
+        <Route exact path={'/credit'} component={CreditPage} />
+        <Route exact path={'/repayment/:id'} component={Repayment} />
 
         <Route exact path={'/sale'} component={SalePage} />
 
