@@ -187,7 +187,8 @@ class SalePage extends Component {
                                                         type: "text",
                                                         placeholder: t('input-customer-name-search'),
                                                         search_name: 'name'
-                                                    }} 
+                                                    }
+                                                    } 
                                                 chooseItem={(e) => this.getCustomer(e)}
                                             />
 

@@ -51,9 +51,9 @@ export const CustomerComponent = ({ input, retrive }) => {
                 />
 
                 <FormControl 
-                    className="me-3"
+                    className={`${zawgyi(lang)} me-3`}
                     type="text"
-                    placeholder="Enter Customer Phone Number"
+                    placeholder={t('input-customer-phone-number')}
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'phone')}
@@ -61,19 +61,19 @@ export const CustomerComponent = ({ input, retrive }) => {
                 />
 
                 <FormControl 
-                    className="me-3"
+                    className={`${zawgyi(lang)} me-3`}
                     type="text"
-                    placeholder="Enter Customer Email"
+                    placeholder={t('input-customer-email')}
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'email')}
                 />
             </InputGroup>
 
-            <InputGroup className="mt-3">
+            <InputGroup className={`${zawgyi(lang)} me-3`}>
                 <FormControl
                     as={'textarea'}
-                    placeholder="Enter Customer Address"
+                    placeholder={t('input-customer-address')}
                     value={customerAddress}
                     onChange={(e) => setCustomerAddress(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'address')}

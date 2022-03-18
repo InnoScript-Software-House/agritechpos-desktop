@@ -1,8 +1,10 @@
+import { t } from "i18next";
 import React, { useEffect, useState } from "react";
 import { FormControl, FormLabel, InputGroup } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { AutoCompleteDropDown } from "../general/autoCompleteDropDown";
+import { zawgyi } from "../../utilities/translation.utility";
 
 export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
 
@@ -10,6 +12,7 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
     const [items, setItems] = useState([]);
     const [item, setItem] = useState(null);
     
+    const lang = useSelector(state => state.lang)
     const dispatch = useDispatch();
 
     const addItem = (e) => {
@@ -32,14 +35,14 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
 
     return (
         <div className="d-md-flex flex-md-row align-items-start">
-            <div className="">
-                <FormLabel> Material Code </FormLabel>
+            <div className={`${zawgyi(lang)}`}>
+                <FormLabel> {t('martial-code')} </FormLabel>
                 <AutoCompleteDropDown 
                     dataSource={items} 
                     inputOption={
                         {
                             type: "text",
-                            placeholder: 'Enter item code',
+                            placeholder: t('enter-item-code'),
                             search_name: 'code'
                         }} 
                     chooseItem={(e) => setItem({
@@ -55,11 +58,11 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
             </div>
 
         <InputGroup>
-            <div className="">
-                <FormLabel> Qty </FormLabel>
+            <div className={`${zawgyi(lang)}`}>
+                <FormLabel> {t('quality')} </FormLabel>
                 <FormControl 
                     type="number" 
-                    placeholder="qty" 
+                    placeholder={t('Qty')}
                     value={qty} 
                     onChange={(e) => setQty(e.target.value)}
                     onKeyPress={(e) => {
@@ -72,34 +75,34 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
 
             { item && (
                 <>
-                    <div className="">
-                        <FormLabel> Name </FormLabel>
-                        <FormControl placeholder="Name" value={item.name || ''} disabled={true} />
+                    <div className={`${zawgyi(lang)}`}>
+                        <FormLabel> {t('name')} </FormLabel>
+                        <FormControl placeholder={t('name')} value={item.name || ''} disabled={true} />
                     </div>
                     
-                    <div className="">
-                        <FormLabel> Model </FormLabel>
-                        <FormControl placeholder="Model" value={item.model || ''} disabled={true} />
+                    <div className={`${zawgyi(lang)}`}>
+                        <FormLabel> {t('model')} </FormLabel>
+                        <FormControl placeholder={t('model')} value={item.model || ''} disabled={true} />
                     </div>
 
-                    <div className="">
-                        <FormLabel> Code </FormLabel>
-                        <FormControl placeholder="Code" value={item.code || ''} disabled={true} />
+                    <div className={`${zawgyi(lang)}`}>
+                        <FormLabel> {t('code')} </FormLabel>
+                        <FormControl placeholder={t('code')} value={item.code || ''} disabled={true} />
                     </div>
 
-                    <div className="">
-                        <FormLabel> Price (MMK) </FormLabel>
-                        <FormControl placeholder="Price" value={item.sell_price || ''} disabled={true} />
+                    <div className={`${zawgyi(lang)}`}>
+                        <FormLabel> {t('price')} </FormLabel>
+                        <FormControl placeholder={t('price')} value={item.sell_price || ''} disabled={true} />
                     </div>
 
-                    <div className="">
-                        <FormLabel> Total Qty </FormLabel>
-                        <FormControl placeholder="Total Qty" value={item.totalQty || 0} disabled={true} />
+                    <div className={`${zawgyi(lang)}`}>
+                        <FormLabel> {t('total-qty')} </FormLabel>
+                        <FormControl placeholder={t('total-qty')} value={item.totalQty || 0} disabled={true} />
                     </div>
 
-                    <div className="">
-                        <FormLabel> Request Qty </FormLabel>
-                        <FormControl placeholder="Request Qty" value={qty || 0} disabled={true} />
+                    <div className={`${zawgyi(lang)}`}>
+                        <FormLabel>{t('request-qty')}</FormLabel>
+                        <FormControl placeholder={t('request-qty')} value={qty || 0} disabled={true} />
                     </div>
                 </>
             )}

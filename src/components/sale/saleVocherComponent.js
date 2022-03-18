@@ -2,8 +2,10 @@ import numeral from "numeral";
 import React, { useEffect, useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { BsTrash } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import { t, zawgyi } from "../../utilities/translation.utility";
 
-const tableHeader = ['Material Code', 'Name', 'Model', 'Qty', 'Price', 'Total'];
+const tableHeader = [t('martial-code'),t('name'),t('model'), t('Qty'),t('price'),t('total')];
 
 export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
 
@@ -17,6 +19,8 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
         sell: 0,
         buy: 0
     });
+
+    const lang = useSelector(state => state.lang);
 
     const removeItem = (selectedItem) => {
         const removeItems = items.filter(item => item.code !== selectedItem.code);
@@ -60,7 +64,9 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
                             <th className="cart-item-table-hash-width"> # </th>
                             {tableHeader.map((header, index) => {
                                 return(
-                                    <th key={`header_id_${index}`} className="cart-item-table-with"> {header} </th>
+                                    <th key={`header_id_${index}`} >  
+                                        <span className={`${zawgyi(lang)} cart-item-table-with`}> {header}  </span>
+                                    </th>
                                 )
                             })}
                             
@@ -72,11 +78,11 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
                             return(
                                 <tr key={`cart_item_id_${index}`}>
                                     <td className="cart-item-table-hash-width"> {index + 1} </td>
-                                    <td className="cart-item-table-with"> {item.name} </td> 
-                                    <td className="cart-item-table-with"> {item.model} </td>
-                                    <td className="cart-item-table-with"> {item.code} </td>
-                                    <td className="cart-item-table-with"> {item.requestQty} </td>
-                                    <td className="cart-item-table-with"> {numeral(item.sell_price).format('0,0')} MMK </td>
+                                    <td className={`${zawgyi(lang)} cart-item-table-with`}> {item.name} </td> 
+                                    <td className={`${zawgyi(lang)} cart-item-table-with`}> {item.model} </td>
+                                    <td className={`${zawgyi(lang)} cart-item-table-with`}> {item.code} </td>
+                                    <td className={`${zawgyi(lang)} cart-item-table-with`}> {item.requestQty} </td>
+                                    <td className={`${zawgyi(lang)} cart-item-table-with`}> {numeral(item.sell_price).format('0,0')} MMK </td>
                                     <td className="cart-item-table-with"> 
                                         <div className="d-md-flex flex-md-row justify-content-between align-items-center">
                                             <span className="me-3"> { numeral(item.sell_price * item.requestQty).format('0,0') } MMK</span>
@@ -97,12 +103,12 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <td className="pe-3"> <h4> Total Amount </h4> </td>
-                                    <td className="pe-3"> <h4> {numeral(totalAmount).format('0,0')} MMK </h4> </td>
+                                    <td className={`${zawgyi(lang)} pe-3`}> <h4> {t('total-amount')} </h4> </td>
+                                    <td className={`${zawgyi(lang)} pe-3`}> <h4> {numeral(totalAmount).format('0,0')} {t('mmk')} </h4> </td>
                                 </tr>
 
                                 <tr>
-                                    <td> <h4> Discount </h4> </td>
+                                    <td className={`${zawgyi(lang)}`}> <h4> {t('discount')} </h4> </td>
                                     <td>
                                         <InputGroup>
                                             <FormControl 
@@ -120,7 +126,7 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
                                 </tr>
                                 
                                 <tr>
-                                    <td> <h4> Pay Amount </h4> </td>
+                                    <td className={`${zawgyi(lang)}`}> <h4> {t('pay-amount')} </h4> </td>
                                     <td>
                                         <InputGroup>
                                             <FormControl 
@@ -138,18 +144,18 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
                                 </tr>
 
                                 <tr>
-                                    <td className="pe-3"> <h4> Credit Amount </h4> </td>
-                                    <td className="pe-3"> <h4> {creditAmount} MMK </h4> </td>
+                                    <td className={`${zawgyi(lang)} pe-3`}> <h4> {t('credit-amount')} </h4> </td>
+                                    <td className={`${zawgyi(lang)} pe-3`}> <h4> {creditAmount}  {t('mmk')} </h4> </td>
                                 </tr>
 
                                 <tr>
-                                    <td className="pe-3"> <h4> Net Amount </h4> </td>
-                                    <td className="pe-3"> <h4> {numeral(netAmount).format('0,0')} MMK </h4> </td>
+                                    <td className={`${zawgyi(lang)} pe-3`}> <h4> {t('net-amount')}</h4> </td>
+                                    <td className={`${zawgyi(lang)} pe-3`}> <h4> {numeral(netAmount).format('0,0')}  {t('mmk')} </h4> </td>
                                 </tr>
 
                                 <tr>
-                                    <td className="pe-3" colSpan={2}>
-                                        <Button className="btn w-full" onClick={() => makePayment()}> Make Payment</Button>
+                                    <td className={`${zawgyi(lang)} pe-3`} colSpan={2}>
+                                        <Button className="btn w-full" onClick={() => makePayment()}> {t('make-payment')}</Button>
                                     </td>
                                 </tr>
                             </thead>
