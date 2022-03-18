@@ -78,7 +78,7 @@ ipcMain.on('quit-app', () => {
 
 ipcMain.on('print-invoice', () => {
     var options = {
-        silent: false,
+        silent: true,
         printBackground: true,
         color: true,
         margin: {
@@ -87,12 +87,12 @@ ipcMain.on('print-invoice', () => {
         landscape: false,
         pagesPerSheet: 1,
         collate: false,
-        copies: 1,
-        header: 'Header of the Page',
-        footer: 'Footer of the Page'
+        copies: 2,
+        header: 'AgriTech POS System',
+        footer: 'AgriTech POS System'
     }
-    
+
     curentWindow.webContents.print(options, (success, failureReason) => {
-        curentWindow.webContents.send('reload', true);
+        curentWindow.webContents.send('reload', success ? success : failureReason);
     })
 });
