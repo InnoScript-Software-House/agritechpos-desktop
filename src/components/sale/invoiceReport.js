@@ -79,25 +79,26 @@ export const InvoiceReportPage = () => {
 
         if(invoiceResponse && invoiceResponse.success === false) {
             dispatch(setOpenToastAction('Invoice', invoiceResponse.success, 'danger'));
-            return console.log(invoiceResponse);
+            return;
         }
+        console.log(invoiceResponse);
 
         const lastInvoice = invoiceResponse.length > 0  ? invoiceResponse[invoiceResponse.length - 1] : 0;
         let ivId = 1;
 
-        if(lastInvoice.invoice_id) {
-            ivId = Number(lastInvoice.invoice_id) + 1;
+        if(lastInvoice.invoice_no) {
+            ivId = Number(lastInvoice.invoice_no) + 1;
         } 
         
-        let invoice_id = '';
+        let invoice_no = '';
 
         for(let x=ivId.toString().length; x<6; x++) {
-            invoice_id += '0';
+            invoice_no += '0';
         }
 
-        invoice_id += ivId;
+        invoice_no += ivId;
 
-        setInvoiceId(invoice_id);
+        setInvoiceId(invoice_no);
 
         const getcustomer = await getCustomerList();
         if(getcustomer && getcustomer.success === false) {
