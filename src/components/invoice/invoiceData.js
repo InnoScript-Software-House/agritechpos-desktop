@@ -64,7 +64,7 @@ export const InvoiceDataComponent = ({props, invoiceDetail }) => {
                         <div className="col-md-12 mt-3 ps-3">
                             <div className="d-md-flex flex-row justify-content-between align-items-center mb-3">
                                 <div className="invoice-info">
-                                    <h2> INVOICE - AT{invoice.invoice_id} </h2>
+                                    <h2> INVOICE - AT{invoice.invoice_no} </h2>
                                     <span> Date - {moment(invoice.created_at).format('DD,MM,YYYY')} </span>
                                 </div>
 

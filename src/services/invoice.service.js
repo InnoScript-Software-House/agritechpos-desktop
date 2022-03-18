@@ -1,7 +1,7 @@
 import { getRequest, postRequest, putRequest } from "./api.service";
 
 const url = 'invoice';
-    
+
 const handlerException = (response) => {
     if(response && response.status === 0) {
         return null;
@@ -23,3 +23,8 @@ export const getLastInvoice = async () => {
 //     const response = await putRequest(`${url}/${id}`, requestBody);
 //     return handlerException(response);
 // }
+
+export const getInvoice = async () => {
+    const response = await getRequest(`${url}`);
+    return handlerException(response);
+}
