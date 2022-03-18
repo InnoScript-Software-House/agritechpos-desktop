@@ -277,6 +277,9 @@ input[type="number"]:focus,
   overflow-y: scroll;
 }
 
+.w-300 {
+  width: 300px;
+}
 /** License Key **/
 .serial-key-label {
   color: #01a3a6;
@@ -759,4 +762,8 @@ margin-bottom: 10px;
 
 .display {
   display: none!important;
+}
+
+.remove-mr {
+  margin: 0px!important;
 }
