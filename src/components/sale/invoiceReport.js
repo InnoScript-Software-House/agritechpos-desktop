@@ -25,10 +25,10 @@ export const InvoiceReportPage = () => {
         if(invoice) {
             const requestBody = {
                 invoice_no: invoiceId,
-                // customer_name: invoice.customer.name !== '' ? invoice.customer.name : null,
-                // customer_phone: invoice.customer.phone !== '' ? invoice.customer.phone : null,
-                // customer_address: invoice.customer.address !== '' ? invoice.customer.address : null,
-                // customer_email : null,
+                customer_name: invoice.customer.name !== '' ? invoice.customer.name : null,
+                customer_phone: invoice.customer.phone !== '' ? invoice.customer.phone : null,
+                customer_address: invoice.customer.address !== '' ? invoice.customer.address : null,
+                customer_email : invoice.customer.email !== '' ? invoice.customer.email: null,
                 total_amount: invoice.totalAmount,
                 pay_amount: invoice.payAmount,
                 discount: invoice.discount,
@@ -181,9 +181,10 @@ export const InvoiceReportPage = () => {
                             </table>
 
                             <div className="d-md-flex flex-md-row justify-content-between align-items-center mt-3 pt-3">
-                                {/* <div className="">
+                                {invoice.isPaid ? (
+                                <div className="">
                                     <img className="paid-img align-self-end" src="build/assets/images/paid.png" />
-                                </div> */}
+                                </div>) : (<></>)}
                                 <div className="d-md-flex flex-md-center justify-content-end">
                                 </div>
                                 <table>

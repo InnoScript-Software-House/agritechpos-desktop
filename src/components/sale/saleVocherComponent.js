@@ -19,6 +19,7 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
         buy: 0
     });
     const history = useHistory();
+    // const [ispaid, setIsPaid] = useState(true);
     const [customer, setCustomer] = useState(null);
 
     const removeItem = (selectedItem) => {
@@ -43,6 +44,9 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
     //         this.setState({
     //             payBtn: true
     //         });
+            // if(!creditAmount === 0) {
+            //     setIsPaid(false);
+            // };
             let iData = {
                 totalAmount: totalAmount,
                 discount: discount,
@@ -50,6 +54,7 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
                 creditAmount: creditAmount,
                 payAmount: payAmount,
                 customer: customer,
+                isPaid: ispaid,
                 bought_items: items.map(e => e)
             };
             localStorage.setItem('INVOICE', JSON.stringify(iData));
