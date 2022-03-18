@@ -14,8 +14,8 @@ export const createInvoice = async (requestBody) => {
     return handlerException(response);
 }
 
-export const getInvoice = async () => {
-    const response = await getRequest(`${url}`);
+export const getLastInvoice = async () => {
+    const response = await getRequest(`${url}/lastInvoice`);
     return handlerException(response);
 }
 

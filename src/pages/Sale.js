@@ -113,53 +113,6 @@ class SalePage extends Component {
         }
         this.setState({ customer: customer });
     }
-
-    // async saveInvoice() {
-    //     const { customerAddress, customerName, customerPhone, total, discount, cartItems } = this.state;
-    //     const { openToast } = this.props;
-
-    //     const requestBody = {
-    //         customer_name: customerName !== '' ? customerName : null,
-    //         customer_phone: customerPhone !== '' ? customerPhone : null,
-    //         customer_address: customerAddress !== '' ? customerAddress : null,
-    //         customer_email : null,
-    //         total_amount: total,
-    //         discount: discount,
-    //         invoice_data: cartItems,
-    //         cash_back: 0,
-    //     }
-    //     const response = await createInvoice(requestBody);
-
-    //     if(response && response.success === false) {
-    //         openToast('Customer', response.message, 'danger');
-    //         return;
-    //     }
-    // }
-
-    // payNow(){
-    //     const { history } = this.props;
-    //     if(this.state.cartItems.length > 0){
-    //         this.setState({
-    //             payBtn: true
-    //         });
-    //         let iData = {
-    //             invoice_id: this.state.invoice_id,
-    //             customer_name: this.state.customerName,
-    //             customer_phone: this.state.customerPhone,
-    //             customer_address: this.state.customerAddress,
-    //             bought_items: this.state.cartItems.map(e => e),
-    //             total: this.state.total,
-    //             discount: this.state.discount,
-    //             netAmount: this.state.total - this.state.discount
-    //         };
-    //         this.props.setInvoice(iData);
-    //         history.push('/invoiceReport');
-    //     };
-    //     this.setState({
-    //         payBtn: false
-    //     });
-    //     return;
-    // }
     
     async componentDidMount(){
         await this.loadingData();

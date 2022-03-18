@@ -181,10 +181,9 @@ export const InvoiceReportPage = () => {
                             </table>
 
                             <div className="d-md-flex flex-md-row justify-content-between align-items-center mt-3 pt-3">
-                                {/* {invoice.isPaid ? (
-                                <div className="">
+                                {invoice.isaid ? (<div className="">
                                     <img className="paid-img align-self-end" src="build/assets/images/paid.png" />
-                                </div>) : (<></>)} */}
+                                </div>) : (<></>)}
                                 <div className="d-md-flex flex-md-center justify-content-end">
                                 </div>
                                 <table>

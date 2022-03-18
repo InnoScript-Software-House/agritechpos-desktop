@@ -188,7 +188,6 @@ class ProfilePage extends Component {
                   <Card.Body className='d-md-flex flex-md-column'>
                     <InputGroup className='mb-3'>
                       <FormControl
-                        className="me-3"
                         type='text'
                         className="me-3"
                         placeholder="Account Name"

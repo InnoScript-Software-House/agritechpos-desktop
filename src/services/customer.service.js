@@ -19,12 +19,12 @@ export const createCustomer = async (requestBody) => {
     return handlerException(response);
 }
 
-// export const categoryDetail = async (id) => {
-//     const response = await getRequest(`${url}/${id}`);
-//     return handlerException(response);
-// }
+export const customerDetail = async (id) => {
+    const response = await getRequest(`${url}/${id}`);
+    return handlerException(response);
+}
 
-// export const updateCategory = async (id, requestBody) => {
-//     const response = await putRequest(`${url}/${id}`, requestBody);
-//     return handlerException(response);
-// }
+export const updateCustomer = async (id, requestBody) => {
+    const response = await putRequest(`${url}/${id}`, requestBody);
+    return handlerException(response);
+}

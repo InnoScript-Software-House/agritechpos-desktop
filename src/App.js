@@ -5,7 +5,7 @@ import history from './utilities/histroy';
 import ConfigurationPage from './pages/Configuration';
 import LoginPage from './pages/auth/Login';
 import LogoutPage from './pages/auth/Logout';
-import DashboardPage from './pages/Dashboard';
+import DashboardPage from './pages/dashboard/Dashboard';
 import LandingPage from './pages/Landing';
 import LicensePage from './pages/License';
 import ErrorPage from './pages/Error';
@@ -21,6 +21,8 @@ import EditCategoryPage from './pages/category/EditCategory';
 import SalePage from './pages/Sale';
 import {InvoiceReportPage} from './components/sale/invoiceReport';
 import InvociePage from './pages/Invoice';
+import CustomerPage from './pages/customer/Customer';
+import EditCustomerPage from './components/customer/EditCustomer';
 
 import './assets/css/theme.css';
 import Invoice from './pages/Invoice';
@@ -63,6 +65,9 @@ class App extends Component {
         <Route exact path={'/repayment/:id'} component={Repayment} />
 
         <Route exact path={'/sale'} component={SalePage} />
+
+        <Route exact path={'/customer'} component={CustomerPage} />
+        <Route exact path={'/editcustomer/:id'} component={EditCustomerPage} />
       </HashRouter>
     );
   }

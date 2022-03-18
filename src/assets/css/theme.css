@@ -764,6 +764,24 @@ margin-bottom: 10px;
   display: none!important;
 }
 
-.remove-mr {
-  margin: 0px!important;
+.hv-100 {
+  height: 100vh!important;
+}
+
+.thank-you {
+  font-size: 100px!important;
+}
+
+/* countcard */
+.countcardbody{
+  background-color: #17A2B8;
+}
+
+.countcardfooter{
+  background-color: #148A9D!important;
+}
+
+.countcardbtn{
+  background-color: #148A9D!important;
+  border: none!important;
 }
