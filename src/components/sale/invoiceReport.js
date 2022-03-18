@@ -24,7 +24,7 @@ export const InvoiceReportPage = () => {
     const [display, setDisplay] = useState('');
     const [success, setSuccess] = useState(false);
 
-    
+
     const saveInvoice = async () => {
         if(invoice) {
             const requestBody = {
@@ -58,13 +58,12 @@ export const InvoiceReportPage = () => {
 
         setDisplay('display');
         
+        await saveInvoice();
         await print.invoice();
-        await print.reload();
-
-        saveInvoice();
-        setSuccess(true);
-        localStorage.removeItem('INVOICE');
-
+        await print.reload((data) => {
+            setSuccess(true);
+            localStorage.removeItem('INVOICE');
+        });
     }
 
     useEffect(async () => {
@@ -82,12 +81,11 @@ export const InvoiceReportPage = () => {
             dispatch(setOpenToastAction('Invoice', invoiceResponse.success, 'danger'));
             return;
         }
-        console.log(invoiceResponse);
 
         const lastInvoice = invoiceResponse ? invoiceResponse.invoice_no : 0;
         let ivId = Number(lastInvoice) + 1;
 
-        let invoice_id = '';
+        let invoice_no = '';
 
         for(let x=ivId.toString().length; x<6; x++) {
             invoice_no += '0';
@@ -121,8 +119,8 @@ export const InvoiceReportPage = () => {
                                     </div>
 
                                     <div className="d-flex flex-column mt-3 pe-3">
-                                        <span className={`${zawgyi(lang)}`}> {t('shop-phone')} - {shop.phone} </span>
-                                        <span className={`${zawgyi(lang)}`}> {t('shop-email')} - {shop.email} </span>
+                                        <span className={`${zawgyi(lang)}`}> <small> {t('shop-phone')} - {shop.phone} </small> </span>
+                                        <span className={`${zawgyi(lang)}`}> <small> {t('shop-email')} - {shop.email} </small> </span>
                                     </div>
                                 </div>
 
@@ -130,14 +128,14 @@ export const InvoiceReportPage = () => {
                                     <div className="d-md-flex flex-row justify-content-between align-items-center mb-3">
                                         <div className="invoice-info">
                                             <h4 className={`${zawgyi(lang)}`}> {t('invoice')} - AT{invoiceId} </h4>
-                                            <span className={`${zawgyi(lang)}`}> {t('invoice-date')} - {moment().format('Y-MM-DD')} </span>
+                                            <small className={`${zawgyi(lang)}`}> {t('invoice-date')} - {moment().format('Y-MM-DD')} </small>
                                         </div>
 
                                         <div className="customer-info">
                                             <div className="mt-3 pe-3">
-                                                <h4 className={`${zawgyi(lang)}`}> {t('customer-name')}: {invoice.customer && invoice.customer.name} </h4>
-                                                <h4 className={`${zawgyi(lang)}`}> {t('customer-phone')} : {invoice.customer && invoice.customer.phone} </h4>
-                                                <h4 className={`${zawgyi(lang)}`}> {t('customer-address')} : {invoice.customer && invoice.customer.address} </h4>
+                                                <h6 className={`${zawgyi(lang)}`}> {t('customer-name')}: {invoice.customer && invoice.customer.name} </h6>
+                                                <h6 className={`${zawgyi(lang)}`}> {t('customer-phone')} : {invoice.customer && invoice.customer.phone} </h6>
+                                                <h6 className={`${zawgyi(lang)}`}> {t('customer-address')} : {invoice.customer && invoice.customer.address} </h6>
                                             </div>
                                         </div>
                                     </div>
@@ -148,7 +146,7 @@ export const InvoiceReportPage = () => {
                                             <tr>
                                                 {tableHeader.map((thHeader, index) => {
                                                     return (
-                                                        <th key={`table_header_id_${index}`} className={`${zawgyi(lang)}`}> {thHeader} </th>
+                                                        <th key={`table_header_id_${index}`} className={`${zawgyi(lang)}`}> <small> {thHeader} </small> </th>
                                                     )
                                                 })}
                                             </tr>
@@ -156,15 +154,14 @@ export const InvoiceReportPage = () => {
 
                                         <tbody>
                                             {invoice.bought_items.length > 0 && invoice.bought_items.map((value, index) => {
-
                                                 return(
                                                     <tr key={`item_id_${index}`}>
-                                                        <td className={`${zawgyi(lang)}`}> {value.code} </td>
-                                                        <td className={`${zawgyi(lang)}`}> {value.name} </td>
-                                                        <td className={`${zawgyi(lang)}`}> {value.model} </td>
-                                                        <td className={`${zawgyi(lang)}`}> {value.requestQty} </td>
-                                                        <td className={`${zawgyi(lang)}`}> {numeral(value.sell_price).format('0,0')} MMK </td>
-                                                        <td className={`${zawgyi(lang)}`}> {numeral(value.totalAmount).format('0,0')} MMK </td>
+                                                        <td className={`${zawgyi(lang)}`}> <small> {value.code} </small> </td>
+                                                        <td className={`${zawgyi(lang)}`}> <small> {value.name} </small> </td>
+                                                        <td className={`${zawgyi(lang)}`}> <small> {value.model} </small> </td>
+                                                        <td className={`${zawgyi(lang)}`}> <small> {value.requestQty} </small> </td>
+                                                        <td className={`${zawgyi(lang)}`}> <small> {numeral(value.sell_price).format('0,0')} MMK </small> </td>
+                                                        <td className={`${zawgyi(lang)}`}> <small> {numeral(value.totalAmount).format('0,0')} MMK </small> </td>
                                                     </tr>
                                                 )
                                             })}
@@ -182,24 +179,24 @@ export const InvoiceReportPage = () => {
                                         <table>
                                             <thead>
                                                 <tr>
-                                                    <td className="w-200"> <h5 className={`${zawgyi(lang)}`}> {t('invoice-total')} </h5> </td>
-                                                    <td className="w-200"> <h5> {numeral(invoice.totalAmount).format('0,0')} MMK </h5> </td>
+                                                    <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-total')} </h6> </td>
+                                                    <td className="w-200"> <h6> {numeral(invoice.totalAmount).format('0,0')} MMK </h6> </td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="w-200"> <h5 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h5> </td>
-                                                    <td className="w-200"> <h5> {numeral(invoice.discount).format('0,0')} MMK </h5> </td>
+                                                    <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h6> </td>
+                                                    <td className="w-200"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="w-200"> <h5 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h5> </td>
-                                                    <td className="w-200"> <h5> {numeral(invoice.payAmount).format('0,0')} MMK </h5> </td>
+                                                    <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h6> </td>
+                                                    <td className="w-200"> <h6> {numeral(invoice.payAmount).format('0,0')} MMK </h6> </td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="w-200"> <h5 className={`${zawgyi(lang)}`}> {t('invoice-credit-amount')} </h5> </td>
-                                                    <td className="w-200"> <h5> {numeral(invoice.creditAmount).format('0,0')} MMK </h5> </td>
+                                                    <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-credit-amount')} </h6> </td>
+                                                    <td className="w-200"> <h6> {numeral(invoice.creditAmount).format('0,0')} MMK </h6> </td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="w-200"> <h5 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h5> </td>
-                                                    <td className="w-200"> <h5> {numeral(invoice.netAmount).format('0,0')} MMK </h5> </td>
+                                                    <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h6> </td>
+                                                    <td className="w-200"> <h6> {numeral(invoice.netAmount).format('0,0')} MMK </h6> </td>
                                                 </tr>
 
                                                 <tr>
