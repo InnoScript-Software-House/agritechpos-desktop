@@ -1,8 +1,10 @@
 import React from 'react'
-import { Card } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap'
 import { FaArrowCircleRight } from "react-icons/fa";
 
-export const CountCard = () => {
+export const CountCard = ({ props}) => {
+
+    const { history } = props
     return (
         <>
             <div className='container-fluid mt-3 me-auto'>
@@ -19,9 +21,11 @@ export const CountCard = () => {
                             </Card.Body>
                             <Card.Footer className='countcardfooter'>
                                 <div className='d-md-flex flex-md-row justify-content-center align-items-center'>
-                                    <span className='me-1 text-white'>More Info</span>
-                                    <FaArrowCircleRight size={20}
-                                    color={'white'} />
+                                    <Button onClick={() => history.push('/customer')} className='countcardbtn'>
+                                        <span className='me-1 text-white'>View Customer Detail</span>
+                                        <FaArrowCircleRight size={20}
+                                            color={'white'} />
+                                    </Button>
                                 </div>
                             </Card.Footer>
                         </Card>

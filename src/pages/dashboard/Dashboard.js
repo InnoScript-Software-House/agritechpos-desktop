@@ -12,7 +12,7 @@ class DashboardPage extends Component {
         super(props);
         this.state = {
             notification: {
-                shop: false
+                shop: false,
             }
         }
     }
@@ -28,6 +28,7 @@ class DashboardPage extends Component {
 
         this.setState({
             notification: updateNotification
+
         });
     }
 
@@ -41,7 +42,12 @@ class DashboardPage extends Component {
         return (
             <>
                 <Navigation props={this.props} />
-                <CountCard />
+
+                <CountCard 
+                props={this.props}
+                
+                />
+
                 <DashboardNotiCompoment 
                     props={this.props} 
                     notification={notification} 

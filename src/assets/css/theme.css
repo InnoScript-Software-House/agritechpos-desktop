@@ -769,3 +769,8 @@ margin-bottom: 10px;
 .countcardfooter{
   background-color: #148A9D!important;
 }
+
+.countcardbtn{
+  background-color: #148A9D!important;
+  border: none!important;
+}
