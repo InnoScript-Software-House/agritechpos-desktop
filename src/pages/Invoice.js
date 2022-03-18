@@ -45,7 +45,6 @@ class InvoicePage extends Component {
             if(data === true) {
                 this.setState({
                     is_print: false,
-                    invoiceDatas: null
                 })
             }
         });
@@ -75,7 +74,8 @@ class InvoicePage extends Component {
         this.setState({
             start_date: '',
             end_date: '',
-            searchText: ''
+            searchText: '',
+            invoiceDatas: null
         });
         this.loadingData();
     }

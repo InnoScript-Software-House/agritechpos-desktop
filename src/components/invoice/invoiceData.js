@@ -13,10 +13,9 @@ export const InvoiceDataComponent = ({props, invoiceDetail }) => {
     const [discount, setDiscount] = useState(0);
     const [netAmount, setNetAmount] = useState(0);
     const [display, setDisplay] = useState('');
-    console.log(invoiceDetail);
 
     const importData = () => {
-            const iData = invoiceDetail && JSON.parse(invoiceDetail[0].invoice_data);
+            const iData = invoiceDetail && JSON.parse(invoiceDetail[0].invoice_data) ;
             if(iData){
             const total = iData.map(e => e.total);
             setTotalAmount(total.reduce((a, b) => a + b, 0));
