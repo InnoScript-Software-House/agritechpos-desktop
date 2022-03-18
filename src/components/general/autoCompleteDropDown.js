@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, FormControl, InputGroup } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { zawgyi } from "../../utilities/translation.utility";
 
 const CustomMenu = React.forwardRef(({options, dataSource, chooseItem}, ref) => {
 
     const [text, setText] = useState('');
     const [items, setItems] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
+
+    const lang = useSelector(state => state.lang);
 
     const searchResult = (text) => {
         setText(text);
@@ -34,6 +38,7 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseItem}, ref) => 
     return(
         <>
             <FormControl 
+                className={`${zawgyi(lang)}`}
                 type={options.type}
                 placeholder={options.placeholder}
                 value={text}

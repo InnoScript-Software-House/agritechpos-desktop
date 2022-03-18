@@ -32,7 +32,7 @@ export const Language = ({props}) => {
     });
 
     return(
-        <div className='lang-wrapper m-3'>
+        <div className='lang-wrapper'>
             <h3 className={`lang-title ${zawgyi(lng)}`}> {t('change-language')} </h3>
 
             <InputGroup className='lang-input-group'>

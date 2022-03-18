@@ -1,5 +1,5 @@
 import React from "react";
-
+import moment from 'moment';
 
 export const invoiceColumns = (props) => {
 
@@ -7,11 +7,17 @@ export const invoiceColumns = (props) => {
         {
             name: <span> # </span>,
             selector: (row, index) => index +1,
-            sortable: true
+            sortable: true,
+            width: '50px'
         },
         {
             name: <span> Invoid ID </span>,
             selector: row => row.invoice_id,
+            sortable: true
+        },
+        {
+            name: <span> Date </span>,
+            selector: row => moment(row.created_at).format('DD,MM,YYYY'),
             sortable: true
         },
         {
@@ -27,26 +33,6 @@ export const invoiceColumns = (props) => {
         {
             name: <span> Customer email </span>,
             selector: row => row.customer_email,
-            sortable: true
-        },
-        {
-            name: <span> Customer Address </span>,
-            selector: row => row.customer_address,
-            sortable: true
-        },
-        {
-            name: <span> Item Eng Name </span>,
-            selector: row => row.customer_address,
-            sortable: true
-        },
-        {
-            name: <span> Customer Address </span>,
-            selector: row => row.customer_address,
-            sortable: true
-        },
-        {
-            name: <span> Customer Address </span>,
-            selector: row => row.customer_address,
             sortable: true
         },
         {

@@ -96,4 +96,3 @@ ipcMain.on('print-invoice', () => {
         curentWindow.webContents.send('reload', true);
     })
 });
-

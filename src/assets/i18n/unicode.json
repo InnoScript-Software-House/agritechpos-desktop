@@ -1,4 +1,8 @@
 {
+    "invoice" : "ဘောင်ချာ",
+    "input-customer-name-search" : "စျေးဝယ်သူအမည်ဖြင့်ရှာရန်",
+    "input-customer-name" : "စျေးဝယ်သူအမည်ထည့်ရန်",
+
     "nav-sale": "အရောင်း",
     "nav-dashboard": "အချက်အလက်များ",
     "nav-setting": "ထိန်းချုပ်ခြင်းများ",
@@ -274,7 +278,6 @@
     "account-edit-title" : "အကောင့်ပြုပြင်ရန်",
     "btn-account-create": "အတည်ပြုပါ",
     "account-create-empty-error": "အကောင့်သစ်ဖွင့်ရန်လိုအပ်ချက်များကို အပြည့်အစုံဖြည့်စွက်ပေးပါ",
-    "invalid-email-error": "Email မှားယွင်းနေပါသည်",
     "invalid-phone-number": "ဖုန်းနံပါတ်မှားယွင်းနေပါတယ်",
     "account-does-not-match-error": "စကား၀ှက်မတူပါ",
     "account-create-successful": "အောင်မြင်စွာပြီးဆုံးသွားပါပြီ",
