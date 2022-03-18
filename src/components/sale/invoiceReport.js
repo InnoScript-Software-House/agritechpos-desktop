@@ -8,6 +8,7 @@ import numeral from "numeral";
 import { createInvoice, getInvoice } from "../../services/invoice.service";
 import { useHistory } from "react-router-dom";
 import { BsArrowLeftCircle } from 'react-icons/bs';
+import { getCustomerList } from "../../services/customer.service";
  
 export const InvoiceReportPage = () => {
 
@@ -18,19 +19,21 @@ export const InvoiceReportPage = () => {
     const [invoice, setInvoice] = useState(null);
     const [invoiceId, setInvoiceId] = useState('');
     const [display, setDisplay] = useState('');
+    const [customerId, setCustomerId] = useState(0);
 
     const saveInvoice = async () => {
         if(invoice) {
             const requestBody = {
-                customer_name: invoice.customer_name !== '' ? invoice.customer_name : null,
-                customer_phone: invoice.customer_phone !== '' ? invoice.customer_phone : null,
-                customer_address: invoice.customer_address !== '' ? invoice.customer_address : null,
-                customer_email : null,
-                total_amount: invoice.total,
+                invoice_no: invoiceId,
+                // customer_name: invoice.customer.name !== '' ? invoice.customer.name : null,
+                // customer_phone: invoice.customer.phone !== '' ? invoice.customer.phone : null,
+                // customer_address: invoice.customer.address !== '' ? invoice.customer.address : null,
+                // customer_email : null,
+                total_amount: invoice.totalAmount,
+                pay_amount: invoice.payAmount,
                 discount: invoice.discount,
                 invoice_data: invoice.bought_items,
                 cash_back: 0,
-                invoice_id: invoiceId
             }
 
             const response = await createInvoice(requestBody);
@@ -46,6 +49,7 @@ export const InvoiceReportPage = () => {
     }
 
     const print = () => {
+        console.log(invoiceId,invoice.payAmount,customerId,invoice.discount, invoice.bought_items,customerId)
         const { print } = window.nativeApi;
 
         setDisplay('display');
@@ -53,6 +57,7 @@ export const InvoiceReportPage = () => {
         print.reload((data) => {
             if(data === true) {
                 saveInvoice();
+                history.push('/sale');
             }
         });
     }
@@ -74,7 +79,7 @@ export const InvoiceReportPage = () => {
 
         if(invoiceResponse && invoiceResponse.success === false) {
             dispatch(setOpenToastAction('Invoice', invoiceResponse.success, 'danger'));
-            return;
+            return console.log(invoiceResponse);
         }
 
         const lastInvoice = invoiceResponse.length > 0  ? invoiceResponse[invoiceResponse.length - 1] : 0;
@@ -93,6 +98,15 @@ export const InvoiceReportPage = () => {
         invoice_id += ivId;
 
         setInvoiceId(invoice_id);
+
+        const getcustomer = await getCustomerList();
+        if(getcustomer && getcustomer.success === false) {
+            dispatch(setOpenToastAction('Invoice', getcustomer.message, 'danger'));
+            return;
+        }
+        let custId = getcustomer.length + 1;
+        console.log(getcustomer)
+        setCustomerId(custId);
         saveInvoice();
 
     },[]);
@@ -129,9 +143,9 @@ export const InvoiceReportPage = () => {
 
                                 <div className="customer-info">
                                     <div className="pe-3">
-                                        <h4> Customer Name : {invoice.customer_name} </h4>
-                                        <h4> Phone Number : {invoice.customer_phone} </h4>
-                                        <h4> Address : {invoice.customer_address} </h4>
+                                        <h4> Customer Name : {invoice.customer && invoice.customer.name} </h4>
+                                        <h4> Phone Number : {invoice.customer && invoice.customer.phone} </h4>
+                                        <h4> Address : {invoice.customer && invoice.customer.address} </h4>
                                     </div>
                                 </div>
                             </div>
@@ -156,9 +170,9 @@ export const InvoiceReportPage = () => {
                                                 <td> {value.code} </td>
                                                 <td> {value.name} </td>
                                                 <td> {value.model} </td>
-                                                <td> {value.qty} </td>
+                                                <td> {value.requestQty} </td>
                                                 <td> {numeral(( ((Number(value.price) * Number(value.percentage)) / 100) + Number(value.price))).format('0,0')} MMK </td>
-                                                <td> {numeral(((((Number(value.price) * Number(value.percentage)) / 100) + Number(value.price)) * Number(value.qty))).format('0,0')} MMK </td>
+                                                <td> {numeral(((((Number(value.price) * Number(value.percentage)) / 100) + Number(value.price)) * Number(value.requestQty))).format('0,0')} MMK </td>
                                             </tr>
                                         )
                                     })}
@@ -169,15 +183,25 @@ export const InvoiceReportPage = () => {
                                 {/* <div className="">
                                     <img className="paid-img align-self-end" src="build/assets/images/paid.png" />
                                 </div> */}
+                                <div className="d-md-flex flex-md-center justify-content-end">
+                                </div>
                                 <table>
                                     <thead>
                                         <tr>
                                             <td className="w-200"> <h4> TOTAL </h4> </td>
-                                            <td className="w-200"> <h4> {numeral(invoice.total).format('0,0')} MMK </h4></td>
+                                            <td className="w-200"> <h4> {numeral(invoice.totalAmount).format('0,0')} MMK </h4></td>
                                         </tr>
                                         <tr>
                                             <td className="w-200"> <h4> DISCOUNT </h4> </td>
                                             <td className="w-200"> <h4> {numeral(invoice.discount).format('0,0')} MMK </h4></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="w-200"> <h4> Pay AMOUNT </h4> </td>
+                                            <td className="w-200"> <h4> {numeral(invoice.payAmount).format('0,0')} MMK </h4></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="w-200"> <h4> CREDIT AMOUNT </h4> </td>
+                                            <td className="w-200"> <h4> {numeral(invoice.creditAmount).format('0,0')} MMK </h4></td>
                                         </tr>
                                         <tr>
                                             <td className="w-200"> <h4> NET AMOUNT </h4> </td>

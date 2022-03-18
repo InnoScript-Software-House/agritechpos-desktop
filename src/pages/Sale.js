@@ -202,7 +202,7 @@ class SalePage extends Component {
                                         <CustomerComponent className="mt-3" input={customer} retrive={(e) => this.setState({ customer: e })} />
                                     </div>  
 
-                                    <SaleVoucherComponent dataSource={requestItems} total={totalAmount} retrive={(e) => {this.updateItem(e)}} />
+                                    <SaleVoucherComponent dataSource={requestItems} total={totalAmount} retrive={(e) => {this.updateItem(e)}} getcustomer={this.state.customer} />
               
                                 </Card.Body>
 
