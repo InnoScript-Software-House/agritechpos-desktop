@@ -97,9 +97,9 @@ export const InvoiceDataComponent = ({props, invoiceDetail }) => {
                                             <td> {value.code} </td>
                                             <td> {value.name} </td>
                                             <td> {value.model} </td>
-                                            <td> {value.qty} </td>
-                                            <td> {numeral(( ((Number(value.price) * Number(value.percentage)) / 100) + Number(value.price))).format('0,0')} MMK </td>
-                                            <td> {numeral(((((Number(value.price) * Number(value.percentage)) / 100) + Number(value.price)) * Number(value.qty))).format('0,0')} MMK </td>
+                                            <td> {value.requestQty} </td>
+                                            <td> {value.price} MMK </td>
+                                            <td> {value.totalAmount} MMK </td>
                                         </tr>
                                         )
                                     })
@@ -115,15 +115,23 @@ export const InvoiceDataComponent = ({props, invoiceDetail }) => {
                                     <thead>
                                         <tr>
                                             <td className="w-200"> <h4> TOTAL </h4> </td>
-                                            <td className="w-200"> <h4> {numeral(totalAmount).format('0,0')} MMK </h4></td>
+                                            <td className="w-200"> <h4> {numeral(invoice.total_amount).format('0,0')} MMK </h4></td>
                                         </tr>
                                         <tr>
                                             <td className="w-200"> <h4> DISCOUNT </h4> </td>
-                                            <td className="w-200"> <h4> {numeral(discount).format('0,0')} MMK </h4></td>
+                                            <td className="w-200"> <h4> {numeral(invoice.discount).format('0,0')} MMK </h4></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="w-200"> <h4> Pay AMOUNT </h4> </td>
+                                            <td className="w-200"> <h4> {numeral(invoice.pay_amount).format('0,0')} MMK </h4></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="w-200"> <h4> CREDIT AMOUNT </h4> </td>
+                                            <td className="w-200"> <h4> {numeral(invoice.credit.amount).format('0,0')} MMK </h4></td>
                                         </tr>
                                         <tr>
                                             <td className="w-200"> <h4> NET AMOUNT </h4> </td>
-                                            <td className="w-200"> <h4> {numeral(netAmount).format('0,0')} MMK </h4></td>
+                                            <td className="w-200"> <h4> {numeral(invoice.total_amount - invoice.discount).format('0,0')} MMK </h4></td>
                                         </tr>
 
                                         <tr>

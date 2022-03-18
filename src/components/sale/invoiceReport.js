@@ -28,10 +28,17 @@ export const InvoiceReportPage = () => {
         if(invoice) {
             const requestBody = {
                 invoice_no: invoiceId,
+<<<<<<< HEAD
                 customer_name: invoice.customer ? invoice.customer.name : null,
                 customer_phone: invoice.customer ? invoice.customer.phone : null,
                 customer_address: invoice.customer ? invoice.customer.address : null,
                 customer_email : invoice.customer ? invoice.customer.email : null,
+=======
+                customer_name: invoice.customer.name !== '' ? invoice.customer.name : null,
+                customer_phone: invoice.customer.phone !== '' ? invoice.customer.phone : null,
+                customer_address: invoice.customer.address !== '' ? invoice.customer.address : null,
+                customer_email : invoice.customer.email !== '' ? invoice.customer.email: null,
+>>>>>>> 173506ef8ea2e42dc34171d17fdb431982307a02
                 total_amount: invoice.totalAmount,
                 pay_amount: invoice.payAmount,
                 discount: invoice.discount,
@@ -81,19 +88,28 @@ export const InvoiceReportPage = () => {
             dispatch(setOpenToastAction('Invoice', invoiceResponse.success, 'danger'));
             return;
         }
+        console.log(invoiceResponse);
 
         const lastInvoice = invoiceResponse ? invoiceResponse.invoice_no : 0;
         let ivId = Number(lastInvoice) + 1;
 
+<<<<<<< HEAD
         let invoice_id = '';
+=======
+        if(lastInvoice.invoice_no) {
+            ivId = Number(lastInvoice.invoice_no) + 1;
+        } 
+        
+        let invoice_no = '';
+>>>>>>> 173506ef8ea2e42dc34171d17fdb431982307a02
 
         for(let x=ivId.toString().length; x<6; x++) {
-            invoice_id += '0';
+            invoice_no += '0';
         }
 
-        invoice_id += ivId;
+        invoice_no += ivId;
 
-        setInvoiceId(invoice_id);
+        setInvoiceId(invoice_no);
 
         const iData = JSON.parse(localStorage.getItem('INVOICE'));
         setInvoice(iData);
@@ -150,6 +166,7 @@ export const InvoiceReportPage = () => {
                                                     )
                                                 })}
                                             </tr>
+<<<<<<< HEAD
                                         </thead>
 
                                         <tbody>
@@ -208,6 +225,19 @@ export const InvoiceReportPage = () => {
                                             </thead>
                                         </table>
                                     </div>
+=======
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+
+                            <div className="d-md-flex flex-md-row justify-content-between align-items-center mt-3 pt-3">
+                                {invoice.isPaid ? (
+                                <div className="">
+                                    <img className="paid-img align-self-end" src="build/assets/images/paid.png" />
+                                </div>) : (<></>)}
+                                <div className="d-md-flex flex-md-center justify-content-end">
+>>>>>>> 173506ef8ea2e42dc34171d17fdb431982307a02
                                 </div>
                             </>
                         )}

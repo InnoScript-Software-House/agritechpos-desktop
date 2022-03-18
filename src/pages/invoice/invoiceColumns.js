@@ -12,7 +12,7 @@ export const invoiceColumns = (props) => {
         },
         {
             name: <span> Invoid ID </span>,
-            selector: row => row.invoice_id,
+            selector: row => row.invoice_no,
             sortable: true
         },
         {
