@@ -29,7 +29,7 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
 
     const calculateDiscount = () => {
         const updateNetAmount = Number(totalAmount) - Number(discount);
-        setNetAmount(updateNetAmount); 
+        setNetAmount(updateNetAmount);
         setPayAmount(updateNetAmount);
     }
 
