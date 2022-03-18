@@ -58,18 +58,18 @@ class EditItemPage extends Component {
 
                     {!is_loading && (
                         <div className='row mt-1'>
-                            <div className='col-md-3'>
+                            <div className='col-md-4'>
                                 <EditItemComponent props={this.props} item={item} reload={() => this.loadingData()} />
                             </div>
 
-                            <div className='col-md-4'> 
+                            <div className='col-md-8'> 
                                 <EditItemSellPriceComponent props={this.props} item={item} reload={() => this.loadingData()} />
                             </div>
 
-                            <div className='col-md-5'>
+                            {/* <div className='col-md-5'>
                                 <ItemQRComponent item={item} />
                                 <ItemBarCodeComponent item={item} />
-                            </div>
+                            </div> */}
                     </div>
                     )}
                 </div>

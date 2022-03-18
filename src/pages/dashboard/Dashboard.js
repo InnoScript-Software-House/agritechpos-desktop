@@ -1,57 +1,65 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { DashboardNotiCompoment } from '../../components/dashboard/notification';
 import { CountCard } from '../../components/general/CountCard';
 import { Navigation } from '../../components/general/Navigation';
-import { getShop } from '../../services/shop.service';
+import { setOpenToastAction } from '../../redux/actions/toast.action';
+import { getInvoice } from '../../services/invoice.service';
 
 class DashboardPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            notification: {
-                shop: false,
+            count: {
+                customer: 0
             }
         }
     }
 
-    async checkApp() {
-        const { notification } = this.state;
-        console.log(this.props);
-        
-        const shop = await getShop();
+    async loadingData() {
+        const { count } = this.state;
+        const { openToast } = this.props;
 
-        let updateNotification = notification;
-        updateNotification.shop = shop === null ? true : false
+        const customerResponse = await getInvoice();
+
+        if(customerResponse && customerResponse.success === false) {
+            openToast('Customer', customerResponse.message, 'danger');
+            return;
+        }
+
+        const updateCount = count;
+        updateCount.customer = customerResponse.length;
 
         this.setState({
-            notification: updateNotification
-
+            count : updateCount
         });
     }
 
     async componentDidMount() {
-        this.checkApp();
-        
+        this.loadingData();
     }
 
     render() {
-        const { notification } = this.state;
+        const { count } = this.state;
         return (
             <>
                 <Navigation props={this.props} />
 
-                <CountCard 
-                props={this.props}
-                
-                />
-
-                <DashboardNotiCompoment 
-                    props={this.props} 
-                    notification={notification} 
-                />
+                <div className='container-fluid'>
+                    <div className='row mt-3'>
+                        <div className='col-md-3'>
+                        <CountCard 
+                            props={this.props}
+                            label="Total Customer"
+                            color="rgba(255,69,70,1)"
+                            count={count.customer}
+                            url={'/customer'}
+                            urlLabel={'View More Customer List'}
+                        />
+                        </div>
+                    </div>
+                </div>
             </>
         )
     }
@@ -63,6 +71,7 @@ const mapStateToProps = (state) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
+    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme)),
 });
   
 export default connect(

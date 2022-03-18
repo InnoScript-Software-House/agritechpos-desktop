@@ -4,16 +4,15 @@ import { BsArrowCounterclockwise } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { updateItem } from "../../services/item.service";
-import { LoadingComponent } from "../general/Loading";
 
 export const EditItemComponent = ({ props, item, reload }) => {
 
     const { id } = props.match.params;
+
     const dispatch = useDispatch();
 
     const [editItem, setEditItem] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [loadingData, setLoadingData] = useState(true);
     const [code, setCode] = useState('');
     const [eng_name, setEnName] = useState('');
     const [mm_name, setMMName] = useState('');
@@ -53,7 +52,6 @@ export const EditItemComponent = ({ props, item, reload }) => {
         });
 
         if(Object.keys(requestBody).length > 0) {
-            setLoadingData(true);
             setLoading(true);
 
             const response = await updateItem(id, requestBody);
@@ -61,12 +59,10 @@ export const EditItemComponent = ({ props, item, reload }) => {
             if(response && response.success === false) {
                 dispatch(setOpenToastAction('Item Update', response.message, 'danger'));
                 setLoading(false);
-                setLoadingData(false);
                 return;
             }
 
             dispatch(setOpenToastAction('Item Update', 'Item is updated', 'success'));
-            setLoadingData(false);
             setLoading(false);
             reload();
         }
@@ -75,10 +71,8 @@ export const EditItemComponent = ({ props, item, reload }) => {
     }
 
     useState(() => {
-        setLoadingData(true);
         if(item) {
             setData();
-            setLoadingData(false);
         }
     }, [item]);
 
@@ -91,14 +85,14 @@ export const EditItemComponent = ({ props, item, reload }) => {
                 </Card.Title>
             </Card.Header>
 
-            { editItem && !loadingData && (
+            { editItem && (
                 <Card.Body>
                     <FormLabel> Material Code </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
                             placeholder="Material Code"
-                            value={code}
+                            value={code || ''}
                             onChange={e => setCode(e.target.value)}
                         />
                     </InputGroup>
@@ -108,7 +102,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             placeholder="English Name"
-                            value={eng_name}
+                            value={eng_name || ''}
                             onChange={e => setEnName(e.target.value)}
                         />
                     </InputGroup>
@@ -118,7 +112,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             placeholder="Myanmar Name"
-                            value={mm_name}
+                            value={mm_name || ''}
                             onChange={e => setMMName(e.target.value)}
                         />
                     </InputGroup>
@@ -128,7 +122,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             placeholder="Model"
-                            value={model}
+                            value={model || ''}
                             onChange={e => setModel(e.target.value)}
                         />
                     </InputGroup>
@@ -138,7 +132,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="number"
                             placeholder="Qty"
-                            value={qty}
+                            value={qty || 0}
                             onChange={e => setQty(e.target.value)}
                         />
                     </InputGroup>
@@ -148,7 +142,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             placeholder="Price"
-                            value={price}
+                            value={price || ''}
                             onChange={e => setPrice(e.target.value)}
                         />
                     </InputGroup>
@@ -158,29 +152,17 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         <FormControl 
                             type="text"
                             placeholder="Location"
-                            value={itemLocation}
+                            value={itemLocation || ''}
                             onChange={e => setItemLocation(e.target.value)}
                         />
                     </InputGroup>
                 </Card.Body>
             )}
 
-            {editItem && !loadingData && (
+            {editItem && (
                 <Card.Footer>
-                    <Button 
-                        className="btn-small w-full"
-                            disabled={loading}
-                            onClick={() => update()}
-                        >
-                           Update
-                    </Button>
+                    <Button className="btn-small w-full" disabled={loading} onClick={() => update()}> Update </Button>
                 </Card.Footer>
-            )}
-
-            { loadingData && (
-                <Card.Body>
-                    <LoadingComponent />
-                </Card.Body>
             )}
         </Card>
     );
