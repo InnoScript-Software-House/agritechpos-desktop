@@ -19,12 +19,13 @@ import EditItemPage from './pages/item/EditItem';
 import CategoryListPage from './pages/category/CategoryList';
 import EditCategoryPage from './pages/category/EditCategory';
 import SalePage from './pages/Sale';
-import { InvoiceReportPage } from './components/sale/invoiceReport';
+import {InvoiceReportPage} from './components/sale/invoiceReport';
 import InvociePage from './pages/Invoice';
 import CustomerPage from './pages/customer/Customer';
 import EditCustomerPage from './components/customer/EditCustomer';
 
 import './assets/css/theme.css';
+import Invoice from './pages/Invoice';
 
 class App extends Component {
 

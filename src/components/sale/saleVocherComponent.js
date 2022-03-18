@@ -2,10 +2,11 @@ import numeral from "numeral";
 import React, { useEffect, useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { BsTrash } from "react-icons/bs";
+import { useHistory } from "react-router-dom";
 
 const tableHeader = ['Material Code', 'Name', 'Model', 'Qty', 'Price', 'Total'];
 
-export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
+export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }) => {
 
     const [items, setItems] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
@@ -17,6 +18,8 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
         sell: 0,
         buy: 0
     });
+    const history = useHistory();
+    const [customer, setCustomer] = useState(null);
 
     const removeItem = (selectedItem) => {
         const removeItems = items.filter(item => item.code !== selectedItem.code);
@@ -35,7 +38,26 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
     }
 
     const makePayment = () => {
-
+    //     const { history } = this.props;
+    //     if(this.state.cartItems.length > 0){
+    //         this.setState({
+    //             payBtn: true
+    //         });
+            let iData = {
+                totalAmount: totalAmount,
+                discount: discount,
+                netAmount: netAmount,
+                creditAmount: creditAmount,
+                payAmount: payAmount,
+                customer: customer,
+                bought_items: items.map(e => e)
+            };
+            localStorage.setItem('INVOICE', JSON.stringify(iData));
+            history.push('/invoiceReport');
+    //     this.setState({
+    //         payBtn: false
+    //     });
+    //     return;
     }
 
     useEffect(() => {
@@ -49,7 +71,10 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
             setNetAmount(total.sell);
             setPayAmount(total.sell);
         }
-    }, [dataSource, total])
+        if(getcustomer) {
+            setCustomer(getcustomer);
+        }
+    }, [dataSource, total, getcustomer])
 
     return (
         <>
