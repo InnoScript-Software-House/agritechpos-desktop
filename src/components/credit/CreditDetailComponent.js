@@ -9,7 +9,7 @@ export const CreditDetailComponent = ({prpos, creditDetail}) => {
 
     const setRepayment = (id) => {
         localStorage.setItem('CREDIT', JSON.stringify(detail));
-        history.push(`/repayment/:${id}`);
+        history.push(`/repayment/${id}`);
     }
 
     useEffect(() => {

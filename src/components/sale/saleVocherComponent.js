@@ -54,7 +54,6 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
                 creditAmount: creditAmount,
                 payAmount: payAmount,
                 customer: customer,
-                isPaid: ispaid,
                 bought_items: items.map(e => e)
             };
             localStorage.setItem('INVOICE', JSON.stringify(iData));

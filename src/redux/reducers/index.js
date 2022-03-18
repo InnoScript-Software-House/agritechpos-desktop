@@ -24,5 +24,5 @@ export default combineReducers({
     cartReducer: saleReducer,
     config: configReducer,
     sellPrice: sellPriceReducer,
-    invoice: invoiceReducer
+    invoice: invoiceReducer,
 });
