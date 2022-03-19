@@ -3,8 +3,10 @@ import { Card } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import { CreditTableColumns } from './CreditTableColumn';
 
-export const CreditTableComponent = ({props, detail}) => {
-    const [data, setData] = useState([]);
+export const CreditTableComponent = ({props, detail, data}) => {
+
+    console.log(data);
+    const [tableData, setTableData] = useState([]);
     const [creditDetail, setCreditDetail] = useState(null);
 
     const dummyData = [
@@ -34,9 +36,9 @@ export const CreditTableComponent = ({props, detail}) => {
 
     useEffect(() => {
         if(data){
-            setData(dummyData);
+            setTableData(data);
         }
-    },[])
+    },[data])
 
   return (
         <Card>
@@ -55,7 +57,7 @@ export const CreditTableComponent = ({props, detail}) => {
                 selectableRowsSingle={true}
                 onSelectedRowsChange={e => selectRowHandler(e.selectedRows)}
                 columns={CreditTableColumns(props)}
-                data={data} />
+                data={tableData} />
             </Card.Body>
         </Card>
   )

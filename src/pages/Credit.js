@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import { CreditDetailComponent } from "../components/credit/CreditDetailComponent";
 import { CreditTableComponent } from "../components/credit/CreditTableComponent";
 import { Navigation } from "../components/general/Navigation";
+import { setOpenToastAction } from "../redux/actions/toast.action";
+import { getCreditList } from "../services/credit.service";
 
 const columns = ['#', 'Credit ID', 'Invoice ID', 'Customer Name', 'Credit Amount', 'Repayment', 'Amount Left'];
 
@@ -22,6 +24,21 @@ class CreditPage extends Component {
         });
     }
 
+    async loadingData() {
+        const response = await getCreditList();
+        if(response && response.success === false){
+            return this.props.openToast('Credit', response.message, 'danger');
+        }
+        this.setState({
+            data: response
+        });
+        return response;
+    }
+
+    async componentDidMount(){
+        await this.loadingData();
+    }
+
     render(){
         const {data, creditDetail} = this.state;
         return (
@@ -30,7 +47,7 @@ class CreditPage extends Component {
             <div className="container-fluid mt-3">
                 <div className="d-md-flex flex-md-row justify-content-between">
                     <div className="col-md-7">
-                        <CreditTableComponent props={this.props} detail={e => this.getCreditDetail(e)} />
+                        <CreditTableComponent props={this.props} detail={e => this.getCreditDetail(e)} data={data} />
                     </div>
                     <div className="col-md-5">
                         <CreditDetailComponent props={this.props} creditDetail={creditDetail}/>
@@ -46,7 +63,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-
+    openToast: (title,message,theme) => dispatch(setOpenToastAction(title,message,theme))
 });
 
 export default connect(

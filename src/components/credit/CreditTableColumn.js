@@ -26,7 +26,7 @@ export const CreditTableColumns = (props) => {
         },
         {
             name: <span>Credit Amount</span>,
-            selector: row => row.credit_amount,
+            selector: row => row.amount,
             sortable: true
         },
         {
