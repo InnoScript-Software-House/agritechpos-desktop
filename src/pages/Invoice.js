@@ -9,12 +9,11 @@ import DataTable from "react-data-table-component";
 import { invoiceColumns } from './invoice/invoiceColumns';
 import { TableLoadingComponent } from '../components/table/tableLoading';
 import { InvoiceDataComponent } from '../components/invoice/invoiceData';
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 import moment from 'moment';
 import { paginationComponentOptions } from '../components/table/paginationOptions';
 import { InvoiceTableHeader } from '../components/table/invoiceTableHeader';
+import { autocomplete } from '../utilities/table.utility';
 
 class InvoicePage extends Component {
     constructor(props) {
@@ -24,10 +23,11 @@ class InvoicePage extends Component {
             end_date: '',
             invoices: [],
             tableloading: true,
-            invoiceDatas: null,
+            invoiceData: null,
             searchText: '',
             display: '',
-            is_print: false
+            is_print: false,
+            preview: false
         }
     }
 
@@ -55,19 +55,23 @@ class InvoicePage extends Component {
         if(response && response.success === false){
            return this.props.openToast('Invoice', response.message, 'danger');
         }
-        console.log(response);
         this.setState({
             invoices: response,
             tableloading: false
         });
     }
 
+    // autoSearch(text) {
+    //     const result = autocomplete(dataSource, text, filterType);
+    //     setText(text);
+    //     filterResult(result);
+    // }
+
     dateStartRangeHandler(startdate){
-        const invoicestart = this.state.invoices.filter(e => moment(e.created_at).format('YYYY,MM,DD') >= moment(startdate).format('YYYY,MM,DD'));
+        const invoicestart = this.state.invoices.filter(e => moment(e.created_at).format('YYYY-MM-DD') >= moment(startdate).format('YYYY-MM-DD'));
             this.setState({
                 invoices: invoicestart
             });
-            console.log(moment(startdate).format('YYYY,MM,DD'))
     }
 
     clear(){
@@ -81,15 +85,10 @@ class InvoicePage extends Component {
     }
 
     dateEndRangeHandler(enddate){
-        const invoiceEnd = this.state.invoices.filter(e => moment(e.created_at).format('YYYY,MM,DD') <= moment(enddate).format('YYYY,MM,DD'));
+        const invoiceEnd = this.state.invoices.filter(e => moment(e.created_at).format('YYYY-MM-DD') <= moment(enddate).format('YYYY-MM-DD'));
             this.setState({
                 invoices: invoiceEnd
             });
-            console.log(moment(enddate).format('YYYY,MM,DD'))
-    }
-
-    handleSelect(ranges){
-        console.log(ranges);
     }
 
     onTextChange(e){
@@ -107,7 +106,8 @@ class InvoicePage extends Component {
 
     invoiceDataHandler(event){
         this.setState({
-            invoiceDatas: event
+            invoiceData: event,
+            preview: true
         });
     }
 
@@ -116,25 +116,29 @@ class InvoicePage extends Component {
     }
 
     render() {
-        // const selectionRange = {
-        //     startDate: new Date(),
-        //     endDate: new Date(),
-        //     key: 'selection',
-        //   }
-        const { start_date, end_date, invoices, tableloading, invoiceDatas, searchText, is_print } = this.state; 
+        const { start_date, end_date, invoices, tableloading, preview, searchText, is_print, invoiceData } = this.state; 
         return (
             <>
-                {!is_print?(
-                    <Navigation props={this.props} />): (<></>)
-                    }
+                {!is_print?(<Navigation props={this.props} />): (<></>)}
 
                 <div className='container-fluid'>
+                    { preview && (
+                        <div className='row'>
+                            <div className='col-md-12'>
+                                <InvoiceDataComponent invoiceDetail={invoiceData} />
+                                <div className='d-flex flex-row justify-content-end'>
+                                    {!is_print? (<Button className='mt-2' onClick={() => this.print()}> Print </Button>) : (<></>)}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <div className='row mt-3'>
-                        {!is_print?( 
-                        <div className='col-md-5'>
+                        {!is_print ? ( 
+                        <div className='col-md-12'>
                             <Card>
-                                <Card.Header className='d-md-flex flex-md-row justify-content-between align-items-center'>
-                                    <div className='d-md-flex flex-md-column'>
+                                <Card.Header className='d-md-flex flex-md-row justify-content-start align-items-center'>
+                                    <div className='d-md-flex flex-md-column ms-3'>
                                         <FormLabel> Start Date </FormLabel>
                                         <FormControl
                                             type='date'
@@ -146,7 +150,7 @@ class InvoicePage extends Component {
                                         />
                                     </div>
 
-                                    <div className='d-md-flex flex-md-column'>
+                                    <div className='d-md-flex flex-md-column ms-3'>
                                         <FormLabel> End Date </FormLabel>
                                         <FormControl
                                             type='date'
@@ -157,31 +161,25 @@ class InvoicePage extends Component {
                                             }}
                                         />
                                     </div>
-                                    <div className='d-md-flex flex-md-column align-items-center'>
-                                        <Button expand='sm'
-                                        className='mt-4'
-                                        onClick={()=> this.clear()}>
-                                            Clear
-                                        </Button>
+
+                                    <div className='d-md-flex flex-md-column ms-3'>
+                                        <Button className='btn btn-margin-top' onClick={()=> this.clear()}> Clear </Button>
                                     </div>
                                 </Card.Header>
+
                                 <Card.Body>
                                     <DataTable
                                         subHeader
-                                        subHeaderComponent={
-                                            <InputGroup>
-                                                <FormControl
-                                                type='text'
-                                                value={searchText}
-                                                placeholder='Search with Material ID'
-                                                onChange={e => this.onTextChange(e.target.value)}
-                                                />
-                                            </InputGroup>
-                                            // <InvoiceTableHeader
-                                            // filterResult ={e => this.getFilter(e)}
-                                            // data={invoices}
-                                            //  />
-                                        }
+                                        // subHeaderComponent={
+                                        //     <InputGroup>
+                                        //         <FormControl
+                                        //             type='text'
+                                        //             value={searchText}
+                                        //             placeholder='Search with Material ID'
+                                        //             onChange={e => this.autoSearch(e.target.value)}
+                                        //         />
+                                        //     </InputGroup>
+                                        // }
                                         pagination={paginationComponentOptions}
                                         dense
                                         progressPending={tableloading}
@@ -201,12 +199,6 @@ class InvoicePage extends Component {
                             </Card>
                         </div>
                         ): (<></>)}
-                        <div className='col-md-7'>
-                                <InvoiceDataComponent props={this.props} invoiceDetail={this.state.invoiceDatas}/>
-                            <div className='d-flex flex-row justify-content-end'>
-                                {!is_print? (<Button className='mt-2' onClick={() => this.print()}> Print </Button>) : (<></>)}
-                            </div>
-                        </div>
                     </div>
                 </div>
             </>
