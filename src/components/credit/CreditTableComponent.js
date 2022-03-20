@@ -1,63 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from "react-bootstrap";
 import DataTable from "react-data-table-component";
+import { paginationComponentOptions } from '../table/paginationOptions';
 import { CreditTableColumns } from './CreditTableColumn';
 
-export const CreditTableComponent = ({props, detail, data}) => {
+export const CreditTableComponent = ({ data, retrive }) => {
 
-    console.log(data);
     const [tableData, setTableData] = useState([]);
-    const [creditDetail, setCreditDetail] = useState(null);
-
-    const dummyData = [
-        {
-            id: 1,
-            invoice_no: '000001',
-            customer_name: 'Aung Aung',
-            credit_amount: 50000,
-            repayment: 0,
-            amount_left: 50000
-        },
-        {
-            id: 2,
-            invoice_no: '000002',
-            customer_name: 'Kuu Kuu',
-            credit_amount: 100000,
-            repayment: 0,
-            amount_left: 100000
-        }
-    ];
 
     const selectRowHandler = (e) => {
-        setCreditDetail(e);
-        detail(e);
+        retrive(e);
     }
-
 
     useEffect(() => {
         if(data){
+            console.log(data);
             setTableData(data);
         }
-    },[data])
+    },[data]);
 
   return (
         <Card>
             <Card.Header>
-                <Card.Title>
-                    <span> Credit </span>
-                </Card.Title>
+                <Card.Title> Credit </Card.Title>
             </Card.Header>
+
             <Card.Body>
                 <DataTable
-                dense
-                highlightOnHover
-                pointerOnHover
-                selectableRows={true}
-                selectableRowsHighlight={true}
-                selectableRowsSingle={true}
-                onSelectedRowsChange={e => selectRowHandler(e.selectedRows)}
-                columns={CreditTableColumns(props)}
-                data={tableData} />
+                    dense
+                    highlightOnHover
+                    pointerOnHover
+                    selectableRows={true}
+                    selectableRowsHighlight={true}
+                    selectableRowsSingle={true}
+                    onSelectedRowsChange={e => selectRowHandler(e.selectedRows)}
+                    columns={CreditTableColumns()}
+                    data={tableData}
+                    pagination
+                    paginationComponentOptions={paginationComponentOptions}
+                />
             </Card.Body>
         </Card>
   )

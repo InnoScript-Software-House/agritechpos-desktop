@@ -5,6 +5,7 @@ import { CountCard } from '../../components/general/CountCard';
 import { Navigation } from '../../components/general/Navigation';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { getInvoice } from '../../services/invoice.service';
+import { changeNumberFormat } from '../../utilities/number.utility';
 
 class DashboardPage extends Component {
 
