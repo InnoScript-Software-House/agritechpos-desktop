@@ -132,26 +132,27 @@ class SalePage extends Component {
                             <Card className="mt-3">
                                 <Card.Header>
                                     <Card.Title className="title">
-                                        <div className="d-md-flex flex-md-row justify-content-between align-item-center">
+                                        Invoice
+                                        {/* <div className="d-md-flex flex-md-row justify-content-between align-item-center">
                                             <AutoCompleteDropDown 
                                                 dataSource={customers} 
                                                 inputOption={
                                                     {
                                                         type: "text",
-                                                        placeholder: t('input-customer-name-search'),
+                                                        placeholder: 'Search Customer name',
                                                         search_name: 'name'
                                                     }} 
                                                 chooseItem={(e) => this.getCustomer(e)}
                                             />
 
                                             <Language props={this.props} />
-                                        </div>
+                                        </div> */}
                                     </Card.Title>
                                 </Card.Header>
 
                                 <Card.Body>
                                     <div className="d-md-flex flex-column mb-3">
-                                        <h3 className={`${zawgyi(lang)} mt-3`}> {t('invoice')} </h3>
+                                        <h3 className={`${zawgyi(lang)} mt-3`}> Invoice </h3>
                                         <CustomerComponent className="mt-3" input={customer} retrive={(e) => this.setState({ customer: e })} />
                                     </div>  
 
