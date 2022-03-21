@@ -25,9 +25,10 @@ export const CreditDetailComponent = ({data, addRepayment}) => {
             console.log(data);
             if(Number(totalPayAmount) < Number(data[0].amount)) {
                 setIsRepayment(true);
+                console.log(isRepayment)
             }
         }
-    },[data]);
+    },[data, isRepayment]);
 
 
   return (
@@ -86,7 +87,7 @@ export const CreditDetailComponent = ({data, addRepayment}) => {
                                     )
                                 })}
 
-                                {isRepayment && (
+                                {!isRepayment && (
                                     <tr>
                                         <td colSpan={2}> 
                                             <Button className="btn w-full" onClick={() => addRepayment(data[0].id)}> Add Repayment </Button>
