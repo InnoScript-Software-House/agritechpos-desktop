@@ -14,7 +14,6 @@ export const CreditTableComponent = ({ data, retrive }) => {
 
     useEffect(() => {
         if(data){
-            console.log(data);
             setTableData(data);
         }
     },[data]);
