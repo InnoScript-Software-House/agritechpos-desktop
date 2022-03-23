@@ -30,6 +30,12 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
     }
 
     const update = async () => {
+
+        if(!Number(percentage)){
+            dispatch(setOpenToastAction('Update Item Percentage', 'Invalid Input', 'danger'))
+            return;
+        }
+
         const requestBody = {
             percentage: percentage,
             fix_amount: fix_amount
@@ -114,7 +120,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                                 <div className="col-md-6">
                                     <FormControl
                                         placeholder="Enter sell perentage"
-                                        type="number"
+                                        type="text"
                                         maxLength={3}
                                         minLength={1}
                                         max={100}

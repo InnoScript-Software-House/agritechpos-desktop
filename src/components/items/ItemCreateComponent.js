@@ -23,6 +23,12 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
     const dispatch = useDispatch();
 
     const itemSave = async () => {
+
+        if(!Number(price) || !Number(qty) || !Number(percentage)) {
+            dispatch(setOpenToastAction('Create Item', 'Invalid Input', 'danger'));
+            return;
+        }
+
         if(eng_name === '') {
             dispatch(setOpenToastAction('Create Item', 'English name is required', 'danger'));
             return;
@@ -126,7 +132,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <FormLabel> Qty </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
-                            type="number"
+                            type="text"
                             placeholder="Qty"
                             value={qty}
                             onChange={e => setQty(e.target.value)}
@@ -146,7 +152,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <FormLabel> Sell Percentage </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
-                            type="number"
+                            type="text"
                             placeholder="Sell Percentage"
                             value={percentage}
                             onChange={e => setPercentage(e.target.value)}
