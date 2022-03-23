@@ -16,12 +16,11 @@ export const CreditTableComponent = ({ data, retrive, refresh }) => {
 
   console.log(currentRow);
 
-  useEffect(() => {
-    if (data) {
-      setTableData(data);
-      retrive(currentRow);
-    }
-  }, [data, currentRow]);
+    useEffect(() => {
+        if(data){
+            setTableData(data);
+        }
+    },[data]);
 
   return (
     <Card>

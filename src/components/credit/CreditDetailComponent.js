@@ -11,23 +11,27 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
 
   const history = useHistory();
 
-  useEffect(() => {
-    if (data && data.length > 0) {
-      // console.log(data)
-      const repayments = JSON.parse(data[0].repayment);
-
-      setDetail(data[0]);
-      setRepayments(repayments);
+    useEffect(() => {
+        if(data && data.length > 0){
+            const repayments = JSON.parse(data[0].repayment);
 
 
-      const repaymentAmounts = repayments.map((value) => value.pay_amount);
-      const totalPayAmount = repaymentAmounts.reduce((a, b) => a + b, 0);
+            const repaymentAmounts = repayments.map(value => value.pay_amount);
+            const totalPayAmount = repaymentAmounts.reduce((a,b) => a+b, 0);
+            //const reduceAmount = Number(data[0].invoice.discount) + Number(totalPayAmount) + Number(data[0].amount);
+            const balance = totalPayAmount + Number(data[0].invoice.discount);
+            
+            if(Number(balance) !== Number(data[0].invoice.total_amount)) {
+                setIsRepayment(true);
+                return;
+            } else {
+                setIsRepayment(false);
+                return;
+            }
 
-      if (totalPayAmount > data[0].amount) {
-        setIsRepayment(true);
-      } else setIsRepayment(false);
-    }
-  }, [data]);
+            // setIsRepayment(false);
+        }
+    },[data]);
 
   return (
     <Card>
