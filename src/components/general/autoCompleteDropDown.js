@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dropdown, FormControl, InputGroup } from "react-bootstrap";
+import { Dropdown, FormControl } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { zawgyi } from "../../utilities/translation.utility";
 

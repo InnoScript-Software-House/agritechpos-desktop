@@ -4,10 +4,11 @@ import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { BsTrash } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { t, zawgyi } from "../../utilities/translation.utility";
+import { useHistory } from "react-router-dom";
 
 const tableHeader = [t('martial-code'),t('name'),t('model'), t('Qty'),t('price'),t('total')];
 
-export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
+export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }) => {
 
     const [items, setItems] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
@@ -19,6 +20,9 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
         sell: 0,
         buy: 0
     });
+    const history = useHistory();
+    // const [ispaid, setIsPaid] = useState(true);
+    const [customer, setCustomer] = useState(null);
 
     const lang = useSelector(state => state.lang);
 
@@ -39,7 +43,30 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
     }
 
     const makePayment = () => {
-
+    //     const { history } = this.props;
+    //     if(this.state.cartItems.length > 0){
+    //         this.setState({
+    //             payBtn: true
+    //         });
+            // if(!creditAmount === 0) {
+            //     setIsPaid(false);
+            // };
+            let iData = {
+                totalAmount: totalAmount,
+                discount: discount,
+                netAmount: netAmount,
+                creditAmount: creditAmount,
+                payAmount: payAmount,
+                customer: customer,
+                // isPaid: ispaid,
+                bought_items: items.map(e => e)
+            };
+            localStorage.setItem('INVOICE', JSON.stringify(iData));
+            history.push('/invoiceReport');
+    //     this.setState({
+    //         payBtn: false
+    //     });
+    //     return;
     }
 
     useEffect(() => {
@@ -53,7 +80,10 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total }) => {
             setNetAmount(total.sell);
             setPayAmount(total.sell);
         }
-    }, [dataSource, total])
+        if(getcustomer) {
+            setCustomer(getcustomer);
+        }
+    }, [dataSource, total, getcustomer])
 
     return (
         <>

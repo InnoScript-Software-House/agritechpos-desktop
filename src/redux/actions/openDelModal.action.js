@@ -7,3 +7,10 @@ export const setOpenDelModal = (delData) => async (dispatch) => {
         payload: delData
     });
 }
+
+export const setOpenRepaymentModal = (repayAmount) => async (dispatch) => {
+    return dispatch({
+        type: SET_OPEN_REPAY,
+        payload: repayAmount
+    });
+}

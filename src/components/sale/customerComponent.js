@@ -44,7 +44,7 @@ export const CustomerComponent = ({ input, retrive }) => {
                 <FormControl 
                     className={`${zawgyi(lang)} me-3`}
                     type="text"
-                    placeholder={t('input-customer-name')}
+                    placeholder="Customer name"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'name')}

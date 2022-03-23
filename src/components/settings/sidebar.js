@@ -10,10 +10,10 @@ const menus = [
         "label": "Number Specification",
         "component": "NumberSpecificationComponent"
     },
-    {
-        "label": "Device",
-        "component": "DeviceComponent"
-    }
+    // {
+    //     "label": "Device",
+    //     "component": "DeviceComponent"
+    // }
 ];
 
 export const SideBarComponent = ({ getComponent }) => {

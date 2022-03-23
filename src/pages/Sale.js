@@ -113,53 +113,6 @@ class SalePage extends Component {
         }
         this.setState({ customer: customer });
     }
-
-    // async saveInvoice() {
-    //     const { customerAddress, customerName, customerPhone, total, discount, cartItems } = this.state;
-    //     const { openToast } = this.props;
-
-    //     const requestBody = {
-    //         customer_name: customerName !== '' ? customerName : null,
-    //         customer_phone: customerPhone !== '' ? customerPhone : null,
-    //         customer_address: customerAddress !== '' ? customerAddress : null,
-    //         customer_email : null,
-    //         total_amount: total,
-    //         discount: discount,
-    //         invoice_data: cartItems,
-    //         cash_back: 0,
-    //     }
-    //     const response = await createInvoice(requestBody);
-
-    //     if(response && response.success === false) {
-    //         openToast('Customer', response.message, 'danger');
-    //         return;
-    //     }
-    // }
-
-    // payNow(){
-    //     const { history } = this.props;
-    //     if(this.state.cartItems.length > 0){
-    //         this.setState({
-    //             payBtn: true
-    //         });
-    //         let iData = {
-    //             invoice_id: this.state.invoice_id,
-    //             customer_name: this.state.customerName,
-    //             customer_phone: this.state.customerPhone,
-    //             customer_address: this.state.customerAddress,
-    //             bought_items: this.state.cartItems.map(e => e),
-    //             total: this.state.total,
-    //             discount: this.state.discount,
-    //             netAmount: this.state.total - this.state.discount
-    //         };
-    //         this.props.setInvoice(iData);
-    //         history.push('/invoiceReport');
-    //     };
-    //     this.setState({
-    //         payBtn: false
-    //     });
-    //     return;
-    // }
     
     async componentDidMount(){
         await this.loadingData();
@@ -179,13 +132,14 @@ class SalePage extends Component {
                             <Card className="mt-3">
                                 <Card.Header>
                                     <Card.Title className="title">
-                                        <div className="d-md-flex flex-md-row justify-content-between align-item-center">
+                                        Invoice
+                                        {/* <div className="d-md-flex flex-md-row justify-content-between align-item-center">
                                             <AutoCompleteDropDown 
                                                 dataSource={customers} 
                                                 inputOption={
                                                     {
                                                         type: "text",
-                                                        placeholder: t('input-customer-name-search'),
+                                                        placeholder: 'Search Customer name',
                                                         search_name: 'name'
                                                     }
                                                     } 
@@ -193,17 +147,17 @@ class SalePage extends Component {
                                             />
 
                                             <Language props={this.props} />
-                                        </div>
+                                        </div> */}
                                     </Card.Title>
                                 </Card.Header>
 
                                 <Card.Body>
                                     <div className="d-md-flex flex-column mb-3">
-                                        <h3 className={`${zawgyi(lang)} mt-3`}> {t('invoice')} </h3>
+                                        <h3 className={`${zawgyi(lang)} mt-3`}> Invoice </h3>
                                         <CustomerComponent className="mt-3" input={customer} retrive={(e) => this.setState({ customer: e })} />
                                     </div>  
 
-                                    <SaleVoucherComponent dataSource={requestItems} total={totalAmount} retrive={(e) => {this.updateItem(e)}} />
+                                    <SaleVoucherComponent dataSource={requestItems} total={totalAmount} retrive={(e) => {this.updateItem(e)}} getcustomer={this.state.customer} />
               
                                 </Card.Body>
 

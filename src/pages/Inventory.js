@@ -11,6 +11,7 @@ import { ItemListTableComponent } from '../components/items/ItemListTableCompone
 import { getItems } from '../services/item.service';
 import { DeleteDialog } from '../components/general/deleteDialog';
 import { setOpenToastAction } from '../redux/actions/toast.action';
+import { VerticalChart } from '../utilities/vertical.chart';
 
 class InventoryPage extends Component {
 
@@ -113,6 +114,9 @@ class InventoryPage extends Component {
                         <div className={openCreateItem ? 'col-md-10' : 'col-md-12'}>
                             <ItemListTableComponent props={this.props} dataSource={items} reload={(e) => this.loadingData('item')} />
                         </div>
+                    </div>
+                    <div>
+                    <VerticalChart props={this.props} dataSource={items} type={items.map(e => e)} title={'qtyChart'} />
                     </div>
                 </div>
 

@@ -52,12 +52,12 @@ export const itemColumns = (props) => {
             sortable: true,
             width: "200px"
         },
-        {
-            name: <span className="database-header"> Myanmar Name </span>,
-            selector: row => row.mm_name,
-            sortable: true,
-            width: "200px"
-        },
+        // {
+        //     name: <span className="database-header"> Myanmar Name </span>,
+        //     selector: row => row.mm_name,
+        //     sortable: true,
+        //     width: "200px"
+        // },
         {
             name: <span className="database-header"> Model </span>,
             selector: row => row.model,
