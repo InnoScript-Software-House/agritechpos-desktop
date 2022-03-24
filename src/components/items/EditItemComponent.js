@@ -33,6 +33,11 @@ export const EditItemComponent = ({ props, item, reload }) => {
     }
 
     const update = async () => {
+        if(!Number(qty)){
+            dispatch(setOpenToastAction('Update Item', 'Invalid qty', 'danger'))
+            return;
+        }
+        
         const requestBody = {
             code: code,
             eng_name: eng_name,
@@ -130,7 +135,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                     <FormLabel> Qty </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
-                            type="number"
+                            type="text"
                             placeholder="Qty"
                             value={qty || 0}
                             onChange={e => setQty(e.target.value)}

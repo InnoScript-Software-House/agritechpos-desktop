@@ -87,7 +87,7 @@ export const TableHeaderComponent = ({ dataSource, searchColumns, placeholder, f
                 {type === 'Items' && (
                     <FormControl
                         className="input-small"
-                        type='number'
+                        type='text'
                         placeholder="Change Items %"
                         value={calPercentage}
                         onChange={(e) => {
@@ -95,6 +95,10 @@ export const TableHeaderComponent = ({ dataSource, searchColumns, placeholder, f
                         }}
                         onKeyPress={(e) => {
                             if(e.code === 'Enter') {
+                                if(!Number(calPercentage)){
+                                    dispatch(setOpenToastAction('Percentage', 'Invalid Input', 'danger'));
+                                    return;
+                                }
                                 changePercentage(e.target.value);
                             }
                         }}

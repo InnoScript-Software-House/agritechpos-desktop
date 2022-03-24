@@ -16,6 +16,11 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
     const dispatch = useDispatch();
 
     const addItem = (e) => {
+        if(!Number(qty)){
+            dispatch(setOpenToastAction('Item', "Invalid qty", 'danger'));
+            return;
+        }
+        
         if(Number(item.totalQty) < Number(e) || Number(e) <= 0) {
             dispatch(setOpenToastAction('Item', "Invalid request item's qty", 'danger'));
             return;
@@ -61,8 +66,8 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
             <div className={`${zawgyi(lang)}`}>
                 <FormLabel> {t('quality')} </FormLabel>
                 <FormControl 
-                    type="number" 
-                    placeholder={t('Qty')}
+                    type="text" 
+                    placeholder="qty" 
                     value={qty} 
                     onChange={(e) => setQty(e.target.value)}
                     onKeyPress={(e) => {

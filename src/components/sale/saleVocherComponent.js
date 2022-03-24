@@ -160,7 +160,7 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
                                     <td>
                                         <InputGroup>
                                             <FormControl 
-                                                type="number"
+                                                type="text"
                                                 value={payAmount}
                                                 onChange={(e) => setPayAmount(e.target.value)}
                                                 onKeyPress={(e) => {

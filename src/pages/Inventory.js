@@ -115,9 +115,6 @@ class InventoryPage extends Component {
                             <ItemListTableComponent props={this.props} dataSource={items} reload={(e) => this.loadingData('item')} />
                         </div>
                     </div>
-                    <div>
-                    <VerticalChart props={this.props} dataSource={items} type={items.map(e => e)} title={'qtyChart'} />
-                    </div>
                 </div>
 
                 {delModal && delModal.open === true && (
