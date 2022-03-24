@@ -24,18 +24,18 @@ class DashboardPage extends Component {
     }
 
     async loadingData() {
-        const { count } = this.state;
+
         const { openToast } = this.props;
 
         const customerResponse = await getInvoice();
         if (customerResponse && customerResponse.success === false) {
-
             openToast('Customer', customerResponse.message, 'danger');
             return;
         }
 
         const customerFilter = customerResponse.filter(value => value.customer_name !== null);
         // console.log(customerFilter);
+        console.log(customerResponse);
 
         customerResponse.map((value) => {
             value.created_at = moment(value.created_at).format('DD-MM-Y');
@@ -65,7 +65,6 @@ class DashboardPage extends Component {
             qty: totalqty,
         });
     }
-
 
 
     async componentDidMount() {
@@ -111,12 +110,14 @@ class DashboardPage extends Component {
                             />
                         </div>
                     </div>
-                    {/* <div className='row mt-3'>
+                    <div className='row mt-3'>
                         <div className='col-md-6'>
                             <WeeklyTable
-                            title={'Weekly Table'} />                           
+                            title='Weekly Table' 
+                            dataSource={qty}
+                            />                           
                         </div>
-                    </div> */}
+                    </div>
                 </div>
             </>
         )
