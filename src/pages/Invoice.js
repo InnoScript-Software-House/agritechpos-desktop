@@ -67,7 +67,9 @@ class InvoicePage extends Component {
     //     filterResult(result);
     // }
 
-    dateStartRangeHandler(startdate){
+    dateStartRangeHandler(
+        
+    ){
         const invoicestart = this.state.invoices.filter(e => moment(e.created_at).format('YYYY-MM-DD') >= moment(startdate).format('YYYY-MM-DD'));
             this.setState({
                 invoices: invoicestart

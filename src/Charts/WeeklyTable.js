@@ -19,6 +19,8 @@ const WeeklyTable = ({ title ,dataSource  }) => {
         datasets: []
     })
 
+
+
     const options = {
         responsive: true,
         plugins: {
@@ -39,14 +41,39 @@ const WeeklyTable = ({ title ,dataSource  }) => {
                 labels: model,
                 datasets: [
                     {
-                        label: 'First Week',
-                        data: dataSource,
+                        label: 'Monday',
+                        data: dataSource.map(value => value),
                         backgroundColor: 'rgba(250, 10, 10, 0.8)'
                     },
                     {
-                        label: 'Second Week',
-                        data: dataSource,
-                        backgroundColor: 'rgba(250, 10, 10, 0.8)'
+                        label: 'Tuesday',
+                        data: dataSource.map(value => value),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)'
+                    },
+                    {
+                        label: 'Wednesday',
+                        data: dataSource.map(value => value),
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    },
+                    {
+                        label: 'Thursday',
+                        data: dataSource.map(value => value),
+                        backgroundColor:  'rgba(75, 192, 192, 0.2)',
+                    },
+                    {
+                        label:'Friday',
+                        data: dataSource.map(value => value),
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    },
+                    {
+                        label:'Saturday',
+                        data: dataSource.map(value => value),
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    },
+                    {
+                        label:'Sunday',
+                        data: dataSource.map(value => value),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     }
                 ]
             })

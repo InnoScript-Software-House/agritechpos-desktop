@@ -19,7 +19,8 @@ class DashboardPage extends Component {
                 customer: 0,
             },
             totalSellAmount: 0,
-            qty: 0
+            qty: 0,
+            weekly: 0,
         };
     }
 
@@ -35,7 +36,6 @@ class DashboardPage extends Component {
 
         const customerFilter = customerResponse.filter(value => value.customer_name !== null);
         // console.log(customerFilter);
-        console.log(customerResponse);
 
         customerResponse.map((value) => {
             value.created_at = moment(value.created_at).format('DD-MM-Y');
@@ -66,13 +66,40 @@ class DashboardPage extends Component {
         });
     }
 
+    async chartData() {
+        const chartResponse = await getInvoice()
+        if(chartResponse && chartResponse.success === false) {
+            openToast('Customer', customerResponse.message, 'danger');
+            return;
+        }
+        chartResponse.map((value) => {
+            value.created_at = moment(value.created_at).format('DD-MM-Y')
+        })
+        const chartToDayDate = moment().format('DD-MM-Y')
+        const startdate = chartResponse.filter(value => value.created_at === chartToDayDate)
+        const new_date = moment( startdate , 'DD-MM-Y' )
+        const end_date = new_date.add(7 ,'days').format ('DD-MM-Y')
+        
+        const data = chartResponse.filter(value => startdate <= value.created_at <= end_date);
+        const weekSale = data.map(value => value.totalSellAmount);
+
+        this.setState({
+            weekly: weekSale
+        })
+        
+    }
+
+
+
+
 
     async componentDidMount() {
         this.loadingData();
+        this.chartData();
     }
 
     render() {
-        const { count, totalSellAmount , qty } = this.state;
+        const { count, totalSellAmount , qty , weekly } = this.state;
         return (
             <>
                 <Navigation props={this.props} />
@@ -114,7 +141,7 @@ class DashboardPage extends Component {
                         <div className='col-md-6'>
                             <WeeklyTable
                             title='Weekly Table' 
-                            dataSource={qty}
+                            dataSource={weekly}
                             />                           
                         </div>
                     </div>
