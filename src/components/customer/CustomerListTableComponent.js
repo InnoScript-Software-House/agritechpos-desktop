@@ -4,7 +4,7 @@ import DataTable from 'react-data-table-component';
 import { customerColumns } from '../columns/customer.columns';
 import { ChangeNumberFormatBtn } from '../general/changeNumberFormatBtn';
 import { paginationComponentOptions } from '../table/paginationOptions';
-import { TableHeaderComponent } from '../table/tableHeader';
+import CustomerTableHeaderComponent from '../table/customerTableHeader';
 import { TableLoadingComponent } from '../table/tableLoading';
 
 const searchColumns = [
@@ -21,10 +21,16 @@ export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
         setCustomerList(e);
     }
 
+    const getCustomerList = () => {
+        let customerData = dataSource.filter(e => e.customer_name !== null);
+        return customerData;
+    }
+
     useEffect(() => {
         if (dataSource) {
-            setCustomerList(dataSource);
-            setTableLoading(false)
+            let customerList = getCustomerList();
+            setCustomerList(customerList);
+            setTableLoading(false);
         }
     }, [dataSource]);
 
@@ -41,9 +47,9 @@ export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
                     <DataTable
                         subHeader={true}
                         subHeaderComponent={
-                            <TableHeaderComponent
+                            <CustomerTableHeaderComponent
                                 type={'CustomerLists'}
-                                dataSource={dataSource}
+                                dataSource={customerList}
                                 searchColumns={searchColumns}
                                 placeholder='Search Item'
                                 filterResult={e => getFilterResult(e)}
@@ -66,7 +72,6 @@ export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
                         selectableRows={true}
                         selectableRowsHighlight={true}
                         onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
-
                     />
                 </Card.Body>
             </Card>

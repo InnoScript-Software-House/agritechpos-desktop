@@ -1,7 +1,7 @@
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 
-export const itemExportToExcel = async (fileName) => {
+export const itemExportToExcel = async (fileName, filterResult) => {
     const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     const fileExtension = '.xlsx';
 

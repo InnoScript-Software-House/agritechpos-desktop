@@ -15,21 +15,43 @@ export const customerColumns = (props) => {
     },
     {
       name: <span className='database-header'>Name</span>,
-      selector: row => row.name,
+      selector: row => row.customer_name,
       sortable: true,
-      width: '200px'
+      width: '150px'
     },
     {
       name: <span className='database-header'>Email</span>,
-      selector: row => row.email,
+      selector: row => row.customer_email,
       sortable: true,
       width: '200px'
     },
     {
       name: <span className='database-header'>Phone Number</span>,
-      selector: row => row.phone,
+      selector: row => row.customer_phone,
       sortable: true,
-      width: '200px'
+      width: '150px'
+    },
+    {
+      name: <span className='database-header'>Credit</span>,
+      selector: row => row.credit_amount,
+      sortable: true,
+      width: '175px'
+    },
+    {
+      name: <span className='database-header'>Paid Count</span>,
+      selector: row => {
+        let getcredit = row.credit;
+        let repayment = JSON.parse(getcredit.repayment);
+        return repayment.length;
+      },
+      sortable: true,
+      width: '175px'
+    },
+    {
+      name: <span className='database-header'>Total Amount</span>,
+      selector: row => row.total_amount,
+      sortable: true,
+      width: '175px'
     },
     {
       name: <span className='database-header'>Option</span>,

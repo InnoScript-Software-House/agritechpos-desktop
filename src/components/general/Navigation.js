@@ -8,7 +8,7 @@ const menus = [
     { label: "Inventory", url: "/inventory"},
     { label: "Invoice", url: "/invoice"},
     { label: "Credit", url: "/credit" },
-    // { label: "Customer", url: "/customer"},
+    { label: "Customer", url: "/customer"},
     { label: "Profile", url: "/profile"},
     { label: "Account", url: "/account"},
     { label: "Setting", url: "/setting"},

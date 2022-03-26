@@ -33,7 +33,6 @@ class CreditPage extends Component {
   }
 
   getCreditDetail(e) {
-    console.log(e);
     this.setState({
       creditDetail: e,
     });
