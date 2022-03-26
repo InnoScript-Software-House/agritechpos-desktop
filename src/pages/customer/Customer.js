@@ -7,6 +7,7 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { CustomerListTableComponent } from '../../components/customer/CustomerListTableComponent';
 import { CustomerCreateComponent } from '../../components/customer/CustomerCreateComponent';
 import { getCustomerList } from '../../services/customer.service';
+import { getInvoice } from '../../services/invoice.service';
 
 class CustomerPage extends Component {
  
@@ -21,7 +22,7 @@ class CustomerPage extends Component {
 
     async loadingData() {
         const { openToast } = this.props;
-        const response = await getCustomerList();
+        const response = await getInvoice();
 
         if(response && response.success === false) {
             openToast('Customer', response.message, 'danger');
@@ -35,8 +36,8 @@ class CustomerPage extends Component {
         return;
     }
 
-    componentDidMount() {
-        this.loadingData();
+    async componentDidMount() {
+        await this.loadingData();
     }
  
     render() {
