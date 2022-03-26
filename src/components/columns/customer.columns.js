@@ -17,25 +17,21 @@ export const customerColumns = (props) => {
       name: <span className='database-header'>Name</span>,
       selector: row => row.customer_name,
       sortable: true,
-      width: '150px'
     },
     {
       name: <span className='database-header'>Email</span>,
       selector: row => row.customer_email,
       sortable: true,
-      width: '200px'
     },
     {
       name: <span className='database-header'>Phone Number</span>,
       selector: row => row.customer_phone,
       sortable: true,
-      width: '150px'
     },
     {
       name: <span className='database-header'>Credit</span>,
       selector: row => row.credit_amount,
       sortable: true,
-      width: '175px'
     },
     {
       name: <span className='database-header'>Paid Count</span>,
@@ -45,7 +41,6 @@ export const customerColumns = (props) => {
         return repayment.length;
       },
       sortable: true,
-      width: '175px'
     },
     {
       name: <span className='database-header'>Total Amount</span>,
@@ -53,19 +48,19 @@ export const customerColumns = (props) => {
       sortable: true,
       width: '175px'
     },
-    {
-      name: <span className='database-header'>Option</span>,
-      selector: (row) => {
-        return (
-          <>
-            <BsArrowUpRightSquare 
-            size={20}
-            className="icon-btn-outline"
-            onClick={() => history.push(`/editcustomer/${row.id}`)}/>
-          </>
-        )
-      }
-    }
+    // {
+    //   name: <span className='database-header'>Option</span>,
+    //   selector: (row) => {
+    //     return (
+    //       <>
+    //         <BsArrowUpRightSquare 
+    //         size={20}
+    //         className="icon-btn-outline"
+    //         onClick={() => history.push(`/editcustomer/${row.id}`)}/>
+    //       </>
+    //     )
+    //   }
+    // }
   ];
   return columns;
 }

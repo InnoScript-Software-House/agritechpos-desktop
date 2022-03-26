@@ -50,7 +50,7 @@ class CustomerPage extends Component {
 
             <div className='container-fluid'>
                 <div className='row'>
-                    <div className='col-md-12'>
+                    {/* <div className='col-md-12'>
                         <div className='d-md-flex flex-md-row justify-content-start align-items-center'>
                             <Button className='btn-small mt-3 me-3'
                             onClick={() => this.setState({
@@ -61,10 +61,10 @@ class CustomerPage extends Component {
                             <span className='me-3'> {openCreateItem ? 'Hide Create Item Form' : 'Show Create Item Form'}</span>
                             </Button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className='row'>
-                    {openCreateItem && (
+                    {/* {openCreateItem && (
                         <div className='col-md-2'>
                             <CustomerCreateComponent
                                 reload={(e) => {
@@ -74,8 +74,8 @@ class CustomerPage extends Component {
                                 }}
                             />
                         </div>
-                    )}
-                    <div className={openCreateItem ? 'col-md-10' : 'col-md-12'}>
+                    )} */}
+                    <div className='col-md-12'>
                         <CustomerListTableComponent 
                             props={this.props}
                             dataSource={customerLists}
