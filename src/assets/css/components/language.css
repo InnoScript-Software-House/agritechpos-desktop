@@ -3,12 +3,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    margin: 10px;
 }
 
 .lang-title {
-    color: #01a3a6;
+    color: #fff;
     font-size: medium;
-    font-weight: 900;
 }
 
 .lang-input-group {

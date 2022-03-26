@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { FormSelect, InputGroup } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { setLangAction } from '../../redux/actions/lang.action';
 
@@ -21,15 +21,16 @@ const languages = [
     }
 ]
 
-export const Language = ({props}) => {
-    const { lang } = props.reducer;
+export const Language = () => {
+    const state = useSelector((state) => state);
+    const { lang } = state;
     const [lng, setLang] = useState(lang);
     const dispatch = useDispatch();
 
-    const changeLng = useCallback((selectedValue) => {
+    const changeLang = (selectedValue) => {
         dispatch(setLangAction(selectedValue));
         setLang(selectedValue);
-    });
+    };
 
     return(
         <div className='lang-wrapper'>
@@ -38,7 +39,7 @@ export const Language = ({props}) => {
             <InputGroup className='lang-input-group'>
                 <FormSelect 
                     className={zawgyi(lng)}
-                    onChange={(e) => changeLng(e.target.value)}
+                    onChange={(e) => changeLang(e.target.value)}
                     defaultValue={lng}
                 >
                     {
@@ -46,7 +47,7 @@ export const Language = ({props}) => {
                             return(
                                 <option 
                                     className={zawgyi(lng)}
-                                    key={`lnag_id_${index}`} 
+                                    key={`lang_id_${index}`} 
                                     value={value.value}
                                 > 
                                     {t(value.label)} 

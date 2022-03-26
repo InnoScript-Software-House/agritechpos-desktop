@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, ToastContainer} from "react-bootstrap";
+import { Language } from "./Language";
 import { AppToast } from "./toasts";
 
 const menus = [
@@ -24,7 +25,7 @@ export const Navigation = ({props}) => {
                 <AppToast props={props} />
             </ToastContainer>
 
-            <div className="d-md-flex flex-md-row justify-content-between navigation-wrapper">
+            <div className="d-md-flex flex-md-row justify-content-between align-item-center navigation-wrapper">
                 <div className="d-md-flex flex-md-row justify-content-start align-items-center mt-3 mb-3">
                     {menus.map((menu, index) => {
                         return(
@@ -34,6 +35,8 @@ export const Navigation = ({props}) => {
                         )
                     })}
                 </div>
+
+                <Language />
             </div>
         </>
     )
