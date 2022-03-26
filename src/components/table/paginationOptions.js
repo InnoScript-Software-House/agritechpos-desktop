@@ -1,8 +1,6 @@
-import { t } from "../../utilities/translation.utility";
-
 export const paginationComponentOptions = {
     noRowsPerPage: false,
-    rowsPerPageText: t('table-row-record'),
-    rangeSeparatorText: t('table-row-total'),
+    rowsPerPageText: "Total Record",
+    rangeSeparatorText: "| Total Record",
     selectAllRowsItem: false,
 };

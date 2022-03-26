@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
-import { Language } from '../../components/general/Language';
-import { t, zawgyi } from '../../utilities/translation.utility';
 import { createAccount } from '../../services/user.service';
 import { ToastContainer } from "react-bootstrap";
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { AppToast } from '../../components/general/toasts'
-
-import '../../assets/css/first-user-register.css';
 
 var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const checkphone = /^(\+?(95)|[09])\d{10}/g;
@@ -37,31 +33,19 @@ class FirstUserRegisterPage extends Component {
         const { history } = this.props;
 
         if(account_name === '' || phone === '' || email === '' || password === '' || confirm_password === '') {
-            return this.props.openToast('First User Account', t('first-user-error-message'), 'danger');
-            // this.setState({
-            //     err_message: t('first-user-error-message')
-            // });
+            return this.props.openToast('User Account', 'All fields are required', 'danger');
         }
 
         if(password !== confirm_password) {
-            return this.props.openToast('First User Account', t('first-user-error-confirm-password'), 'danger');
-            // this.setState({
-            //     err_message: t('first-user-error-confirm-password')
-            // });
+            return this.props.openToast('User Account', 'Password does not match', 'danger');
         }
 
         if(!pattern.test(email)){
-            return this.props.openToast('First User Account', t('invalid-email-error'), 'danger');
-            // this.setState({
-            //     err_message: t('invalid-email-error')
-            // });
+            return this.props.openToast('User Account', 'Invalid email address', 'danger');
         }
 
         if(!checkphone.test(phone)){
-            return this.props.openToast('First User Account', 'Invalid phone number', 'danger');
-            // this.setState({
-            //     err_message: ('Invalid phone number')
-            // })
+            return this.props.openToast('User Account', 'Invalid phone number', 'danger');
         }
 
         const resquestBody = {
@@ -78,9 +62,8 @@ class FirstUserRegisterPage extends Component {
         const response = await createAccount(resquestBody);
 
         if(response.success === false) {
-            this.props.openToast('First User Account', response.message, 'danger');
+            this.props.openToast('User Account', response.message, 'danger');
             return this.setState({
-                // err_message: response.message,
                 is_loading: false
             });
         }
@@ -95,107 +78,100 @@ class FirstUserRegisterPage extends Component {
     }
 
     render() {
-        const { is_loading, account_name, phone, email, password, confirm_password, err_message } = this.state;
-        const { lang } = this.props.reducer; 
+        const { is_loading, account_name, phone, email, password, confirm_password } = this.state;
 
         return (
-            <>
-            <ToastContainer
-            className="app-toast-container"
-            position={'top-end'}
-            >
-                <AppToast props={this.props} />
-            </ToastContainer>
-                <div className='d-md-flex flex-row justify-content-end'>
-                    <Language props={this.props} />
+            <div className='container-fluid'>
+                <div className='row'>
+                    <ToastContainer
+                        className="app-toast-container"
+                        position={'top-end'}
+                    >
+                        <AppToast props={this.props} />
+                    </ToastContainer>
                 </div>
 
-                <div className='d-md-flex flex-row justify-content-between'>
-                    <div className='col-md-5 d-flex flex-column justify-content-center'>
-                        <img src="build/assets/images/side_image.jpeg" className='cover-image align-self-center mt-3' />
+                <div className='row'>
+                    <div className='col-md-4 mt-3'>
+                        <img src="build/assets/images/side_image.jpeg" className='img-fluid' />
                     </div>
 
-                    <div className='col-md-7 d-md-flex flex-column justify-content-start'>
-                        <h3 className={`title m-3 ${zawgyi(lang)}`}> {t('first-user-title')} </h3>
-                        <p className={`m-3 ${zawgyi(lang)}`}> {t('first-user-description')} </p>
+                    <div className='col-md-8'>
+                        <h3 className="title m-3"> Create User Account </h3>
+                        <p className="m-3"> create user account for first times user. This account can login into software. </p>
 
-                        <InputGroup className="p-3">
-                            <FormControl
-                                className={`me-3 ${zawgyi(lang)}`}
-                                type="text"
-                                required={true}
-                                placeholder={t('first-user-name')}
-                                value={account_name}
-                                onChange={(e) => this.setState({
-                                    account_name: e.target.value
-                                })}
-                            />
+                        <div className='d-md-flex flex-md-row justify-content-between'>
+                            <div className='col-md-12 d-flex flex-column justify-content-center'>
+                                <InputGroup className="p-3">
+                                    <FormControl
+                                        className="me-3"
+                                        type="text"
+                                        required={true}
+                                        placeholder="Account Name"
+                                        value={account_name}
+                                        onChange={(e) => this.setState({
+                                            account_name: e.target.value
+                                        })}
+                                    />
 
-                            <FormControl
-                                className={`me-3 ${zawgyi(lang)}`}
-                                type="text"
-                                required={true}
-                                placeholder={t('first-user-phone')}
-                                value={phone}
-                                onChange={(e) => this.setState({
-                                    phone: e.target.value
-                                })}
-                            />
+                                    <FormControl
+                                        className="me-3"
+                                        type="text"
+                                        required={true}
+                                        placeholder="Phone"
+                                        value={phone}
+                                        onChange={(e) => this.setState({
+                                            phone: e.target.value
+                                        })}
+                                    />
 
-                            <FormControl
-                                className={`me-3 ${zawgyi(lang)}`}
-                                type="text"
-                                required={true}
-                                placeholder={t('first-user-email')}
-                                value={email}
-                                onChange={(e) => this.setState({
-                                    email: e.target.value
-                                })}
-                            />
-                        </InputGroup>
+                                    <FormControl
+                                        className="me-3"
+                                        type="text"
+                                        required={true}
+                                        placeholder="Email"
+                                        value={email}
+                                        onChange={(e) => this.setState({
+                                            email: e.target.value
+                                        })}
+                                    />
+                                </InputGroup>
 
-                        <InputGroup className="p-3">
-                            <FormControl
-                                className={`me-3 ${zawgyi(lang)}`}
-                                type="password"
-                                required={true}
-                                placeholder={t('first-user-password')}
-                                value={password}
-                                onChange={(e) => this.setState({
-                                    password: e.target.value
-                                })}
-                            />
+                                <InputGroup className="p-3">
+                                    <FormControl
+                                        className="me-3"
+                                        type="password"
+                                        required={true}
+                                        placeholder="Password"
+                                        value={password}
+                                        onChange={(e) => this.setState({
+                                            password: e.target.value
+                                        })}
+                                    />
 
-                            <FormControl
-                                className={`me-3 ${zawgyi(lang)}`}
-                                type="password"
-                                required={true}
-                                placeholder={t('first-user-reenter-password')}
-                                value={confirm_password}
-                                onChange={(e) => this.setState({
-                                    confirm_password: e.target.value
-                                })}
-                            />
-                        </InputGroup>
-                        
-                        <InputGroup className='p-3'>
-                            <Button
-                                className={`${zawgyi(lang)}`}
-                                disabled={is_loading}
-                                onClick={() => this.createAccount()}
-                            > 
-                                {t('first-user-btn-create')}
-                            </Button>
-                        </InputGroup>
-
-                        {/* <p className={`ps-3 error-message ${zawgyi(lang)}`}> {err_message} </p> */}
+                                    <FormControl
+                                        className="me-3"
+                                        type="password"
+                                        required={true}
+                                        placeholder="Confirm password"
+                                        value={confirm_password}
+                                        onChange={(e) => this.setState({
+                                            confirm_password: e.target.value
+                                        })}
+                                    />
+                                </InputGroup>
+                                
+                                <InputGroup className='p-3'>
+                                    <Button disabled={is_loading} onClick={() => this.createAccount()}> Create Account </Button>
+                                </InputGroup>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </>
+            </div>
         )
     }
 }
-
 
 const mapStateToProps = (state) => ({
     reducer: state

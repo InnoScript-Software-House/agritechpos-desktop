@@ -1,8 +1,22 @@
-const { BrowserWindow, app, Menu } = require('electron');
+const { BrowserWindow, app, Menu, globalShortcut, ipcMain } = require('electron');
+
 const path = require('path');
 
-const isDev = !app.isPackaged;
+const printOptions = {
+    silent: false,
+    pageSize: 'A4',
+    printBackground: false,
+    color: false,
+    margin: {
+        marginType: 'printableArea',
+    },
+    landscape: false,
+    pagesPerSheet: 1,
+    collate: false,
+};
 
+
+const isDev = !app.isPackaged;
 let webPreferences = {
     nodeIntegration: true,
     nodeIntegrationInWorker: true,
@@ -18,19 +32,27 @@ let browserWindowOptions = {
 }
 
 let menuHide = new Menu();
+let curentWindow = null;
 
 let mainWindow = () => {
     let win = new BrowserWindow({
         width: 1800,
         height: 1000,
-        fullscreen: true,
         type: 'MainWindow',
+        frame: false,
+        fullscreen: true,
         ...browserWindowOptions
     });
 
-    win.loadFile('./index.html');
 
-    win.webContents.openDevTools()
+    // if(!isDev){ 
+    //     globalShortcut.register('Ctrl+Shift+I', () => {
+    //         return null;
+    //     })
+    // }
+
+
+    win.loadFile('./index.html');
     return win;
 }
 
@@ -43,8 +65,34 @@ if(isDev) {
 
 
 app.whenReady().then(() => {
-    const contents = mainWindow();
-    contents.webContents.on('did-finish-load', () => {
-        contents.webContents.send('get-device-info', true);
-    });
+    curentWindow = mainWindow();
+});
+
+ipcMain.on('restart-app', () => {
+    app.quit();
+});
+
+ipcMain.on('quit-app', () => {
+    app.quit();
+});
+
+ipcMain.on('print-invoice', () => {
+    var options = {
+        silent: true,
+        printBackground: true,
+        color: true,
+        margin: {
+            marginType: 'printableArea'
+        },
+        landscape: false,
+        pagesPerSheet: 1,
+        collate: false,
+        copies: 2,
+        header: 'AgriTech POS System',
+        footer: 'AgriTech POS System'
+    }
+
+    curentWindow.webContents.print(options, (success, failureReason) => {
+        curentWindow.webContents.send('reload', success ? success : failureReason);
+    })
 });

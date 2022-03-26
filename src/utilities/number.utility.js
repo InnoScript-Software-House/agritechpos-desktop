@@ -10,7 +10,19 @@ export const changeNumberFormat = (value, numberFormat, char) => {
 
     if(char) {
         for(let x=0; x<value.length; x++) {
-            charValue += char.filter(charData => Number(charData.set_number) === Number(value.charAt(x)))[0].set_char;
+            const charFilter = char.filter((charValue) => {
+                if(Number(charValue.set_number) === Number(value.charAt(x))) {
+                    return charValue.set_char;
+                }
+            });
+
+            if(charFilter.length > 0) {
+                charValue += charFilter[0].set_char;
+            }
+
+            if(charFilter.length === 0) {
+                charValue += '.';
+            }
         }
     }
 

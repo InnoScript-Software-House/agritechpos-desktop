@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { Button, Card, FormControl, InputGroup } from "react-bootstrap";
+import { Button, Card, FormControl, FormLabel, InputGroup } from "react-bootstrap";
 import { BsArrowCounterclockwise } from "react-icons/bs";
-import { t, zawgyi } from "../../utilities/translation.utility";
+import { useDispatch } from "react-redux";
+import { setOpenToastAction } from "../../redux/actions/toast.action";
+import { updateItem } from "../../services/item.service";
 
-export const EditItemComponent = ({ props, item }) => {
+export const EditItemComponent = ({ props, item, reload }) => {
 
-    const { lang } = props.reducer;
-    const dispatch = useDispath();
+    const { id } = props.match.params;
+
+    const dispatch = useDispatch();
 
     const [editItem, setEditItem] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [code, setCode] = useState('');
     const [eng_name, setEnName] = useState('');
     const [mm_name, setMMName] = useState('');
@@ -28,10 +32,47 @@ export const EditItemComponent = ({ props, item }) => {
         setItemLocation(item.location);
     }
 
-    const update = () => {
-        const requestBody = {
-            
+    const update = async () => {
+        if(!Number(qty)){
+            dispatch(setOpenToastAction('Update Item', 'Invalid qty', 'danger'))
+            return;
         }
+        
+        const requestBody = {
+            code: code,
+            eng_name: eng_name,
+            mm_name: mm_name,
+            model: model,
+            qty: qty,
+            price: price,
+            location: itemLocation
+        }
+
+        const fileds = Object.keys(requestBody);
+
+        fileds.map((field) => {
+            if(requestBody[field] === editItem[field]) {
+                delete requestBody[field];
+            }
+        });
+
+        if(Object.keys(requestBody).length > 0) {
+            setLoading(true);
+
+            const response = await updateItem(id, requestBody);
+
+            if(response && response.success === false) {
+                dispatch(setOpenToastAction('Item Update', response.message, 'danger'));
+                setLoading(false);
+                return;
+            }
+
+            dispatch(setOpenToastAction('Item Update', 'Item is updated', 'success'));
+            setLoading(false);
+            reload();
+        }
+
+        return;
     }
 
     useState(() => {
@@ -44,90 +85,90 @@ export const EditItemComponent = ({ props, item }) => {
         <Card>
             <Card.Header>
                 <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center"> 
-                    <span className={`${zawgyi(lang)}`}> {t('item-edit-title')} </span>
+                    <span className="title"> Update Item </span>
                     <BsArrowCounterclockwise size={20} className="btn-icon" onClick={() => setData()} />
                 </Card.Title>
             </Card.Header>
 
             { editItem && (
                 <Card.Body>
+                    <FormLabel> Material Code </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('item-code')}`}
-                            value={code}
+                            placeholder="Material Code"
+                            value={code || ''}
                             onChange={e => setCode(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> English Name </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-eng-name')}`}
-                            value={eng_name}
+                            placeholder="English Name"
+                            value={eng_name || ''}
                             onChange={e => setEnName(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> Myanmar Name </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-mm-name')}`}
-                            value={mm_name}
+                            placeholder="Myanmar Name"
+                            value={mm_name || ''}
                             onChange={e => setMMName(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> Model </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-model')}`}
-                            value={model}
+                            placeholder="Model"
+                            value={model || ''}
                             onChange={e => setModel(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> Qty </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
-                            type="number"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-qty')}`}
-                            value={qty}
+                            type="text"
+                            placeholder="Qty"
+                            value={qty || 0}
                             onChange={e => setQty(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> Price </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-price')}`}
-                            value={price}
+                            placeholder="Price"
+                            value={price || ''}
                             onChange={e => setPrice(e.target.value)}
                         />
                     </InputGroup>
 
+                    <FormLabel> Location </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            className={`${zawgyi(lang)}`}
-                            placeholder={`${t('input-item-create-location')}`}
-                            value={itemLocation}
+                            placeholder="Location"
+                            value={itemLocation || ''}
                             onChange={e => setItemLocation(e.target.value)}
                         />
                     </InputGroup>
                 </Card.Body>
             )}
 
-            <Card.Footer>
-                <Button className={`btn-small ${zawgyi(lang)}`} onClick={() => update()}>
-                    {t('item-update-btn')}
-                </Button>
-            </Card.Footer>
+            {editItem && (
+                <Card.Footer>
+                    <Button className="btn-small w-full" disabled={loading} onClick={() => update()}> Update </Button>
+                </Card.Footer>
+            )}
         </Card>
     );
 }

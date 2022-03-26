@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { SET_ACCEASS_TOEKN } from '../../redux/actionTypes';
 import { logout } from '../../services/auth.service';
 
 class LogoutPage extends Component {
@@ -15,8 +16,8 @@ class LogoutPage extends Component {
 
     async componentDidMount() {
         const { history } = this.props;
-        await logout();
-        localStorage.clear();
+        //await logout();
+        localStorage.removeItem(SET_ACCEASS_TOEKN);
 
         this.setState({
             is_loading: false
