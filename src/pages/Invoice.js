@@ -14,6 +14,7 @@ import moment from 'moment';
 import { paginationComponentOptions } from '../components/table/paginationOptions';
 import { InvoiceTableHeader } from '../components/table/invoiceTableHeader';
 import { autocomplete } from '../utilities/table.utility';
+import { itemExportToExcel } from '../utilities/exports/itemExport.utility';
 
 class InvoicePage extends Component {
     constructor(props) {
@@ -111,6 +112,10 @@ class InvoicePage extends Component {
         });
     }
 
+    exportInvoice(){
+        itemExportToExcel('Invoice List from'+this.state.start_date+'to'+this.state.end_date,this.state.invoices);
+    }
+
     async componentDidMount(){
         await this.loadingData();
     }
@@ -160,6 +165,9 @@ class InvoicePage extends Component {
                                             this.dateEndRangeHandler(e.target.value);
                                             }}
                                         />
+                                    </div>
+                                    <div className='d-md-flex flex-md-column ms-3'>
+                                        <Button className='btn btn-margin-top' onClick={() => this.exportInvoice()}> Export </Button>
                                     </div>
 
                                     <div className='d-md-flex flex-md-column ms-3'>
