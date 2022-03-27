@@ -113,7 +113,18 @@ class InvoicePage extends Component {
     }
 
     exportInvoice(){
-        itemExportToExcel('Invoice List from'+this.state.start_date+'to'+this.state.end_date,this.state.invoices);
+        const excelData = this.state.invoices.map(e => ({
+            invoice_no: e.invoice_no,
+            customer_name: e.customer_name,
+            customer_phone: e.customer_phone,
+            customer_email: e.customer_email,
+            customer_address: e.customer_address,
+            credit_amount: e.credit_amount,
+            total_amount: e.total_amount,
+            pay_amount: e.pay_amount,
+            discount: e.discount
+        }));
+        itemExportToExcel(this.state.start_date ==='' && this.state.end_date === ''?'Invoice List':'Invoice List from'+this.state.start_date+'to'+this.state.end_date,excelData);
     }
 
     async componentDidMount(){

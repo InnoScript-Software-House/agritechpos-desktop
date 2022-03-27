@@ -1,3 +1,4 @@
+import { orderBy, sortBy } from "lodash";
 import React, { useEffect, useState } from "react";
 import { Badge } from "react-bootstrap";
 import { BsArrowUpRightSquare, BsTrash } from "react-icons/bs";
@@ -17,6 +18,18 @@ export const itemColumns = (props) => {
     const dispatch = useDispatch();
 
     const [type, setType] = useState('');
+
+    const sortSellPrice = (rowA, rowB) => {
+        const sellPriceA = Number(rowA.price) + (Number(rowA.price) * (Number(rowA.qty/100)));
+        const sellPriceB = Number(rowB.price )+ (Number(rowB.price) * (Number(rowB.qty/100)));
+        if(Number(sellPriceA) > Number(sellPriceB)){
+            return 1;
+        }
+        if(Number(sellPriceA) < Number(sellPriceB)){
+            return -1;
+        }
+        return 0;
+    }
 
     const num = (value) => {
         return changeNumberFormat(value, numberFormat, char);
@@ -66,9 +79,9 @@ export const itemColumns = (props) => {
         },
         {
             name: <span className="database-header"> Qty </span>,
-            selector: row => numeral(row.qty).format('0,0'),
+            selector: row => row.qty,
             sortable: true,
-            width: "200px"
+            width: "200px",
         },
         {
             name: <span className="database-header"> Price(MMK) </span>,
@@ -91,7 +104,7 @@ export const itemColumns = (props) => {
         {
             name: <span className="database-header"> Sell Price(MMK) </span>,
             selector: row =>  `${numeral(Number(row.price) + (Number(row.price) * Number((row.percentage/100)))).format('0,0')} MMK`,
-            sortable: true,
+            sortFunction: (rowA, rowB) => sortSellPrice(rowA, rowB),
             width: "200px"
         },
         {
