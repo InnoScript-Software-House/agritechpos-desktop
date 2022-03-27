@@ -11,12 +11,12 @@ export const CreditTableComponent = ({data, retrive, refresh}) => {
 	const [currentRow, setCurrentRow] = useState(null);
 	const [start_date, setStartDAte] = useState('');
 	const [end_date, setEndDate] = useState('');
+	const [currentInvoice, setCurrentInvoice] = useState('');
 
 	const selectRowHandler = e => {
 		setCurrentRow(e);
 		retrive(e);
 	};
-	console.log(tableData);
 
 	const dateStartRangeHandler = start_date => {
 		const creditStart = tableData.filter(
@@ -91,8 +91,12 @@ export const CreditTableComponent = ({data, retrive, refresh}) => {
 			if (data) {
 				setTableData(data);
 			}
+			if ((refresh = true)) {
+				const newData = data.filter(e => e.invoice_no === currentInvoice);
+				retrive(newData);
+			}
 		},
-		[data]
+		[data, refresh]
 	);
 
 	return (
@@ -154,6 +158,13 @@ export const CreditTableComponent = ({data, retrive, refresh}) => {
 					selectableRowsSingle={true}
 					onSelectedRowsChange={e => {
 						selectRowHandler(e.selectedRows);
+						if (e.selectedCount === 1) {
+							return setCurrentInvoice(e.selectedRows[0].invoice_no);
+						} else {
+							setCurrentInvoice('');
+							retrive(null);
+							return;
+						}
 					}}
 					columns={CreditTableColumns()}
 					data={tableData}
