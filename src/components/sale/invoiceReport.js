@@ -26,13 +26,13 @@ export const InvoiceReportPage = () => {
 
 
     const saveInvoice = async () => {
-        if(invoice) {
+        if (invoice) {
             const requestBody = {
                 invoice_no: invoiceId,
                 customer_name: invoice.customer ? invoice.customer.name : null,
                 customer_phone: invoice.customer ? invoice.customer.phone : null,
                 customer_address: invoice.customer ? invoice.customer.address : null,
-                customer_email : invoice.customer ? invoice.customer.email : null,
+                customer_email: invoice.customer ? invoice.customer.email : null,
                 total_amount: invoice.totalAmount,
                 pay_amount: invoice.payAmount,
                 discount: invoice.discount,
@@ -42,7 +42,7 @@ export const InvoiceReportPage = () => {
 
             const response = await createInvoice(requestBody);
 
-            if(response && response.success === false) {
+            if (response && response.success === false) {
                 dispatch(setOpenToastAction('Invoice', response.message, 'danger'));
                 return;
             }
@@ -56,7 +56,7 @@ export const InvoiceReportPage = () => {
         const { print } = window.nativeApi;
 
         setDisplay('display');
-        
+
         await saveInvoice();
         await print.invoice();
         await print.reload((data) => {
@@ -68,15 +68,15 @@ export const InvoiceReportPage = () => {
     useEffect(async () => {
         const shopinfo = await getShop();
 
-        if(shopinfo && shopinfo.success === false) {
+        if (shopinfo && shopinfo.success === false) {
             dispatch(setOpenToastAction('Shop', shopinfo.success, 'danger'));
             return;
         }
 
-        setShop(shopinfo); 
+        setShop(shopinfo);
 
         const invoiceResponse = await getLastInvoice();
-        if(invoiceResponse && invoiceResponse.success === false) {
+        if (invoiceResponse && invoiceResponse.success === false) {
             dispatch(setOpenToastAction('Invoice', invoiceResponse.success, 'danger'));
             return;
         }
@@ -86,7 +86,7 @@ export const InvoiceReportPage = () => {
 
         let invoice_no = '';
 
-        for(let x=ivId.toString().length; x<6; x++) {
+        for (let x = ivId.toString().length; x < 6; x++) {
             invoice_no += '0';
         }
 
@@ -96,11 +96,11 @@ export const InvoiceReportPage = () => {
 
         const iData = JSON.parse(localStorage.getItem('INVOICE'));
         setInvoice(iData);
-    },[]);
+    }, []);
 
     return (
         <div className="container-fluid bg-clear">
-            { success === false && (
+            {success === false && (
                 <>
                     <div className="row">
                         <div className="d-md-flex flex-md-row justify-content-start mt-3">
@@ -109,7 +109,7 @@ export const InvoiceReportPage = () => {
                     </div>
 
                     <div className="row">
-                        { shop && invoice && (
+                        {shop && invoice && (
                             <>
                                 <div className="col-md-12 d-md-flex flex-md-row justify-content-between align-items-center mt-3 line mb-3">
                                     <div className="ps-3">
@@ -153,7 +153,7 @@ export const InvoiceReportPage = () => {
 
                                         <tbody>
                                             {invoice.bought_items.length > 0 && invoice.bought_items.map((value, index) => {
-                                                return(
+                                                return (
                                                     <tr key={`item_id_${index}`}>
                                                         <td className={`${zawgyi(lang)}`}> <small> {value.code} </small> </td>
                                                         <td className={`${zawgyi(lang)}`}> <small> {value.name} </small> </td>
@@ -169,7 +169,7 @@ export const InvoiceReportPage = () => {
 
                                     <div className="d-md-flex flex-md-row justify-content-between align-items-center mt-3 pt-3">
                                         <div className="">
-                                            { invoice && invoice.creditAmount === 0 && (
+                                            {invoice && invoice.creditAmount === 0 && (
                                                 <img className="paid-img align-self-end" src="build/assets/images/paid.png" />
                                             )}
                                         </div>
@@ -199,7 +199,7 @@ export const InvoiceReportPage = () => {
                                                 </tr>
 
                                                 <tr>
-                                                    <td colSpan={2}> 
+                                                    <td colSpan={2}>
                                                         <Button className={`btn btn-print-full mt-3 ${display}`} onClick={() => print()}> Print </Button>
                                                     </td>
                                                 </tr>
@@ -213,7 +213,7 @@ export const InvoiceReportPage = () => {
                 </>
             )}
 
-            { success && (
+            {success && (
                 <div className="row">
                     <div className="d-flex flex-column justify-content-center align-items-center hv-100">
                         <h1 className="thank-you"> Thank You </h1>
