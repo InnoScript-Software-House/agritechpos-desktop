@@ -6,6 +6,7 @@
     "customer-name" : "Name",
     "customer-phone" : "Phone",
     "customer-address" : "Customer Address",
+    "customer-email": "Customer Email",
     "item-code" : "Material Code",
     "item-name" : "Name",
     "item-model" : "Model",
@@ -19,6 +20,9 @@
     "invoice-net-amount" : "Net Amount",
     "input-customer-name-search" : "Search customer by name",
     "input-customer-name" : "Enter customer name",
+    "make-payment" : "Make Payment",
+    "save-invoice" : "Save Invoice",
+    "item-request" : "Item Request",
 
     "nav-sale": "Sale",
     "nav-dashboard": "Dashboard",
@@ -156,6 +160,10 @@
     "percentage" : "Percentage",
     "fix-amount" : "Fix Amount",
     "total-price" : "Total",
+
+    "open-invoice" : "Open Invoice",
+    "open-recent-invoice" : "Open Recent Invoice",
+    "invoice-label" : "Invoice",
 
     "dashboard-alert-shop-title": "Shop Information Need!",
     "dashboard-alert-shop-description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",

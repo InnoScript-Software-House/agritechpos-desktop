@@ -2,11 +2,18 @@ import numeral from "numeral";
 import React, { useEffect, useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { BsTrash } from "react-icons/bs";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
+import { t, zawgyi } from "../../utilities/translation.utility";
+import { v4 as uuidv4 } from 'uuid';
 
-const tableHeader = ['Material Code', 'Name', 'Model', 'Qty', 'Price', 'Total'];
+const tableHeader = [t('item-code'), t('item-name'), t('item-model'), t('item-qty'), t('item-price'), t('item-total')];
 
-export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }) => {
+export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, save }) => {
+    const history = useHistory();
+    const state = useSelector(state => state);
+    const { lang } = state;
 
     const [items, setItems] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
@@ -18,9 +25,7 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
         sell: 0,
         buy: 0
     });
-    const history = useHistory();
-    // const [ispaid, setIsPaid] = useState(true);
-    const [customer, setCustomer] = useState(null);
+   const [customer, setCustomer] = useState(null);
 
     const removeItem = (selectedItem) => {
         const removeItems = items.filter(item => item.code !== selectedItem.code);
@@ -38,36 +43,37 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
         setCreditAmount(updateCreditAmount);
     }
 
-    const makePayment = () => {
-    //     const { history } = this.props;
-    //     if(this.state.cartItems.length > 0){
-    //         this.setState({
-    //             payBtn: true
-    //         });
-            // if(!creditAmount === 0) {
-            //     setIsPaid(false);
-            // };
-            let iData = {
-                totalAmount: totalAmount,
-                discount: discount,
-                netAmount: netAmount,
-                creditAmount: creditAmount,
-                payAmount: payAmount,
-                customer: customer,
-                // isPaid: ispaid,
-                bought_items: items.map(e => e)
-            };
+    const makePayment = (type) => {
+        let iData = {
+            totalAmount: totalAmount,
+            discount: discount,
+            netAmount: netAmount,
+            creditAmount: creditAmount,
+            payAmount: payAmount,
+            customer: customer,
+            bought_items: items.map(e => e)
+        };
+
+        if(type === 'cash') {
             localStorage.setItem('INVOICE', JSON.stringify(iData));
             history.push('/invoiceReport');
-    //     this.setState({
-    //         payBtn: false
-    //     });
-    //     return;
+        }
+
+        if(type === 'save') {
+            const invoiceLists = localStorage.getItem('INVOICE_LIST') ? JSON.parse(localStorage.getItem('INVOICE_LIST')) : [];
+            iData.recent_id = uuidv4();
+            invoiceLists.push(iData);
+
+            localStorage.setItem('INVOICE_LIST', JSON.stringify(invoiceLists));
+            // window.location.reload();
+            save(invoiceLists);
+            return;
+        }
     }
 
     useEffect(() => {
         if(dataSource) {
-            setItems(dataSource)
+            setItems(dataSource);
         }
 
         if(total) {
@@ -90,7 +96,7 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
                             <th className="cart-item-table-hash-width"> # </th>
                             {tableHeader.map((header, index) => {
                                 return(
-                                    <th key={`header_id_${index}`} className="cart-item-table-with"> {header} </th>
+                                    <th key={`header_id_${index}`} className={`${zawgyi(lang)} cart-item-table-with`}> {header} </th>
                                 )
                             })}
                             
@@ -127,12 +133,12 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <td className="pe-3"> <h4> Total Amount </h4> </td>
+                                    <td className="pe-3"> <h4 className={`${zawgyi(lang)}`}> {t('invoice-total')} </h4> </td>
                                     <td className="pe-3"> <h4> {numeral(totalAmount).format('0,0')} MMK </h4> </td>
                                 </tr>
 
                                 <tr>
-                                    <td> <h4> Discount </h4> </td>
+                                    <td> <h4 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h4> </td>
                                     <td>
                                         <InputGroup>
                                             <FormControl 
@@ -150,7 +156,7 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
                                 </tr>
                                 
                                 <tr>
-                                    <td> <h4> Pay Amount </h4> </td>
+                                    <td> <h4 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h4> </td>
                                     <td>
                                         <InputGroup>
                                             <FormControl 
@@ -168,18 +174,19 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer }
                                 </tr>
 
                                 <tr>
-                                    <td className="pe-3"> <h4> Credit Amount </h4> </td>
+                                    <td className="pe-3"> <h4 className={`${zawgyi(lang)}`}> {t('invoice-credit-amount')} </h4> </td>
                                     <td className="pe-3"> <h4> {creditAmount} MMK </h4> </td>
                                 </tr>
 
                                 <tr>
-                                    <td className="pe-3"> <h4> Net Amount </h4> </td>
+                                    <td className="pe-3"> <h4 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h4> </td>
                                     <td className="pe-3"> <h4> {numeral(netAmount).format('0,0')} MMK </h4> </td>
                                 </tr>
 
                                 <tr>
                                     <td className="pe-3" colSpan={2}>
-                                        <Button className="btn w-full" onClick={() => makePayment()}> Make Payment</Button>
+                                        <Button className="btn w-full" onClick={() => makePayment('cash')}> {t('make-payment')} </Button>
+                                        <Button className="btn w-full mt-3" onClick={() => makePayment('save')}> {t('save-invoice')} </Button>
                                     </td>
                                 </tr>
                             </thead>

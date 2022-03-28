@@ -10,7 +10,8 @@ export const CustomerComponent = ({ input, retrive }) => {
     const [customerEmail, setCustomerEmail] = useState('');
     const [customerAddress, setCustomerAddress] = useState('');
 
-    const lang = useSelector(state => state.lang);
+    const state = useSelector(state => state);
+    const { lang } = state;
 
     const updateCustomerInfo = (e, type) => {
         let customer = {
@@ -44,16 +45,16 @@ export const CustomerComponent = ({ input, retrive }) => {
                 <FormControl 
                     className={`${zawgyi(lang)} me-3`}
                     type="text"
-                    placeholder="Customer name"
+                    placeholder={t('customer-name')}
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'name')}
                 />
 
                 <FormControl 
-                    className="me-3"
+                    className={`${zawgyi(lang)} me-3`}
                     type="text"
-                    placeholder="Enter Customer Phone Number"
+                    placeholder={t('customer-phone')}
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'phone')}
@@ -61,9 +62,9 @@ export const CustomerComponent = ({ input, retrive }) => {
                 />
 
                 <FormControl 
-                    className="me-3"
+                    className={`${zawgyi(lang)} me-3`}
                     type="text"
-                    placeholder="Enter Customer Email"
+                    placeholder={t('customer-email')}
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'email')}
@@ -73,7 +74,7 @@ export const CustomerComponent = ({ input, retrive }) => {
             <InputGroup className="mt-3">
                 <FormControl
                     as={'textarea'}
-                    placeholder="Enter Customer Address"
+                    placeholder={t('customer-address')}
                     value={customerAddress}
                     onChange={(e) => setCustomerAddress(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'address')}

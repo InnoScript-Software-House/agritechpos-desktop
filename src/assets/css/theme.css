@@ -37,7 +37,6 @@ body {
 /* Title & Header */
 .title {
   color: #01a3a6;
-  font-weight: 600;
 }
 
 /* Form, Input, Button */
@@ -789,4 +788,16 @@ margin-bottom: 10px;
 
 .btn-margin-top {
   margin-top: 27px!important;
+}
+
+/* Recent Invoice Component */
+.recent-invoice-wrapper {
+  border-bottom: 1px solid #17A2B8;
+  padding: 10px 10px 0px  10px;
+  cursor: pointer;
+}
+
+.recent-invoice-wrapper:hover {
+  background-color: rgba(23, 162, 184, 0.3);
+  color: #fff;
 }
