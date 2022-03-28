@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import {  Card } from "react-bootstrap";
+import {  Card, FormControl } from "react-bootstrap";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Navigation } from "../components/general/Navigation";
@@ -12,6 +12,8 @@ import { SaleVoucherInputComponent } from "../components/sale/saleVoucherInputCo
 import { SaleVoucherComponent } from "../components/sale/saleVocherComponent";
 import { t, zawgyi } from "../utilities/translation.utility";
 import { RecentInvoice } from "../components/sale/RecentInvoice";
+import { AutoCompleteDropDown } from "../components/general/autoCompleteDropDown";
+import { getInvoice } from "../services/invoice.service";
   
 class SalePage extends Component {
     constructor(props){
@@ -25,7 +27,7 @@ class SalePage extends Component {
                 sell: 0,
                 buy: 0
             },
-            saveInvoice: null
+            saveInvoice: null,
         };
     };
 
@@ -38,15 +40,16 @@ class SalePage extends Component {
             return;
         }
         
-        const customers = await getCustomerList();
+        const customers = await getInvoice();
         if(customers && customers.success === false) {
             openToast('Customer', customers.message, 'danger');
             return;
         }
+        const customerList = customers.filter(e => e.customer_name !== null);
 
         this.setState({
             items: response,
-            customers: customers
+            customers: customerList
         });
     }
 
@@ -102,12 +105,14 @@ class SalePage extends Component {
 
     getCustomer(e) {
         const customer = {
-            name: e.name,
-            phone: e.phone,
-            email: e.email,
-            address: e.address
+            name: e.customer_name,
+            phone: e.customer_phone,
+            email: e.customer_email,
+            address: e.customer_address
         }
-        this.setState({ customer: customer });
+        this.setState({ customer: customer});
+
+        console.log(this.state.customer);
     }
 
     getSaveInvoice(e) {
@@ -146,7 +151,20 @@ class SalePage extends Component {
                             <Card className="mt-3">
                                 <Card.Header>
                                     <Card.Title className={`${zawgyi(lang)} title`}>
-                                        {t('open-invoice')}
+                                        <div className="d-flex flex-row justify-content-between align-items-center">
+                                            <span> {t('open-invoice') }</span>
+                                            <div>
+                                            <AutoCompleteDropDown
+                                                dataSource={customers}
+                                                inputOption={{
+                                                    type: "text",
+                                                    placeholder: 'Customer Name',
+                                                    search_name: 'customer_name'
+                                                    }} 
+                                                chooseItem = {(e) => this.getCustomer(e)}
+                                                />
+                                            </div>
+                                        </div>
                                     </Card.Title>
                                 </Card.Header>
 
