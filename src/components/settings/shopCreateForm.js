@@ -19,17 +19,17 @@ export const CreateShopFormComponent = ({ retrive }) => {
     const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     const create = async () => {
-        if(name === '' || description === '' || phone === '' || email === '' || address === '') {
+        if(name === '' || description === '' || phone === '' || address === '') {
             return dispatch(setOpenToastAction('Create Shop', 'All fields are required','danger'));
         }
 
-        if(!checkphone.test(phone)) {
-            return dispatch(setOpenToastAction('Create Shop', 'Invalid phone number','danger'));
-        }
+        // if(!checkphone.test(phone)) {
+        //     return dispatch(setOpenToastAction('Create Shop', 'Invalid phone number','danger'));
+        // }
 
-        if(!pattern.test(email)) {
-            return dispatch(setOpenToastAction('Create Shop', 'Invalid email address','danger'));
-        }
+        // if(!pattern.test(email)) {
+        //     return dispatch(setOpenToastAction('Create Shop', 'Invalid email address','danger'));
+        // }
 
         const requestBody = {
             name: name,
