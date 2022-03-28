@@ -29,6 +29,8 @@ class CreditPage extends Component {
       credit_id: null,
       repayment_amount: "",
       refresh: false,
+      display: '',
+      isPrint: false
     };
   }
 
@@ -43,6 +45,23 @@ class CreditPage extends Component {
       credit_id: e,
       openAddRepayment: true,
     });
+  }
+
+  async print(){
+    this.setState({
+      display: 'display',
+      isPrint: true
+    });
+    const {print} = window.nativeApi;
+
+    await print.invoice();
+    await print.reload((data) => {
+      if(data === true) {
+          this.setState({
+              isPrint: false,
+          })
+      }
+  });
   }
 
   async save() {
@@ -77,7 +96,7 @@ class CreditPage extends Component {
     });
     return;
   }
-
+  
   async loadingData() {
     const response = await getCreditList();
     if (response && response.success === false) {
@@ -101,31 +120,50 @@ class CreditPage extends Component {
       openAddRepayment,
       repayment_amount,
       refresh,
+      isPrint
     } = this.state;
     return (
       <>
-        <Navigation props={this.props} />
+      {
+        !isPrint? (
+          <Navigation props={this.props} />
+        ):(<> </>)
+      }
 
         <div className="container-fluid">
           <div className="row mt-3">
             <div className="col-md-4">
               {!refresh ? (
+                <div>
                 <CreditDetailComponent
                   data={creditDetail}
                   addRepayment={(e) => this.addRepayment(e)}
                 />
+                {
+                  !isPrint? (
+                    <Button className="mt-2" onClick={() => this.print()}> Print </Button>
+                  ): (
+                    <>
+                    </>
+                  )
+                }
+                </div>
               ) : (
                 <>loading</>
               )}
             </div>
 
-            <div className="col-md-8">
-              <CreditTableComponent
-                data={credits}
-                retrive={(e) => this.getCreditDetail(e)}
-                refresh={refresh}
-              />
-            </div>
+            {!isPrint? (
+                <div className="col-md-8">
+                  <CreditTableComponent
+                    data={credits}
+                    retrive={(e) => this.getCreditDetail(e)}
+                    refresh={refresh}
+                  />
+                </div>
+            ):(
+              <></>
+            )}
           </div>
         </div>
 

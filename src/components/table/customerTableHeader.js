@@ -10,10 +10,22 @@ const CustomerTableHeaderComponent = ({dataSource, searchColumns, filterResult, 
     const [isSelected, setIsSelected] = useState(false);
     const [excelData, setExcelData] = useState([]);
 
+    const paidCount = (e) => {
+        let repayment = JSON.parse(e.credit.repayment);
+        let paidCount = repayment.length;
+        return paidCount;
+    }
+
     const exportToExcel = () => {
-        // const data = selectedRows.map(e => e);
-        // console.log(data)
-        itemExportToExcel('customerlist', selectedRows);
+        const excelData = selectedRows.map(e => ({
+            name: e.customer_name,
+            email: e.customer_email,
+            phone_number: e.customer_phone,
+            credit: e.credit_amount,
+            paid_count: paidCount(e),
+            total_amount: e.total_amount
+        }));
+        itemExportToExcel('customerlist', excelData);
     }
 
     const completeFilter = (type) => {

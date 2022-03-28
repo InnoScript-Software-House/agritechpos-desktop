@@ -39,7 +39,7 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
     //     }
     // },[data]);
 
-      if (totalPayAmount > data[0].amount) {
+      if (totalPayAmount >= data[0].invoice.total_amount) {
         setIsRepayment(true);
       } else setIsRepayment(false);
     }
