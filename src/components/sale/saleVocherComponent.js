@@ -8,7 +8,7 @@ import moment from "moment";
 import { t, zawgyi } from "../../utilities/translation.utility";
 import { v4 as uuidv4 } from 'uuid';
 
-const tableHeader = [t('item-code'), t('item-name'), t('item-model'), t('item-qty'), t('item-price'), t('item-total')];
+const tableHeader = [t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('item-total')];
 
 export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, save }) => {
     const history = useHistory();
@@ -108,9 +108,8 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
                             return(
                                 <tr key={`cart_item_id_${index}`}>
                                     <td className="cart-item-table-hash-width"> {index + 1} </td>
-                                    <td className="cart-item-table-with"> {item.name} </td> 
-                                    <td className="cart-item-table-with"> {item.model} </td>
                                     <td className="cart-item-table-with"> {item.code} </td>
+                                    <td className="cart-item-table-with"> {item.name} </td> 
                                     <td className="cart-item-table-with"> {item.requestQty} </td>
                                     <td className="cart-item-table-with"> {numeral(item.sell_price).format('0,0')} MMK </td>
                                     <td className="cart-item-table-with"> 
