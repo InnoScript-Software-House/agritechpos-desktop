@@ -48,11 +48,39 @@ export const itemColumns = (props) => {
             width: "50px"
         },
         {
-            name: <span className="database-header"> Category </span>,
-            selector: row => row.category_title,
+            name: <span className="database-header"> Option </span>,
+            selector: (row) => {
+               return(
+                   <>
+                        <BsArrowUpRightSquare 
+                            size={20} 
+                            className="icon-btn-outline"
+                            onClick={() => history.push(`/item/${row.id}`)}
+                        />
+
+                        <BsTrash 
+                            size={20} 
+                            className="icon-btn-outline ms-3" 
+                            onClick={() => dispatch(setOpenDelModal({
+                                open: true,
+                                title: 'Delete Record',
+                                message: 'Are you sure to delete record',
+                                id: row.id,
+                                type: 'items'
+                            }))}
+                        />
+                   </>
+               )
+            },
             sortable: true,
             width: "200px"
         },
+        // {
+        //     name: <span className="database-header"> Category </span>,
+        //     selector: row => row.category_title,
+        //     sortable: true,
+        //     width: "200px"
+        // },
         {
             name: <span className="database-header"> Material Code </span>,
             selector: row => row.code,
@@ -113,40 +141,13 @@ export const itemColumns = (props) => {
             sortable: true,
             width: "200px"
         },
-        {
-            name: <span className="database-header"> Status </span>,
-            selector: row => <Badge bg={row.active ? 'success' : 'danger'}> {row.active ? 'Publish' : 'Unpublished'} </Badge>,
-            sortable: true,
-            width: "200px"
-        },
-        {
-            name: <span className="database-header"> Option </span>,
-            selector: (row) => {
-               return(
-                   <>
-                        <BsArrowUpRightSquare 
-                            size={20} 
-                            className="icon-btn-outline"
-                            onClick={() => history.push(`/item/${row.id}`)}
-                        />
-
-                        <BsTrash 
-                            size={20} 
-                            className="icon-btn-outline ms-3" 
-                            onClick={() => dispatch(setOpenDelModal({
-                                open: true,
-                                title: 'Delete Record',
-                                message: 'Are you sure to delete record',
-                                id: row.id,
-                                type: 'items'
-                            }))}
-                        />
-                   </>
-               )
-            },
-            sortable: true,
-            width: "200px"
-        }
+        // {
+        //     name: <span className="database-header"> Status </span>,
+        //     selector: row => <Badge bg={row.active ? 'success' : 'danger'}> {row.active ? 'Publish' : 'Unpublished'} </Badge>,
+        //     sortable: true,
+        //     width: "200px"
+        // },
+        
     ];
 
     if(type === 'category') {

@@ -7,7 +7,7 @@ import { paginationComponentOptions } from '../table/paginationOptions';
 import { TableHeaderComponent } from '../table/tableHeader';
 import { TableLoadingComponent } from '../table/tableLoading';
 
-const searchColumns = [ 'code', 'eng_name', 'mm_name', 'category_title', 'location', 'model' ];
+const searchColumns = [ 'code', 'eng_name', 'mm_name', 'category_title', 'location' ];
 
 export const ItemListTableComponent = ({ props, dataSource, reload }) => {
 	const [ tableLoading, setTableLoading ] = useState(true);

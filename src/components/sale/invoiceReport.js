@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { zawgyi, t } from "../../utilities/translation.utility";
 
-const tableHeader = [t('item-code'), t('item-name'), t('item-model'), t('item-qty'), t('item-price'), t('item-total')];
+const tableHeader = [t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('item-total')];
 
 export const InvoiceReportPage = () => {
 
@@ -157,7 +157,6 @@ export const InvoiceReportPage = () => {
                                                     <tr key={`item_id_${index}`}>
                                                         <td className={`${zawgyi(lang)}`}> <small> {value.code} </small> </td>
                                                         <td className={`${zawgyi(lang)}`}> <small> {value.name} </small> </td>
-                                                        <td className={`${zawgyi(lang)}`}> <small> {value.model} </small> </td>
                                                         <td className={`${zawgyi(lang)}`}> <small> {value.requestQty} </small> </td>
                                                         <td className={`${zawgyi(lang)}`}> <small> {numeral(value.sell_price).format('0,0')} MMK </small> </td>
                                                         <td className={`${zawgyi(lang)}`}> <small> {numeral(value.totalAmount).format('0,0')} MMK </small> </td>
