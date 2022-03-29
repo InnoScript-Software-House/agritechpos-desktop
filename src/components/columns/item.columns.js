@@ -1,6 +1,6 @@
-import { orderBy, sortBy } from "lodash";
+// import { orderBy, sortBy } from "lodash";
+// import { Badge } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-import { Badge } from "react-bootstrap";
 import { BsArrowUpRightSquare, BsTrash } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -72,8 +72,7 @@ export const itemColumns = (props) => {
                    </>
                )
             },
-            sortable: true,
-            width: "200px"
+            sortable: false
         },
         // {
         //     name: <span className="database-header"> Category </span>,
@@ -85,13 +84,13 @@ export const itemColumns = (props) => {
             name: <span className="database-header"> Material Code </span>,
             selector: row => row.code,
             sortable: true,
-            width: "200px"
+            width: "250px"
         },
         {
             name: <span className="database-header"> English Name </span>,
             selector: row => row.eng_name,
             sortable: true,
-            width: "200px"
+            width: "250px"
         },
         // {
         //     name: <span className="database-header"> Myanmar Name </span>,
@@ -108,38 +107,32 @@ export const itemColumns = (props) => {
         {
             name: <span className="database-header"> Qty </span>,
             selector: row => row.qty,
-            sortable: true,
-            width: "200px",
+            sortable: true
         },
         {
             name: <span className="database-header"> Price(MMK) </span>,
             selector: row => num(row.price),
-            sortable: true,
-            width: "200px"
+            sortable: true
         },
         {
             name: <span className="database-header"> Total Price(MMK) </span>,
             selector: row => `${numeral(row.price * row.qty).format('0,0')} MMK`,
-            sortable: true,
-            width: "200px"
+            sortable: true
         },
         {
             name: <span className="database-header"> Sell Percentage </span>,
             selector: row => row.percentage,
-            sortable: true,
-            width: "200px"
+            sortable: true
         },
         {
             name: <span className="database-header"> Sell Price(MMK) </span>,
             selector: row =>  `${numeral(Number(row.price) + (Number(row.price) * Number((row.percentage/100)))).format('0,0')} MMK`,
             sortFunction: (rowA, rowB) => sortSellPrice(rowA, rowB),
-            width: "200px"
         },
         {
             name: <span className="database-header"> Location </span>,
             selector: row => row.location,
-            sortable: true,
-            width: "200px"
+            sortable: true
         },
         // {
         //     name: <span className="database-header"> Status </span>,

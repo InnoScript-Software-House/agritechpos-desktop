@@ -10,6 +10,10 @@ const menus = [
         "label": "Number Specification",
         "component": "NumberSpecificationComponent"
     },
+    {
+        "label" : "Invoice",
+        "component" : "InvoiceComponent"
+    }
     // {
     //     "label": "Device",
     //     "component": "DeviceComponent"

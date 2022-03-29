@@ -43,18 +43,27 @@ class SalePage extends Component {
         }
         
         const customers = await getInvoice();
+
         if(customers && customers.success === false) {
             openToast('Customer', customers.message, 'danger');
             return;
         }
+
         const customerList = customers.filter(e => e.customer_name !== null);
+        const data = this.getUniqueListBy(customerList, 'customer_phone');
+
+        console.log(data);
 
         this.setState({
             items: response,
-            customers: customerList
+            customers: data
         });
     }
 
+    getUniqueListBy(arr, key) {
+        return [...new Map(arr.map(item => [item[key], item])).values()]
+    }
+    
     addItem(item) {
         const { requestItems } = this.state;
         const existItem = requestItems.filter(value => value.code === item.code);
@@ -173,7 +182,7 @@ class SalePage extends Component {
                                                 inputOption={{
                                                     type: "text",
                                                     placeholder: t('customer-name'),
-                                                    search_name: t('customer-name')
+                                                    search_name: t('customer_name')
                                                 }}
                                                 chooseItem = {(e) => this.getCustomer(e)}
                                             />
@@ -196,7 +205,11 @@ class SalePage extends Component {
 
                                     <div className="d-md-flex flex-column mb-3">
                                         <h3 className={`${zawgyi(lang)} mt-3 mb-3`}> {t('invoice-label')} </h3>
-                                        <CustomerComponent className="mt-3" input={customer} retrive={(e) => this.setState({ customer: e })} />
+                                        <CustomerComponent 
+                                            className="mt-3" 
+                                            input={customer} 
+                                            retrive={(e) => this.setState({ customer: e })} 
+                                        />
                                     </div>  
 
                                     <SaleVoucherComponent 
