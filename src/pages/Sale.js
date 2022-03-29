@@ -132,11 +132,22 @@ class SalePage extends Component {
         return(
             <>
                 <Navigation props={this.props} />
+                
+                <div className="container-fluid">
+                    <div className="row mt-3">
+                        <div className="col-md-12">
+                            <Button className="btn btn-small" onClick={() => this.setState({
+                                openRecentInvoice: !openRecentInvoice
+                            })}> 
+                                {openRecentInvoice ? 'Close Recent Invoice' : 'Open Recent Invoice'} 
+                            </Button>
+                        </div>
+                    </div>
+                </div>
 
                 <div className="container-fluid">
                     <div className="row">
-                        <Button> {openRecentInvoice ? 'Close Recent Invoice' : 'Open Recent Invoice'} </Button>
-                        { openRecentInvoice && (
+                        {openRecentInvoice && (
                             <div className="col-md-3 mt-3">
                                 <RecentInvoice dataSource={saveInvoice} retrive={(e) => {
                                     this.setState({
