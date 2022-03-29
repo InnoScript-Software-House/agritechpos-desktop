@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { zawgyi, t } from "../../utilities/translation.utility";
 
-const tableHeader = [t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('item-total')];
+const tableHeader = ['No', t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('item-total')];
 
 export const InvoiceReportPage = () => {
 
@@ -107,108 +107,84 @@ export const InvoiceReportPage = () => {
                             <BsArrowLeftCircle size={30} className={`btn-icon ${display}`} onClick={() => history.push('/sale')} />
                         </div>
                     </div>
-
                     <div className="row">
+                        <h3> Inovice. {invoiceId}</h3>
+                    </div>
+                    <table className="table solid-border">
                         {shop && invoice && (
                             <>
-                                <div className="col-md-12 d-md-flex flex-md-row justify-content-between align-items-center mt-3 line mb-3">
-                                    <div className="ps-3">
-                                        <h4 className={`${zawgyi(lang)}`}> {shop.name} - {shop.description} </h4>
-                                        <p className={`${zawgyi(lang)}`}> {shop.address} </p>
-                                    </div>
-
-                                    <div className="d-flex flex-column mt-3 pe-3">
-                                        <span className={`${zawgyi(lang)}`}> <small> {t('shop-phone')} - {shop.phone} </small> </span>
-                                        <span className={`${zawgyi(lang)}`}> <small> {t('shop-email')} - {shop.email} </small> </span>
-                                    </div>
-                                </div>
-
-                                <div className="col-md-12 mt-3 ps-3">
-                                    <div className="d-md-flex flex-row justify-content-between align-items-center mb-3">
-                                        <div className="invoice-info">
-                                            <h4 className={`${zawgyi(lang)}`}> {t('invoice')} - AT{invoiceId} </h4>
-                                            <small className={`${zawgyi(lang)}`}> {t('invoice-date')} - {moment().format('Y-MM-DD')} </small>
-                                        </div>
-
-                                        <div className="customer-info">
-                                            <div className="mt-3 pe-3">
+                                <thead>
+                                    <tr className="solid-border">
+                                        <td colSpan={6} align='center'>
+                                            <h4 className={`${zawgyi(lang)}`}>{shop.name}</h4>
+                                            <h5 className={`${zawgyi(lang)}`}>{shop.description}</h5>
+                                            <h6 className={`${zawgyi(lang)}`}>{shop.address}</h6>
+                                            <h6 className={`${zawgyi(lang)}`}>phone : {shop.phone}</h6>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="solid-border" colSpan={3} align='justify'>
+                                            To
                                                 <h6 className={`${zawgyi(lang)}`}> {t('customer-name')}: {invoice.customer && invoice.customer.name} </h6>
                                                 <h6 className={`${zawgyi(lang)}`}> {t('customer-phone')} : {invoice.customer && invoice.customer.phone} </h6>
                                                 <h6 className={`${zawgyi(lang)}`}> {t('customer-address')} : {invoice.customer && invoice.customer.address} </h6>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <table className="table mb-3 pb-3">
-                                        <thead>
-                                            <tr>
-                                                {tableHeader.map((thHeader, index) => {
-                                                    return (
-                                                        <th key={`table_header_id_${index}`} className={`${zawgyi(lang)}`}> <small> {thHeader} </small> </th>
+                                        </td>
+                                        <td className="solid-border" colSpan={3} align='right'>
+                                            Date: <small className={`${zawgyi(lang)}`}>{moment().format('DD,MM,YYYY')} </small><br/>
+                                            Invoice: <small>#{invoiceId}</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        {tableHeader.map((thHeader, index) => {
+                                            return (
+                                                    <th key={`table_header_id_${index}`} className={`${zawgyi(lang)} solid-border`}> <small> {thHeader} </small> </th>
                                                     )
-                                                })}
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            {invoice.bought_items.length > 0 && invoice.bought_items.map((value, index) => {
-                                                return (
-                                                    <tr key={`item_id_${index}`}>
-                                                        <td className={`${zawgyi(lang)}`}> <small> {value.code} </small> </td>
-                                                        <td className={`${zawgyi(lang)}`}> <small> {value.name} </small> </td>
-                                                        <td className={`${zawgyi(lang)}`}> <small> {value.requestQty} </small> </td>
-                                                        <td className={`${zawgyi(lang)}`}> <small> {numeral(value.sell_price).format('0,0')} MMK </small> </td>
-                                                        <td className={`${zawgyi(lang)}`}> <small> {numeral(value.totalAmount).format('0,0')} MMK </small> </td>
-                                                    </tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                    </table>
-
-                                    <div className="d-md-flex flex-md-row justify-content-between align-items-center mt-3 pt-3">
-                                        <div className="">
-                                            {invoice && invoice.creditAmount === 0 && (
-                                                <img className="paid-img align-self-end" src="build/assets/images/paid.png" />
-                                            )}
-                                        </div>
-                                        <div className="d-md-flex flex-md-center justify-content-end">
-                                        </div>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-total')} </h6> </td>
-                                                    <td className="w-200"> <h6> {numeral(invoice.totalAmount).format('0,0')} MMK </h6> </td>
+                                        })}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        {invoice.bought_items.length > 0 && invoice.bought_items.map((value, index) => {
+                                            return (
+                                                <tr className="solid-border" key={`item_id_${index}`}>
+                                                    <td className={`${zawgyi(lang)} solid-border`}><small>{index +1}</small></td>
+                                                    <td className={`${zawgyi(lang)} solid-border`}> <small> {value.code} </small> </td>
+                                                    <td className={`${zawgyi(lang)} solid-border`}> <small> {value.name} </small> </td>
+                                                    <td className={`${zawgyi(lang)} solid-border`}> <small> {value.requestQty} </small> </td>
+                                                    <td className={`${zawgyi(lang)} solid-border`}> <small> {numeral(value.sell_price).format('0,0')} MMK </small> </td>
+                                                    <td className={`${zawgyi(lang)} solid-border`}> <small> {numeral(value.totalAmount).format('0,0')} MMK </small> </td>
                                                 </tr>
-                                                <tr>
-                                                    <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h6> </td>
-                                                    <td className="w-200"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h6> </td>
-                                                    <td className="w-200"> <h6> {numeral(invoice.payAmount).format('0,0')} MMK </h6> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-credit-amount')} </h6> </td>
-                                                    <td className="w-200"> <h6> {numeral(invoice.creditAmount).format('0,0')} MMK </h6> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h6> </td>
-                                                    <td className="w-200"> <h6> {numeral(invoice.netAmount).format('0,0')} MMK </h6> </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colSpan={2}>
-                                                        <Button className={`btn btn-print-full mt-3 ${display}`} onClick={() => print()}> Print </Button>
-                                                    </td>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                            </>
+                                            )
+                                        })}
+                                        <tr>
+                                            <td colSpan={4} className='no-border' />
+                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`} > {t('invoice-total')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.totalAmount).format('0,0')} MMK </h6> </td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan={4} className='no-border' />
+                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
+                                        </tr>
+                                        {/* <tr>
+                                            <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h6> </td>
+                                            <td className="w-200"> <h6> {numeral(invoice.payAmount).format('0,0')} MMK </h6> </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-credit-amount')} </h6> </td>
+                                            <td className="w-200"> <h6> {numeral(invoice.creditAmount).format('0,0')} MMK </h6> </td>
+                                        </tr> */}
+                                        <tr>
+                                            <td colSpan={4} className="no-border" />
+                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.netAmount).format('0,0')} MMK </h6> </td>
+                                        </tr>
+                                </tbody>        
+                            </>             
                         )}
-                    </div>
+                    </table>
+                        <div className="d-flex flex-row justify-content-end">
+                            <Button className={`btn btn-print mt-3 w-25${display}`} onClick={() => print()}> Print </Button>
+                        </div> 
                 </>
             )}
 
