@@ -24,7 +24,6 @@ export const RecentInvoice = ({ dataSource, retrive}) => {
     }
 
     const openInvoice = (invoice) => {
-        
         deleteInvoice(invoice);
         retrive(invoice);
     }
@@ -43,7 +42,9 @@ export const RecentInvoice = ({ dataSource, retrive}) => {
             <Card.Header>
                 <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center">
                     <span className={`${zawgyi(lang)} title`}> {t('open-recent-invoice')} </span>
-                    <Button className="btn-small" onClick={() => deleteAll()}> Delete All </Button>
+                    {invoiceList.length > 0 && (
+                        <Button className="btn-small" onClick={() => deleteAll()}> Delete All </Button>
+                    )}
                 </Card.Title>
             </Card.Header>
 
