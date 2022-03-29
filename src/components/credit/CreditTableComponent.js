@@ -170,6 +170,8 @@ export const CreditTableComponent = ({data, retrive, refresh}) => {
 					data={tableData}
 					pagination
 					paginationComponentOptions={paginationComponentOptions}
+					paginationPerPage={50}
+					paginationRowsPerPageOptions={[50, 100, 150, 200, 500]}
 				/>
 			</Card.Body>
 		</Card>

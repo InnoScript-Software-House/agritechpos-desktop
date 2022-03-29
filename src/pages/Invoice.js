@@ -225,6 +225,8 @@ class InvoicePage extends Component {
                                             this.invoiceDataHandler(e.selectedRows)
                                         }
                                         selectableRowsSingle={true}
+                                        paginationPerPage={50}
+                                        paginationRowsPerPageOptions={[50, 100, 150, 200, 500]}
                                     />
                                 </Card.Body>
                             </Card>

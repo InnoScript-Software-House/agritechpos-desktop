@@ -12,7 +12,7 @@ import { getItems } from '../services/item.service';
 import { DeleteDialog } from '../components/general/deleteDialog';
 import { setOpenToastAction } from '../redux/actions/toast.action';
 import { CountCard } from '../components/general/CountCard';
-import numeral, { Numeral } from 'numeral';
+import numeral from 'numeral';
 
 class InventoryPage extends Component {
 
@@ -26,7 +26,8 @@ class InventoryPage extends Component {
             totalItemSellList: 0,
             totalProfitList: 0,
             totalQtyList: 0,
-            totalSellPriceList: 0
+            totalSellPriceList: 0,
+            outOfStock: 0,
         }
     }
     
@@ -64,22 +65,23 @@ class InventoryPage extends Component {
             const priceTotalList = items.map(e => Number(e.total))
             const totalPrice = priceTotalList.reduce((a , b) => a + b , 0)
 
-            const sellPrice = items.map( e => e = Number(e.price) + (Number(e.price) * (Number(e.percentage / 100))));
+            const sellPrice = items.map( e => e = (Number(e.price) + Number(e.sell_price)) * Number(e.qty));
             const sellPriceList = sellPrice.reduce((a, b) => a + b ,0)
 
-
-            const profitTotalPrice = items.map(e => Number(e.sell_price))
-            const profitTotal = profitTotalPrice.reduce((a,b) => a + b , 0)
+            const profitTotal = Number(sellPriceList) - Number(totalPrice);
 
             const totalItemQty = items.map(e => Number(e.qty) )
-            const totalQty = totalItemQty.reduce((a , b) => a + b , 0 )
+            const totalQty = totalItemQty.reduce((a , b) => a + b , 0);
+
+            const getZeroQty = items.map(e => Number(e.qty) === 0);
 
             this.setState({ 
                 items: itemList,
                 totalItemPriceList: numeral(totalPrice).format('0,0') + ' MMK',
                 totalSellPriceList: numeral(sellPriceList).format('0,0') + ' MMK',
                 totalProfitList: numeral(profitTotal).format('0,0') + ' MMK',
-                totalQtyList: numeral(totalQty).format('0,0') + ' AMOUNT',
+                totalQtyList: numeral(totalQty).format('0,0') + ' Items',
+                outOfStock: numeral(getZeroQty.reduce((a,b) => a+b, 0)).format('0,0') + ' Items'
             });
             return;
         }
@@ -93,72 +95,35 @@ class InventoryPage extends Component {
 
     render() {
         const { delModal } = this.props.reducer;
-        const { categories, items, openCreateItem , totalItemPriceList , totalItemSellList, totalProfitList , totalQtyList, totalSellPriceList} = this.state;
+        const { categories, items, openCreateItem , totalItemPriceList, totalProfitList , totalQtyList, totalSellPriceList, outOfStock} = this.state;
         const { history } = this.props;
 
         return(
             <>
                 <Navigation props={this.props} />
 
-               
-
                 <div className='container-fluid'>
-                    <div className='row'>
-                        <div className='col-md-12'>
-                            <div className='d-md-flex flex-md-row justify-content-start align-items-center'>
-                                <Button
-                                    className='btn-small mt-3 me-3'
-                                    onClick={() => this.setState({
-                                        openCreateItem: !openCreateItem
-                                    })}
-                                >
-                                    {openCreateItem ? (<BsEyeSlash size={20} />) :  <BsEye size={20} />}
-                                    <span className='me-3'> {openCreateItem ? 'Hide Create Item From' : 'Show Create Item Form'} </span>
-                                </Button>
+                    <div className='row justify-content-start mt-3'>
+                        <div className='col-3'>
+                            <CountCard props={this.props} label="Total Amount" color="rgb(255, 218, 108, 1)" count={totalItemPriceList} />
+                        </div>
 
-                                <Button
-                                    className='btn-small mt-3 ms-3'
-                                    onClick={() => history.push('/category')}
-                                >
-                                    <BsListTask size={20} />
-                                    <span className='me-3'> Category List </span>
-                                </Button>
-                            </div>
+                        <div className='col-3'>
+                            <CountCard  props={this.props} label="Total Sell Amount" color="rgb(108, 147, 39, 1)" count={totalSellPriceList} />
+                        </div>
+
+                        <div className='col-3'>
+                            <CountCard props={this.props} label="Total Qty" color="rgb(23, 162, 184,1)" count={totalQtyList} />
+                        </div>
+
+                        <div className='col-3'>
+                            <CountCard props={this.props} label="Profit" color="rgba(114, 196, 84,1)" count={totalProfitList} />
                         </div>
                     </div>
 
                     <div className='row justify-content-start mt-3'>
                         <div className='col-3'>
-                        <CountCard 
-                            props={this.props}
-                            label="Total Price"
-                            color="rgba(255,69,70,1)"
-                            count={totalItemPriceList}
-                        />
-                        </div>
-                        <div className='col-3'>
-                        <CountCard 
-                            props={this.props}
-                            label="Total Sell Price"
-                            color="rgba(255,69,70,1)"
-                            count={totalSellPriceList}
-                        />
-                        </div>
-                        <div className='col-3'>
-                        <CountCard 
-                            props={this.props}
-                            label="Qty Total Price"
-                            color="rgba(255,69,70,1)"
-                            count={totalQtyList}
-                        />
-                        </div>
-                        <div className='col-3'>
-                        <CountCard 
-                            props={this.props}
-                            label="Profit Total Price"
-                            color="rgba(255,69,70,1)"
-                            count={totalProfitList}
-                        />
+                            <CountCard props={this.props} label="Out Of Stock" color="rgba(229, 64, 64,1)" count={outOfStock} />
                         </div>
                     </div>
 
@@ -174,7 +139,15 @@ class InventoryPage extends Component {
                         )}
 
                         <div className={openCreateItem ? 'col-md-10' : 'col-md-12'}>
-                            <ItemListTableComponent props={this.props} dataSource={items} reload={(e) => this.loadingData('item')} />
+                            <ItemListTableComponent 
+                                props={this.props} 
+                                dataSource={items} 
+                                reload={(e) => this.loadingData('item')} 
+                                openCreateItem={openCreateItem} 
+                                open={(e) => this.setState({
+                                    openCreateItem: e
+                                })}
+                            />
                         </div>
                     </div>
                 </div>

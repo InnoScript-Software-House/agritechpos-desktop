@@ -9,6 +9,7 @@ import { createInvoice, getLastInvoice } from "../../services/invoice.service";
 import { useHistory } from "react-router-dom";
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { zawgyi, t } from "../../utilities/translation.utility";
+import { printOptions } from "../../utilities/print.utility";
 
 const tableHeader = ['No', t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('item-total')];
 

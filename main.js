@@ -1,19 +1,5 @@
-const {BrowserWindow, app, Menu, globalShortcut, ipcMain} = require('electron');
-
+const {BrowserWindow, app, Menu, ipcMain} = require('electron');
 const path = require('path');
-
-const printOptions = {
-	silent: false,
-	pageSize: 'A4',
-	printBackground: false,
-	color: false,
-	margin: {
-		marginType: 'printableArea'
-	},
-	landscape: false,
-	pagesPerSheet: 1,
-	collate: false
-};
 
 const isDev = !app.isPackaged;
 let webPreferences = {
@@ -38,8 +24,8 @@ let mainWindow = () => {
 		width: 1800,
 		height: 1000,
 		type: 'MainWindow',
-		frame: false,
-		fullscreen: true,
+		frame: true,
+		fullscreen: false,
 		...browserWindowOptions
 	});
 

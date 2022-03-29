@@ -772,7 +772,7 @@ input[type="number"]:focus,
 }
 
 .countcardfooter {
-	background-color: #148a9d !important;
+	background-color: #148a9d;
 }
 
 .countcardbtn {

@@ -2,12 +2,12 @@ import React from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { FaArrowCircleRight } from "react-icons/fa";
 
-export const CountCard = ({ props, count, label, url, urlLabel }) => {
+export const CountCard = ({ props, count, label, url, urlLabel, color }) => {
     const { history } = props;
 
     return (
-        <Card>
-            <Card.Body className='countcardbody'>
+        <Card className="countcardbody" style={{ backgroundColor: color }}>
+            <Card.Body>
                 <div className='d-md-flex flex-md-row justify-content-start align-items-start'>
                     <div className='col-md mb-1'>
                         <h1 className='mb-1 text-white'> {count} </h1>

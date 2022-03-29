@@ -4,11 +4,11 @@ import { Language } from "./Language";
 import { AppToast } from "./toasts";
 
 const menus = [
-    { label: "Dashboard", url: "/dashboard"},
+    // { label: "Dashboard", url: "/dashboard"},
     { label: "Sale", url: "/sale"},
     { label: "Inventory", url: "/inventory"},
     { label: "Invoice", url: "/invoice"},
-    // { label: "Credit", url: "/credit" },
+    { label: "Credit", url: "/credit" },
     { label: "Customer", url: "/customer"},
     { label: "Profile", url: "/profile"},
     { label: "Account", url: "/account"},
