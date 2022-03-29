@@ -16,7 +16,9 @@ export const CountCard = ({ props, count, label, url, urlLabel }) => {
                 </div>
             </Card.Body>
 
-            <Card.Footer className='countcardfooter'>
+
+            { url && (
+                <Card.Footer className='countcardfooter'>
                 <div className='d-md-flex flex-md-row justify-content-center align-items-center'>
                     <Button onClick={() => history.push(url)} className='countcardbtn'>
                         <span className='me-1 text-white'> { urlLabel } </span>
@@ -25,6 +27,7 @@ export const CountCard = ({ props, count, label, url, urlLabel }) => {
                     </Button>
                 </div>
             </Card.Footer>
+            )}
         </Card>
     )
 }

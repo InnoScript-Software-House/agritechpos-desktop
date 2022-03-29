@@ -11,6 +11,8 @@ import { ItemListTableComponent } from '../components/items/ItemListTableCompone
 import { getItems } from '../services/item.service';
 import { DeleteDialog } from '../components/general/deleteDialog';
 import { setOpenToastAction } from '../redux/actions/toast.action';
+import { CountCard } from '../components/general/CountCard';
+import numeral, { Numeral } from 'numeral';
 
 class InventoryPage extends Component {
 
@@ -20,6 +22,11 @@ class InventoryPage extends Component {
             openEdit : false,
             categories: [],
             items: [],
+            totalItemPriceList: 0,
+            totalItemSellList: 0,
+            totalProfitList: 0,
+            totalQtyList: 0,
+            totalSellPriceList: 0
         }
     }
     
@@ -54,7 +61,26 @@ class InventoryPage extends Component {
                 itemList.push(updateItem);
             });
 
-            this.setState({ items: itemList });
+            const priceTotalList = items.map(e => Number(e.total))
+            const totalPrice = priceTotalList.reduce((a , b) => a + b , 0)
+
+            const sellPrice = items.map( e => e = Number(e.price) + (Number(e.price) * (Number(e.percentage / 100))));
+            const sellPriceList = sellPrice.reduce((a, b) => a + b ,0)
+
+
+            const profitTotalPrice = items.map(e => Number(e.sell_price))
+            const profitTotal = profitTotalPrice.reduce((a,b) => a + b , 0)
+
+            const totalItemQty = items.map(e => Number(e.qty) )
+            const totalQty = totalItemQty.reduce((a , b) => a + b , 0 )
+
+            this.setState({ 
+                items: itemList,
+                totalItemPriceList: numeral(totalPrice).format('0,0') + ' MMK',
+                totalSellPriceList: numeral(sellPriceList).format('0,0') + ' MMK',
+                totalProfitList: numeral(profitTotal).format('0,0') + ' MMK',
+                totalQtyList: numeral(totalQty).format('0,0') + ' AMOUNT',
+            });
             return;
         }
     }
@@ -67,12 +93,14 @@ class InventoryPage extends Component {
 
     render() {
         const { delModal } = this.props.reducer;
-        const { categories, items, openCreateItem } = this.state;
+        const { categories, items, openCreateItem , totalItemPriceList , totalItemSellList, totalProfitList , totalQtyList, totalSellPriceList} = this.state;
         const { history } = this.props;
 
         return(
             <>
                 <Navigation props={this.props} />
+
+               
 
                 <div className='container-fluid'>
                     <div className='row'>
@@ -96,6 +124,41 @@ class InventoryPage extends Component {
                                     <span className='me-3'> Category List </span>
                                 </Button>
                             </div>
+                        </div>
+                    </div>
+
+                    <div className='row justify-content-start mt-3'>
+                        <div className='col-3'>
+                        <CountCard 
+                            props={this.props}
+                            label="Total Price"
+                            color="rgba(255,69,70,1)"
+                            count={totalItemPriceList}
+                        />
+                        </div>
+                        <div className='col-3'>
+                        <CountCard 
+                            props={this.props}
+                            label="Total Sell Price"
+                            color="rgba(255,69,70,1)"
+                            count={totalSellPriceList}
+                        />
+                        </div>
+                        <div className='col-3'>
+                        <CountCard 
+                            props={this.props}
+                            label="Qty Total Price"
+                            color="rgba(255,69,70,1)"
+                            count={totalQtyList}
+                        />
+                        </div>
+                        <div className='col-3'>
+                        <CountCard 
+                            props={this.props}
+                            label="Profit Total Price"
+                            color="rgba(255,69,70,1)"
+                            count={totalProfitList}
+                        />
                         </div>
                     </div>
 
