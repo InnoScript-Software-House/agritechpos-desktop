@@ -15,6 +15,7 @@ import { paginationComponentOptions } from '../components/table/paginationOption
 import { InvoiceTableHeader } from '../components/table/invoiceTableHeader';
 import { autocomplete } from '../utilities/table.utility';
 import { itemExportToExcel } from '../utilities/exports/itemExport.utility';
+import numeral from 'numeral';
 
 let getToday = moment().format('YYYY-MM-DD');
 
@@ -31,7 +32,8 @@ class InvoicePage extends Component {
             searchText: '',
             display: '',
             is_print: false,
-            preview: false
+            preview: false,
+            totalSoldAmount: 0
         }
     }
 
@@ -61,16 +63,18 @@ class InvoicePage extends Component {
         }
         this.setState({
             invoices: response,
-            tableloading: false
+            tableloading: false,
         });
     }
 
-    todayInvoices() {
+    async todayInvoices() {
+        await this.loadingData();
         const invoiceToday = this.state.invoices.filter(e => moment(e.created_at).format('YYYY-MM-DD') === getToday);
         this.setState({
             invoices: invoiceToday,
             start_date: getToday
         });
+        this.totalSold();
     }
 
     // autoSearch(text) {
@@ -79,28 +83,38 @@ class InvoicePage extends Component {
     //     filterResult(result);
     // }
 
-    dateStartRangeHandler(startdate){
+    async dateStartRangeHandler(startdate){
+        await this.loadingData();
         const invoicestart = this.state.invoices.filter(e => moment(e.created_at).format('YYYY-MM-DD') >= moment(startdate).format('YYYY-MM-DD'));
             this.setState({
                 invoices: invoicestart
             });
+        this.totalSold();
+    }
+
+    totalSold(){
+        const totalSold = this.state.invoices.map(e => Number(e.total_amount));
+        const totalAmount = totalSold.reduce((a,b) => a + b, 0)
+        this.setState({
+            totalSoldAmount: totalAmount
+        })
     }
 
     clear(){
         this.setState({
-            start_date: '',
             end_date: '',
             searchText: '',
-            invoiceDatas: null
         });
-        this.loadingData();
+        this.todayInvoices();
     }
 
-    dateEndRangeHandler(enddate){
+    async dateEndRangeHandler(enddate){
+        await this.loadingData();
         const invoiceEnd = this.state.invoices.filter(e => moment(e.created_at).format('YYYY-MM-DD') <= moment(enddate).format('YYYY-MM-DD'));
             this.setState({
                 invoices: invoiceEnd
             });
+        this.totalSold();
     }
 
     onTextChange(e){
@@ -144,13 +158,13 @@ class InvoicePage extends Component {
     }
 
     render() {
-        const { start_date, end_date, invoices, tableloading, preview, searchText, is_print, invoiceData } = this.state; 
+        const { start_date, end_date, invoices, tableloading, preview, searchText, is_print, invoiceData, totalSoldAmount } = this.state; 
         return (
             <>
                 {!is_print?(<Navigation props={this.props} />): (<></>)}
 
                 <div className='container-fluid'>
-                    { preview && (
+                    {/* { preview && (
                         <div className='row'>
                             <div className='col-md-12'>
                                 <InvoiceDataComponent invoiceDetail={invoiceData} />
@@ -159,7 +173,7 @@ class InvoicePage extends Component {
                                 </div>
                             </div>
                         </div>
-                    )}
+                    )} */}
 
                     <div className='row mt-3'>
                         {!is_print ? ( 
@@ -196,6 +210,11 @@ class InvoicePage extends Component {
                                     <div className='d-md-flex flex-md-column ms-3'>
                                         <Button className='btn btn-margin-top' onClick={()=> this.clear()}> Clear </Button>
                                     </div>
+                                    <div className='col'>
+                                        <div className='d-md-flex flex-md-row justify-content-end align-items-center'>
+                                            <h3> Total Sold Amount - {numeral(totalSoldAmount).format('0,0') +' MMk'} </h3>
+                                        </div>
+                                    </div>
                                 </Card.Header>
 
                                 <Card.Body>
@@ -219,7 +238,7 @@ class InvoicePage extends Component {
                                         columns={invoiceColumns(this.props)}
                                         highlightOnHover
                                         pointerOnHover
-                                        selectableRows={true}
+                                        // selectableRows={true}
                                         selectableRowsHighlight={true}
                                         onSelectedRowsChange={(e) => 
                                             this.invoiceDataHandler(e.selectedRows)
