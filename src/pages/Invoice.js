@@ -16,6 +16,9 @@ import { InvoiceTableHeader } from '../components/table/invoiceTableHeader';
 import { autocomplete } from '../utilities/table.utility';
 import { itemExportToExcel } from '../utilities/exports/itemExport.utility';
 
+let getToday = moment().format('YYYY-MM-DD');
+
+
 class InvoicePage extends Component {
     constructor(props) {
         super(props);
@@ -59,6 +62,14 @@ class InvoicePage extends Component {
         this.setState({
             invoices: response,
             tableloading: false
+        });
+    }
+
+    todayInvoices() {
+        const invoiceToday = this.state.invoices.filter(e => moment(e.created_at).format('YYYY-MM-DD') === getToday);
+        this.setState({
+            invoices: invoiceToday,
+            start_date: getToday
         });
     }
 
@@ -129,6 +140,7 @@ class InvoicePage extends Component {
 
     async componentDidMount(){
         await this.loadingData();
+        this.todayInvoices();
     }
 
     render() {
