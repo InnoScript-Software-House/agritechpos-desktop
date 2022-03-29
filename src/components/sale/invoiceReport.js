@@ -113,7 +113,7 @@ export const InvoiceReportPage = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <h3> Inovice. {invoiceId}</h3>
+                        <h3> Inovice. {localStorage.getItem('PREFIX') ? localStorage.getItem('PREFIX') : 'AT'}{invoiceId}</h3>
                     </div>
                     <table className="table solid-border">
                         {shop && invoice && (
@@ -136,7 +136,7 @@ export const InvoiceReportPage = () => {
                                         </td>
                                         <td className="solid-border" colSpan={3} align='right'>
                                             Date: <small className={`${zawgyi(lang)}`}>{moment().format('DD,MM,YYYY')} </small><br/>
-                                            Invoice: <small>#{invoiceId}</small>
+                                            Invoice: <small>#{localStorage.getItem('PREFIX') ? localStorage.getItem('PREFIX') : 'AT'}{invoiceId}</small>
                                         </td>
                                     </tr>
                                     <tr>
@@ -161,7 +161,9 @@ export const InvoiceReportPage = () => {
                                             )
                                         })}
                                         <tr>
-                                            <td colSpan={4} className='no-border' />
+                                            <td colSpan={4} className='no-border'>
+                                                <img className="paid-img" src="./build/assets/images/409-4091954_ensuring-payment-before-during-and-after-the-project (3).png" />
+                                            </td>
                                             <td className="solid-border"> <h6 className={`${zawgyi(lang)}`} > {t('invoice-total')} </h6> </td>
                                             <td className="solid-border"> <h6> {numeral(invoice.totalAmount).format('0,0')} MMK </h6> </td>
                                         </tr>
