@@ -12,7 +12,7 @@ axios.defaults.headers.common['Authorization'] = localStorage.getItem(ACCESS_TOK
 const httpHandler = (response) => {
     if(response.status === 401) {
         history.push('/logout');
-        window.refresh();
+        window.location.reload();
         return {
             ...response.data,
             status: response.status

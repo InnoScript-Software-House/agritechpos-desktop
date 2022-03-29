@@ -272,6 +272,8 @@ input[type="number"]:focus,
 .dropdown-wrapper {
 	max-height: 100px;
 	overflow-y: scroll;
+	position: absolute;
+	background: white;
 }
 
 .w-300 {
@@ -791,6 +793,18 @@ input[type="number"]:focus,
 
 .recent-invoice-wrapper:hover {
 	background-color: rgba(23, 162, 184, 0.3);
+	color: #fff;
+}
+
+.clickable {
+	cursor: pointer;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 3px;
+}
+
+.clickable:hover {
+	background-color: #01a3a6;
 	color: #fff;
 }
 
