@@ -35,8 +35,8 @@ export const customerColumns = props => {
 		{
 			name: <span className="database-header">Paid Count</span>,
 			selector: row => {
-				if (row.credit !== null) {
-					let getcredit = row.credit;
+				if (row.credit.length !== 0) {
+					let getcredit = row.credit[0];
 					let repayment = JSON.parse(getcredit.repayment);
 					return repayment.length;
 				}

@@ -21,7 +21,7 @@ class CustomerPage extends Component {
 
 
     async loadingData() {
-        const { openToast } = this.props;
+        const { openToast } = this.props; 
         const response = await getInvoice();
 
         if(response && response.success === false) {
