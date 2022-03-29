@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import {Card} from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
-import { itemColumns } from '../columns/item.columns';
-import { ChangeNumberFormatBtn } from '../general/changeNumberFormatBtn';
-import { paginationComponentOptions } from '../table/paginationOptions';
-import { TableHeaderComponent } from '../table/tableHeader';
-import { TableLoadingComponent } from '../table/tableLoading';
+import {itemColumns} from '../columns/item.columns';
+import {ChangeNumberFormatBtn} from '../general/changeNumberFormatBtn';
+import {paginationComponentOptions} from '../table/paginationOptions';
+import {TableHeaderComponent} from '../table/tableHeader';
+import {TableLoadingComponent} from '../table/tableLoading';
 
-const searchColumns = [ 'code', 'eng_name', 'mm_name', 'category_title', 'location' ];
+const searchColumns = ['code', 'eng_name', 'mm_name', 'category_title', 'location'];
 
-export const ItemListTableComponent = ({ props, dataSource, reload }) => {
-	const [ tableLoading, setTableLoading ] = useState(true);
-	const [ itemList, setItemList ] = useState([]);
-	const [ selectedRows, setSelectedRows ] = useState([]);
+export const ItemListTableComponent = ({props, dataSource, reload}) => {
+	const [tableLoading, setTableLoading] = useState(true);
+	const [itemList, setItemList] = useState([]);
+	const [selectedRows, setSelectedRows] = useState([]);
 
-	const getFilterResult = (e) => {
+	const getFilterResult = e => {
 		setItemList(e);
 	};
 
@@ -25,7 +25,7 @@ export const ItemListTableComponent = ({ props, dataSource, reload }) => {
 				setTableLoading(false);
 			}
 		},
-		[ dataSource ]
+		[dataSource]
 	);
 
 	return (
@@ -46,17 +46,18 @@ export const ItemListTableComponent = ({ props, dataSource, reload }) => {
 							dataSource={dataSource}
 							searchColumns={searchColumns}
 							placeholder="Search Item"
-							filterResult={(e) => getFilterResult(e)}
+							filterResult={e => getFilterResult(e)}
 							selectedRows={selectedRows}
-							reload={(e) => reload(e)}
+							reload={e => reload(e)}
 						/>
 					}
 					pagination
-					fixedHeader
+					fixedHead
 					fixedHeaderScrollHeight="400px"
 					columns={itemColumns(props)}
 					data={itemList}
 					paginationComponentOptions={paginationComponentOptions}
+					keyField
 					progressPending={tableLoading}
 					progressComponent={<TableLoadingComponent />}
 					dense
@@ -64,7 +65,7 @@ export const ItemListTableComponent = ({ props, dataSource, reload }) => {
 					pointerOnHover
 					selectableRows={true}
 					selectableRowsHighlight={true}
-					onSelectedRowsChange={(e) => setSelectedRows(e.selectedRows)}
+					onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
 				/>
 			</Card.Body>
 		</Card>

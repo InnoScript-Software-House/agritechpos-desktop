@@ -1,119 +1,128 @@
-import React, { useEffect, useState } from 'react';
-import { Button, FormControl, InputGroup } from 'react-bootstrap';
-import { autocomplete } from '../../utilities/table.utility';
-import { BsTrash } from 'react-icons/bs';
-import { useDispatch } from 'react-redux';
-import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
-import { setOpenToastAction } from '../../redux/actions/toast.action';
-import { updatePercentage } from '../../services/item.service';
+import React, {useEffect, useState} from 'react';
+import {Button, FormControl, InputGroup} from 'react-bootstrap';
+import {autocomplete, searchAll} from '../../utilities/table.utility';
+import {BsTrash} from 'react-icons/bs';
+import {useDispatch} from 'react-redux';
+import {setOpenDelModal} from '../../redux/actions/openDelModal.action';
+import {setOpenToastAction} from '../../redux/actions/toast.action';
+import {updatePercentage} from '../../services/item.service';
 
-export const TableHeaderComponent = ({ dataSource, searchColumns, placeholder, filterResult, selectedRows, reload, type }) => {
-    const dispatch = useDispatch();
+export const TableHeaderComponent = ({
+	dataSource,
+	searchColumns,
+	placeholder,
+	filterResult,
+	selectedRows,
+	reload,
+	type
+}) => {
+	const dispatch = useDispatch();
 
-    const [text, setText] = useState('');
-    const [filterType, setFilterType] = useState(searchColumns[0]);
-    const [selectedList, setSelectedList] = useState([]);
-    const [calPercentage, setCalPercentage] = useState('');
+	const [text, setText] = useState('');
+	const [filterType, setFilterType] = useState(searchColumns[0]);
+	const [selectedList, setSelectedList] = useState([]);
+	const [calPercentage, setCalPercentage] = useState('');
 
-    const autoSearch = (text) => {
-        const result = autocomplete(dataSource, text, filterType);
-        setText(text);
-        filterResult(result);
-    }
+	const autoSearch = text => {
+		const result = searchAll(dataSource, text);
+		setText(text);
+		filterResult(result);
+	};
 
-    const reset = () => {
-        setFilterType(searchColumns[0]);
-        setText('');
-        filterResult(dataSource);
-    }
+	const reset = () => {
+		setFilterType(searchColumns[0]);
+		setText('');
+		filterResult(dataSource);
+	};
 
-    const deleteSelectedRows = () => {
-        dispatch(setOpenDelModal({
-           title: "Delete Record",
-           message: "Are you sure to delete record",
-           type: type,
-           multiple: true,
-           open: true,
-           data: selectedList
-        }));
-    }
+	const deleteSelectedRows = () => {
+		dispatch(
+			setOpenDelModal({
+				title: 'Delete Record',
+				message: 'Are you sure to delete record',
+				type: type,
+				multiple: true,
+				open: true,
+				data: selectedList
+			})
+		);
+	};
 
-    const changePercentage = async (amount) => {
+	const changePercentage = async amount => {
+		if (amount === '' || Number(amount) === 0) {
+			dispatch(setOpenToastAction('Update percentage ', 'Invalid percentage', 'danger'));
+			return;
+		}
 
-        if(amount === '' || Number(amount) === 0) {
-            dispatch(setOpenToastAction('Update percentage ', 'Invalid percentage', 'danger'));
-            return;
-        }
-        
-        let requestBody = {
-            type: Number(amount) < 0 ? 'decrement' : 'increment',
-            amount: Math.abs(amount)
-        }
+		let requestBody = {
+			type: Number(amount) < 0 ? 'decrement' : 'increment',
+			amount: Math.abs(amount)
+		};
 
-        const response = await updatePercentage(requestBody);
-        if(response && response.success === false) {
-            dispatch(setOpenToastAction('Update percentage', response.message, 'danger'));
-            return;
-        }
+		const response = await updatePercentage(requestBody);
+		if (response && response.success === false) {
+			dispatch(setOpenToastAction('Update percentage', response.message, 'danger'));
+			return;
+		}
 
-        setCalPercentage('');
-        reload(true);
-        return;
-    }
+		setCalPercentage('');
+		reload(true);
+		return;
+	};
 
-    useEffect(() => {
-        if(selectedRows) {
-            setSelectedList(selectedRows);
-        }
-    },[selectedRows]);
+	useEffect(
+		() => {
+			if (selectedRows) {
+				setSelectedList(selectedRows);
+			}
+		},
+		[selectedRows]
+	);
 
-    return(
-        <div className='table-header mb-2'>
-            <div className='table-header-left'>
-                {selectedRows.length > 0 && (
-                    <div className='d-md-flex flex-md-row justifiy-content-start align-items-center'>
-                        <Button
-                            className='btn-small ms-3'
-                            onClick={() => deleteSelectedRows()}
-                        >
-                            <BsTrash size={20} />
-                            <span> Delete All </span>
-                        </Button>
-                    </div>
-                )}
-            </div>
+	return (
+		<div className="table-header mb-2">
+			<div className="table-header-left">
+				{selectedRows.length > 0 && (
+					<div className="d-md-flex flex-md-row justifiy-content-start align-items-center">
+						<Button className="btn-small ms-3" onClick={() => deleteSelectedRows()}>
+							<BsTrash size={20} />
+							<span> Delete All </span>
+						</Button>
+					</div>
+				)}
+			</div>
 
-            <InputGroup className='table-header-right'>
-                {type === 'Items' && (
-                    <FormControl
-                        className="input-small"
-                        type='text'
-                        placeholder="Change Items %"
-                        value={calPercentage}
-                        onChange={(e) => {
-                            setCalPercentage(e.target.value);
-                        }}
-                        onKeyPress={(e) => {
-                            if(e.code === 'Enter') {
-                                if(!Number(calPercentage)){
-                                    dispatch(setOpenToastAction('Percentage', 'Invalid Input', 'danger'));
-                                    return;
-                                }
-                                changePercentage(e.target.value);
-                            }
-                        }}
-                    />
-                )}
+			<InputGroup className="table-header-right">
+				{type === 'Items' && (
+					<FormControl
+						className="input-small"
+						type="text"
+						placeholder="Change Items %"
+						value={calPercentage}
+						onChange={e => {
+							setCalPercentage(e.target.value);
+						}}
+						onKeyPress={e => {
+							if (e.code === 'Enter') {
+								if (!Number(calPercentage)) {
+									dispatch(setOpenToastAction('Percentage', 'Invalid Input', 'danger'));
+									return;
+								}
+								changePercentage(e.target.value);
+							}
+						}}
+					/>
+				)}
 
-                <FormControl
-                    className="input-small"
-                    type='text'
-                    placeholder={placeholder}
-                    value={text}
-                    onChange={e => autoSearch(e.target.value)}
-                />
+				<FormControl
+					className="input-small"
+					type="text"
+					placeholder={placeholder}
+					value={text}
+					onChange={e => autoSearch(e.target.value)}
+				/>
 
-                <FormControl
+				{/* <FormControl
                     className="select-input-group"
                     as={'select'}
                     value={filterType}
@@ -128,10 +137,13 @@ export const TableHeaderComponent = ({ dataSource, searchColumns, placeholder, f
                             <option key={`filter_column_id_${index}`}> {filter} </option>
                         )
                     })}
-                </FormControl>
-                    
-                <Button className="btn-small" onClick={() => reset()}> Reset </Button>
-            </InputGroup>
-        </div>
-    )
-}
+                </FormControl> */}
+
+				{/* <Button className="btn-small" onClick={() => reset()}>
+					{' '}
+					Reset{' '}
+				</Button> */}
+			</InputGroup>
+		</div>
+	);
+};
