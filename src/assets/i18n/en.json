@@ -23,6 +23,7 @@
     "make-payment" : "Make Payment",
     "save-invoice" : "Save Invoice",
     "item-request" : "Item Request",
+    "item-sell" : "Sale Price",
 
     "nav-sale": "Sale",
     "nav-dashboard": "Dashboard",

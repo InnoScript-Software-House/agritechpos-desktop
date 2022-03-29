@@ -32,10 +32,10 @@ export const CustomerComponent = ({ input, retrive }) => {
 
     useEffect(() => {
         if(input) {
-            setCustomerAddress(input.address);
-            setCustomerEmail(input.email);
+            setCustomerAddress(input.address? input.address: '');
+            setCustomerEmail(input.email? input.email: '');
             setCustomerName(input.name);
-            setCustomerPhone(input.phone);
+            setCustomerPhone(input.phone? input.phone: '');
         }
     }, [input]);
 

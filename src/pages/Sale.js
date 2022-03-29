@@ -1,10 +1,9 @@
 import React, { Component} from "react";
-import {  Card } from "react-bootstrap";
+import {  Button, Card } from "react-bootstrap";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Navigation } from "../components/general/Navigation";
 import { setOpenToastAction } from "../redux/actions/toast.action";
-import { getCustomerList } from "../services/customer.service";
 import { getItems } from "../services/item.service";
 import { setInvoiceAction } from "../redux/actions/invoice.action";
 import { CustomerComponent } from "../components/sale/customerComponent";
@@ -12,6 +11,9 @@ import { SaleVoucherInputComponent } from "../components/sale/saleVoucherInputCo
 import { SaleVoucherComponent } from "../components/sale/saleVocherComponent";
 import { t, zawgyi } from "../utilities/translation.utility";
 import { RecentInvoice } from "../components/sale/RecentInvoice";
+import { AutoCompleteDropDown } from "../components/general/autoCompleteDropDown";
+import { getInvoice } from "../services/invoice.service";
+import { SelectedItemDetail } from "../components/sale/SelectedItemDetail";
   
 class SalePage extends Component {
     constructor(props){
@@ -21,11 +23,13 @@ class SalePage extends Component {
             customers: [],
             suggestions: [],
             requestItems: [],
+            selectedItem: null,
             totalAmount: {
                 sell: 0,
                 buy: 0
             },
-            saveInvoice: null
+            saveInvoice: null,
+            openRecentInvoice: false
         };
     };
 
@@ -38,15 +42,16 @@ class SalePage extends Component {
             return;
         }
         
-        const customers = await getCustomerList();
+        const customers = await getInvoice();
         if(customers && customers.success === false) {
             openToast('Customer', customers.message, 'danger');
             return;
         }
+        const customerList = customers.filter(e => e.customer_name !== null);
 
         this.setState({
             items: response,
-            customers: customers
+            customers: customerList
         });
     }
 
@@ -102,12 +107,12 @@ class SalePage extends Component {
 
     getCustomer(e) {
         const customer = {
-            name: e.name,
-            phone: e.phone,
-            email: e.email,
-            address: e.address
+            name: e.customer_name,
+            phone: e.customer_phone,
+            email: e.customer_email,
+            address: e.customer_address
         }
-        this.setState({ customer: customer });
+        this.setState({ customer: customer});
     }
 
     getSaveInvoice(e) {
@@ -121,7 +126,7 @@ class SalePage extends Component {
     }
 
     render(){
-        const { customer, customers, items, requestItems, totalAmount, saveInvoice } = this.state;
+        const { customer, customers, items, requestItems, totalAmount, saveInvoice, selectedItem, openRecentInvoice } = this.state;
         const { lang } = this.props.reducer;
 
         return(
@@ -130,27 +135,54 @@ class SalePage extends Component {
 
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-3 mt-3">
-                            <RecentInvoice dataSource={saveInvoice} retrive={(e) => {
-                                this.setState({
-                                    requestItems: []
-                                }, () => {
-                                    for(let x=0; x<e.bought_items.length; x++) {
-                                        this.addItem(e.bought_items[x]);
-                                    }
-                                });
-                            }} />
-                        </div>
+                        <Button> {openRecentInvoice ? 'Close Recent Invoice' : 'Open Recent Invoice'} </Button>
+                        { openRecentInvoice && (
+                            <div className="col-md-3 mt-3">
+                                <RecentInvoice dataSource={saveInvoice} retrive={(e) => {
+                                    this.setState({
+                                        requestItems: []
+                                        }, () => {
+                                            for(let x=0; x<e.bought_items.length; x++) {
+                                                this.addItem(e.bought_items[x]);
+                                            }
+                                        });
+                                    }} 
+                                />
+                            </div>
+                        )}
 
-                        <div className="col-md-9">
+                        <div className={`${openRecentInvoice ? 'col-md-9' : 'col-md-12'}`}>
                             <Card className="mt-3">
                                 <Card.Header>
                                     <Card.Title className={`${zawgyi(lang)} title`}>
-                                        {t('open-invoice')}
+                                        <div className="d-flex flex-row justify-content-between align-items-center">
+                                            <AutoCompleteDropDown
+                                                classsName={`${zawgyi(lang)}`}
+                                                dataSource={customers}
+                                                inputOption={{
+                                                    type: "text",
+                                                    placeholder: t('customer-name'),
+                                                    search_name: t('customer-name')
+                                                }}
+                                                chooseItem = {(e) => this.getCustomer(e)}
+                                            />
+
+                                            <SaleVoucherInputComponent 
+                                                dataSource={items} 
+                                                retrive={e => { this.addItem(e)}} 
+                                                selectedItem={(e) => this.setState({
+                                                    selectedItem: e
+                                                })} 
+                                            />
+                                        </div>
                                     </Card.Title>
                                 </Card.Header>
 
                                 <Card.Body>
+                                    <div className="d-md-flex flex-row mb-3">
+                                        <SelectedItemDetail selectedItem={selectedItem} />
+                                    </div>
+
                                     <div className="d-md-flex flex-column mb-3">
                                         <h3 className={`${zawgyi(lang)} mt-3 mb-3`}> {t('invoice-label')} </h3>
                                         <CustomerComponent className="mt-3" input={customer} retrive={(e) => this.setState({ customer: e })} />
@@ -164,10 +196,6 @@ class SalePage extends Component {
                                         save={(e) => this.getSaveInvoice(e)}
                                     />
                                 </Card.Body>
-
-                                <Card.Footer>
-                                    <SaleVoucherInputComponent dataSource={items} retrive={e => { this.addItem(e)}} />
-                                </Card.Footer>
                             </Card>
                         </div>
                     </div>

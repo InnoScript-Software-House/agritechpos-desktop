@@ -22,7 +22,8 @@
     "invoice-net-amount" : "စုစုေပါင္းက်သင့္ေငြ",
     "make-payment" : "ေငြေပးေခ်မည္",
     "save-invoice" : "ေဘာင္ခ်ာသိမ္းမည္",
-    "item-request" : "ပစၥည္းေတာင္းဆိုျခင္း",
+    "item-request" : "ေရာင္းခ်မည့္ပစၥည္း အရည္အတြက္",
+    "item-sell": "ေရာင္းေစ်း",
 
     "nav-sale": "အေရာင္း",
     "nav-dashboard": "အခ်က္အလက္မ်ား",

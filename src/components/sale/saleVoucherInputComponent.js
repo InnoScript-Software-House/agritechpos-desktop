@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { FormControl, FormLabel, InputGroup } from "react-bootstrap";
+import { FormControl, InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
-import { t, zawgyi } from "../../utilities/translation.utility";
+import { t } from "../../utilities/translation.utility";
 import { AutoCompleteDropDown } from "../general/autoCompleteDropDown";
 
-export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
+export const SaleVoucherInputComponent = ({ dataSource, retrive, selectedItem }) => {
 
     const dispatch = useDispatch();
-    const state = useSelector(state => state);
-    const { lang } = state;
-
     const [qty, setQty] = useState('');
     const [items, setItems] = useState([]);
     const [item, setItem] = useState(null);
@@ -36,35 +33,35 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
         if(dataSource) {
             setItems(dataSource);
         }
-    }, [dataSource])
+
+        if(item !== null) {
+            selectedItem(item);
+        }
+    }, [dataSource, item])
 
     return (
-        <div className="d-md-flex flex-md-row align-items-start">
-            <div className="col-2">
-                <FormLabel className={`${zawgyi(lang)}`}> {t('item-code')} </FormLabel>
-                <AutoCompleteDropDown 
-                    dataSource={items} 
-                    inputOption={
-                        {
-                            type: "text",
-                            placeholder: t('input-item-code'),
-                            search_name: 'code'
-                        }} 
-                    chooseItem={(e) => setItem({
-                        name: e.eng_name,
-                        model: e.model,
-                        code: e.code,
-                        price: Number(e.price),
-                        totalQty: Number(e.qty),
-                        percentage: Number(e.percentage),
-                        sell_price: ((Number(e.price) * Number(e.percentage)) / 100) + Number(e.price)
-                    })}
-                />
-            </div>
+        <div className="d-md-flex flex-md-row align-items-start justify-content-end">
+            <AutoCompleteDropDown
+                dataSource={items} 
+                inputOption={
+                    {
+                        type: "text",
+                        placeholder: t('input-item-code'),
+                        search_name: 'code'
+                    }} 
+                chooseItem={(e) => setItem({
+                    id: e.id,
+                    name: e.eng_name,
+                    model: e.model,
+                    code: e.code,
+                    price: Number(e.price),
+                    totalQty: Number(e.qty),
+                    percentage: Number(e.percentage),
+                    sell_price: ((Number(e.price) * Number(e.percentage)) / 100) + Number(e.price)
+                })}
+            />
 
-        <InputGroup>
-            <div className="col-2">
-                <FormLabel className={`${zawgyi(lang)}`}> {t('item-qty')} </FormLabel>
+            <InputGroup>
                 <FormControl 
                     type="text" 
                     placeholder={t('item-qty')} 
@@ -76,43 +73,7 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
                         }
                     }}
                 />
-            </div>
-
-            { item && (
-                <div className="col-8">  
-                    <div className="table-responsive">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <FormLabel className={`${zawgyi(lang)}`}> {t('item-name')} </FormLabel>
-                                    </th>
-                                    <th>
-                                        <FormLabel className={`${zawgyi(lang)}`}> {t('item-price')} (MMK) </FormLabel>
-                                    </th>
-                                    <th>
-                                        <FormLabel className={`${zawgyi(lang)}`}> {t('item-total')} </FormLabel>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <FormControl className="w-50" placeholder={t('item-name')} value={item.name || ''} disabled={true} />
-                                    </td>
-                                    <td>
-                                        <FormControl className="w-50" placeholder={t('item-price')} value={item.sell_price || ''} disabled={true} />
-                                    </td>
-                                    <td>
-                                        <FormControl className="w-50" placeholder={t('item-total')} value={item.totalQty || 0} disabled={true} />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            )}
-        </InputGroup>
-</div>
+            </InputGroup>
+        </div>
     )
 }
