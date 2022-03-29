@@ -23,6 +23,7 @@ export const InvoiceReportPage = () => {
     const [invoiceId, setInvoiceId] = useState('');
     const [display, setDisplay] = useState('');
     const [success, setSuccess] = useState(false);
+    const [isPrint, setIsPrint] = useState(false);
 
 
     const saveInvoice = async () => {
@@ -54,6 +55,7 @@ export const InvoiceReportPage = () => {
 
     const print = async () => {
         const { print } = window.nativeApi;
+        setIsPrint(true);
 
         setDisplay('display');
 
@@ -61,6 +63,7 @@ export const InvoiceReportPage = () => {
         await print.invoice();
         await print.reload((data) => {
             setSuccess(true);
+            setIsPrint(false);
             localStorage.removeItem('INVOICE');
         });
     }
@@ -157,13 +160,13 @@ export const InvoiceReportPage = () => {
                                         })}
                                         <tr>
                                             <td colSpan={4} className='no-border' />
-                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`} > {t('invoice-total')} </h6> </td>
-                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.totalAmount).format('0,0')} MMK </h6> </td>
+                                            <td className="solid-border"> <h6 className={`${zawgyi(lang)}`} > {t('invoice-total')} </h6> </td>
+                                            <td className="solid-border"> <h6> {numeral(invoice.totalAmount).format('0,0')} MMK </h6> </td>
                                         </tr>
                                         <tr>
                                             <td colSpan={4} className='no-border' />
-                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h6> </td>
-                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
+                                            <td className="solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h6> </td>
+                                            <td className="solid-border"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
                                         </tr>
                                         {/* <tr>
                                             <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h6> </td>
@@ -175,16 +178,19 @@ export const InvoiceReportPage = () => {
                                         </tr> */}
                                         <tr>
                                             <td colSpan={4} className="no-border" />
-                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h6> </td>
-                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.netAmount).format('0,0')} MMK </h6> </td>
+                                            <td className="solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h6> </td>
+                                            <td className="solid-border"> <h6> {numeral(invoice.netAmount).format('0,0')} MMK </h6> </td>
                                         </tr>
                                 </tbody>        
                             </>             
                         )}
-                    </table>
+                    </table>{
+                        !isPrint && (
                         <div className="d-flex flex-row justify-content-end">
                             <Button className={`btn btn-print mt-3 w-25${display}`} onClick={() => print()}> Print </Button>
                         </div> 
+                        )
+                    }
                 </>
             )}
 

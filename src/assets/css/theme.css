@@ -819,3 +819,7 @@ input[type="number"]:focus,
 	border-top-width: 0px !important;
 	border-style: none !important;
 }
+.table {
+	width: 100%;
+	border-color: white !important;
+}
