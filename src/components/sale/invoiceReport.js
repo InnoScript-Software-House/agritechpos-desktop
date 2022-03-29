@@ -59,8 +59,10 @@ export const InvoiceReportPage = () => {
 
         setDisplay('display');
 
+        const getPrintOptions = localStorage.getItem("PRINT_SETTING") ? JSON.parse(localStorage.getItem("PRINT_SETTING")) : printOptions;
+
         await saveInvoice();
-        await print.invoice();
+        await print.invoice(getPrintOptions);
         await print.reload((data) => {
             setSuccess(true);
             setIsPrint(false);

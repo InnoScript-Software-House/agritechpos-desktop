@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { trans, pages } from '../assets/i18n/mm.json'; 
-import { ArrowBarDown, ArrowRight, List, ListCheck } from 'react-bootstrap-icons';
-import { NetworkConnection } from '../components/settings/NetworkConnection';
-import { LanguageComponent } from '../components/general/Language';
-import { UpdateComponent } from '../components/settings/Update';
-import { LicenseComponent } from '../components/settings/License';
+// import { trans, pages } from '../assets/i18n/mm.json'; 
+// import { ArrowBarDown, ArrowRight, List, ListCheck } from 'react-bootstrap-icons';
+// import { NetworkConnection } from '../components/settings/NetworkConnection';
+// import { LanguageComponent } from '../components/general/Language';
+// import { UpdateComponent } from '../components/settings/Update';
+// import { LicenseComponent } from '../components/settings/License';
 import { SideBarComponent } from '../components/settings/sidebar';
 import { ShopComponent } from '../components/settings/shop';
 import { Navigation } from '../components/general/Navigation';

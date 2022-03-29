@@ -26,8 +26,8 @@ contextBridge.exposeInMainWorld('nativeApi', {
         }
     },
     print: {
-        invoice() {
-            return ipcRenderer.send('print-invoice');
+        invoice(options) {
+            return ipcRenderer.send('print-invoice', options);
         },
         targetComponent(){
             return ipcRenderer.send('print-target-component');

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, FormControl, FormLabel, InputGroup } from "react-bootstrap";
+import { printOptions } from "../../utilities/print.utility";
 
 export const InvoiceComponent = () => {
 
@@ -11,25 +12,28 @@ export const InvoiceComponent = () => {
     const [invoice_footer, setInvoiceFooter] = useState('');
     const [silent_print, setSilentPrint] = useState('');
     const [lanscape, setLanscape] = useState('');
+    const [printSetting, setPrintSetting] = useState(printOptions);
+
+    const saveInvoiceSetting = (key, value) => {
+        printSetting[`${key}`] = value;
+        setPrintSetting(printSetting);
+        localStorage.setItem('PRINT_SETTING', JSON.stringify(printSetting));
+        return;
+    }
 
     useEffect(() => {
         const getPrefix = localStorage.getItem('PREFIX') ? localStorage.getItem('PREFIX') : 'AT';
-        const getInvoicePrintNumber = localStorage.getItem('PRINT_NUMBER') ? localStorage.getItem('PRINT_NUMBER') : 2;
-        const getColorPrint = localStorage.getItem('COLOR_PRINT') ? localStorage.getItem('COLOR_PRINT') : false;
-        const getBackgroundPrint = localStorage.getItem('PRINT_BACKGROUND') ? localStorage.getItem('PRINT_BACKGROUND') : false;
-        const getInvoiceHeader = localStorage.getItem('INVOICE_HEADER') ? localStorage.getItem('INVOICE_HEADER') : 'AgriTech POS';
-        const getInvoiceFooter = localStorage.getItem('INVOICE_FOOTER') ? localStorage.getItem('INVOICE_FOOTER') : 'AgriTech POS';
-        const getSilentPrint = localStorage.getItem('SILENT_PRINT') ? localStorage.getItem('SILENT_PRINT') :  false;
-        const getLandscape = localStorage.getItem('PRINT_LANDSCAPE') ? localStorage.getItem('PRINT_LANDSCAPE') : false;
+        const getPrintSetting = localStorage.getItem('PRINT_SETTING') ? JSON.parse(localStorage.getItem('PRINT_SETTING')) : printSetting;
 
         setPrefix(getPrefix);
-        setPrintNumber(getInvoicePrintNumber);
-        setColorPrint(getColorPrint);
-        setBackgroundPrint(getBackgroundPrint);
-        setInvoiceHeader(getInvoiceHeader);
-        setInvoiceFooter(getInvoiceFooter);
-        setSilentPrint(getSilentPrint);
-        setLanscape(getLandscape);
+        setPrintSetting(getPrintSetting);
+        setPrintNumber(getPrintSetting.copies);
+        setColorPrint(getPrintSetting.color);
+        setBackgroundPrint(getPrintSetting.printBackground);
+        setInvoiceHeader(getPrintSetting.header);
+        setInvoiceFooter(getPrintSetting.footer);
+        setSilentPrint(getPrintSetting.silent);
+        setLanscape(getPrintSetting.landscape);
 
     }, []);
 
@@ -65,7 +69,7 @@ export const InvoiceComponent = () => {
                                 value={printNumber}
                                 onChange={(e) => {
                                     setPrintNumber(e.target.value);
-                                    localStorage.setItem('PRINT_NUMBER', e.target.value)
+                                    saveInvoiceSetting('copies', e.target.value);
                                 }}
                             />
                         </InputGroup>
@@ -79,7 +83,7 @@ export const InvoiceComponent = () => {
                                 value={colorPrint}
                                 onChange={(e) => {
                                     setColorPrint(e.target.value);
-                                    localStorage.setItem('COLOR_PRINT', e.target.value)
+                                    saveInvoiceSetting('color', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.color);
                                 }}
                             >
                                 <option value={false}> Black & White </option> 
@@ -98,7 +102,7 @@ export const InvoiceComponent = () => {
                                 value={backgroundPrint}
                                 onChange={(e) => {
                                     setBackgroundPrint(e.target.value);
-                                    localStorage.setItem('PRINT_BACKGROUND', e.target.value)
+                                    saveInvoiceSetting('printBackground', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.printBackground);
                                 }}
                             >
                                 <option value={false}> No </option> 
@@ -115,7 +119,7 @@ export const InvoiceComponent = () => {
                                 value={silent_print}
                                 onChange={(e) => {
                                     setSilentPrint(e.target.value);
-                                    localStorage.setItem('SILENT_PRINT', e.target.value)
+                                    saveInvoiceSetting('silent', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.silent);
                                 }}
                             >
                                 <option value={true}> Yes </option>
@@ -130,7 +134,7 @@ export const InvoiceComponent = () => {
                             as={'select'}
                             value={lanscape}
                             onChange={(e) => {
-                                localStorage.setItem('PRINT_LANDSCAPE', e.target.value);
+                                saveInvoiceSetting('landscape', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.landscape);
                                 setLanscape(e.target.value)
                             }}
                         >
@@ -149,7 +153,7 @@ export const InvoiceComponent = () => {
                                 value={invoice_header}
                                 onChange={(e) => {
                                     setInvoiceHeader(e.target.value);
-                                    localStorage.setItem('INVOICE_HEADER', e.target.value)
+                                    saveInvoiceSetting('header', e.target.value || printSetting.header);
                                 }}
                             />
                         </InputGroup>
@@ -163,7 +167,7 @@ export const InvoiceComponent = () => {
                                 value={invoice_footer}
                                 onChange={(e) => {
                                     setInvoiceFooter(e.target.value);
-                                    localStorage.setItem('INVOICE_FOOTER', e.target.value)
+                                    saveInvoiceSetting('footer', e.target.value || printSetting.footer);
                                 }}
                             />
                         </InputGroup>

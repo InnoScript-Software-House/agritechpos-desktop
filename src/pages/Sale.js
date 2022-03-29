@@ -52,8 +52,6 @@ class SalePage extends Component {
         const customerList = customers.filter(e => e.customer_name !== null);
         const data = this.getUniqueListBy(customerList, 'customer_phone');
 
-        console.log(data);
-
         this.setState({
             items: response,
             customers: data
