@@ -50,13 +50,20 @@ class SalePage extends Component {
         }
 
         const customerList = customers.filter(e => e.customer_name !== null);
+        const data = this.getUniqueListBy(customerList, 'customer_phone');
+
+        console.log(data);
 
         this.setState({
             items: response,
-            customers: customerList
+            customers: data
         });
     }
 
+    getUniqueListBy(arr, key) {
+        return [...new Map(arr.map(item => [item[key], item])).values()]
+    }
+    
     addItem(item) {
         const { requestItems } = this.state;
         const existItem = requestItems.filter(value => value.code === item.code);
