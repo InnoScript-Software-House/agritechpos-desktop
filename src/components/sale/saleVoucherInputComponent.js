@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FormControl, InputGroup } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { t } from "../../utilities/translation.utility";
 import { AutoCompleteDropDown } from "../general/autoCompleteDropDown";

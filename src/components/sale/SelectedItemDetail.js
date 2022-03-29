@@ -8,7 +8,7 @@ import { t, zawgyi } from "../../utilities/translation.utility";
 
 const tableHeader = [t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('table-col-sell-percentage'), t('item-sell'), ''];
 
-export const SelectedItemDetail = ({selectedItem, reload}) => {
+export const SelectedItemDetail = ({ selectedItem }) => {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
 
@@ -26,14 +26,11 @@ export const SelectedItemDetail = ({selectedItem, reload}) => {
             dispatch(setOpenToastAction('Item', 'Invalid Percentage Value', 'danger'));
             return;
         }
-
-        item.percentage = percentageValue;
-        item.sell_price = ((Number(item.price) * Number(percentageValue)) / 100) + Number(item.price);
     }
 
     const save = async () => {
         const requestBody = {
-            percentage: item.percentage
+            percentage: percentage
         };
 
         const response = await updateItem(item.id, requestBody);
@@ -44,6 +41,8 @@ export const SelectedItemDetail = ({selectedItem, reload}) => {
         }
 
         dispatch(setOpenToastAction('Item', "Item's percentage is updated", 'success'));
+        item.percentage = percentage;
+        item.sell_price = ((Number(item.price) * Number(percentage)) / 100) + Number(item.price);
         setPercentage('');
         return;
     }
