@@ -1,5 +1,4 @@
 const {BrowserWindow, app, Menu, ipcMain} = require('electron');
-
 const path = require('path');
 
 const isDev = !app.isPackaged;
@@ -25,7 +24,7 @@ let mainWindow = () => {
 		width: 1800,
 		height: 1000,
 		type: 'MainWindow',
-		frame: false,
+		frame: true,
 		fullscreen: false,
 		...browserWindowOptions
 	});

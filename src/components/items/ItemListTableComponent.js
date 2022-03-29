@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Card} from 'react-bootstrap';
+import {Card, Button} from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import {itemColumns} from '../columns/item.columns';
 import {ChangeNumberFormatBtn} from '../general/changeNumberFormatBtn';
 import {paginationComponentOptions} from '../table/paginationOptions';
 import {TableHeaderComponent} from '../table/tableHeader';
 import {TableLoadingComponent} from '../table/tableLoading';
+import { BsEye, BsEyeSlash, BsListTask } from "react-icons/bs";
 
 const searchColumns = ['code', 'eng_name', 'mm_name', 'category_title', 'location'];
 
-export const ItemListTableComponent = ({props, dataSource, reload}) => {
+export const ItemListTableComponent = ({props, dataSource, reload, openCreateItem, open}) => {
 	const [tableLoading, setTableLoading] = useState(true);
 	const [itemList, setItemList] = useState([]);
 	const [selectedRows, setSelectedRows] = useState([]);
@@ -32,7 +33,23 @@ export const ItemListTableComponent = ({props, dataSource, reload}) => {
 		<Card className="mt-3">
 			<Card.Header>
 				<div className="d-md-flex flex-md-row justify-content-between">
-					<span className="title"> Item List </span>
+					<div className=''>
+						<Button
+                            className='btn-small mt-3 me-3'
+                            onClick={(e) => open(!openCreateItem)}
+                        >
+                            {openCreateItem ? (<BsEyeSlash size={20} />) :  <BsEye size={20} />}
+                        	<span className='me-3'> {openCreateItem ? 'Hide Create Item From' : 'Show Create Item Form'} </span>
+                        </Button>
+
+						<Button
+                            className='btn-small mt-3 ms-3'
+                            onClick={() => props.history.push('/category')}
+                        >
+                            <BsListTask size={20} />
+                            <span className='me-3'> Category List </span>
+                        </Button>
+					</div>
 					<ChangeNumberFormatBtn props={props} />
 				</div>
 			</Card.Header>
@@ -53,7 +70,6 @@ export const ItemListTableComponent = ({props, dataSource, reload}) => {
 					}
 					pagination
 					fixedHead
-					fixedHeaderScrollHeight="400px"
 					columns={itemColumns(props)}
 					data={itemList}
 					paginationComponentOptions={paginationComponentOptions}
@@ -66,6 +82,9 @@ export const ItemListTableComponent = ({props, dataSource, reload}) => {
 					selectableRows={true}
 					selectableRowsHighlight={true}
 					onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
+					paginationPerPage={50}
+					paginationRowsPerPageOptions={[50, 100, 150, 200, 500]}
+					
 				/>
 			</Card.Body>
 		</Card>

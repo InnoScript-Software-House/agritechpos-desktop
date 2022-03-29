@@ -45,7 +45,7 @@ export const itemColumns = (props) => {
             name: <span className='datatable-header'> # </span>,
             selector: (row, index) => index + 1,
             sortable: true,
-            width: "50px"
+            width: "60px"
         },
         {
             name: <span className="database-header"> Option </span>,

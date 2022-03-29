@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { customerColumns } from '../columns/customer.columns';
-import { ChangeNumberFormatBtn } from '../general/changeNumberFormatBtn';
 import { paginationComponentOptions } from '../table/paginationOptions';
 import CustomerTableHeaderComponent from '../table/customerTableHeader';
 import { TableLoadingComponent } from '../table/tableLoading';
@@ -72,6 +71,8 @@ export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
                         selectableRows={true}
                         selectableRowsHighlight={true}
                         onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
+                        paginationPerPage={50}
+                        paginationRowsPerPageOptions={[50, 100, 150, 200, 500]}
                     />
                 </Card.Body>
             </Card>

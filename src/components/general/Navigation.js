@@ -4,7 +4,7 @@ import { Language } from "./Language";
 import { AppToast } from "./toasts";
 
 const menus = [
-    { label: "Dashboard", url: "/dashboard"},
+    // { label: "Dashboard", url: "/dashboard"},
     { label: "Sale", url: "/sale"},
     { label: "Inventory", url: "/inventory"},
     { label: "Invoice", url: "/invoice"},
