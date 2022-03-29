@@ -40,7 +40,7 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
 
     return (
         <div className="d-md-flex flex-md-row align-items-start">
-            <div className="">
+            <div className="col-2">
                 <FormLabel className={`${zawgyi(lang)}`}> {t('item-code')} </FormLabel>
                 <AutoCompleteDropDown 
                     dataSource={items} 
@@ -63,7 +63,7 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
             </div>
 
         <InputGroup>
-            <div className="">
+            <div className="col-2">
                 <FormLabel className={`${zawgyi(lang)}`}> {t('item-qty')} </FormLabel>
                 <FormControl 
                     type="text" 
@@ -79,17 +79,11 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
             </div>
 
             { item && (
-                <>  
+                <div className="col-8">  
                     <div className="table-responsive">
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <FormLabel className={`${zawgyi(lang)}`}> {t('item-code')} </FormLabel>
-                                    </th>
-                                    <th>
-                                        <FormLabel className={`${zawgyi(lang)}`}> {t('item-request')} </FormLabel>
-                                    </th>
                                     <th>
                                         <FormLabel className={`${zawgyi(lang)}`}> {t('item-name')} </FormLabel>
                                     </th>
@@ -104,12 +98,6 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
                             <tbody>
                                 <tr>
                                     <td>
-                                        <FormControl placeholder={t('item-model')} value={item.code || ''} disabled={true} />
-                                    </td>
-                                    <td>
-                                        <FormControl placeholder={t('item-request')} value={qty || 0} disabled={true} />
-                                    </td>
-                                    <td>
                                         <FormControl className="w-50" placeholder={t('item-name')} value={item.name || ''} disabled={true} />
                                     </td>
                                     <td>
@@ -122,23 +110,7 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive }) => {
                             </tbody>
                         </table>
                     </div>
-                    {/* <div className="">
-                        <FormLabel className={`${zawgyi(lang)}`}>  {t('item-model')} </FormLabel>
-                        <FormControl placeholder={t('item-model')} value={item.model || ''} disabled={true} />
-                    </div> */}
-
-                    {/* <div className="">
-                       
-                        
-                    </div> */}
-
-                   
-
-                    {/* <div className="">
-                       
-                        
-                    </div> */}
-                </>
+                </div>
             )}
         </InputGroup>
 </div>

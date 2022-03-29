@@ -99,12 +99,12 @@ export const itemColumns = (props) => {
         //     sortable: true,
         //     width: "200px"
         // },
-        {
-            name: <span className="database-header"> Model </span>,
-            selector: row => row.model,
-            sortable: true,
-            width: "200px"
-        },
+        // {
+        //     name: <span className="database-header"> Model </span>,
+        //     selector: row => row.model,
+        //     sortable: true,
+        //     width: "200px"
+        // },
         {
             name: <span className="database-header"> Qty </span>,
             selector: row => row.qty,
