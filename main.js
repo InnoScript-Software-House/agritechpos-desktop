@@ -2,6 +2,7 @@ const {BrowserWindow, app, Menu, ipcMain, shell} = require('electron');
 const path = require('path');
 
 const isDev = !app.isPackaged;
+
 let webPreferences = {
 	nodeIntegration: true,
 	nodeIntegrationInWorker: true,
@@ -33,7 +34,8 @@ const template = [
 		  { role: 'zoomIn' },
 		  { role: 'zoomOut' },
 		  { type: 'separator' },
-		  { role: 'togglefullscreen' }
+		  { role: 'togglefullscreen' },
+		  { role: 'toggleDevTools' },
 		]
 	  },
 	  {
@@ -96,11 +98,11 @@ let mainWindow = () => {
 		...browserWindowOptions
 	});
 
-	if(!isDev){
-	    globalShortcut.register('Ctrl+Shift+I', () => {
-	        return null;
-	    })
-	}
+	// if(!isDev){
+	//     globalShortcut.register('Ctrl+Shift+I', () => {
+	//         return null;
+	//     })
+	// }
 
 	win.loadFile('./index.html');
 	return win;
