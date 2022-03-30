@@ -10,7 +10,7 @@
 
 # production
 /build
-/output
+/release
 
 # misc
 .DS_Store
@@ -25,3 +25,4 @@ yarn-error.log*
 
 # package
 .package-lock.json
+.vcode

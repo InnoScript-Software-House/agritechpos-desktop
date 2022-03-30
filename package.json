@@ -1,19 +1,29 @@
 {
-  "name": "agri_tech_pos",
-  "productName": "Agri Tech Pos",
+  "name": "agritechpos",
+  "productName": "AgriTech POS",
   "version": "1.0.1",
   "description": "Agricultural Equipment POS Software",
-  "main": "main.js",
+  "author" : "Development <dev@agritechpos.com>",
+  "keywords": ["Agriculture", "POS"],
+  "license": "ISC",
   "build": {
     "appId": "com.agritech.desktop",
     "productName": "AgriTech POS",
     "copyright": "InnoScript Co.,Ltd",
     "buildVersion": "1",
     "directories": {
-      "app": ".",
-      "output": "output",
-      "buildResources": "build-res"
+      "output": "release",
+      "buildResources": "resources"
     },
+    "extraResources": [
+      {
+        "from": "../backend",
+        "to": "api",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
     "files": [
       "./build/**/*",
       "./src/**/*",
@@ -25,15 +35,25 @@
       "target": "AppImage",
       "category": "Utility"
     },
-    "nsis": {
-      "perMachine": true
+    "win": {
+      "asar": true,
+      "target": "nsis",
+      "icon" : "./build/assets/icons/logo.ico"
+    },
+    "nsis" : {
+      "oneClick" : false,
+      "perMachine" : true,
+      "runAfterFinish" : false,
+      "warningsAsErrors" : true,
+      "deleteAppDataOnUninstall": true
     }
   },
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "watch": "webpack --config webpack.common.js --watch",
-    "pack": "electron-builder --win",
+    "pack": "rm -rf build && rm -rf release && webpack --config webpack.common.js && electron-builder --win",
     "dist": "electron-builder",
     "postinstall": "electron-builder install-app-deps",
     "react-build": "webpack --config webpack.common.js"
@@ -42,9 +62,6 @@
     "type": "git",
     "url": "git+https://github.com/kubota-POS/desktop.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/kubota-POS/desktop/issues"
   },
