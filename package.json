@@ -51,7 +51,7 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "displayLanguageSelector": true,
-      "menuCategory": "POS"
+      "menuCategory": "InnoScript"
     }
   },
   "main": "main.js",
