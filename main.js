@@ -1,4 +1,4 @@
-const {BrowserWindow, app, Menu, ipcMain} = require('electron');
+const {BrowserWindow, app, Menu, ipcMain, shell} = require('electron');
 const path = require('path');
 
 const isDev = !app.isPackaged;
@@ -16,7 +16,74 @@ let browserWindowOptions = {
 	backgroundColor: '#eeeeee'
 };
 
-let menuHide = new Menu();
+const template = [
+	{
+		label: 'File',
+		submenu: [
+			{ role: 'Quit'}
+		]
+	},
+	{
+		label: 'View',
+		submenu: [
+		  { role: 'reload' },
+		  { role: 'forceReload' },
+		  { type: 'separator' },
+		  { role: 'resetZoom' },
+		  { role: 'zoomIn' },
+		  { role: 'zoomOut' },
+		  { type: 'separator' },
+		  { role: 'togglefullscreen' }
+		]
+	  },
+	  {
+		label: 'Window',
+		submenu: [
+		  { role: 'minimize' },
+		  { role: 'zoom' }
+		]
+	  },
+	  {
+		role: 'help',
+		submenu: [
+		  {
+			label: 'User Guide',
+			click: async () => {
+			  await shell.openExternal('https://agritechpos.com/userguide')
+			}
+		  },
+		  {
+			label: 'Documentations',
+			click: async () => {
+			  await shell.openExternal('https://agritechpos.com/documentaions')
+			}
+		  },
+		  {
+			label: 'About Software',
+			click: async () => {
+			  await shell.openExternal('https://agritechpos.com/about-software')
+			}
+		  },
+		  {
+			label: 'Support',
+			click: async () => {
+			  await shell.openExternal('https://agritechpos.com/support')
+			}
+		  }
+		]
+	  },
+	...(isDev ? [
+		{
+			label: 'Development Tools',
+			submenu: [
+				{ role: 'toggleDevTools' },
+			]
+		}
+	] : [])
+];
+
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
 let curentWindow = null;
 
 let mainWindow = () => {
@@ -29,11 +96,11 @@ let mainWindow = () => {
 		...browserWindowOptions
 	});
 
-	// if(!isDev){
-	//     globalShortcut.register('Ctrl+Shift+I', () => {
-	//         return null;
-	//     })
-	// }
+	if(!isDev){
+	    globalShortcut.register('Ctrl+Shift+I', () => {
+	        return null;
+	    })
+	}
 
 	win.loadFile('./index.html');
 	return win;
