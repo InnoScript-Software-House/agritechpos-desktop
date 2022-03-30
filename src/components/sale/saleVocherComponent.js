@@ -184,8 +184,8 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
 
                                 <tr>
                                     <td className="pe-3" colSpan={2}>
-                                        <Button className="btn w-full" onClick={() => makePayment('cash')}> {t('make-payment')} </Button>
-                                        <Button className="btn w-full mt-3" onClick={() => makePayment('save')}> {t('save-invoice')} </Button>
+                                        <Button className="btn w-full" onClick={() => makePayment('cash')}> <span className={`${zawgyi(lang)}`}> {t('make-payment')} </span> </Button>
+                                        <Button className="btn w-full mt-3" onClick={() => makePayment('save')}> <span className={`${zawgyi(lang)}`}> {t('save-invoice')}  </span> </Button>
                                     </td>
                                 </tr>
                             </thead>

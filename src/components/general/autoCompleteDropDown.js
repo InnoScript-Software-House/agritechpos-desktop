@@ -19,7 +19,7 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseItem}, ref) => 
             return;
         }
 
-        const suggestionResult = items.filter((item) => item[options.search_name].toLowerCase().startsWith(text.toLowerCase()));
+        const suggestionResult = items.filter((item) => item[options.search_name].toLowerCase().includes(text.toLowerCase()));
         setSuggestions(suggestionResult);
     }
 

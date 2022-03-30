@@ -1,12 +1,12 @@
 {
-  "name": "argri_tech_pos",
-  "productName": "Argri Tech Pos",
-  "version": "1.0.0",
+  "name": "agri_tech_pos",
+  "productName": "Agri Tech Pos",
+  "version": "1.0.1",
   "description": "Agricultural Equipment POS Software",
   "main": "main.js",
   "build": {
-    "appId": "com.argritech.desktop",
-    "productName": "ArgriTech POS",
+    "appId": "com.agritech.desktop",
+    "productName": "AgriTech POS",
     "copyright": "InnoScript Co.,Ltd",
     "buildVersion": "1",
     "directories": {
@@ -24,6 +24,9 @@
     "linux": {
       "target": "AppImage",
       "category": "Utility"
+    },
+    "nsis": {
+      "perMachine": true
     }
   },
   "scripts": {

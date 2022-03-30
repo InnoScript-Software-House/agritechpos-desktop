@@ -164,7 +164,7 @@ class InvoicePage extends Component {
                 {!is_print?(<Navigation props={this.props} />): (<></>)}
 
                 <div className='container-fluid'>
-                    {/* { preview && (
+                    { preview && (
                         <div className='row'>
                             <div className='col-md-12'>
                                 <InvoiceDataComponent invoiceDetail={invoiceData} />
@@ -173,7 +173,7 @@ class InvoicePage extends Component {
                                 </div>
                             </div>
                         </div>
-                    )} */}
+                    )}
 
                     <div className='row mt-3'>
                         {!is_print ? ( 
@@ -238,7 +238,7 @@ class InvoicePage extends Component {
                                         columns={invoiceColumns(this.props)}
                                         highlightOnHover
                                         pointerOnHover
-                                        // selectableRows={true}
+                                        selectableRows={true}
                                         selectableRowsHighlight={true}
                                         onSelectedRowsChange={(e) => 
                                             this.invoiceDataHandler(e.selectedRows)
