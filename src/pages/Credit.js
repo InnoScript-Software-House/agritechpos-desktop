@@ -27,7 +27,7 @@ class CreditPage extends Component {
       credits: [],
       openAddRepayment: false,
       credit_id: null,
-      repayment_amount: "",
+      repayment_amount: '',
       refresh: false,
       display: '',
       isPrint: false
