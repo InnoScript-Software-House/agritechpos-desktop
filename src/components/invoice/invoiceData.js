@@ -75,12 +75,12 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                             </div>
 
 
-                            <table className="table mb-3 pb-3">
+                            <table className="table solid-border mb-3 pb-3">
                                 <thead>
                                     <tr>
                                         {tableHeader.map((thHeader, index) => {
                                             return (
-                                                <th key={`table_header_id_${index}`} className={`${zawgyi(lang)}`}> <small> {thHeader} </small> </th>
+                                                <th key={`table_header_id_${index}`} className={`${zawgyi(lang)} solid-border`}> <small> {thHeader} </small> </th>
                                             )
                                         })}
                                     </tr>
@@ -90,12 +90,12 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                                     { invoiceData && invoiceData.map((value, index) => {
                                         return (
                                         <tr key={`invoice data key ${index}`}>
-                                            <td className={`${zawgyi(lang)}`}> <small> {value.code} </small> </td>
-                                            <td className={`${zawgyi(lang)}`}> <small> {value.name} </small> </td>
-                                            <td className={`${zawgyi(lang)}`}> <small> {value.model} </small> </td>
-                                            <td className={`${zawgyi(lang)}`}> <small> {value.requestQty} </small> </td>
-                                            <td className={`${zawgyi(lang)}`}> <small> {numeral(value.sell_price).format('0,0')} MMK </small> </td>
-                                            <td className={`${zawgyi(lang)}`}> <small> {numeral(value.totalAmount).format('0,0')} MMK </small> </td>
+                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {value.code} </small> </td>
+                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {value.name} </small> </td>
+                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {value.model} </small> </td>
+                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {value.requestQty} </small> </td>
+                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {numeral(value.sell_price).format('0,0')} MMK </small> </td>
+                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {numeral(value.totalAmount).format('0,0')} MMK </small> </td>
                                         </tr>
                                         )
                                     })
@@ -113,28 +113,28 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                                 <table>
                                     <thead>
                                         <tr>
-                                            <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-total')} </h6> </td>
-                                            <td className="w-200"> <h6> {numeral(invoice.total_amount).format('0,0')} MMK </h6> </td>
+                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-total')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.total_amount).format('0,0')} MMK </h6> </td>
                                         </tr>
 
                                         <tr>
-                                            <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h6> </td>
-                                            <td className="w-200"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
+                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
+                                        </tr>
+{/* 
+                                        <tr>
+                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.pay_amount).format('0,0')} MMK </h6> </td>
                                         </tr>
 
                                         <tr>
-                                            <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h6> </td>
-                                            <td className="w-200"> <h6> {numeral(invoice.pay_amount).format('0,0')} MMK </h6> </td>
-                                        </tr>
+                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-credit-amount')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.credit_amount).format('0,0')} MMK </h6> </td>
+                                        </tr> */}
 
                                         <tr>
-                                            <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-credit-amount')} </h6> </td>
-                                            <td className="w-200"> <h6> {numeral(invoice.credit_amount).format('0,0')} MMK </h6> </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h6> </td>
-                                            <td className="w-200"> <h6> {numeral(invoice.total_amount).format('0,0')} MMK </h6> </td>
+                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.total_amount).format('0,0')} MMK </h6> </td>
                                         </tr>
                                     </thead>
                                 </table>
