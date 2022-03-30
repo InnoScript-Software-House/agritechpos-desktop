@@ -24,9 +24,9 @@ export const searchAll = (dataSource, text) => {
 	const result = dataSource.filter(data => {
 		let filterText = data.code.toString();
 		let filterName = data.eng_name ? data.eng_name.toLowerCase() : '';
-		if (filterText.includes(textString)) {
+		if (filterText.includes(textString.toLowerCase())) {
 			return data;
-		} else if (filterName.includes(textString)) {
+		} else if (filterName.includes(textString.toLowerCase())) {
 			return data;
 		}
 	});
