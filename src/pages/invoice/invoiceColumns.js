@@ -17,7 +17,7 @@ export const invoiceColumns = props => {
 		},
 		{
 			name: <span> Date </span>,
-			selector: row => moment(row.created_at).format('DD-MM-YYY'),
+			selector: row => moment(row.created_at).format('DD-MM-Y'),
 			sortable: true
 		},
 		{
