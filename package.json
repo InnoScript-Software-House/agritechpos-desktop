@@ -3,7 +3,7 @@
   "productName": "AgriTech POS",
   "version": "1.0.1",
   "description": "Agricultural Equipment POS Software",
-  "author" : "Development <dev@agritechpos.com>",
+  "author" : "InnoScript <dev@agritechpos.com>",
   "keywords": ["Agriculture", "POS"],
   "license": "ISC",
   "build": {
@@ -12,6 +12,7 @@
     "copyright": "InnoScript Co.,Ltd",
     "buildVersion": "1",
     "directories": {
+      "app": ".",
       "output": "release",
       "buildResources": "resources"
     },
@@ -45,7 +46,12 @@
       "perMachine" : true,
       "runAfterFinish" : false,
       "warningsAsErrors" : true,
-      "deleteAppDataOnUninstall": true
+      "deleteAppDataOnUninstall": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "displayLanguageSelector": true,
+      "menuCategory": "POS"
     }
   },
   "main": "main.js",
