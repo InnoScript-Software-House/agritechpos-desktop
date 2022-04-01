@@ -1,12 +1,12 @@
 import React from 'react'
-import { Button, Card } from 'react-bootstrap'
+import { div, Card } from 'react-bootstrap'
 import { FaArrowCircleRight } from "react-icons/fa";
 
 export const CountCard = ({ props, count, label, url, urlLabel, color }) => {
     const { history } = props;
 
     return (
-        <Card className="countcardbody" style={{ backgroundColor: color }}>
+        <Card style={{ backgroundColor: color }}>
             <Card.Body>
                 <div className='d-md-flex flex-md-row justify-content-start align-items-start'>
                     <div className='col-md mb-1'>
@@ -18,13 +18,16 @@ export const CountCard = ({ props, count, label, url, urlLabel, color }) => {
 
 
             { url && (
-                <Card.Footer className='countcardfooter'>
+                <Card.Footer>
                 <div className='d-md-flex flex-md-row justify-content-center align-items-center'>
-                    <Button onClick={() => history.push(url)} className='countcardbtn'>
-                        <span className='me-1 text-white'> { urlLabel } </span>
-                        <FaArrowCircleRight size={20}
-                            color={'white'} />
-                    </Button>
+                    <div onClick={() => history.push(url)}>
+                        <span className='countcardbtn text-white'> { urlLabel } </span>
+                        <FaArrowCircleRight 
+                            className='ms-1'
+                            size={20}
+                            color={'white'} 
+                            cursor={'pointer'}/>
+                    </div>
                 </div>
             </Card.Footer>
             )}

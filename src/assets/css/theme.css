@@ -767,18 +767,14 @@ input[type="number"]:focus,
 }
 
 /* countcard */
-.countcardbody {
-	background-color: #17a2b8;
+.countcardbtn{
+	cursor: pointer;
 }
 
-.countcardfooter {
-	background-color: #148a9d;
+.countcardbtn:hover {
+	text-decoration: underline;
 }
 
-.countcardbtn {
-	background-color: #148a9d !important;
-	border: none !important;
-}
 
 .btn-margin-top {
 	margin-top: 27px !important;
