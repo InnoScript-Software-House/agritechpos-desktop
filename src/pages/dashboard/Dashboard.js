@@ -12,6 +12,7 @@ import { changeNumberFormat } from '../../utilities/number.utility';
 import { getItems } from '../../services/item.service';
 import WeekChart from '../../components/charts/WeekChart';
 import { Card } from 'react-bootstrap';
+import { getCreditList } from '../../services/credit.service';
 
 class DashboardPage extends Component {
 
@@ -70,8 +71,22 @@ class DashboardPage extends Component {
         });
     }
 
+    async creditData() {
+        const { openToast } = this.props
+
+        const creditResponse = await getCreditList();
+        if(creditResponse && creditResponse.success === false) {
+            openToast('Credit', creditResponse.message, 'danger');
+            return;
+        }
+        console.log(creditResponse)
+            const creditCustomer = creditResponse.map(e => e.invoice.customer_name)
+        console.log(creditCustomer) 
+    }
+
     async componentDidMount() {
         this.loadingData();
+        this.creditData();
     }
 
     render() {
@@ -118,6 +133,16 @@ class DashboardPage extends Component {
                                     />
                                 </div>
                             </div>
+                        </Card.Body>
+                    </Card>
+                    <Card className='mt-3'>
+                        <Card.Header>
+                            <Card.Title className='row justify-content-center'>
+                                Credit
+                            </Card.Title>
+                        </Card.Header>
+                        <Card.Body>
+
                         </Card.Body>
                     </Card>
                     <div className='row mt-3'>

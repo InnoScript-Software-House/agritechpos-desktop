@@ -819,3 +819,9 @@ input[type="number"]:focus,
 	width: 100%;
 	border-color: white !important;
 }
+
+/* logo */
+.logo{
+	position: relative;
+	top: 80px;
+}

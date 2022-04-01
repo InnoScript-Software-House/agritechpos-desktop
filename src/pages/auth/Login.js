@@ -75,11 +75,11 @@ class LoginPage extends Component {
                 </div>
 
                 <div className='row mt-3'>
-                    <div className='col-md-4'>
-                        <img src="build/assets/images/side_image.jpeg" className='img-fluid' />
+                    <div className='col-md-3 '>
+                        <img src="build/assets/images/agritech.png" className='img-fluid logo' />
                     </div>
 
-                <div className='col-md-8'>
+                <div className='col-md-9'>
                         <h3 className="title mb-3 pb-3"> Agricultural Equipment POS Software </h3>
                         <div className='d-md-flex flex-md-column justify-content-center align-items-start'>
                             <div className='col-md-4'>
