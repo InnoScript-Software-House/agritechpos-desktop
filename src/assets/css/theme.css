@@ -827,3 +827,8 @@ input[type="number"]:focus,
 .items-dropdown-width {
 	width: 460px!important;
 }
+
+.bg {
+	background-color: #033c1e;
+	color: #fff;
+}
