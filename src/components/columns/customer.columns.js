@@ -1,3 +1,4 @@
+import numeral from 'numeral';
 import React from 'react';
 import {BsArrowUpRightSquare} from 'react-icons/bs';
 import {useHistory} from 'react-router-dom';
@@ -46,7 +47,7 @@ export const customerColumns = props => {
 		},
 		{
 			name: <span className="database-header">Total Amount</span>,
-			selector: row => row.total_amount,
+			selector: row => numeral(row.total_amount).format('0,0') + ' MMK',
 			sortable: true,
 			width: '175px'
 		}

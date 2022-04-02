@@ -22,11 +22,20 @@ export const TableHeaderComponent = ({
 	const [filterType, setFilterType] = useState(searchColumns[0]);
 	const [selectedList, setSelectedList] = useState([]);
 	const [calPercentage, setCalPercentage] = useState('');
+	const [items, setItems] = useState([]);
 
-	const autoSearch = text => {
-		const result = searchAll(dataSource, text);
-		setText(text);
-		filterResult(result);
+	const autoSearch = (e) => {
+		setText(e);
+
+		if(e === '') {
+			filterResult(items);
+			return;
+		}
+
+		const suggestionResultForCode = items.filter((item) => item.code.toLowerCase().includes(text.toLowerCase()));
+		const suggestionResultForName = items.filter((item) => item.eng_name.toLowerCase().includes(text.toLowerCase()));
+		const resultConnect = suggestionResultForCode.concat(suggestionResultForName);
+		filterResult(resultConnect);
 	};
 
 	const reset = () => {
@@ -70,14 +79,17 @@ export const TableHeaderComponent = ({
 		return;
 	};
 
-	useEffect(
-		() => {
-			if (selectedRows) {
-				setSelectedList(selectedRows);
+	useEffect(() => {
+		if (selectedRows) {
+			setSelectedList(selectedRows);
 			}
-		},
-		[selectedRows]
-	);
+		},[selectedRows]);
+
+	useEffect(() => {
+		if(dataSource) {
+			setItems(dataSource);
+		}
+	}, [dataSource]);
 
 	return (
 		<div className="table-header mb-2">

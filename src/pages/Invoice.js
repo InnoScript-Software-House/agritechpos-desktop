@@ -61,6 +61,18 @@ class InvoicePage extends Component {
         if(response && response.success === false){
            return this.props.openToast('Invoice', response.message, 'danger');
         }
+
+        response.map((value) => {
+            let getInvoiceItems = value.invoice_data ? JSON.parse(value.invoice_data) : [];
+            getInvoiceItems.map((item) => {
+                item.net_profit = item.totalAmount - item.totalOriginAmount;
+                return item;
+            });
+
+            value.invoice_data = JSON.stringify(getInvoiceItems);
+            return value;
+        });
+
         this.setState({
             invoices: response,
             tableloading: false,
@@ -68,7 +80,6 @@ class InvoicePage extends Component {
     }
 
     async todayInvoices() {
-        await this.loadingData();
         const invoiceToday = this.state.invoices.filter(e => moment(e.created_at).format('YYYY-MM-DD') === getToday);
         this.setState({
             invoices: invoiceToday,

@@ -16,15 +16,6 @@
       "output": "release",
       "buildResources": "resources"
     },
-    "extraResources": [
-      {
-        "from": "../backend",
-        "to": "api",
-        "filter": [
-          "**/*"
-        ]
-      }
-    ],
     "files": [
       "./build/**/*",
       "./src/**/*",

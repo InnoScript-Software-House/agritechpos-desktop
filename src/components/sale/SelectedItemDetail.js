@@ -6,7 +6,7 @@ import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { updateItem } from "../../services/item.service";
 import { t, zawgyi } from "../../utilities/translation.utility";
 
-const tableHeader = [t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('table-col-sell-percentage'), t('item-sell'), ''];
+const tableHeader = [t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('table-col-sell-percentage'), t('item-sell'), t('item-location'), ''];
 
 export const SelectedItemDetail = ({ selectedItem }) => {
     const state = useSelector(state => state);
@@ -83,6 +83,7 @@ export const SelectedItemDetail = ({ selectedItem }) => {
                                 </span>
                             </td>
                             <td> {numeral(item.sell_price).format('0,0')} MMK </td>
+                            <td> {item.location} </td>
                             <td> 
                                 <InputGroup>
                                     <FormControl

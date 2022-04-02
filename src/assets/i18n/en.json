@@ -24,6 +24,7 @@
     "save-invoice" : "Save Invoice",
     "item-request" : "Item Request",
     "item-sell" : "Sale Price",
+    "item-location" : "Location",
 
     "nav-sale": "Sale",
     "nav-dashboard": "Dashboard",

@@ -1,9 +1,7 @@
 
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { BsEye, BsEyeSlash, BsListTask } from "react-icons/bs";
 import { Navigation } from '../components/general/Navigation';
 import { ItemCreateComponent } from '../components/items/ItemCreateComponent';
 import { getCategories } from '../services/category.service';

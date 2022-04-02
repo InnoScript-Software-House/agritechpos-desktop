@@ -52,9 +52,24 @@ class SalePage extends Component {
         const customerList = customers.filter(e => e.customer_name !== null);
         const data = this.getUniqueListBy(customerList, 'customer_phone');
 
+        const requestItems = localStorage.getItem('CURRENT_INVOICE') ? JSON.parse(localStorage.getItem('CURRENT_INVOICE')) : [];
+
+        let totalSellAmount = 0;
+        let totalPriceAmount = 0;
+
+        requestItems.map((value) => {
+            totalSellAmount += value.totalAmount
+            totalPriceAmount += value.totalOriginAmount
+        });
+
         this.setState({
             items: response,
-            customers: data
+            customers: data,
+            requestItems: requestItems,
+            totalAmount: {
+                sell: totalSellAmount,
+                buy: totalPriceAmount
+            }
         });
     }
 
@@ -198,7 +213,9 @@ class SalePage extends Component {
 
                                 <Card.Body>
                                     <div className="d-md-flex flex-row mb-3">
-                                        <SelectedItemDetail selectedItem={selectedItem} />
+                                        {selectedItem && (
+                                            <SelectedItemDetail selectedItem={selectedItem} />
+                                        )}
                                     </div>
 
                                     <div className="d-md-flex flex-column mb-3">

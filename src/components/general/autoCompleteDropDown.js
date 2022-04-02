@@ -19,14 +19,28 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseItem}, ref) => 
             return;
         }
 
-        const suggestionResult = items.filter((item) => item[options.search_name].toLowerCase().includes(text.toLowerCase()));
+        let suggestionResult = [];
+
+        if(options.for === 'items') {
+            const suggestionResultForCode = items.filter((item) => item.code.toLowerCase().includes(text.toLowerCase()));
+            const suggestionResultForName = items.filter((item) => item.eng_name.toLowerCase().includes(text.toLowerCase()));
+
+            const resultConnect = suggestionResultForCode.concat(suggestionResultForName);
+            setSuggestions(resultConnect);
+            return;
+        }
+
+        suggestionResult = items.filter((item) => item[options.search_name].toLowerCase().includes(text.toLowerCase()));
+
         setSuggestions(suggestionResult);
+       
     }
 
     const selectedItem = (item) => {
         setText(item[options.search_name]);
         setSuggestions([]);
         chooseItem(item);
+        return;
     }
 
     useEffect(() => {
@@ -45,7 +59,7 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseItem}, ref) => 
                 onChange={(e) => searchResult(e.target.value)}
             />
 
-        <div className="dropdown-wrapper">
+        <div className={`dropdown-wrapper ${options.for === 'items' ? 'items-dropdown-width' : ''}`}>
             {suggestions.length > 0 && suggestions.map((value, index) => {
                 return(
                     <Dropdown.Item 
@@ -58,13 +72,12 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseItem}, ref) => 
                             }
                         }}
                     > 
-                        {value[options.search_name]} 
+                        {options.for === 'items' ? `${value.code} [${value.eng_name}]` : value[options.search_name]}
                     </Dropdown.Item>
                 )
             })}
         </div>
         </>
-
     )
 });
 

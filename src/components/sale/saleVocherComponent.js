@@ -29,6 +29,10 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
 
     const removeItem = (selectedItem) => {
         const removeItems = items.filter(item => item.code !== selectedItem.code);
+        const getCurrentInvoice = localStorage.getItem('CURRENT_INVOICE') ? JSON.parse(localStorage.getItem('CURRENT_INVOICE')) : [];
+        const removeInvoiceItem = getCurrentInvoice.filter(value => value.code != selectedItem.code);
+
+        localStorage.setItem('CURRENT_INVOICE', JSON.stringify(removeInvoiceItem));
         retrive(removeItems);
     }
 
