@@ -42,7 +42,7 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "displayLanguageSelector": true,
-      "menuCategory": "POS"
+      "menuCategory": "InnoSript"
     }
   },
   "main": "main.js",
