@@ -25,16 +25,20 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
         sell: 0,
         buy: 0
     });
-   const [customer, setCustomer] = useState(null);
+    const [customer, setCustomer] = useState(null);
 
     const removeItem = (selectedItem) => {
         const removeItems = items.filter(item => item.code !== selectedItem.code);
+        const getCurrentInvoice = localStorage.getItem('CURRENT_INVOICE') ? JSON.parse(localStorage.getItem('CURRENT_INVOICE')) : [];
+        const removeInvoiceItem = getCurrentInvoice.filter(value => value.code != selectedItem.code);
+
+        localStorage.setItem('CURRENT_INVOICE', JSON.stringify(removeInvoiceItem));
         retrive(removeItems);
     }
 
     const calculateDiscount = () => {
         const updateNetAmount = Number(totalAmount) - Number(discount);
-        setNetAmount(updateNetAmount); 
+        setNetAmount(updateNetAmount);
         setPayAmount(updateNetAmount);
     }
 
@@ -54,12 +58,12 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
             bought_items: items.map(e => e)
         };
 
-        if(type === 'cash') {
+        if (type === 'cash') {
             localStorage.setItem('INVOICE', JSON.stringify(iData));
             history.push('/invoiceReport');
         }
 
-        if(type === 'save') {
+        if (type === 'save') {
             const invoiceLists = localStorage.getItem('INVOICE_LIST') ? JSON.parse(localStorage.getItem('INVOICE_LIST')) : [];
             iData.recent_id = uuidv4();
             invoiceLists.push(iData);
@@ -72,17 +76,17 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
     }
 
     useEffect(() => {
-        if(dataSource) {
+        if (dataSource) {
             setItems(dataSource);
         }
 
-        if(total) {
+        if (total) {
             setTotalOriginPrice(total.buy);
             setTotalAmount(total.sell);
             setNetAmount(total.sell);
             setPayAmount(total.sell);
         }
-        if(getcustomer) {
+        if (getcustomer) {
             setCustomer(getcustomer);
         }
     }, [dataSource, total, getcustomer])
@@ -95,26 +99,26 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
                         <tr>
                             <th className="cart-item-table-hash-width"> # </th>
                             {tableHeader.map((header, index) => {
-                                return(
+                                return (
                                     <th key={`header_id_${index}`} className={`${zawgyi(lang)} cart-item-table-with`}> {header} </th>
                                 )
                             })}
-                            
+
                         </tr>
                     </thead>
 
                     <tbody>
                         {items.length > 0 && items.map((item, index) => {
-                            return(
+                            return (
                                 <tr key={`cart_item_id_${index}`}>
                                     <td className="cart-item-table-hash-width"> {index + 1} </td>
                                     <td className="cart-item-table-with"> {item.code} </td>
-                                    <td className="cart-item-table-with"> {item.name} </td> 
+                                    <td className="cart-item-table-with"> {item.name} </td>
                                     <td className="cart-item-table-with"> {item.requestQty} </td>
                                     <td className="cart-item-table-with"> {numeral(item.sell_price).format('0,0')} MMK </td>
-                                    <td className="cart-item-table-with"> 
+                                    <td className="cart-item-table-with">
                                         <div className="d-md-flex flex-md-row justify-content-between align-items-center">
-                                            <span className="me-3"> { numeral(item.sell_price * item.requestQty).format('0,0') } MMK</span>
+                                            <span className="me-3"> {numeral(item.sell_price * item.requestQty).format('0,0')} MMK</span>
                                             <BsTrash className="btn-icon" size={20} onClick={() => removeItem(item)} />
                                         </div>
                                     </td>
@@ -140,12 +144,12 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
                                     <td> <h4 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h4> </td>
                                     <td>
                                         <InputGroup>
-                                            <FormControl 
+                                            <FormControl
                                                 type="number"
                                                 value={discount}
                                                 onChange={(e) => setDiscount(e.target.value)}
                                                 onKeyPress={(e) => {
-                                                    if(e.code === 'Enter') {
+                                                    if (e.code === 'Enter') {
                                                         calculateDiscount();
                                                     }
                                                 }}
@@ -153,21 +157,21 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
                                         </InputGroup>
                                     </td>
                                 </tr>
-                                
+
                                 <tr>
                                     <td> <h4 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h4> </td>
                                     <td>
                                         <InputGroup>
-                                            <FormControl 
+                                            <FormControl
                                                 type="text"
                                                 value={payAmount}
                                                 onChange={(e) => setPayAmount(e.target.value)}
                                                 onKeyPress={(e) => {
-                                                    if(e.code == 'Enter') {
+                                                    if (e.code == 'Enter') {
                                                         calculateCredit();
                                                     }
                                                 }}
-                                            /> 
+                                            />
                                         </InputGroup>
                                     </td>
                                 </tr>

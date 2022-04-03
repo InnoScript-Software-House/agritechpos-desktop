@@ -71,7 +71,7 @@ export const CustomerComponent = ({ input, retrive }) => {
                 />
             </InputGroup>
 
-            <InputGroup className="mt-3">
+            <InputGroup className={`${zawgyi(lang)} me-3`}>
                 <FormControl
                     as={'textarea'}
                     placeholder={t('customer-address')}

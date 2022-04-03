@@ -113,10 +113,6 @@ class InventoryPage extends Component {
                         </div>
 
                         <div className='col-3'>
-                            <CountCard props={this.props} label="Total Qty" color="rgb(23, 162, 184,1)" count={totalQtyList} />
-                        </div>
-
-                        <div className='col-3'>
                             <CountCard props={this.props} label="Profit" color="rgba(114, 196, 84,1)" count={totalProfitList} />
                         </div>
                     </div>
@@ -124,6 +120,10 @@ class InventoryPage extends Component {
                     <div className='row justify-content-start mt-3'>
                         <div className='col-3'>
                             <CountCard props={this.props} label="Out Of Stock" color="rgba(229, 64, 64,1)" count={outOfStock} />
+                        </div>
+
+                        <div className='col-3'>
+                            <CountCard props={this.props} label="Total Qty" color="rgb(23, 162, 184,1)" count={totalQtyList} />
                         </div>
                     </div>
 
