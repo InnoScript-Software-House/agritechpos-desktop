@@ -819,13 +819,6 @@ input[type="number"]:focus,
 	border-color: white !important;
 }
 
-/* logo */
-.logo{
-	position: relative;
-	top: 80px;
-}
-
-
 /*Backup  */
 .btn-backup-save{
 	width: 100%;

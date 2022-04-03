@@ -69,7 +69,7 @@ export const CreditTableComponent = ({data, retrive, refresh}) => {
 		return lastRepaymentDate;
 	};
 
-	const exportCredit = () => {
+	const exportCredit = () => {	
 		const excelData = tableData.map(e => ({
 			invoice_no: e.invoice_no,
 			invoiceDate: moment(e.created_at).format('DD,MM,YYYY'),

@@ -125,14 +125,14 @@ class LoginPage extends Component {
                                 </InputGroup>
                             </div>
 
-                            <label className='login-separte-text'> Connect with in </label>
+                            <label className='login-separte-text'> Connect with </label>
 
                             <div className='social-media-wrapper'>
-                                <BsInstagram className="me-3" size={40} color="#01a3a6" cursor={'pointer'}  />
+                                <BsInstagram className="me-3 rounded-circle" size={40} color="#01a3a6" cursor={'pointer'} />
                                 <BsFacebook className="me-3" size={40} color="#01a3a6" cursor={'pointer'} />
-                                <BsYoutube className='me-3' size={40} color="#01a3a6"cursor={'pointer'} />
-                                <BsGoogle className='me-3' size={40} color="#01a3a6" cursor={'pointer'} />
-                                <BsLinkedin className='me-3' size={40} color="#01a3a6" cursor={'pointer'} />
+                                <BsYoutube className='me-3 rounded-circle' size={40} color="#01a3a6"cursor={'pointer'} />
+                                <BsGoogle className='me-3 rounded-circle' size={40} color="#01a3a6" cursor={'pointer'} />
+                                <BsLinkedin className='me-3 rounded-circle' size={40} color="#01a3a6" cursor={'pointer'} />
                             </div>
                         </div>
                     </div>
