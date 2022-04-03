@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
-import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Navigation } from '../../components/general/Navigation';
-import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { CustomerListTableComponent } from '../../components/customer/CustomerListTableComponent';
-import { CustomerCreateComponent } from '../../components/customer/CustomerCreateComponent';
-import { getCustomerList } from '../../services/customer.service';
 import { getInvoice } from '../../services/invoice.service';
 
 class CustomerPage extends Component {
@@ -42,7 +38,7 @@ class CustomerPage extends Component {
  
     render() {
 
-        const { openCreateItem, customerLists } = this.state;
+        const { customerLists } = this.state;
 
         return (
         <>

@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import { itemExportToExcel } from "../../utilities/exports/itemExport.utility";
-import { autocomplete } from "../../utilities/table.utility";
 
 const CustomerTableHeaderComponent = ({dataSource, searchColumns, filterResult, selectedRows}) => {
     const [filterValue, setFilterValue] = useState('customer_name');
     const [filterType, setFilterType] = useState(searchColumns[0]);
     const [text, setText] = useState('');
     const [isSelected, setIsSelected] = useState(false);
-    const [excelData, setExcelData] = useState([]);
 
     const paidCount = (e) => {
         let repayment = JSON.parse(e.credit.repayment);
@@ -37,11 +35,22 @@ const CustomerTableHeaderComponent = ({dataSource, searchColumns, filterResult, 
     }
 
     const autoSearch = (searchText) => {
-        const result = autocomplete(dataSource, text, filterValue);
         setText(searchText);
-        filterResult(result);
-        console.log(result) 
+
+        if(searchText === '') {
+            filterResult(dataSource);
+            return;
+        }
+
+        const suggestionResut = dataSource.filter((customer) => {
+            if(customer[filterValue]) {
+               return customer[filterValue].toLowerCase().includes(text.toLowerCase())
+            }
+        });
+
+        filterResult(suggestionResut);
     }
+
     useEffect(() => {
         if(selectedRows){
             if(selectedRows.length > 0){

@@ -45,8 +45,11 @@ class LoginPage extends Component {
             password: password
         };
 
-        const response = await login(requestBody);
+        this.setState({
+            is_loading: true
+        })
 
+        const response = await login(requestBody);
         if(response.success === false) {
             this.props.openToast('Login', response.message, 'danger');
             this.setState({
@@ -125,7 +128,7 @@ class LoginPage extends Component {
                                 </InputGroup>
                             </div>
 
-                            <label className='login-separte-text'> Connect with in </label>
+                            <label className='login-separte-text'> Connect with </label>
 
                             <div className='social-media-wrapper'>
                                 <BsInstagram className="me-3" size={40} color="#01a3a6" cursor={'pointer'}  />

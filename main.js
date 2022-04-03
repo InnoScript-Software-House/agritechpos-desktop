@@ -94,15 +94,15 @@ let mainWindow = () => {
 		height: 1000,
 		type: 'MainWindow',
 		frame: true,
-		fullscreen: false,
+		fullscreen: true,
 		...browserWindowOptions
 	});
 
-	// if(!isDev){
-	//     globalShortcut.register('Ctrl+Shift+I', () => {
-	//         return null;
-	//     })
-	// }
+	if(!isDev){
+	    globalShortcut.register('Ctrl+Shift+I', () => {
+	        return null;
+	    })
+	}
 
 	win.loadFile('./index.html');
 	return win;

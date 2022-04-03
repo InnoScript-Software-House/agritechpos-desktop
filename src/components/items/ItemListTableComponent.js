@@ -56,6 +56,7 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 
 			<Card.Body>
 				<DataTable
+					fixedHeaderScrollHeight="400px"
 					subHeader={true}
 					subHeaderComponent={
 						<TableHeaderComponent
