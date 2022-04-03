@@ -13,6 +13,7 @@ import { Navigation } from '../components/general/Navigation';
 import { NumberSpecificationComponent } from '../components/settings/numberSpecification';
 import { DeviceComponent } from '../components/settings/device';
 import { InvoiceComponent } from '../components/settings/InvoiceSetting';
+import BackUpComponent from '../components/settings/backup';
 
 class SettingPage extends Component {
 
@@ -62,6 +63,7 @@ class SettingPage extends Component {
                             {openComponent && openComponent === 'NumberSpecificationComponent' && (<NumberSpecificationComponent props={this.props} />)}
                             {openComponent && openComponent === 'DeviceComponent' && (<DeviceComponent props={this.props} />)}
                             {openComponent && openComponent === 'InvoiceComponent' && (<InvoiceComponent props={this.props} />)}
+                            {openComponent && openComponent === 'BackUpComponent' && (<BackUpComponent props={this.props}/>)}
                         </div>
                     </div>
                 </div>

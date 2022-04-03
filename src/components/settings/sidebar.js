@@ -13,6 +13,10 @@ const menus = [
     {
         "label" : "Invoice",
         "component" : "InvoiceComponent"
+    },
+    {
+        "label" : "Backup",
+        "component" : "BackUpComponent"
     }
     // {
     //     "label": "Device",

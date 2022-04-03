@@ -25,7 +25,8 @@ class DashboardPage extends Component {
             },
             totalSellAmount: 0,
             qty: 0,
-            weekly: 0,
+            totalCreditCustomerAmount: 0,
+            totalCreditCustomerList: 0
         };
     }
 
@@ -75,13 +76,27 @@ class DashboardPage extends Component {
         const { openToast } = this.props
 
         const creditResponse = await getCreditList();
-        if(creditResponse && creditResponse.success === false) {
+        if (creditResponse && creditResponse.success === false) {
             openToast('Credit', creditResponse.message, 'danger');
             return;
         }
-        console.log(creditResponse)
-            const creditCustomer = creditResponse.map(e => e.invoice.customer_name)
-        console.log(creditCustomer) 
+
+        const creditCustomer = creditResponse.filter(e => e.invoice.customer_name !== null)
+        const data = this.getUniqueListBy(creditCustomer, 'customer_phone');
+        const creditCustomerList = data.length
+
+        const CreditAmount = creditResponse.map(e => Number(e.amount))
+        const totalCreditAmount = CreditAmount.reduce((a, b) => a + b, 0)
+
+        this.setState({
+            totalCreditCustomerAmount: totalCreditAmount,
+            totalCreditCustomerList: creditCustomerList
+        })
+    }
+
+
+    getUniqueListBy(items, key) {
+        return [...new Map(items.map(item => [item[key], item])).values()]
     }
 
     async componentDidMount() {
@@ -90,7 +105,7 @@ class DashboardPage extends Component {
     }
 
     render() {
-        const { count, totalSellAmount, qty } = this.state;
+        const { count, totalSellAmount, qty, totalCreditCustomerAmount, totalCreditCustomerList } = this.state;
         return (
             <>
                 <Navigation props={this.props} />
@@ -106,7 +121,7 @@ class DashboardPage extends Component {
                                     <CountCard
                                         props={this.props}
                                         label="Total Customer"
-                                        color="rgba(100,100,70,1)"
+                                        color="rgba(229, 64, 64,1)"
                                         count={count.customer ? count.customer : 0}
                                         url={'/customer'}
                                         urlLabel={'View More Customer List'}
@@ -116,7 +131,7 @@ class DashboardPage extends Component {
                                     <CountCard
                                         props={this.props}
                                         label="Today Sell Amount"
-                                        color="rgba(255,69,70,1)"
+                                        color="rgb(255, 218, 108, 1)"
                                         count={`${numeral(totalSellAmount).format('0,0')} MMK`}
                                         url={'/invoice'}
                                         urlLabel={'Today Sell Amount List'}
@@ -126,7 +141,7 @@ class DashboardPage extends Component {
                                     <CountCard
                                         props={this.props}
                                         label="Total Quantity"
-                                        color="rgba(255,69,70,1)"
+                                        color="rgb(108, 147, 39, 1)"
                                         count={qty ? qty : 0}
                                         url={'/inventory'}
                                         urlLabel={'Quantity'}
@@ -142,7 +157,28 @@ class DashboardPage extends Component {
                             </Card.Title>
                         </Card.Header>
                         <Card.Body>
-
+                            <div className='row'>
+                                <div className='col-md-3'>
+                                    <CountCard
+                                        props={this.props}
+                                        label="Total Quantity"
+                                        color="rgb(23, 162, 184,1)"
+                                        count={totalCreditCustomerList ? totalCreditCustomerList : 0}
+                                        url={'/credit'}
+                                        urlLabel={'Credit List'}
+                                    />
+                                </div>
+                                <div className='col-md-3'>
+                                    <CountCard
+                                        props={this.props}
+                                        label="Total Quantity"
+                                        color="rgba(114, 196, 84,1)"
+                                        count={totalCreditCustomerAmount ? totalCreditCustomerAmount : 0}
+                                        url={'/credit'}
+                                        urlLabel={'Credit List'}
+                                    />
+                                </div>
+                            </div>
                         </Card.Body>
                     </Card>
                     <div className='row mt-3'>
