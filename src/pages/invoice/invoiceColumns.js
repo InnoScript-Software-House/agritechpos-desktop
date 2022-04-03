@@ -50,14 +50,27 @@ export const invoiceColumns = props => {
 			selector: row => `${numeral(row.total_amount).format('0,0')} MMK`,
 			sortable: true
 		},
-		// {
-		//     name: <span> Pay Amount </span>,
-		//     selector: row => `${numeral(row.pay_amount).format('0,0')} MMK`,
-		//     sortable: true
-		// },
+		{
+		    name: <span> Pay Amount </span>,
+		    selector: row => `${numeral(row.pay_amount).format('0,0')} MMK`,
+		    sortable: true
+		},
 		{
 			name: <span> Discount </span>,
 			selector: row => `${numeral(row.discount).format('0,0')} MMK`,
+			sortable: true
+		},
+		{
+			name: <span> Net Profit </span>,
+			selector: row => {
+				const getInvoiceItems = row.invoice_data ? JSON.parse(row.invoice_data) : [];
+				const totalSold = getInvoiceItems.map(e => Number(e.net_profit));
+				const totalAmount = totalSold.reduce((a,b) => a + b, 0);
+				
+				return(
+					`${numeral(totalAmount).format('0,0')} MMK`
+				)
+			},
 			sortable: true
 		}
 	];

@@ -84,7 +84,6 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 					onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
 					paginationPerPage={50}
 					paginationRowsPerPageOptions={[50, 100, 150, 200, 500]}
-					
 				/>
 			</Card.Body>
 		</Card>

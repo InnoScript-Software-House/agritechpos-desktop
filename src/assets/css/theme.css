@@ -14,7 +14,6 @@
 }
 
 body {
-	background-color: #e9e9e9 !important;
 	font-family: "Pyidaungsu" !important;
 }
 
@@ -837,4 +836,13 @@ input[type="number"]:focus,
 	width: 100%;
 	height: auto;
 	margin: auto;
+}
+
+.items-dropdown-width {
+	width: 460px!important;
+}
+
+.bg {
+	background-color: #033c1e;
+	color: #fff;
 }

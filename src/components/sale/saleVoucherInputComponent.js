@@ -25,7 +25,21 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 		item.requestQty = Number(e);
 		item.totalAmount = Number(e) * Number(item.sell_price);
 		item.totalOriginAmount = Number(e) * Number(item.price);
+
+		const getCurrentInvoice = localStorage.getItem('CURRENT_INVOICE') ? JSON.parse(localStorage.getItem('CURRENT_INVOICE')) : [];
+		const checkItem = getCurrentInvoice.filter(value => value.code === item.code);
+
+		if(checkItem.length > 0) {
+			dispatch(setOpenToastAction('Item', "Item is already exist", 'danger'));
+			return;
+		}
+
+		getCurrentInvoice.push(item);
+		localStorage.setItem('CURRENT_INVOICE', JSON.stringify(getCurrentInvoice));
+		
 		retrive(item);
+		selectedItem(null);
+
 	};
 
 	useEffect(
@@ -48,7 +62,8 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 				inputOption={{
 					type: 'text',
 					placeholder: t('input-item-code'),
-					search_name: 'code'
+					search_name: 'code',
+					for: 'items'
 				}}
 				chooseItem={e =>
 					setItem({
@@ -59,7 +74,8 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 						price: Number(e.price),
 						totalQty: Number(e.qty),
 						percentage: Number(e.percentage),
-						sell_price: Number(e.price) * Number(e.percentage) / 100 + Number(e.price)
+						sell_price: Number(e.price) * Number(e.percentage) / 100 + Number(e.price),
+						location: e.location
 					})}
 			/>
 

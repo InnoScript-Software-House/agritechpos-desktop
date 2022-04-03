@@ -9,6 +9,9 @@ import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { AppToast } from '../../components/general/toasts';
 import { ToastContainer } from 'react-bootstrap';
 
+import '../../assets/css/login.css';
+import { BsFacebook, BsGoogle, BsInstagram, BsLinkedin, BsYoutube } from 'react-icons/bs';
+
 class LoginPage extends Component {
 
     constructor(props) {
@@ -62,8 +65,8 @@ class LoginPage extends Component {
         const { username, password, is_loading } = this.state;
         
         return (
-            <div className='container-fluid'>
-                <div className='row'>
+            <div className='container-fluid g-0'>
+                <div className='row g-0'>
                     <div className='col-md-12'>
                         <ToastContainer
                             className='app-toast-container'
@@ -74,14 +77,25 @@ class LoginPage extends Component {
                     </div>
                 </div>
 
-                <div className='row mt-3'>
-                    <div className='col-md-3 '>
-                        <img src="build/assets/images/agritech.png" className='img-fluid logo' />
+                <div className='row g-0'>
+                    <div className='col-md-6 login-left-side'>
+                        <div className='d-md-flex flex-md-column justify-content-center align-items-center login-opacity'>
+                            <div className='login-card'>
+                                <h3> Agricultural Equipment POS Software </h3>
+                                <p> 
+                                    AgriTech is desktop pos software for agriculture machinery equipment businesses.
+                                    We are focusing on IoT products for agriculture sector.
+                                </p>
+
+                                <Button className='btn btn-learn-more'> Learn More </Button>
+                            </div>
+                        </div>
                     </div>
 
-                <div className='col-md-9'>
-                        <h3 className="title mb-3 pb-3"> Agricultural Equipment POS Software </h3>
-                        <div className='d-md-flex flex-md-column justify-content-center align-items-start'>
+                    <div className='col-md-6'>
+                        <div className='login-layout-flex-center'>
+                            <img className="logo" src="build/assets/images/logo.png" />
+
                             <div className='col-md-4'>
                                 <h3 className="title mt-3"> Login Account </h3>
 
@@ -91,6 +105,7 @@ class LoginPage extends Component {
                                         placeholder="username"
                                         value={username}
                                         onChange={e => this.setState({ username: e.target.value})}
+                                        autoFocus={true}
                                     />
                                 </InputGroup>
 
@@ -100,6 +115,7 @@ class LoginPage extends Component {
                                         placeholder="password"
                                         value={password}
                                         onChange={e => this.setState({ password: e.target.value})}
+                                        onKeyPress={e => e.code === 'Enter' ? this.login() : null}
                                     />
                                 </InputGroup>
 
@@ -107,6 +123,16 @@ class LoginPage extends Component {
                                     <Button disabled={is_loading} onClick={() => this.login()} className="btn btn-small"> Login </Button>
                                     <Button onClick={() => this.quitDevice()} className="btn btn-small"> Quit </Button>
                                 </InputGroup>
+                            </div>
+
+                            <label className='login-separte-text'> Connect with in </label>
+
+                            <div className='social-media-wrapper'>
+                                <BsInstagram className="me-3" size={40} color="#01a3a6" cursor={'pointer'}  />
+                                <BsFacebook className="me-3" size={40} color="#01a3a6" cursor={'pointer'} />
+                                <BsYoutube className='me-3' size={40} color="#01a3a6"cursor={'pointer'} />
+                                <BsGoogle className='me-3' size={40} color="#01a3a6" cursor={'pointer'} />
+                                <BsLinkedin className='me-3' size={40} color="#01a3a6" cursor={'pointer'} />
                             </div>
                         </div>
                     </div>
