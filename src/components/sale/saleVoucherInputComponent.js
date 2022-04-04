@@ -61,7 +61,7 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 				dataSource={items}
 				inputOption={{
 					type: 'text',
-					placeholder: t('input-item-code'),
+					placeholder: t('materail-code'),
 					search_name: 'code',
 					for: 'items'
 				}}
@@ -82,7 +82,7 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 			<InputGroup>
 				<FormControl
 					type="text"
-					placeholder={t('item-qty')}
+					placeholder={t('quantity')}
 					value={qty}
 					onChange={e => setQty(e.target.value)}
 					onKeyPress={e => {

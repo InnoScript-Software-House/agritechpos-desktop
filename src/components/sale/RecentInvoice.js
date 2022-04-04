@@ -53,8 +53,8 @@ export const RecentInvoice = ({ dataSource, retrive}) => {
                     return(
                         <div key={`recent_invoice_id_${index}`} className="d-md-flex flex-md-row justify-content-between align-items-center recent-invoice-wrapper">
                             <label className="mb-3"> 
-                                <Badge className="ms-1" bg="primary"> Total Items - {invoice.bought_items.length} </Badge> 
-                                <Badge className="ms-1" bg="secondary">Total Amount - {numeral(invoice.totalAmount).format('0,0')} MMK </Badge>
+                                <Badge className="ms-1" bg="primary"> {`${t('total-items')} - ${invoice.bought_items.length}`} </Badge> 
+                                <Badge className="ms-1" bg="secondary">{`${t('total-amount')} - ${numeral(invoice.totalAmount).format('0,0')} MMK`}  </Badge>
                             </label>
 
                             <div className="mb-3">

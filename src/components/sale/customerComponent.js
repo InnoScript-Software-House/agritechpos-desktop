@@ -43,18 +43,18 @@ export const CustomerComponent = ({ input, retrive }) => {
         <>
             <InputGroup>
                 <FormControl 
-                    className={`${zawgyi(lang)} me-3`}
+                    className='me-3'
                     type="text"
-                    placeholder={t('customer-name')}
+                    placeholder={t('name')}
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'name')}
                 />
 
                 <FormControl 
-                    className={`${zawgyi(lang)} me-3`}
+                    className='me-3'
                     type="text"
-                    placeholder={t('customer-phone')}
+                    placeholder={t('phone')}
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'phone')}
@@ -62,19 +62,19 @@ export const CustomerComponent = ({ input, retrive }) => {
                 />
 
                 <FormControl 
-                    className={`${zawgyi(lang)} me-3`}
+                    className='me-3'
                     type="text"
-                    placeholder={t('customer-email')}
+                    placeholder={t('email')}
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'email')}
                 />
             </InputGroup>
 
-            <InputGroup className={`${zawgyi(lang)} me-3`}>
+            <InputGroup className='me-3'>
                 <FormControl
                     as={'textarea'}
-                    placeholder={t('customer-address')}
+                    placeholder={t('address')}
                     value={customerAddress}
                     onChange={(e) => setCustomerAddress(e.target.value)}
                     onBlur={(e) => updateCustomerInfo(e.target.value, 'address')}

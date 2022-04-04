@@ -5,10 +5,10 @@ import { BsTrash } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
-import { t, zawgyi } from "../../utilities/translation.utility";
+import { t } from "../../utilities/translation.utility";
 import { v4 as uuidv4 } from 'uuid';
 
-const tableHeader = [t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('item-total')];
+const tableHeader = [t('materail-code'), t('name'), t('quantity'), t('price'), t('total')];
 
 export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, save }) => {
     const history = useHistory();
@@ -100,7 +100,7 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
                             <th className="cart-item-table-hash-width"> # </th>
                             {tableHeader.map((header, index) => {
                                 return (
-                                    <th key={`header_id_${index}`} className={`${zawgyi(lang)} cart-item-table-with`}> {header} </th>
+                                    <th key={`header_id_${index}`} className='cart-item-table-with'> {header} </th>
                                 )
                             })}
 
@@ -136,12 +136,12 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <td className="pe-3"> <h4 className={`${zawgyi(lang)}`}> {t('invoice-total')} </h4> </td>
+                                    <td className="pe-3"> <h4> {t('total-amount')} </h4> </td>
                                     <td className="pe-3"> <h4> {numeral(totalAmount).format('0,0')} MMK </h4> </td>
                                 </tr>
 
                                 <tr>
-                                    <td> <h4 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h4> </td>
+                                    <td> <h4> {t('discount')} </h4> </td>
                                     <td>
                                         <InputGroup>
                                             <FormControl
@@ -159,7 +159,7 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
                                 </tr>
 
                                 <tr>
-                                    <td> <h4 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h4> </td>
+                                    <td> <h4> {t('pay-amount')} </h4> </td>
                                     <td>
                                         <InputGroup>
                                             <FormControl
@@ -177,19 +177,19 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
                                 </tr>
 
                                 <tr>
-                                    <td className="pe-3"> <h4 className={`${zawgyi(lang)}`}> {t('invoice-credit-amount')} </h4> </td>
+                                    <td className="pe-3"> <h4> {t('credit-amount')} </h4> </td>
                                     <td className="pe-3"> <h4> {creditAmount} MMK </h4> </td>
                                 </tr>
 
                                 <tr>
-                                    <td className="pe-3"> <h4 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h4> </td>
+                                    <td className="pe-3"> <h4> {t('net-amount')} </h4> </td>
                                     <td className="pe-3"> <h4> {numeral(netAmount).format('0,0')} MMK </h4> </td>
                                 </tr>
 
                                 <tr>
                                     <td className="pe-3" colSpan={2}>
-                                        <Button className="btn w-full" onClick={() => makePayment('cash')}> <span className={`${zawgyi(lang)}`}> {t('make-payment')} </span> </Button>
-                                        <Button className="btn w-full mt-3" onClick={() => makePayment('save')}> <span className={`${zawgyi(lang)}`}> {t('save-invoice')}  </span> </Button>
+                                        <Button className="btn w-full" onClick={() => makePayment('cash')}> <span> {t('make-payment')} </span> </Button>
+                                        <Button className="btn w-full mt-3" onClick={() => makePayment('save')}> <span> {t('save-invoice')}  </span> </Button>
                                     </td>
                                 </tr>
                             </thead>

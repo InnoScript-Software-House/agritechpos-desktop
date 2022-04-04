@@ -1,4 +1,85 @@
 {   
+    "amount" : "Amount",
+    "address" : "Address",
+    "close" : "Close",
+    "confirm" : "Confirm",
+    "credit-amount" : "Credit Amount",
+    "description" : "Description",
+    "discount" : "Discount",
+    "email" : "Email Address",
+    "login-account" : "Login Account",
+    "login-btn-enter": "Login",
+    "location" : "Location",
+    "make-payment" : "Make Payment",
+    "materail-code" : "Material code",
+    "model" : "Model",
+    "name" : "Name",
+    "net-amount" : "Net Amount",
+    "open-recent-invoice" : "Open Recent Invoice",
+    "option" : "Option",
+    "pay-amount" : "Pay Amount",
+    "password" : "Password",
+    "percentage" : "Percentage",
+    "price" : "Price",
+    "phone" : "Phone Number",
+    "quit-btn-enter": "Quit",
+    "quantity" : "Qty",
+    "save-invoice" : "Save Invoice",
+    "sale-price" : "Sale Price",
+    "search" : "Search",
+    "total" : "Total",
+    "total-items" : "Total Items",
+    "total-amount" : "Total Amount",
+    "username" : "Username",
+    "update" : "Update",
+
+
+
+
+
+
+
+    
+    
+
+    
+
+
+
+
+    
+
+
+   
+
+    
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     "invoice" : "Invoice No.",
     "invoice-date" : "Invoice Date",
     "shop-phone" : "Phone",
@@ -20,8 +101,7 @@
     "invoice-net-amount" : "Net Amount",
     "input-customer-name-search" : "Search customer by name",
     "input-customer-name" : "Enter customer name",
-    "make-payment" : "Make Payment",
-    "save-invoice" : "Save Invoice",
+    
     "item-request" : "Item Request",
     "item-sell" : "Sale Price",
     "item-location" : "Location",
@@ -159,12 +239,11 @@
     "alert-category-delete" : "Once the item type is used, the item type cannot be delete",
 
     "unit-year" : "Year",
-    "percentage" : "Percentage",
     "fix-amount" : "Fix Amount",
     "total-price" : "Total",
 
     "open-invoice" : "Open Invoice",
-    "open-recent-invoice" : "Open Recent Invoice",
+
     "invoice-label" : "Invoice",
 
     "dashboard-alert-shop-title": "Shop Information Need!",
@@ -213,7 +292,7 @@
     "btn-frist-device-create": "Create",
     "first-device-empty": "All fields are required except note field",
     "login-title": "User Login",
-    "login-btn-enter": "Login",
+
     "login-input-password": "Enter your password",
     "login-input-username": "Enter your username",
     "login-required": "All fields are required",

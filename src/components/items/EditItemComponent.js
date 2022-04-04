@@ -4,6 +4,7 @@ import { BsArrowCounterclockwise } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { updateItem } from "../../services/item.service";
+import { t } from 'i18next';
 
 export const EditItemComponent = ({ props, item, reload }) => {
 
@@ -96,7 +97,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder="Material Code"
+                            placeholder={t('materail-code')}
                             value={code || ''}
                             onChange={e => setCode(e.target.value)}
                         />
@@ -106,7 +107,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder="English Name"
+                            placeholder={` English ${t('name')}`}
                             value={eng_name || ''}
                             onChange={e => setEnName(e.target.value)}
                         />
@@ -116,7 +117,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder="Myanmar Name"
+                            placeholder={` Myanmar ${t('name')}`}
                             value={mm_name || ''}
                             onChange={e => setMMName(e.target.value)}
                         />
@@ -126,7 +127,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder="Model"
+                            placeholder={t('model')}
                             value={model || ''}
                             onChange={e => setModel(e.target.value)}
                         />
@@ -136,7 +137,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder="Qty"
+                            placeholder={t('quantity')}
                             value={qty || 0}
                             onChange={e => setQty(e.target.value)}
                         />
@@ -146,7 +147,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder="Price"
+                            placeholder={t('price')}
                             value={price || ''}
                             onChange={e => setPrice(e.target.value)}
                         />
@@ -156,7 +157,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder="Location"
+                            placeholder={t('location')}
                             value={itemLocation || ''}
                             onChange={e => setItemLocation(e.target.value)}
                         />

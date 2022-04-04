@@ -1,5 +1,6 @@
 // import { orderBy, sortBy } from "lodash";
 // import { Badge } from "react-bootstrap";
+import { t } from "i18next";
 import React, { useEffect, useState } from "react";
 import { BsArrowUpRightSquare, BsTrash } from "react-icons/bs";
 import { useDispatch } from "react-redux";
@@ -48,7 +49,7 @@ export const itemColumns = (props) => {
             width: "60px"
         },
         {
-            name: <span className="database-header"> Option </span>,
+            name: <span className="database-header"> {t('option')} </span>,
             selector: (row) => {
                return(
                    <>
@@ -81,13 +82,13 @@ export const itemColumns = (props) => {
         //     width: "200px"
         // },
         {
-            name: <span className="database-header"> Material Code </span>,
+            name: <span className="database-header"> {t('materail-code')} </span>,
             selector: row => row.code,
             sortable: true,
             width: "250px"
         },
         {
-            name: <span className="database-header"> English Name </span>,
+            name: <span className="database-header"> {t('name')} </span>,
             selector: row => row.eng_name,
             sortable: true,
             width: "250px"
@@ -105,32 +106,32 @@ export const itemColumns = (props) => {
         //     width: "200px"
         // },
         {
-            name: <span className="database-header"> Qty </span>,
+            name: <span className="database-header"> {t('quantity')} </span>,
             selector: row => row.qty,
             sortable: true
         },
         {
-            name: <span className="database-header"> Price(MMK) </span>,
+            name: <span className="database-header"> {t('price')} </span>,
             selector: row => num(row.price),
             sortable: true
         },
         {
-            name: <span className="database-header"> Total Price(MMK) </span>,
+            name: <span className="database-header"> {t('total')} </span>,
             selector: row => `${numeral(row.price * row.qty).format('0,0')} MMK`,
             sortable: true
         },
         {
-            name: <span className="database-header"> Sell Percentage </span>,
+            name: <span className="database-header"> {t('percentage')} </span>,
             selector: row => row.percentage,
             sortable: true
         },
         {
-            name: <span className="database-header"> Sell Price(MMK) </span>,
+            name: <span className="database-header"> {t('sale-price')} </span>,
             selector: row =>  `${numeral(Number(row.price) + (Number(row.price) * Number((row.percentage/100)))).format('0,0')} MMK`,
             sortFunction: (rowA, rowB) => sortSellPrice(rowA, rowB),
         },
         {
-            name: <span className="database-header"> Location </span>,
+            name: <span className="database-header"> {t('location')} </span>,
             selector: row => row.location,
             sortable: true
         },

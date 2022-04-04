@@ -9,7 +9,7 @@ import { setInvoiceAction } from "../redux/actions/invoice.action";
 import { CustomerComponent } from "../components/sale/customerComponent";
 import { SaleVoucherInputComponent } from "../components/sale/saleVoucherInputComponent";
 import { SaleVoucherComponent } from "../components/sale/saleVocherComponent";
-import { t, zawgyi } from "../utilities/translation.utility";
+import { t } from "../utilities/translation.utility";
 import { RecentInvoice } from "../components/sale/RecentInvoice";
 import { AutoCompleteDropDown } from "../components/general/autoCompleteDropDown";
 import { getInvoice } from "../services/invoice.service";
@@ -187,14 +187,13 @@ class SalePage extends Component {
                         <div className={`${openRecentInvoice ? 'col-md-9' : 'col-md-12'}`}>
                             <Card className="mt-3">
                                 <Card.Header>
-                                    <Card.Title className={`${zawgyi(lang)} title`}>
+                                    <Card.Title className="title">
                                         <div className="d-flex flex-row justify-content-between align-items-center">
                                             <AutoCompleteDropDown
-                                                classsName={`${zawgyi(lang)}`}
                                                 dataSource={customers}
                                                 inputOption={{
                                                     type: "text",
-                                                    placeholder: t('customer-name'),
+                                                    placeholder: t('name'),
                                                     search_name: t('customer_name')
                                                 }}
                                                 chooseItem = {(e) => this.getCustomer(e)}
@@ -219,7 +218,7 @@ class SalePage extends Component {
                                     </div>
 
                                     <div className="d-md-flex flex-column mb-3">
-                                        <h3 className={`${zawgyi(lang)} mt-3 mb-3`}> {t('invoice-label')} </h3>
+                                        <h3 className='mt-3 mb-3'> {t('invoice-label')} </h3>
                                         <CustomerComponent 
                                             className="mt-3" 
                                             input={customer} 

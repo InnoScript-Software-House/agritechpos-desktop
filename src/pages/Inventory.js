@@ -10,6 +10,7 @@ import { getItems } from '../services/item.service';
 import { DeleteDialog } from '../components/general/deleteDialog';
 import { setOpenToastAction } from '../redux/actions/toast.action';
 import { CountCard } from '../components/general/CountCard';
+import { t } from 'i18next';
 import numeral from 'numeral';
 
 class InventoryPage extends Component {

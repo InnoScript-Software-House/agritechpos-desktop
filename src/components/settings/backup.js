@@ -7,7 +7,6 @@ import BackupTableList from './backupTableList';
 const todayDate = moment().format('LTS');
 
 const BackUpComponent = ({ props }) => {
-    console.log(props)
     return (
         <>
             <div className='row mt-3'>
@@ -20,7 +19,7 @@ const BackUpComponent = ({ props }) => {
                         </Card.Header>
                         <Card.Body>
                             <h5>Time</h5>
-                            <div className='row justify-content-center'>{todayDate}</div>
+                            <div className='row justify-content-center border'>{todayDate}</div>
                             <h5 className='mt-3'>Schedule</h5>
                             <Dropdown>
                                 <Dropdown.Toggle variant="outline-secondary" className='dropdownbtn-backup'>

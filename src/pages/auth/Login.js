@@ -8,6 +8,7 @@ import { setAccountAction } from '../../redux/actions/account.action';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { AppToast } from '../../components/general/toasts';
 import { ToastContainer } from 'react-bootstrap';
+import {t} from 'i18next';
 
 import '../../assets/css/login.css';
 import { BsFacebook, BsGoogle, BsInstagram, BsLinkedin, BsYoutube } from 'react-icons/bs';
@@ -100,12 +101,12 @@ class LoginPage extends Component {
                             <img className="logo" src="build/assets/images/logo.png" />
 
                             <div className='col-md-4'>
-                                <h3 className="title mt-3"> Login Account </h3>
+                                <h3 className="title mt-3"> {t('login-account')} </h3>
 
                                 <InputGroup className='mt-3'>
                                     <FormControl
                                         type="text"
-                                        placeholder="username"
+                                        placeholder={t('username')}
                                         value={username}
                                         onChange={e => this.setState({ username: e.target.value})}
                                         autoFocus={true}
@@ -115,7 +116,7 @@ class LoginPage extends Component {
                                 <InputGroup className='mt-3'>
                                     <FormControl
                                         type="password"
-                                        placeholder="password"
+                                        placeholder={t('password')}
                                         value={password}
                                         onChange={e => this.setState({ password: e.target.value})}
                                         onKeyPress={e => e.code === 'Enter' ? this.login() : null}
@@ -123,8 +124,8 @@ class LoginPage extends Component {
                                 </InputGroup>
 
                                 <InputGroup className='mt-3'>
-                                    <Button disabled={is_loading} onClick={() => this.login()} className="btn btn-small"> Login </Button>
-                                    <Button onClick={() => this.quitDevice()} className="btn btn-small"> Quit </Button>
+                                    <Button disabled={is_loading} onClick={() => this.login()} className="btn btn-small"> {t('login-btn-enter')} </Button>
+                                    <Button onClick={() => this.quitDevice()} className="btn btn-small"> {t('quit-btn-enter')} </Button>
                                 </InputGroup>
                             </div>
 
