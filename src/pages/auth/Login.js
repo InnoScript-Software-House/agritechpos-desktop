@@ -45,8 +45,11 @@ class LoginPage extends Component {
             password: password
         };
 
-        const response = await login(requestBody);
+        this.setState({
+            is_loading: true
+        })
 
+        const response = await login(requestBody);
         if(response.success === false) {
             this.props.openToast('Login', response.message, 'danger');
             this.setState({

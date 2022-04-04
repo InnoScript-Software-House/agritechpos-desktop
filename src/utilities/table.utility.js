@@ -1,20 +1,23 @@
 export const autocomplete = (dataSource, text, columnName) => {
 	const textString = text;
+	let filterResult = [];
 
-	const filterResult = dataSource.filter((result, index) => {
-		let filterText = result[columnName] ? result[columnName] : '';
-
-		if (Number(result[columnName])) {
-			filterText = result[columnName].toString();
-			if (filterText.includes(textString)) {
+	if(text !== '') {
+		filterResult = dataSource.filter((result, index) => {
+			let filterText = result[columnName] ? result[columnName] : '';
+	
+			if (Number(result[columnName])) {
+				filterText = result[columnName].toString();
+				if (filterText.includes(textString)) {
+					return result;
+				}
+			}
+	
+			if (filterText.toLowerCase().includes(textString.toLowerCase())) {
 				return result;
 			}
-		}
-
-		if (filterText.toLowerCase().includes(textString.toLowerCase())) {
-			return result;
-		}
-	});
+		});
+	}
 
 	return filterResult;
 };
