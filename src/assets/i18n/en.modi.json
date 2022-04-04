@@ -1,0 +1,35 @@
+{
+    "login-btn-enter": "Login",
+    "quit-btn-enter": "Quit",
+
+    "materail-code" : "Material code",
+
+    "username" : "Username",
+    "name" : "Name",
+    "password" : "Password",
+    "model" : "Model",
+    "quantity" : "Qty",
+    "price" : "Price",
+    "total" : "Total",
+    "discount" : "Discount",
+    "pay-amount" : "Pay Amount",
+    "credit-amount" : "Credit Amount",
+    "amount" : "Amount",
+    "phone" : "Phone Number",
+    "email" : "Email Address",
+    "address" : "Address"
+
+    
+
+ 
+
+
+
+
+
+
+
+
+
+
+}

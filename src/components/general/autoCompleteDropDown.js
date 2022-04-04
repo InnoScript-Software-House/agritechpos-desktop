@@ -24,7 +24,6 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseItem}, ref) => 
         if(options.for === 'items') {
             const suggestionResultForCode = items.filter((item) => item.code.toLowerCase().includes(text.toLowerCase()));
             const suggestionResultForName = items.filter((item) => item.eng_name.toLowerCase().includes(text.toLowerCase()));
-
             const resultConnect = suggestionResultForCode.concat(suggestionResultForName);
             setSuggestions(resultConnect);
             return;
