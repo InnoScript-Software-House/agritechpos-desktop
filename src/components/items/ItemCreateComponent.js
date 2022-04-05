@@ -98,7 +98,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
-                            placeholder={` English ${t('name')}`}
+                            placeholder={t('eng-name')}
                             value={eng_name}
                             onChange={e => setEngName(e.target.value)}
                         />
@@ -108,7 +108,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
-                            placeholder={` Myanmar ${t('name')}`}
+                            placeholder={t('myanmar-name')}
                             value={mm_name}
                             onChange={e => setMName(e.target.value)}
                         />
