@@ -68,6 +68,7 @@ export const InvoiceReportPage = () => {
             setSuccess(true);
             setIsPrint(false);
             localStorage.removeItem('INVOICE');
+            localStorage.removeItem('CURRENT_INVOICE');
         });
     }
 

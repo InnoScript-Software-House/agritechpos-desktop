@@ -1,10 +1,9 @@
 import numeral from "numeral";
 import React, { useEffect, useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { BsTrash } from "react-icons/bs";
+import { BsArrowCounterclockwise, BsTrash } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import moment from "moment";
 import { t, zawgyi } from "../../utilities/translation.utility";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -86,10 +85,12 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
             setNetAmount(total.sell);
             setPayAmount(total.sell);
         }
+
         if(getcustomer) {
             setCustomer(getcustomer);
         }
-    }, [dataSource, total, getcustomer])
+
+    }, [dataSource || total || getcustomer])
 
     return (
         <>
@@ -103,7 +104,11 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
                                     <th key={`header_id_${index}`} className={`${zawgyi(lang)} cart-item-table-with`}> {header} </th>
                                 )
                             })}
-                            
+                            <th className="cart-item-table-hash-width"> 
+                                <BsArrowCounterclockwise className="btn-icon" size={20} onClick={() => {
+                                    localStorage.setItem('INVOICE_LIST', []);
+                                }} />
+                            </th>
                         </tr>
                     </thead>
 

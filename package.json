@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "description": "Agricultural Equipment POS Software",
   "author" : "InnoScript <dev@agritechpos.com>",
-  "keywords": ["Agriculture", "POS"],
+  "keywords": ["Agriculture", "POS", "InnoScript"],
   "license": "ISC",
   "build": {
     "appId": "com.agritech.desktop",

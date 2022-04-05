@@ -1,4 +1,4 @@
-const {BrowserWindow, app, Menu, ipcMain, shell} = require('electron');
+const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut} = require('electron');
 const path = require('path');
 
 const isDev = !app.isPackaged;
@@ -13,8 +13,7 @@ let webPreferences = {
 };
 
 let browserWindowOptions = {
-	webPreferences,
-	backgroundColor: '#eeeeee'
+	webPreferences
 };
 
 const template = [
@@ -73,15 +72,7 @@ const template = [
 			}
 		  }
 		]
-	  },
-	...(isDev ? [
-		{
-			label: 'Development Tools',
-			submenu: [
-				{ role: 'toggleDevTools' },
-			]
-		}
-	] : [])
+	  }
 ];
 
 const menu = Menu.buildFromTemplate(template);
@@ -94,7 +85,7 @@ let mainWindow = () => {
 		height: 1000,
 		type: 'MainWindow',
 		frame: true,
-		fullscreen: true,
+		fullscreen: false,
 		...browserWindowOptions
 	});
 
