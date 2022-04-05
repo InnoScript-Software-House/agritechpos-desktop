@@ -25,6 +25,7 @@ export const InvoiceReportPage = () => {
     const [display, setDisplay] = useState('');
     const [success, setSuccess] = useState(false);
     const [isPrint, setIsPrint] = useState(false);
+    const [reload, setReload] = useState(false);
 
 
     const saveInvoice = async () => {
@@ -57,7 +58,6 @@ export const InvoiceReportPage = () => {
     const print = async () => {
         const { print } = window.nativeApi;
         setIsPrint(true);
-
         setDisplay('display');
 
         const getPrintOptions = localStorage.getItem("PRINT_SETTING") ? JSON.parse(localStorage.getItem("PRINT_SETTING")) : printOptions;
@@ -67,7 +67,8 @@ export const InvoiceReportPage = () => {
         await print.reload((data) => {
             setSuccess(true);
             setIsPrint(false);
-            localStorage.removeItem('INVOICE');
+            localStorage.removeItem('INOICE');
+            localStorage.removeItem('CURRENT_INVOICE');
         });
     }
 

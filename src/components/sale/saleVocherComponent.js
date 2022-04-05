@@ -71,6 +71,8 @@ export const SaleVoucherComponent = ({ dataSource, retrive, total, getcustomer, 
             localStorage.setItem('INVOICE_LIST', JSON.stringify(invoiceLists));
             // window.location.reload();
             save(invoiceLists);
+            setItems([]);
+            localStorage.removeItem('CURRENT_INVOICE');
             return;
         }
     }
