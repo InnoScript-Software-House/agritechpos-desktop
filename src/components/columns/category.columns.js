@@ -1,6 +1,7 @@
 import React from 'react';
 import { BsArrowUpRightSquare } from "react-icons/bs";
 import { useHistory } from 'react-router-dom';
+import { t } from 'i18next';
 
 export const categoryColumns = () => {
     const history = useHistory();
@@ -13,16 +14,16 @@ export const categoryColumns = () => {
             width: "50px"
         },
         {
-            name: <span className="datatable-header"> Category Name </span>,
+            name: <span className="datatable-header"> {t('name')} </span>,
             selector: row => row.name,
             sortable: true
         },
         {
-            name: <span className="datatable-header"> Description </span>,
+            name: <span className="datatable-header"> {t('description')} </span>,
             selector: row => row.description,
         },
         {
-            name: <span className="datatable-header"> Option </span>,
+            name: <span className="datatable-header"> {t('option')} </span>,
             selector: (row) => {
                 return(
                     <BsArrowUpRightSquare 

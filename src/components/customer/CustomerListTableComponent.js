@@ -5,9 +5,10 @@ import { customerColumns } from '../columns/customer.columns';
 import { paginationComponentOptions } from '../table/paginationOptions';
 import CustomerTableHeaderComponent from '../table/customerTableHeader';
 import { TableLoadingComponent } from '../table/tableLoading';
+import {t} from 'i18next';
 
 const searchColumns = [
-    'name', 'email', 'phone'
+    t('name'), t('email'), t('phone')
 ];
 
 export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
@@ -50,7 +51,7 @@ export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
                                 type={'CustomerLists'}
                                 dataSource={dataSource}
                                 searchColumns={searchColumns}
-                                placeholder='Search Item'
+                                placeholder={t('search')}
                                 filterResult={e => getFilterResult(e)}
                                 selectedRows={selectedRows}
                                 reload={(e) => reload(e)}

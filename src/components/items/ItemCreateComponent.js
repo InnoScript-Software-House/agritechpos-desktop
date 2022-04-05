@@ -25,7 +25,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
     const itemSave = async () => {
 
         if(eng_name === '') {
-            dispatch(setOpenToastAction('Create Item', 'English name is required', 'danger'));
+            dispatch(setOpenToastAction('Create Item', `${t('english-name-is-required')}`, 'danger'));
             return;
         }
 
@@ -172,7 +172,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     onClick={() => itemSave()}
                     disabled={btnLoading}
                 >
-                    Save
+                    {t('save')}
                 </Button>
             </Card.Footer>
         </Card>

@@ -3,6 +3,7 @@ import { Card, Table } from 'react-bootstrap';
 import { getNumberSpecList } from '../../services/numberSpecification.service';
 import { EditNumberSpecificationForm } from './editNumberSpecificationForm';
 import { HistoryLog } from '../general/Historylog';
+import { t } from 'i18next';
 
 export const NumberSpecificationComponent = ({ props }) => {
     const [numLists, setNumLists] = useState([]);
@@ -27,7 +28,7 @@ export const NumberSpecificationComponent = ({ props }) => {
             <div className='col-md-4'>
                 <Card>
                     <Card.Header>
-                        <Card.Title> Number Specification </Card.Title>
+                        <Card.Title> {t('number-specification')} </Card.Title>
                     </Card.Header>
 
                     <Card.Body>
@@ -35,8 +36,8 @@ export const NumberSpecificationComponent = ({ props }) => {
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th> Number </th>
-                                    <th> Character </th>
+                                    <th> {t('number')} </th>
+                                    <th> {t('character')} </th>
                                 </tr>
                             </thead>
 
@@ -61,7 +62,7 @@ export const NumberSpecificationComponent = ({ props }) => {
             </div>
 
             <div className='col-md-4'>
-                <HistoryLog props={props} title="Number Specification History Log" />
+                <HistoryLog props={props} title={t('number-specification-history-log')} />
             </div>
         </div>
     )

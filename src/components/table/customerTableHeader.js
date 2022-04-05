@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import { itemExportToExcel } from "../../utilities/exports/itemExport.utility";
+import { t } from 'i18next';
 
 const CustomerTableHeaderComponent = ({dataSource, searchColumns, filterResult, selectedRows}) => {
     const [filterValue, setFilterValue] = useState('customer_name');
@@ -72,7 +73,7 @@ const CustomerTableHeaderComponent = ({dataSource, searchColumns, filterResult, 
                 isSelected && (
                     <div className="me-3">
                         <Button onClick={() => exportToExcel()}>
-                            Export
+                            {t('export')}
                         </Button>
                     </div>
                 )

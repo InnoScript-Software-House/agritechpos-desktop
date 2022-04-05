@@ -6,9 +6,10 @@ import { TableHeaderComponent } from '../table/tableHeader';
 import { TableLoadingComponent } from '../table/tableLoading';
 import { accountColumns } from '../columns/account.columns';
 import { paginationComponentOptions } from '../table/paginationOptions';
+import { t } from 'i18next';
 
 const searchColumns = [
-    'name', 'phone', 'email'
+    t('name'), t('email'), t('phone')
 ];
 
 export const AccountList = ({ dataSource, reload, selectedEdit }) => {
@@ -46,7 +47,7 @@ export const AccountList = ({ dataSource, reload, selectedEdit }) => {
                                     type='auth'
                                     dataSource={dataSource} 
                                     searchColumns={searchColumns} 
-                                    placeholder="Search user account"
+                                    placeholder={t('search')}
                                     filterResult={e => getFilterResult(e)}
                                     selectedRows={selectedRows}
                                     reload={(e) => reload(e)}

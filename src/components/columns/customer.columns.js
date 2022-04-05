@@ -2,6 +2,7 @@ import numeral from 'numeral';
 import React from 'react';
 import {BsArrowUpRightSquare} from 'react-icons/bs';
 import {useHistory} from 'react-router-dom';
+import { t } from 'i18next';
 
 export const customerColumns = props => {
 	const history = useHistory();
@@ -14,27 +15,27 @@ export const customerColumns = props => {
 			width: '50px'
 		},
 		{
-			name: <span className="database-header">Name</span>,
+			name: <span className="database-header">{t('name')}</span>,
 			selector: row => row.customer_name,
 			sortable: true
 		},
 		{
-			name: <span className="database-header">Email</span>,
+			name: <span className="database-header"> {t('email')} </span>,
 			selector: row => row.customer_email,
 			sortable: true
 		},
 		{
-			name: <span className="database-header">Phone Number</span>,
+			name: <span className="database-header"> {t('phone')} </span>,
 			selector: row => row.customer_phone,
 			sortable: true
 		},
 		{
-			name: <span className="database-header">Credit</span>,
+			name: <span className="database-header"> {t('credit')} </span>,
 			selector: row => row.credit_amount,
 			sortable: true
 		},
 		{
-			name: <span className="database-header">Paid Count</span>,
+			name: <span className="database-header"> {t('paid-count')} </span>,
 			selector: row => {
 				if (row.credit.length !== 0) {
 					let getcredit = row.credit[0];
@@ -46,7 +47,7 @@ export const customerColumns = props => {
 			sortable: true
 		},
 		{
-			name: <span className="database-header">Total Amount</span>,
+			name: <span className="database-header"> {t('total-amount')} </span>,
 			selector: row => numeral(row.total_amount).format('0,0') + ' MMK',
 			sortable: true,
 			width: '175px'

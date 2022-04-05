@@ -8,16 +8,17 @@ import { Navigation } from "../components/general/Navigation";
 import { setOpenToastAction } from "../redux/actions/toast.action";
 import { getCreditList, updateCredit } from "../services/credit.service";
 import moment from "moment";
+import { t } from 'i18next';
 
-const columns = [
-  "#",
-  "Credit ID",
-  "Invoice ID",
-  "Customer Name",
-  "Credit Amount",
-  "Repayment",
-  "Amount Left",
-];
+// const columns = [
+//   "#",
+//   "Credit ID",
+//   "Invoice ID",
+//   "Customer Name",
+//   "Credit Amount",
+//   "Repayment",
+//   "Amount Left",
+// ];
 
 class CreditPage extends Component {
   constructor(props) {
@@ -141,7 +142,7 @@ class CreditPage extends Component {
                 />
                 {
                   !isPrint? (
-                    <Button className="mt-2" onClick={() => this.print()}> Print </Button>
+                    <Button className="mt-2" onClick={() => this.print()}> {t('print')} </Button>
                   ): (
                     <>
                     </>
@@ -180,7 +181,7 @@ class CreditPage extends Component {
                 onChange={(e) =>
                   this.setState({ repayment_amount: Number(e.target.value) })
                 }
-                placeholder="Enter repayment amount"
+                placeholder={t('enter-repayment-amount')}
               />
             </InputGroup>
           </Modal.Body>
@@ -190,10 +191,10 @@ class CreditPage extends Component {
               variant="secondary"
               onClick={() => this.setState({ openAddRepayment: false })}
             >
-              Close
+              {t('close')}
             </Button>
             <Button variant="primary" onClick={() => this.save()}>
-              Save
+              {t('save')}
             </Button>
           </Modal.Footer>
         </Modal>

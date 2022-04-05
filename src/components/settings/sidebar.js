@@ -1,21 +1,22 @@
 import React from 'react';
 import { BsArrowRightShort } from "react-icons/bs";
+import { t } from 'i18next';
 
 const menus = [
     {
-        "label": "Shop",
+        "label": `${t('shop')}`,
         "component": "ShopComponent"
     },
     {
-        "label": "Number Specification",
+        "label":  `${t('number-specification')}`,
         "component": "NumberSpecificationComponent"
     },
     {
-        "label" : "Invoice",
+        "label" : `${t('receipt')}`,
         "component" : "InvoiceComponent"
     },
     {
-        "label" : "Backup",
+        "label" :`${t('backup')}`,
         "component" : "BackUpComponent"
     }
     // {
@@ -29,7 +30,7 @@ export const SideBarComponent = ({ getComponent }) => {
     return(
         <div className='d-md-flex flex-column sidebar-wrapper'>
             <div className='m-2'>
-                <h3 className="sidebar-title mt-2"> Setting </h3>
+                <h3 className="sidebar-title mt-2"> {t('setting')} </h3>
 
                 <ul className='sidebar-list'>
                     {menus.map((value, index) => {

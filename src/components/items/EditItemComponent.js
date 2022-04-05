@@ -68,7 +68,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                 return;
             }
 
-            dispatch(setOpenToastAction('Item Update', 'Item is updated', 'success'));
+            dispatch(setOpenToastAction('Item Update', `${t('item-is-updated')}`, 'success'));
             setLoading(false);
             reload();
         }
@@ -93,7 +93,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
 
             { editItem && (
                 <Card.Body>
-                    <FormLabel> Material Code </FormLabel>
+                    <FormLabel> {t('materail-code')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
@@ -103,27 +103,27 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> English Name </FormLabel>
+                    <FormLabel> {`${('english')} ${t('name')}`} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder={` English ${t('name')}`}
+                            placeholder={`${('english')} ${t('name')}`}
                             value={eng_name || ''}
                             onChange={e => setEnName(e.target.value)}
                         />
                     </InputGroup>
 
-                    <FormLabel> Myanmar Name </FormLabel>
+                    <FormLabel>{`${('myanmar')} ${t('name')}`} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder={` Myanmar ${t('name')}`}
+                            placeholder={` ${('myanmar')} ${t('name')}`}
                             value={mm_name || ''}
                             onChange={e => setMMName(e.target.value)}
                         />
                     </InputGroup>
 
-                    <FormLabel> Model </FormLabel>
+                    <FormLabel>{t('model')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
@@ -133,7 +133,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> Qty </FormLabel>
+                    <FormLabel> {t('quantity')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
@@ -143,7 +143,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> Price </FormLabel>
+                    <FormLabel> {t('price')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
@@ -153,7 +153,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> Location </FormLabel>
+                    <FormLabel>{t('location')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
@@ -167,7 +167,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
 
             {editItem && (
                 <Card.Footer>
-                    <Button className="btn-small w-full" disabled={loading} onClick={() => update()}> Update </Button>
+                    <Button className="btn-small w-full" disabled={loading} onClick={() => update()}> {t('update')} </Button>
                 </Card.Footer>
             )}
         </Card>

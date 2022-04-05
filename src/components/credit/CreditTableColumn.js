@@ -1,6 +1,7 @@
 import numeral from 'numeral';
 import moment from 'moment';
 import React from 'react';
+import { t } from 'i18next';
 
 export const CreditTableColumns = () => {
 	const columns = [
@@ -10,37 +11,37 @@ export const CreditTableColumns = () => {
 			width: '50px'
 		},
 		{
-			name: <span> Invoice No </span>,
+			name: <span> {t('invoice-id')} </span>,
 			selector: row => row.invoice_no,
 			sortable: true
 		},
 
 		{
-			name: <span> Invoice Date </span>,
+			name: <span> {t('invoice-date')} </span>,
 			selector: row => moment(row.invoice.created_at).format('DD-MM-Y'),
 			sortable: true
 		},
 
 		{
-			name: <span> Total Amount </span>,
+			name: <span> {t('total-amount')} </span>,
 			selector: row => `${numeral(row.invoice.total_amount).format('0,0')} MMK`,
 			sortable: true
 		},
 
 		{
-			name: <span> Discount </span>,
+			name: <span> {t('discount')} </span>,
 			selector: row => `${numeral(row.invoice.discount).format('0,0')} MMK`,
 			sortable: true
 		},
 
 		{
-			name: <span> Credit Amount </span>,
+			name: <span> {t('credit-amount')} </span>,
 			selector: row => `${numeral(row.invoice.credit_amount).format('0,0')} MMK`,
 			sortable: true
 		},
 
 		{
-			name: <span> Pay Amount </span>,
+			name: <span> {t('pay-amount')} </span>,
 			selector: row => {
 				const repayments = JSON.parse(row.repayment);
 				const repaymentAmounts = repayments.map(value => value.pay_amount);
@@ -51,7 +52,7 @@ export const CreditTableColumns = () => {
 		},
 
 		{
-			name: <span> Remaining Balance </span>,
+			name: <span> {t('remaining-balance')} </span>,
 			selector: row => {
 				const repayments = JSON.parse(row.repayment);
 				const repaymentAmounts = repayments.map(value => value.pay_amount);
@@ -68,13 +69,13 @@ export const CreditTableColumns = () => {
 		},
 
 		{
-			name: <span> Repayment Times </span>,
+			name: <span>{t('remaining-time')} </span>,
 			selector: row => `${JSON.parse(row.repayment).length} times`,
 			sortable: true
 		},
 
 		{
-			name: <span> Last Repayment Date </span>,
+			name: <span> {t('last-day')} </span>,
 			selector: row => {
 				const repayments = JSON.parse(row.repayment);
 				const lastRepayment = repayments[repayments.length - 1];

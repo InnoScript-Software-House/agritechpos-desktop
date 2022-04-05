@@ -3,6 +3,7 @@ import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { saveCategory } from '../../services/category.service';
+import { t } from 'i18next';
 
 export const CreateCategoryComponent = ({ reload }) => {
     const dispatch = useDispatch();
@@ -57,7 +58,7 @@ export const CreateCategoryComponent = ({ reload }) => {
             <InputGroup className="mb-3">
                 <FormControl 
                     type='text'
-                    placeholder="Category Name"
+                    placeholder={t('name')}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
@@ -66,7 +67,7 @@ export const CreateCategoryComponent = ({ reload }) => {
             <InputGroup className="mb-3">
                 <FormControl 
                     type='text'
-                    placeholder="Description"
+                    placeholder={t('description')}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
@@ -77,7 +78,7 @@ export const CreateCategoryComponent = ({ reload }) => {
                 disabled={loading}
                 onClick={() => createCategory()}
             > 
-                Create
+                {t('create')}
             </Button>
         </Card.Body>
     </Card>

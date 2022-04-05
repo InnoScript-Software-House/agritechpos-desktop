@@ -13,6 +13,7 @@ import { getItems } from '../../services/item.service';
 import WeekChart from '../../components/charts/WeekChart';
 import { Card } from 'react-bootstrap';
 import { getCreditList } from '../../services/credit.service';
+import { t } from 'i18next';
 
 class DashboardPage extends Component {
 
@@ -113,14 +114,14 @@ class DashboardPage extends Component {
                 <div className='container-fluid'>
                     <Card className='mt-3'>
                         <Card.Header>
-                            <Card.Title className='row justify-content-center'>Customer</Card.Title>
+                            <Card.Title className='row justify-content-center'>{t('customer')}</Card.Title>
                         </Card.Header>
                         <Card.Body>
                             <div className='row' >
                                 <div className='col-md-3'>
                                     <CountCard
                                         props={this.props}
-                                        label="Total Customer"
+                                        label={t('total-customer')}
                                         color="rgba(229, 64, 64,1)"
                                         count={count.customer ? count.customer : 0}
                                         url={'/customer'}
@@ -130,21 +131,21 @@ class DashboardPage extends Component {
                                 <div className='col-md-3'>
                                     <CountCard
                                         props={this.props}
-                                        label="Today Sell Amount"
+                                        label={t('total-sell-amount')}
                                         color="rgb(255, 218, 108, 1)"
                                         count={`${numeral(totalSellAmount).format('0,0')} MMK`}
                                         url={'/invoice'}
-                                        urlLabel={'Today Sell Amount List'}
+                                        urlLabel={'View More Sell Amount List'}
                                     />
                                 </div>
                                 <div className='col-md-3'>
                                     <CountCard
                                         props={this.props}
-                                        label="Total Quantity"
+                                        label={t('total-quantity')}
                                         color="rgb(108, 147, 39, 1)"
                                         count={qty ? qty : 0}
                                         url={'/inventory'}
-                                        urlLabel={'Quantity'}
+                                        urlLabel={'View More Quantity List'}
                                     />
                                 </div>
                             </div>
@@ -153,7 +154,7 @@ class DashboardPage extends Component {
                     <Card className='mt-3'>
                         <Card.Header>
                             <Card.Title className='row justify-content-center'>
-                                Credit
+                                {t('credit')}
                             </Card.Title>
                         </Card.Header>
                         <Card.Body>
@@ -161,21 +162,21 @@ class DashboardPage extends Component {
                                 <div className='col-md-3'>
                                     <CountCard
                                         props={this.props}
-                                        label="Total Quantity"
+                                        label={t('total-credit-customer')}
                                         color="rgb(23, 162, 184,1)"
                                         count={totalCreditCustomerList ? totalCreditCustomerList : 0}
                                         url={'/credit'}
-                                        urlLabel={'Credit List'}
+                                        urlLabel={'View More Credit Customer List'}
                                     />
                                 </div>
                                 <div className='col-md-3'>
                                     <CountCard
                                         props={this.props}
-                                        label="Total Quantity"
+                                        label={t('total-credit-customer-amount')}
                                         color="rgba(114, 196, 84,1)"
                                         count={totalCreditCustomerAmount ? totalCreditCustomerAmount : 0}
                                         url={'/credit'}
-                                        urlLabel={'Credit List'}
+                                        urlLabel={'View MOre Credit Customer Amount List'}
                                     />
                                 </div>
                             </div>

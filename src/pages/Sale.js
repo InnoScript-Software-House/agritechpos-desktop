@@ -218,7 +218,7 @@ class SalePage extends Component {
                                     </div>
 
                                     <div className="d-md-flex flex-column mb-3">
-                                        <h3 className='mt-3 mb-3'> {t('invoice-label')} </h3>
+                                        <h3 className='mt-3 mb-3'> {t('receipt')} </h3>
                                         <CustomerComponent 
                                             className="mt-3" 
                                             input={customer} 

@@ -26,7 +26,7 @@ export const DeleteDialog = ({ props, reload }) => {
         }
 
         closeModal();
-        dispatch(setOpenToastAction(delModal.title, 'Records are deleted', 'success'));
+        dispatch(setOpenToastAction(delModal.title, `${t('records-are-deleted')}`, 'success'));
         reload();
         return;
     }
@@ -44,7 +44,7 @@ export const DeleteDialog = ({ props, reload }) => {
         }
 
         closeModal();
-        dispatch(setOpenToastAction(delModal.title, 'Records are deleted', 'success'));
+        dispatch(setOpenToastAction(delModal.title, `${t('records-are-deleted')}`, 'success'));
         reload();
         return;
     }

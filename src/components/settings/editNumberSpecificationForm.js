@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Card, FormControl, InputGroup } from 'react-bootstrap';
 import { updateChar } from '../../services/numberSpecification.service';
 import { BsArrowCounterclockwise } from "react-icons/bs";
+import { t } from 'i18next';
 
 export const EditNumberSpecificationForm = ({ props, dataSource, reload }) => {
     
@@ -51,7 +52,7 @@ export const EditNumberSpecificationForm = ({ props, dataSource, reload }) => {
         <Card>
             <Card.Header>
                 <Card.Title className='d-md-flex flex-md-row justify-content-between number-spec-info-title'> 
-                <span> Edit Number Specification</span>
+                <span> {t('edit-number-specification')}</span>
                 <div className='icon-btn' onClick={() => reloadApi()}>
                     <BsArrowCounterclockwise size={20} />
                 </div>
@@ -71,7 +72,7 @@ export const EditNumberSpecificationForm = ({ props, dataSource, reload }) => {
                             <FormControl 
                                 className="ms-1"
                                 type='text'
-                                placeholder="Enter Character"
+                                placeholder={t('character')}
                                 value={numSpec.set_char || ''}
                                 onChange={(e) => handleChange(index, numSpec.id, e)}
                                 maxLength={1}
