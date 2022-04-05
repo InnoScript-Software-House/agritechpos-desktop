@@ -15,6 +15,7 @@ import { paginationComponentOptions } from '../components/table/paginationOption
 import { InvoiceTableHeader } from '../components/table/invoiceTableHeader';
 import { autocomplete } from '../utilities/table.utility';
 import { itemExportToExcel } from '../utilities/exports/itemExport.utility';
+import { t } from 'i18next';
 import numeral from 'numeral';
 
 let getToday = moment().format('YYYY-MM-DD');
@@ -192,10 +193,10 @@ class InvoicePage extends Component {
                             <Card>
                                 <Card.Header className='d-md-flex flex-md-row justify-content-start align-items-center'>
                                     <div className='d-md-flex flex-md-column ms-3'>
-                                        <FormLabel> Start Date </FormLabel>
+                                        <FormLabel> {t('start-date')} </FormLabel>
                                         <FormControl
                                             type='date'
-                                            placeholder="Choose Start Date"
+                                            placeholder={t('start-date')}
                                             value={start_date}
                                             onChange={(e) => {this.setState({ start_date: e.target.value });
                                             this.dateStartRangeHandler(e.target.value);
@@ -204,10 +205,10 @@ class InvoicePage extends Component {
                                     </div>
 
                                     <div className='d-md-flex flex-md-column ms-3'>
-                                        <FormLabel> End Date </FormLabel>
+                                        <FormLabel> {t('end-date')} </FormLabel>
                                         <FormControl
                                             type='date'
-                                            placeholder="Choose End Date"
+                                            placeholder={t('end-date')}
                                             value={end_date}
                                             onChange={(e) => {this.setState({ end_date: e.target.value });
                                             this.dateEndRangeHandler(e.target.value);
@@ -215,15 +216,15 @@ class InvoicePage extends Component {
                                         />
                                     </div>
                                     <div className='d-md-flex flex-md-column ms-3'>
-                                        <Button className='btn btn-margin-top' onClick={() => this.exportInvoice()}> Export </Button>
+                                        <Button className='btn btn-margin-top' onClick={() => this.exportInvoice()}> {t('export')} </Button>
                                     </div>
 
                                     <div className='d-md-flex flex-md-column ms-3'>
-                                        <Button className='btn btn-margin-top' onClick={()=> this.clear()}> Clear </Button>
+                                        <Button className='btn btn-margin-top' onClick={()=> this.clear()}> {t('clear')} </Button>
                                     </div>
                                     <div className='col'>
                                         <div className='d-md-flex flex-md-row justify-content-end align-items-center'>
-                                            <h3> Total Sold Amount - {numeral(totalSoldAmount).format('0,0') +' MMk'} </h3>
+                                            <h3> {t('total-sold-amount')} - {numeral(totalSoldAmount).format('0,0') +' MMk'} </h3>
                                         </div>
                                     </div>
                                 </Card.Header>

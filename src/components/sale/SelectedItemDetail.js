@@ -4,9 +4,9 @@ import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { updateItem } from "../../services/item.service";
-import { t, zawgyi } from "../../utilities/translation.utility";
+import { t } from "../../utilities/translation.utility";
 
-const tableHeader = [t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('table-col-sell-percentage'), t('item-sell'), t('item-location'), ''];
+const tableHeader = [t('materail-code'), t('name'), t('quantity'), t('price'), t('percentage'), t('sale-price'), t('location')];
 
 export const SelectedItemDetail = ({ selectedItem }) => {
     const state = useSelector(state => state);
@@ -61,7 +61,7 @@ export const SelectedItemDetail = ({ selectedItem }) => {
                         <tr>
                             {tableHeader.map((value, index) => {
                                 return(
-                                    <td key={`table_id_${index}`} className={`${zawgyi(lang)}`}> {value} </td>
+                                    <td key={`table_id_${index}`}> {value} </td>
                                 )
                             })}
                         </tr>

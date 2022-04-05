@@ -85,9 +85,10 @@
     "category-create-title" : "ပစ္စည်းအမျိုးအစားအသစ်ထည့်သွင်းရန်",
     "category-table-title" : "ပစ္စည်းအမျိုးအစားစာရင်း",
     "category-update-title" : "ပစ္စည်းအမျိုးအစားပြင်ဆင်ရန်",
-
+    "option" : "ပြင်ဆင်ရန်",
     "sell-cart" : "အရောင်းပစ္စည်းစာရင်း",
-
+    "sell-price" : "ရောင်းဈေး",
+    "sell-percentage" : "ရာခိုင်းနှုန်း",
     "table-col-name" : "နာမည်",
     "table-col-qty" : "အရေအတွက်",
     "table-col-description" : "ဖော်ပြချက်",
@@ -159,6 +160,7 @@
     "percentage" : "ရာခိုင်နှုန်း",
     "fix-amount" : "ရောင်းစျေးအသေ",
     "total-price" : "စုစုပေါင်း",
+    "total-price-inv" : "ငွေပေါင်း",
 
     "open-invoice" : "ဘောင်ချာဖွင့်ရန်",
     "open-recent-invoice" : "ဖွင့်ထားသောဘောင်ချာများ",

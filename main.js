@@ -75,8 +75,8 @@ const template = [
 	  }
 ];
 
-const menu = Menu.buildFromTemplate(template);
-Menu.setApplicationMenu(menu);
+// const menu = Menu.buildFromTemplate(template);
+// Menu.setApplicationMenu(menu);
 let curentWindow = null;
 
 let mainWindow = () => {

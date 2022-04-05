@@ -3,6 +3,7 @@ import { Badge } from 'react-bootstrap';
 import { BsArrowUpRightSquare, BsTrash } from "react-icons/bs";
 import { useDispatch } from 'react-redux';
 import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
+import { t } from 'i18next';
 
 export const accountColumns = (edit) => {
 
@@ -16,21 +17,21 @@ export const accountColumns = (edit) => {
             width: "50px"
         },
         {
-            name: <span className="datatable-header"> Account Name </span>,
+            name: <span className="datatable-header"> {t('name')} </span>,
             selector: row => row.name,
             sortable: true
         },
         {
-            name: <span className="datatable-header"> Phone </span>,
+            name: <span className="datatable-header"> {t('phone')} </span>,
             selector: row => row.phone,
         },
         {
-            name: <span className="datatable-header"> Email </span>,
+            name: <span className="datatable-header"> {t('email')} </span>,
             selector: row => row.email,
         },
 
         {
-            name: <span className="datatable-header"> Status </span>,
+            name: <span className="datatable-header"> {t('status')} </span>,
             selector: row => {
                 return(
                     <Badge bg={row.active ? 'success' : 'danger'}> {row.active ? 'Active' : 'Block'} </Badge>
@@ -38,7 +39,7 @@ export const accountColumns = (edit) => {
             },
         },
         {
-            name: <span className="datatable-header"> Option </span>,
+            name: <span className="datatable-header"> {t('option')} </span>,
             selector: row => {
                 return(
                     <div className='d-flex flex-row'>

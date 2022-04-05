@@ -7,6 +7,7 @@ import {paginationComponentOptions} from '../table/paginationOptions';
 import {TableHeaderComponent} from '../table/tableHeader';
 import {TableLoadingComponent} from '../table/tableLoading';
 import { BsEye, BsEyeSlash, BsListTask } from "react-icons/bs";
+import { t } from "i18next";
 
 const searchColumns = ['code', 'eng_name', 'mm_name', 'category_title', 'location'];
 
@@ -63,7 +64,7 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 							type={'Items'}
 							dataSource={dataSource}
 							searchColumns={searchColumns}
-							placeholder="Search Item"
+							placeholder={t('search')}
 							filterResult={e => getFilterResult(e)}
 							selectedRows={selectedRows}
 							reload={e => reload(e)}

@@ -8,6 +8,7 @@ import { AccountList } from '../../components/account/accountList';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { BsArrowLeftRight } from 'react-icons/bs';
 import { DeleteDialog } from '../../components/general/deleteDialog';
+import { t } from 'i18next';
 
 const checkphone = /^(\+?(95)|[09])\d{10}/g;
 const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -171,7 +172,7 @@ class AccountPage extends Component {
                     <FormControl 
                       className="mb-2"
                       type='text'
-                      placeholder="Account Name"
+                      placeholder={t('name')}
                       value={this.state.name}
                       onChange={(e) => this.setState({
                         name: e.target.value
@@ -182,7 +183,7 @@ class AccountPage extends Component {
                   <FormControl 
                     className="mb-2"
                     type='email'
-                    placeholder="Email Address"
+                    placeholder={t('email')}
                     value={this.state.email}
                     onChange={(e) => this.setState({
                       email: e.target.value
@@ -192,7 +193,7 @@ class AccountPage extends Component {
                   <FormControl 
                     className="mb-2"
                     type='text'
-                    placeholder="Phone Number"
+                    placeholder={t('phone')}
                     value={this.state.phone}
                     onChange={(e) => this.setState({
                       phone: e.target.value
@@ -203,7 +204,7 @@ class AccountPage extends Component {
                     <FormControl 
                       className="mb-2"
                       type='password'
-                      placeholder="Password"
+                      placeholder={t('password')}
                       value={this.state.password}
                       onChange={(e) => this.setState({
                         password: e.target.value
@@ -215,7 +216,7 @@ class AccountPage extends Component {
                     <FormControl 
                       className="mb-2"
                       type='password'
-                      placeholder="Confirm Password"
+                      placeholder={t('comfirm-password')}
                       value={this.state.confirm_password}
                       onChange={(e) => this.setState({
                         confirm_password: e.target.value
@@ -230,7 +231,7 @@ class AccountPage extends Component {
                         onClick={() => this.create()}
                         disabled={this.state.loading}
                       > 
-                        Create Account
+                        {t('create')}
                       </Button>
                     ) : (
                       <Button 
@@ -238,7 +239,7 @@ class AccountPage extends Component {
                         onClick={() => this.update()}
                         disabled={this.state.loading}
                       > 
-                        Update Account
+                        {t('update')}
                       </Button>
                     )}
                   </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, FormControl } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { zawgyi } from "../../utilities/translation.utility";
+
 
 const CustomMenu = React.forwardRef(({options, dataSource, chooseItem}, ref) => {
 
@@ -24,7 +24,6 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseItem}, ref) => 
         if(options.for === 'items') {
             const suggestionResultForCode = items.filter((item) => item.code.toLowerCase().includes(text.toLowerCase()));
             const suggestionResultForName = items.filter((item) => item.eng_name.toLowerCase().includes(text.toLowerCase()));
-
             const resultConnect = suggestionResultForCode.concat(suggestionResultForName);
             setSuggestions(resultConnect);
             return;
@@ -52,7 +51,6 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseItem}, ref) => 
     return(
         <>
             <FormControl 
-                className={`${zawgyi(lang)}`}
                 type={options.type}
                 placeholder={options.placeholder}
                 value={text}

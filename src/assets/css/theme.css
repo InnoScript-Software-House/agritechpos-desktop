@@ -766,18 +766,14 @@ input[type="number"]:focus,
 }
 
 /* countcard */
-.countcardbody {
-	background-color: #17a2b8;
+.countcardbtn{
+	cursor: pointer;
 }
 
-.countcardfooter {
-	background-color: #148a9d;
+.countcardbtn:hover {
+	text-decoration: underline;
 }
 
-.countcardbtn {
-	background-color: #148a9d !important;
-	border: none !important;
-}
 
 .btn-margin-top {
 	margin-top: 27px !important;
@@ -823,6 +819,17 @@ input[type="number"]:focus,
 	border-color: white !important;
 }
 
+/*Backup  */
+.btn-backup-save{
+	width: 100%;
+	margin: auto;
+}
+
+.dropdownbtn-backup{
+	width: 100%;
+	height: auto;
+	margin: auto;
+}
 
 .items-dropdown-width {
 	width: 460px!important;

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import { getShop } from "../../services/shop.service";
 import moment from "moment";
-import { t, zawgyi } from "../../utilities/translation.utility";
+import { t } from "../../utilities/translation.utility";
 import { useSelector } from "react-redux";
 import numeral from "numeral";
 
-const tableHeader = [t('item-code'), t('item-name'), t('item-model'), t('item-qty'), t('item-price'), t('item-total')];
+const tableHeader = [t('aterail-code'), t('name'), t('model'), t('quantity'), t('price'), t('total')];
 
 export const InvoiceDataComponent = ({ invoiceDetail }) => {
 
@@ -48,28 +48,28 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                     <>
                         <div className="col-md-12 d-md-flex flex-md-row justify-content-between align-items-center mt-3 line mb-3">
                             <div className="ps-3">
-                                <h3 className={`${zawgyi(lang)}`}> {shop.name} - {shop.description} </h3>
-                                <p className={`${zawgyi(lang)}`}> {shop.address} </p>
+                                <h3> {shop.name} - {shop.description} </h3>
+                                <p> {shop.address} </p>
                             </div>
 
                             <div className="d-md-flex flex-md-column pe-3">
-                                <span className={`${zawgyi(lang)}`}> {t('shop-phone')} - {shop.phone} </span>
-                                <span className={`${zawgyi(lang)}`}> {t('shop-email')} - {shop.email} </span>
+                                <span> {t('phone')} - {shop.phone} </span>
+                                <span> {t('email')} - {shop.email} </span>
                             </div>
                         </div>
 
                         <div className="col-md-12 mt-3 ps-3">
                             <div className="d-md-flex flex-row justify-content-between align-items-center mb-3">
                                 <div className="invoice-info">
-                                    <h2 className={`${zawgyi(lang)}`}> {t('invoice')} - AT{invoice.invoice_no} </h2>
-                                    <span className={`${zawgyi(lang)}`}> {t('invoice-date')} - {moment(invoice.created_at).format('DD,MM,YYYY')} </span>
+                                    <h2> {t('invoice')} - AT{invoice.invoice_no} </h2>
+                                    <span> {t('invoice-date')} - {moment(invoice.created_at).format('DD,MM,YYYY')} </span>
                                 </div>
 
                                 <div className="customer-info">
                                     <div className="pe-3">
-                                        <h5 className={`${zawgyi(lang)}`}> {t('customer-name')} - {invoice.customer_name} </h5>
-                                        <h5 className={`${zawgyi(lang)}`}> {t('customer-phone')} - {invoice.customer_phone} </h5>
-                                        <h5 className={`${zawgyi(lang)}`}> {t('customer-address')} - {invoice.customer_address} </h5>
+                                        <h5> {t('name')} - {invoice.customer_name} </h5>
+                                        <h5> {t('phone')} - {invoice.customer_phone} </h5>
+                                        <h5> {t('address')} - {invoice.customer_address} </h5>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                                     <tr>
                                         {tableHeader.map((thHeader, index) => {
                                             return (
-                                                <th key={`table_header_id_${index}`} className={`${zawgyi(lang)} solid-border`}> <small> {thHeader} </small> </th>
+                                                <th key={`table_header_id_${index}`} className='solid-border'> <small> {thHeader} </small> </th>
                                             )
                                         })}
                                     </tr>
@@ -90,12 +90,12 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                                     { invoiceData && invoiceData.map((value, index) => {
                                         return (
                                         <tr key={`invoice data key ${index}`}>
-                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {value.code} </small> </td>
-                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {value.name} </small> </td>
-                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {value.model} </small> </td>
-                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {value.requestQty} </small> </td>
-                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {numeral(value.sell_price).format('0,0')} MMK </small> </td>
-                                            <td className={`${zawgyi(lang)} solid-border`}> <small> {numeral(value.totalAmount).format('0,0')} MMK </small> </td>
+                                            <td className='solid-border'> <small> {value.code} </small> </td>
+                                            <td className='solid-border'> <small> {value.name} </small> </td>
+                                            <td className='solid-border'> <small> {value.model} </small> </td>
+                                            <td className='solid-border'> <small> {value.requestQty} </small> </td>
+                                            <td className='solid-border'> <small> {numeral(value.sell_price).format('0,0')} MMK </small> </td>
+                                            <td className='solid-border'> <small> {numeral(value.totalAmount).format('0,0')} MMK </small> </td>
                                         </tr>
                                         )
                                     })
@@ -113,12 +113,12 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                                 <table>
                                     <thead>
                                         <tr>
-                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-total')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {t('total')} </h6> </td>
                                             <td className="w-200 solid-border"> <h6> {numeral(invoice.total_amount).format('0,0')} MMK </h6> </td>
                                         </tr>
 
                                         <tr>
-                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {t('discount')} </h6> </td>
                                             <td className="w-200 solid-border"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
                                         </tr>
 {/* 
@@ -133,7 +133,7 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                                         </tr> */}
 
                                         <tr>
-                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h6> </td>
+                                            <td className="w-200 solid-border"> <h6> {t('net-amount')} </h6> </td>
                                             <td className="w-200 solid-border"> <h6> {numeral(invoice.total_amount).format('0,0')} MMK </h6> </td>
                                         </tr>
                                     </thead>

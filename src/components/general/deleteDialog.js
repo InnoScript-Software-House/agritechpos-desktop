@@ -26,7 +26,7 @@ export const DeleteDialog = ({ props, reload }) => {
         }
 
         closeModal();
-        dispatch(setOpenToastAction(delModal.title, 'Records are deleted', 'success'));
+        dispatch(setOpenToastAction(delModal.title, `${t('records-are-deleted')}`, 'success'));
         reload();
         return;
     }
@@ -44,7 +44,7 @@ export const DeleteDialog = ({ props, reload }) => {
         }
 
         closeModal();
-        dispatch(setOpenToastAction(delModal.title, 'Records are deleted', 'success'));
+        dispatch(setOpenToastAction(delModal.title, `${t('records-are-deleted')}`, 'success'));
         reload();
         return;
     }
@@ -66,8 +66,8 @@ export const DeleteDialog = ({ props, reload }) => {
             </Modal.Body>
 
             <Modal.Footer>
-                <Button className="btn-small" onClick={() => delModal.multiple ? multipleDeleted() : confirmDelete()}> Confirm </Button>
-                <Button className="btn-small btn-secondary" onClick={() => closeModal()}> Close </Button>
+                <Button className="btn-small" onClick={() => delModal.multiple ? multipleDeleted() : confirmDelete()}> {t('confirm')} </Button>
+                <Button className="btn-small btn-secondary" onClick={() => closeModal()}> {t('close')} </Button>
             </Modal.Footer>
         </Modal>
     )

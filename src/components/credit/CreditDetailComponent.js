@@ -3,6 +3,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { t } from 'i18next';
 
 export const CreditDetailComponent = ({ data, addRepayment }) => {
   const [detail, setDetail] = useState(null);
@@ -52,12 +53,12 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
           <h4>
             {" "}
             {detail ? (
-              <span> Credit ID - {detail.id} </span>
+              <span> {t('credit-id')} - {detail.id} </span>
             ) : (
               <span> Credit Information</span>
             )}{" "}
           </h4>
-          {detail && <span> Invoice ID - {detail.invoice_no} </span>}
+          {detail && <span> {t('invoice-id')} - {detail.invoice_no} </span>}
         </Card.Title>
       </Card.Header>
 
@@ -70,7 +71,7 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
                 <div className="row mt-3">
                   <span>
                     {" "}
-                    Customer Name : {detail && detail.invoice.customer_name}
+                    {t('name')} : {detail && detail.invoice.customer_name}
                   </span>
                 </div>
               )}
@@ -81,7 +82,7 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
                 <div className="row mt-3">
                   <span>
                     {" "}
-                    Customer Phone : {detail && detail.invoice.customer_phone}
+                    {t('phone')} : {detail && detail.invoice.customer_phone}
                   </span>
                 </div>
               )}
@@ -92,7 +93,7 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
                 <div className="row mt-3">
                   <span>
                     {" "}
-                    Customer Email : {detail && detail.invoice.customer_email}
+                    {t('email')} : {detail && detail.invoice.customer_email}
                   </span>
                 </div>
               )}
@@ -103,7 +104,7 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
                 <div className="row mt-3">
                   <span>
                     {" "}
-                    Customer Address :{" "}
+                    {t('address')} :{" "}
                     {detail && detail.invoice.customer_address}{" "}
                   </span>
                 </div>
@@ -113,8 +114,8 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
               <table className="table">
                 <thead>
                   <tr>
-                    <th> Pay Amount </th>
-                    <th> Pay Date </th>
+                    <th> {t('pay-amount')} </th>
+                    <th> {t('pay-date')} </th>
                   </tr>
                 </thead>
 
@@ -145,7 +146,7 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
                           onClick={() => addRepayment(data[0].id)}
                         >
                           {" "}
-                          Add Repayment{" "}
+                          {t('add-repayment')}{" "}
                         </Button>
                       </td>
                     </tr>
@@ -160,7 +161,7 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
 
         {!detail && (
           <div className="d-flex flex-column justify-content-center align-items-center">
-            <span> No Preview </span>
+            <span> {t('no-preview')} </span>
           </div>
         )}
       </Card.Body>

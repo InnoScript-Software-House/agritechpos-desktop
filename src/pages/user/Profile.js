@@ -7,6 +7,7 @@ import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { editUser } from '../../services/user.service';
 import { changePassword } from '../../services/user.service';
+import { t } from 'i18next';
 
 const checkphone = /^(\+?(95)|[09])\d{9}/g;
 const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -150,27 +151,27 @@ class ProfilePage extends Component {
               {user && (
                 <Card>
                   <Card.Header>
-                    <Card.Title> User Profile </Card.Title>
+                    <Card.Title> {t('user-profile')} </Card.Title>
                   </Card.Header>
 
                   <Card.Body>
                     <Card.Text className='d-md-flex flex-md-row justify-content-between'>
-                      <label> Account Name </label>
+                      <label> {t('name')} </label>
                       <label> {user.name} </label>
                     </Card.Text>
 
                     <Card.Text className='d-md-flex flex-md-row justify-content-between'>
-                      <label> Phone </label>
+                      <label> {t('phone')} </label>
                       <label> {user.phone} </label>
                     </Card.Text>
 
                     <Card.Text className='d-md-flex flex-md-row justify-content-between'>
-                      <label> Email </label>
+                      <label> {t('email')} </label>
                       <label> {user.email} </label>
                     </Card.Text>
 
                     <Card.Text className='d-md-flex flex-md-row justify-content-between'>
-                      <label> Status </label>
+                      <label> {t('status')} </label>
                       <span className={`active-status ${user.active === true ? 'enable' : 'disable'}`}>
                         {`${user.active === true ? 'Active' : 'Disable'}`}
                       </span>
@@ -183,14 +184,14 @@ class ProfilePage extends Component {
             <div className='col-md-8'>
               <Card>
                   <Card.Header>
-                    <Card.Title className="mb-3"> Update Profile </Card.Title>
+                    <Card.Title className="mb-3"> {t('update-profile')} </Card.Title>
                   </Card.Header>
                   <Card.Body className='d-md-flex flex-md-column'>
                     <InputGroup className='mb-3'>
                       <FormControl
                         type='text'
                         className="me-3"
-                        placeholder="Account Name"
+                        placeholder={t('name')}
                         value={update_name}
                         onChange={(e) => this.setState({
                           update_name: e.target.value
@@ -200,7 +201,7 @@ class ProfilePage extends Component {
                       <FormControl 
                           type='text'
                           className="me-3"
-                          placeholder="Phone"
+                          placeholder={t('phone')}
                           value={update_phone}
                           onChange={(e) => this.setState({
                             update_phone: e.target.value
@@ -209,23 +210,23 @@ class ProfilePage extends Component {
 
                         <FormControl
                           type='email' 
-                          placeholder="Email"
+                          placeholder={t('email')}
                           value={update_email}
                           onChange={(e) => this.setState({
                             update_email: e.target.value
                           })}
                         />
 
-                        <Button onClick={() => this.update()} disabled={is_loading}> Update </Button>
+                        <Button onClick={() => this.update()} disabled={is_loading}> {t('update')} </Button>
                     </InputGroup>
 
-                    <Card.Title className="mt-3"> Change Password </Card.Title>
+                    <Card.Title className="mt-3"> {t('change-password')} </Card.Title>
 
                     <InputGroup>
                       <FormControl
                         type='password'
                         className="me-3"
-                        placeholder="Current Password"
+                        placeholder={t('current-password')}
                         value={current_password}
                         onChange={(e) => this.setState({
                           current_password: e.target.value
@@ -235,7 +236,7 @@ class ProfilePage extends Component {
                       <FormControl 
                         type='password'
                         className="me-3"
-                        placeholder="New Password"
+                        placeholder={t('new-password')}
                         value={new_password}
                         onChange={(e) => this.setState({
                           new_password: e.target.value
@@ -244,14 +245,14 @@ class ProfilePage extends Component {
 
                       <FormControl
                         type='password' 
-                        placeholder="Confirm Password"
+                        placeholder={t('confirm-password')}
                         value={confirm_password}
                         onChange={(e) => this.setState({
                           confirm_password: e.target.value
                         })}
                       />
 
-                      <Button onClick={() => this.changePassword()} disabled={is_loading}> Change Password </Button>
+                      <Button onClick={() => this.changePassword()} disabled={is_loading}> {t('change-password')} </Button>
                     </InputGroup>
                   </Card.Body>
                 </Card>

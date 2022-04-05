@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Button, Card, FormControl, FormLabel, InputGroup } from "react-bootstrap";
 import { saveItem } from "../../services/item.service";
 import { setOpenToastAction } from '../../redux/actions/toast.action';
-
+import { t } from 'i18next';
 export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
 
     const [btnLoading, setBtnLoading] = useState(false);
@@ -25,7 +25,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
     const itemSave = async () => {
 
         if(eng_name === '') {
-            dispatch(setOpenToastAction('Create Item', 'English name is required', 'danger'));
+            dispatch(setOpenToastAction('Create Item', `${t('english-name-is-required')}`, 'danger'));
             return;
         }
 
@@ -88,7 +88,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
-                            placeholder="Material Code"
+                            placeholder={t('materail-code')}
                             value={code}
                             onChange={e => setCode(e.target.value)}
                         />
@@ -98,7 +98,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
-                            placeholder="English Name"
+                            placeholder={t('eng-name')}
                             value={eng_name}
                             onChange={e => setEngName(e.target.value)}
                         />
@@ -108,7 +108,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
-                            placeholder="Myanamr Name"
+                            placeholder={t('myanmar-name')}
                             value={mm_name}
                             onChange={e => setMName(e.target.value)}
                         />
@@ -118,7 +118,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
-                            placeholder="Model"
+                            placeholder={t('model')}
                             value={model}
                             onChange={e => setModel(e.target.value)}
                         />
@@ -128,7 +128,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
-                            placeholder="Qty"
+                            placeholder={t('quantity')}
                             value={qty}
                             onChange={e => setQty(e.target.value)}
                         />
@@ -138,7 +138,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
-                            placeholder="Price"
+                            placeholder={t('price')}
                             value={price}
                             onChange={e => setPrice(e.target.value)}
                         />
@@ -148,7 +148,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
-                            placeholder="Sell Percentage"
+                            placeholder={t('percentage')}
                             value={percentage}
                             onChange={e => setPercentage(e.target.value)}
                         />
@@ -158,7 +158,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <InputGroup>
                         <FormControl
                             type="text"
-                            placeholder="Location"
+                            placeholder={t('location')}
                             value={location}
                             onChange={e => setLocation(e.target.value)}
                         />
@@ -172,7 +172,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     onClick={() => itemSave()}
                     disabled={btnLoading}
                 >
-                    Save
+                    {t('save')}
                 </Button>
             </Card.Footer>
         </Card>

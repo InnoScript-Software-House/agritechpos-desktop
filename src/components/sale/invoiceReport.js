@@ -8,10 +8,10 @@ import numeral from "numeral";
 import { createInvoice, getLastInvoice } from "../../services/invoice.service";
 import { useHistory } from "react-router-dom";
 import { BsArrowLeftCircle } from 'react-icons/bs';
-import { zawgyi, t } from "../../utilities/translation.utility";
+import { t } from "../../utilities/translation.utility";
 import { printOptions } from "../../utilities/print.utility";
 
-const tableHeader = ['No', t('item-code'), t('item-name'), t('item-qty'), t('item-price'), t('item-total')];
+const tableHeader = ['No', t('materail-code'), t('name'), t('quantity'), t('price'), t('total')];
 
 export const InvoiceReportPage = () => {
 
@@ -123,28 +123,28 @@ export const InvoiceReportPage = () => {
                                 <thead>
                                     <tr className="solid-border">
                                         <td colSpan={6} align='center'>
-                                            <h4 className={`${zawgyi(lang)}`}>{shop.name}</h4>
-                                            <h5 className={`${zawgyi(lang)}`}>{shop.description}</h5>
-                                            <h6 className={`${zawgyi(lang)}`}>{shop.address}</h6>
-                                            <h6 className={`${zawgyi(lang)}`}>phone : {shop.phone}</h6>
+                                            <h4>{shop.name}</h4>
+                                            <h5>{shop.description}</h5>
+                                            <h6>{shop.address}</h6>
+                                            <h6>phone : {shop.phone}</h6>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td className="solid-border" colSpan={3} align='justify'>
                                             To
-                                                <h6 className={`${zawgyi(lang)}`}> {t('customer-name')}: {invoice.customer && invoice.customer.name} </h6>
-                                                <h6 className={`${zawgyi(lang)}`}> {t('customer-phone')} : {invoice.customer && invoice.customer.phone} </h6>
-                                                <h6 className={`${zawgyi(lang)}`}> {t('customer-address')} : {invoice.customer && invoice.customer.address} </h6>
+                                                <h6> {t('name')}: {invoice.customer && invoice.customer.name} </h6>
+                                                <h6> {t('phone')} : {invoice.customer && invoice.customer.phone} </h6>
+                                                <h6> {t('address')} : {invoice.customer && invoice.customer.address} </h6>
                                         </td>
                                         <td className="solid-border" colSpan={3} align='right'>
-                                            Date: <small className={`${zawgyi(lang)}`}>{moment().format('DD,MM,YYYY')} </small><br/>
+                                            Date: <small>{moment().format('DD,MM,YYYY')} </small><br/>
                                             Invoice: <small>#{localStorage.getItem('PREFIX') ? localStorage.getItem('PREFIX') : 'AT'}{invoiceId}</small>
                                         </td>
                                     </tr>
                                     <tr>
                                         {tableHeader.map((thHeader, index) => {
                                             return (
-                                                    <th key={`table_header_id_${index}`} className={`${zawgyi(lang)} solid-border`}> <small> {thHeader} </small> </th>
+                                                    <th key={`table_header_id_${index}`} className='solid-border'> <small> {thHeader} </small> </th>
                                                     )
                                         })}
                                     </tr>
@@ -153,23 +153,23 @@ export const InvoiceReportPage = () => {
                                         {invoice.bought_items.length > 0 && invoice.bought_items.map((value, index) => {
                                             return (
                                                 <tr className="solid-border" key={`item_id_${index}`}>
-                                                    <td className={`${zawgyi(lang)} solid-border`}><small>{index +1}</small></td>
-                                                    <td className={`${zawgyi(lang)} solid-border`}> <small> {value.code} </small> </td>
-                                                    <td className={`${zawgyi(lang)} solid-border`}> <small> {value.name} </small> </td>
-                                                    <td className={`${zawgyi(lang)} solid-border`}> <small> {value.requestQty} </small> </td>
-                                                    <td className={`${zawgyi(lang)} solid-border`}> <small> {numeral(value.sell_price).format('0,0')} MMK </small> </td>
-                                                    <td className={`${zawgyi(lang)} solid-border`}> <small> {numeral(value.totalAmount).format('0,0')} MMK </small> </td>
+                                                    <td className='solid-border'><small>{index +1}</small></td>
+                                                    <td className='solid-border'> <small> {value.code} </small> </td>
+                                                    <td className='solid-border'> <small> {value.name} </small> </td>
+                                                    <td className='solid-border'> <small> {value.requestQty} </small> </td>
+                                                    <td className='solid-border'> <small> {numeral(value.sell_price).format('0,0')} MMK </small> </td>
+                                                    <td className='solid-border'> <small> {numeral(value.totalAmount).format('0,0')} MMK </small> </td>
                                                 </tr>
                                             )
                                         })}
                                         <tr>
                                             <td colSpan={4} className='no-border'></td>
-                                            <td className="solid-border"> <h6 className={`${zawgyi(lang)}`} > {t('invoice-total')} </h6> </td>
+                                            <td className="solid-border"> <h6> {t('total')} </h6> </td>
                                             <td className="solid-border"> <h6> {numeral(invoice.totalAmount).format('0,0')} MMK </h6> </td>
                                         </tr>
                                         <tr>
                                             <td colSpan={4} className='no-border' />
-                                            <td className="solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-discount')} </h6> </td>
+                                            <td className="solid-border"> <h6> {t('discount')} </h6> </td>
                                             <td className="solid-border"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
                                         </tr>
                                         {/* <tr>
@@ -182,7 +182,7 @@ export const InvoiceReportPage = () => {
                                         </tr> */}
                                         <tr>
                                             <td colSpan={4} className="no-border" />
-                                            <td className="solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-net-amount')} </h6> </td>
+                                            <td className="solid-border"> <h6> {t('net-amount')} </h6> </td>
                                             <td className="solid-border"> <h6> {numeral(invoice.netAmount).format('0,0')} MMK </h6> </td>
                                         </tr>
                                 </tbody>        
@@ -191,7 +191,7 @@ export const InvoiceReportPage = () => {
                     </table>{
                         !isPrint && (
                         <div className="d-flex flex-row justify-content-end">
-                            <Button className={`btn btn-print mt-3 w-25${display}`} onClick={() => print()}> Print </Button>
+                            <Button className={`btn btn-print mt-3 w-25${display}`} onClick={() => print()}> {t('print')} </Button>
                         </div> 
                         )
                     }
@@ -202,7 +202,7 @@ export const InvoiceReportPage = () => {
                 <div className="row">
                     <div className="d-flex flex-column justify-content-center align-items-center hv-100">
                         <h1 className="thank-you"> Thank You </h1>
-                        <Button onClick={() => history.push('/sale')}> GO BACK </Button>
+                        <Button onClick={() => history.push('/sale')}> {t('go-back')} </Button>
                     </div>
                 </div>
             )}

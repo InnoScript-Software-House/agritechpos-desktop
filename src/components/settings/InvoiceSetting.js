@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, FormControl, FormLabel, InputGroup } from "react-bootstrap";
 import { printOptions } from "../../utilities/print.utility";
+import { t } from 'i18next';
 
 export const InvoiceComponent = () => {
 
@@ -40,17 +41,17 @@ export const InvoiceComponent = () => {
     return(
        <Card>
             <Card.Header>
-                <Card.Title> Invoice Setting </Card.Title>
+                <Card.Title> {t('invoice-setting')} </Card.Title>
             </Card.Header>
 
             <Card.Body>
                 <div className="row">
                     <div className="col-md-4 mb-3">
                         <InputGroup>
-                            <FormLabel className="me-3 w-full"> Invoice Prefix Name </FormLabel>
+                            <FormLabel className="me-3 w-full"> {t('invoice-prefix-name')} </FormLabel>
                             <FormControl 
                                 type="text"
-                                placeholder="Invoice Prefix Name"
+                                placeholder={t('invoice-prefix-name')}
                                 value={prefix}
                                 onChange={(e) => {
                                     setPrefix(e.target.value)
@@ -62,10 +63,10 @@ export const InvoiceComponent = () => {
 
                     <div className="col-md-4 mb-3">
                         <InputGroup>
-                            <FormLabel className="me-3 w-full"> Invoice Print Number </FormLabel>
+                            <FormLabel className="me-3 w-full"> {t('invoice-print-number')} </FormLabel>
                             <FormControl 
                                 type="number"
-                                placeholder="Invoice print number"
+                                placeholder={t('invoice-print-number')}
                                 value={printNumber}
                                 onChange={(e) => {
                                     setPrintNumber(e.target.value);
@@ -77,7 +78,7 @@ export const InvoiceComponent = () => {
 
                     <div className="col-md-4 mb-3">
                         <InputGroup>
-                            <FormLabel className="me-3 w-full"> Color Print </FormLabel>
+                            <FormLabel className="me-3 w-full"> {t('color-print')} </FormLabel>
                             <FormControl 
                                 as={'select'}
                                 value={colorPrint}
@@ -86,17 +87,16 @@ export const InvoiceComponent = () => {
                                     saveInvoiceSetting('color', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.color);
                                 }}
                             >
-                                <option value={false}> Black & White </option> 
-                                <option value={true}> Color </option> 
+                                <option value={false}> {t('black')} & {t('white')} </option> 
+                                <option value={true}> {t('color')} </option> 
                             </FormControl>
                         </InputGroup>
                     </div>
                 </div>
-
                 <div className="row">
                     <div className="col-md-4 mb-3">
                         <InputGroup>
-                            <FormLabel className="me-3 w-full"> Print Background </FormLabel>
+                            <FormLabel className="me-3 w-full"> {t('print-background')} </FormLabel>
                             <FormControl 
                                 as={'select'}
                                 value={backgroundPrint}
@@ -105,14 +105,14 @@ export const InvoiceComponent = () => {
                                     saveInvoiceSetting('printBackground', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.printBackground);
                                 }}
                             >
-                                <option value={false}> No </option> 
-                                <option value={true}> Yes </option> 
+                                <option value={false}> {t('no')} </option> 
+                                <option value={true}> {t('yes')} </option> 
                             </FormControl>
                         </InputGroup>
                     </div>
 
                     <div className="col-md-4 mb-3">
-                        <FormLabel className="me-3 w-full"> Print Silent </FormLabel>
+                        <FormLabel className="me-3 w-full"> {t('print-silent')} </FormLabel>
                         <InputGroup>
                             <FormControl 
                                 as={'select'}
@@ -122,14 +122,14 @@ export const InvoiceComponent = () => {
                                     saveInvoiceSetting('silent', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.silent);
                                 }}
                             >
-                                <option value={true}> Yes </option>
-                                <option value={false}> No </option>
+                                <option value={true}> {t('yes')} </option>
+                                <option value={false}> {t('no')} </option>
                             </FormControl>
                         </InputGroup>
                     </div>
 
                     <div className="col-md-4 mb-3">
-                        <FormLabel className="me-3 w-full"> Landscape </FormLabel>
+                        <FormLabel className="me-3 w-full"> {t('lanscape')} </FormLabel>
                         <FormControl
                             as={'select'}
                             value={lanscape}
@@ -138,19 +138,20 @@ export const InvoiceComponent = () => {
                                 setLanscape(e.target.value)
                             }}
                         >
-                            <option value={true}> Yes </option>
-                            <option value={false}> No </option>
+                            <option value={true}> {t('yes')} </option>
+                            <option value={false}> {t('no')} </option>
                         </FormControl>
                     </div>
                 </div>
 
                 <div className="row mb-3">
                     <div className="col-md-6 mb-3">
-                        <FormLabel className="me-3 w-full"> Invoice Header </FormLabel>
+                        <FormLabel className="me-3 w-full"> {t('invoice-header')} </FormLabel>
                         <InputGroup>
                             <FormControl 
                                 type="text"
                                 value={invoice_header}
+                                placeholder= {t('invoice-header')}
                                 onChange={(e) => {
                                     setInvoiceHeader(e.target.value);
                                     saveInvoiceSetting('header', e.target.value || printSetting.header);
@@ -160,11 +161,12 @@ export const InvoiceComponent = () => {
                     </div>
 
                     <div className="col-md-6 mb-3">
-                        <FormLabel className="me-3 w-full"> Invoice Footer </FormLabel>
+                        <FormLabel className="me-3 w-full">  {t('invoice-footer')} </FormLabel>
                         <InputGroup>
                             <FormControl 
                                 type="text"
                                 value={invoice_footer}
+                                placeholder={t('invoice-footer')}
                                 onChange={(e) => {
                                     setInvoiceFooter(e.target.value);
                                     saveInvoiceSetting('footer', e.target.value || printSetting.footer);

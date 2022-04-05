@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import numeral from 'numeral';
+import {t} from 'i18next';
 
 export const invoiceColumns = props => {
 	const columns = [
@@ -11,32 +12,32 @@ export const invoiceColumns = props => {
 			width: '50px'
 		},
 		{
-			name: <span> Invoid ID </span>,
+			name: <span> {t('invoice-id')} </span>,
 			selector: row => row.invoice_no,
 			sortable: true
 		},
 		{
-			name: <span> Date </span>,
+			name: <span> {t('date')} </span>,
 			selector: row => moment(row.created_at).format('DD-MM-Y'),
 			sortable: true
 		},
 		{
-			name: <span> Customer Name </span>,
+			name: <span> {t('name')} </span>,
 			selector: row => row.customer_name,
 			sortable: true
 		},
 		{
-			name: <span> Customer Phone </span>,
+			name: <span> {t('phone')} </span>,
 			selector: row => row.customer_phone,
 			sortable: true
 		},
 		{
-			name: <span> Customer email </span>,
+			name: <span> {t('email')} </span>,
 			selector: row => row.customer_email,
 			sortable: true
 		},
 		{
-			name: <span> Customer Address </span>,
+			name: <span> {t('address')} </span>,
 			selector: row => row.customer_address,
 			sortable: true
 		},
@@ -46,22 +47,22 @@ export const invoiceColumns = props => {
 		//     sortable: true
 		// },
 		{
-			name: <span> Total Amount </span>,
+			name: <span> {t('total-amount')} </span>,
 			selector: row => `${numeral(row.total_amount).format('0,0')} MMK`,
 			sortable: true
 		},
 		{
-		    name: <span> Pay Amount </span>,
+		    name: <span> {t('pay-amount')} </span>,
 		    selector: row => `${numeral(row.pay_amount).format('0,0')} MMK`,
 		    sortable: true
 		},
 		{
-			name: <span> Discount </span>,
+			name: <span> {t('discount')} </span>,
 			selector: row => `${numeral(row.discount).format('0,0')} MMK`,
 			sortable: true
 		},
 		{
-			name: <span> Net Profit </span>,
+			name: <span> {t('net-amount')} </span>,
 			selector: row => {
 				const getInvoiceItems = row.invoice_data ? JSON.parse(row.invoice_data) : [];
 				const totalSold = getInvoiceItems.map(e => Number(e.net_profit));

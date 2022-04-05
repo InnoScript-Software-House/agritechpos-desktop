@@ -3,6 +3,7 @@ import {Button, Card, FormControl, InputGroup} from 'react-bootstrap';
 import {createShop} from '../../services/shop.service';
 import {useDispatch} from 'react-redux';
 import {setOpenToastAction} from '../../redux/actions/toast.action';
+import { t } from 'i18next';
 
 export const CreateShopFormComponent = ({retrive}) => {
 	const [name, setName] = useState('');
@@ -59,7 +60,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 	return (
 		<Card>
 			<Card.Header>
-				<Card.Title> Create Shop Information </Card.Title>
+				<Card.Title> {t('create-shop-information')} </Card.Title>
 			</Card.Header>
 
 			<Card.Body>
@@ -67,7 +68,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 					<FormControl
 						type="text"
 						value={name}
-						placeholder="Shop Name"
+						placeholder={t('name')}
 						onChange={e => setName(e.target.value)}
 					/>
 				</InputGroup>
@@ -76,7 +77,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 					<FormControl
 						type="text"
 						value={description}
-						placeholder="Description"
+						placeholder={t('description')}
 						onChange={e => setDescription(e.target.value)}
 					/>
 				</InputGroup>
@@ -85,7 +86,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 					<FormControl
 						as="textarea"
 						value={address}
-						placeholder="Address"
+						placeholder={t('address')}
 						onChange={e => setAddress(e.target.value)}
 					/>
 				</InputGroup>
@@ -95,14 +96,14 @@ export const CreateShopFormComponent = ({retrive}) => {
 						className="me-3"
 						type="phone"
 						value={phone}
-						placeholder="Phone"
+						placeholder={t('phone')}
 						onChange={e => setPhone(e.target.value)}
 					/>
 
 					<FormControl
 						type="email"
 						value={email}
-						placeholder="Email Address"
+						placeholder={t('email')}
 						onChange={e => setEmail(e.target.value)}
 					/>
 				</InputGroup>
@@ -110,7 +111,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 				<div className="d-flex flex-row justify-content-start align-items-center">
 					<Button onClick={() => create()} disabled={loading}>
 						{' '}
-						Create Shop{' '}
+						{t('create')} {' '}
 					</Button>
 				</div>
 			</Card.Body>

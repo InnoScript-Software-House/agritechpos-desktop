@@ -4,6 +4,7 @@ import { Badge, Button, Card } from 'react-bootstrap';
 import { BsArrowCounterclockwise, BsClock } from 'react-icons/bs';
 import { getHistoryLog } from '../../services/historylog.servcie';
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
+import { t } from 'i18next';
 
 export const HistoryLog = ({ title }) => {
 
@@ -88,7 +89,7 @@ export const HistoryLog = ({ title }) => {
                     })}
                 </div>
 
-                {more && (<Button className='btn-see-more' onClick={() => loadMore()}> See More </Button>)}
+                {more && (<Button className='btn-see-more' onClick={() => loadMore()}> {t('see-more')} </Button>)}
                
             </Card.Body>
 

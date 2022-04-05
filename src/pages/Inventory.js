@@ -10,6 +10,7 @@ import { getItems } from '../services/item.service';
 import { DeleteDialog } from '../components/general/deleteDialog';
 import { setOpenToastAction } from '../redux/actions/toast.action';
 import { CountCard } from '../components/general/CountCard';
+import { t } from 'i18next';
 import numeral from 'numeral';
 
 class InventoryPage extends Component {
@@ -103,25 +104,25 @@ class InventoryPage extends Component {
                 <div className='container-fluid'>
                     <div className='row justify-content-start mt-3'>
                         <div className='col-3'>
-                            <CountCard props={this.props} label="Total Amount" color="rgb(255, 218, 108, 1)" count={totalItemPriceList} />
+                            <CountCard props={this.props} label={t('bought-price')} color="rgb(255, 218, 108, 1)" count={totalItemPriceList} />
                         </div>
 
                         <div className='col-3'>
-                            <CountCard  props={this.props} label="Total Sell Amount" color="rgb(108, 147, 39, 1)" count={totalSellPriceList} />
+                            <CountCard  props={this.props} label={t('sale-price')} color="rgb(108, 147, 39, 1)" count={totalSellPriceList} />
                         </div>
 
                         <div className='col-3'>
-                            <CountCard props={this.props} label="Total Qty" color="rgb(23, 162, 184,1)" count={totalQtyList} />
-                        </div>
-
-                        <div className='col-3'>
-                            <CountCard props={this.props} label="Profit" color="rgba(114, 196, 84,1)" count={totalProfitList} />
+                            <CountCard props={this.props} label={t('profit')} color="rgba(114, 196, 84,1)" count={totalProfitList} />
                         </div>
                     </div>
-
+                    
                     <div className='row justify-content-start mt-3'>
                         <div className='col-3'>
-                            <CountCard props={this.props} label="Out Of Stock" color="rgba(229, 64, 64,1)" count={outOfStock} />
+                            <CountCard props={this.props} label={t('Out of Stock')} color="rgba(229, 64, 64,1)" count={outOfStock} />
+                        </div>
+
+                        <div className='col-3'>
+                            <CountCard props={this.props} label={t('total-quantity')} color="rgb(23, 162, 184,1)" count={totalQtyList} />
                         </div>
                     </div>
 

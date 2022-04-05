@@ -5,6 +5,7 @@ import { TableLoadingComponent } from "../table/tableLoading";
 import { categoryColumns } from "../columns/category.columns";
 import { paginationComponentOptions } from "../table/paginationOptions";
 import { TableHeaderComponent } from "../table/tableHeader";
+import { t } from "i18next";
 
 const searchColumns = ['name'];
 
@@ -43,7 +44,7 @@ export const CategoryListTableComponent = ({ props, dataSource }) => {
                             type={'Category'}
                             dataSource={dataSource} 
                             searchColumns={searchColumns} 
-                            placeholder="Category Search"
+                            placeholder={t('search')}
                             filterResult={e => getFilterResult(e)}
                             selectedRows={selectedRows}
                         />

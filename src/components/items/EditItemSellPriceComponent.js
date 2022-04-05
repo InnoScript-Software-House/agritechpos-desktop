@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { updateItem } from "../../services/item.service";
 import { LoadingComponent } from "../general/Loading";
+import { t } from 'i18next';
 
 
 export const EditItemSellPriceComponent = ({ props, item, reload }) => {
@@ -119,7 +120,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                             <InputGroup className="d-md-flex flex-md-row mt-3 justify-content-center align-items-center">
                                 <div className="col-md-6">
                                     <FormControl
-                                        placeholder="Enter sell perentage"
+                                        placeholder={t('percentage')}
                                         type="text"
                                         maxLength={3}
                                         minLength={1}
@@ -136,7 +137,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
 
                 { !loadingData && (
                     <Card.Footer>
-                        <Button onClick={() => update()} disabled={loading}> Update </Button>
+                        <Button onClick={() => update()} disabled={loading}> {t('update')} </Button>
                     </Card.Footer>
                 )}
             </Card>
@@ -172,7 +173,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                         onClick={() => updateStatus()}
                         disabled={loading}
                     > 
-                       Update
+                       {t('update')}
                     </Button>
                 </Card.Footer>
             </Card>
