@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { useDispatch } from 'react-redux';
+import { t } from "i18next";
 
 export const SerialKeyComponent = ({ retriveSerialKey }) => {
 
@@ -16,12 +17,12 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
 
     const submit = () => {
         if(key01 === '' || key02 === '' || key03 === '' || key04 === '' || key05 === '' || key06 === '') {
-            dispatch(setOpenToastAction('License Key', 'License key is required', 'danger'));
+            dispatch(setOpenToastAction('License Key', `${t('license-key-is-required')}` , 'danger'));
             return;
         }
 
         if(key01.length < 4 || key02.length < 4 || key03.length < 4 || key04.length < 4 || key05.length < 4 || key06.length < 4) {
-            dispatch(setOpenToastAction('License Key', 'Invalid license key', 'danger'));
+            dispatch(setOpenToastAction('License Key', `${t('invalid-license-key')}`, 'danger'));
             return;
         }
 
@@ -33,10 +34,10 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
     return (
         <div className="d-md-flex flex-md-column">
             <p className="mt-3">
-                To use this software, you need to enter a serial number and confirm. You can find the serial number on the software CD.
+               {t('serial-key-info')}
             </p>
 
-            <label className="serial-key-label mb-3 mt-3"> License Key </label>
+            <label className="serial-key-label mb-3 mt-3"> {t('license-key')} </label>
 
             <div className="d-md-flex flex-md-row">
                 <InputGroup className="serial-key-input">
@@ -105,7 +106,7 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
                     />
                 </InputGroup>
 
-                <Button className="btn-serial-key-enter" onClick={() => submit()}> Submit </Button>
+                <Button className="btn-serial-key-enter" onClick={() => submit()}> {t('confirm')} </Button>
             </div>
         </div>
     )

@@ -41,7 +41,7 @@ export const RecentInvoice = ({ dataSource, retrive}) => {
         <Card>
             <Card.Header>
                 <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center">
-                    <span className={`${zawgyi(lang)} title`}> {t('open-recent-invoice')} </span>
+                    <span className='title'> {t('open-recent-invoice-list')} </span>
                     {invoiceList.length > 0 && (
                         <Button className="btn-small" onClick={() => deleteAll()}> {t('delete-all')} </Button>
                     )}

@@ -3,6 +3,7 @@ import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { ArrowLeft } from "react-bootstrap-icons";
 import { useDispatch } from 'react-redux';
 import { setOpenToastAction } from "../../redux/actions/toast.action";
+import { t } from 'i18next';
 
 export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
 
@@ -19,17 +20,17 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
 
     const submit = () => {
         if(firstName === '' || lastName === '' || email === '' || phone === '' || address === '') {
-            dispatch(setOpenToastAction('User Registeration','All fields are requried','danger'));
+            dispatch(setOpenToastAction('User Registeration', `${t('all-fields-are-requried')}` ,'danger'));
             return;
         }
 
         if(!checkEmail.test(email)){
-            dispatch(setOpenToastAction('User Registeration','Invalid email address','danger'));
+            dispatch(setOpenToastAction('User Registeration', `${t('invalid-email-address')}`,'danger'));
             return;
         }
 
         if(!checkPhone.test(phone)){
-            dispatch(setOpenToastAction('User Registeration','Invalid phone number','danger'));
+            dispatch(setOpenToastAction('User Registeration', `${t('invalid-phone-number')}` ,'danger'));
             return;
         }
 
@@ -61,7 +62,7 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
                             type="text"
                             required={true}
                             value={firstName}
-                            placeholder="First Name"
+                            placeholder={t('first-name')}
                             onChange={(e) => setFirstName(e.target.value)}
                         />
                     </InputGroup>
@@ -71,7 +72,7 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
                             type="text"
                             required={true}
                             value={lastName}
-                            placeholder="Last Name"
+                            placeholder={t('last-name')}
                             onChange={(e) => setLastName(e.target.value)}
                         />
                     </InputGroup>
@@ -83,7 +84,7 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
                             type="text"
                             required={true}
                             value={phone}
-                            placeholder="Phone"
+                            placeholder={t('phone')}
                             onChange={(e) => setPhone(e.target.value)}
                         />
                     </InputGroup>
@@ -93,7 +94,7 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
                             type="email"
                             required={true}
                             value={email}
-                            placeholder="Email"
+                            placeholder={t('email')}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </InputGroup>
@@ -106,13 +107,13 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
                             rows={3}
                             required={true}
                             value={address}
-                            placeholder="Address"
+                            placeholder={t('address')}
                             onChange={(e) => setAddress(e.target.value)}
                         />
                     </InputGroup>
                 </div>
 
-                <Button onClick={() => submit()}> Submit </Button>
+                <Button onClick={() => submit()}> {t('confirm')} </Button>
             </div>
         </div>
     )

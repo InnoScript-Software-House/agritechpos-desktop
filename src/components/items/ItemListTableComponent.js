@@ -40,7 +40,7 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
                             onClick={(e) => open(!openCreateItem)}
                         >
                             {openCreateItem ? (<BsEyeSlash size={20} />) :  <BsEye size={20} />}
-                        	<span className='me-3'> {openCreateItem ? 'Hide Create Item From' : 'Show Create Item Form'} </span>
+                        	<span className='me-3'> {openCreateItem ? `${t('hide-create-item-from')}` : `${t('show-create-item-form')}` }</span>
                         </Button>
 
 						<Button
@@ -48,7 +48,7 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
                             onClick={() => props.history.push('/category')}
                         >
                             <BsListTask size={20} />
-                            <span className='me-3'> Category List </span>
+                            <span className='me-3'> {t('category')} </span>
                         </Button>
 					</div>
 					<ChangeNumberFormatBtn props={props} />

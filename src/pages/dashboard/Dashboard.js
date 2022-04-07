@@ -176,7 +176,7 @@ class DashboardPage extends Component {
                                         color="rgba(114, 196, 84,1)"
                                         count={totalCreditCustomerAmount ? totalCreditCustomerAmount : 0}
                                         url={'/credit'}
-                                        urlLabel={'View MOre Credit Customer Amount List'}
+                                        urlLabel={'View More Credit Amount List'}
                                     />
                                 </div>
                             </div>

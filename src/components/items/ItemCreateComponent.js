@@ -1,4 +1,4 @@
-
+import '../../assets/css/theme.css';
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Card, FormControl, FormLabel, InputGroup } from "react-bootstrap";
@@ -64,12 +64,12 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
     return(
         <Card className='mt-3'>
             <Card.Header>
-                <Card.Title> Create New Item </Card.Title>
+                <Card.Title className="fontsize"> {t('create-new-item')} </Card.Title>
             </Card.Header>
 
             <Card.Body>
                 <>
-                    <FormLabel> Category </FormLabel>
+                    <FormLabel> {t('category')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
                             as="select"
@@ -84,7 +84,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         </FormControl>
                     </InputGroup>
                     
-                    <FormLabel> Material Code </FormLabel>
+                    <FormLabel> {t('materail-code')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
@@ -94,17 +94,17 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
                     
-                    <FormLabel> English Name </FormLabel>
+                    <FormLabel> {t('name')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
-                            placeholder={t('eng-name')}
+                            placeholder={t('name')}
                             value={eng_name}
                             onChange={e => setEngName(e.target.value)}
                         />
                     </InputGroup>
                     
-                    <FormLabel> Myanmar Name </FormLabel>
+                    <FormLabel> {t('myanmar-name')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
@@ -114,7 +114,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
                     
-                    <FormLabel> Model </FormLabel>
+                    <FormLabel> {t('model')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
@@ -124,7 +124,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> Qty </FormLabel>
+                    <FormLabel> {t('quantity')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
@@ -134,7 +134,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> Price </FormLabel>
+                    <FormLabel> {t('price')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
@@ -144,7 +144,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> Sell Percentage </FormLabel>
+                    <FormLabel> {t('percentage')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
                             type="text"
@@ -154,7 +154,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
                     
-                    <FormLabel> Location </FormLabel>
+                    <FormLabel> {t('location')} </FormLabel>
                     <InputGroup>
                         <FormControl
                             type="text"
@@ -172,7 +172,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     onClick={() => itemSave()}
                     disabled={btnLoading}
                 >
-                    {t('save')}
+                    {t('confirm')}
                 </Button>
             </Card.Footer>
         </Card>

@@ -86,14 +86,14 @@ export const EditItemComponent = ({ props, item, reload }) => {
         <Card>
             <Card.Header>
                 <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center"> 
-                    <span className="title"> Update Item </span>
+                    <span className="title"> {t('update-item')} </span>
                     <BsArrowCounterclockwise size={20} className="btn-icon" onClick={() => setData()} />
                 </Card.Title>
             </Card.Header>
 
             { editItem && (
                 <Card.Body>
-                    <FormLabel> {t('materail-code')} </FormLabel>
+                <FormLabel> {t('materail-code')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
@@ -103,21 +103,21 @@ export const EditItemComponent = ({ props, item, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> {`${('english')} ${t('name')}`} </FormLabel>
+                    <FormLabel> {t('name')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder={`${('english')} ${t('name')}`}
+                            placeholder={t('name')}
                             value={eng_name || ''}
                             onChange={e => setEnName(e.target.value)}
                         />
                     </InputGroup>
 
-                    <FormLabel>{`${('myanmar')} ${t('name')}`} </FormLabel>
+                    <FormLabel> {t('myanmar-name')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder={` ${('myanmar')} ${t('name')}`}
+                            placeholder={t('myanmar-name')}
                             value={mm_name || ''}
                             onChange={e => setMMName(e.target.value)}
                         />
@@ -167,7 +167,7 @@ export const EditItemComponent = ({ props, item, reload }) => {
 
             {editItem && (
                 <Card.Footer>
-                    <Button className="btn-small w-full" disabled={loading} onClick={() => update()}> {t('update')} </Button>
+                    <Button className="btn-small w-full" disabled={loading} onClick={() => update()}> {t('confirm')} </Button>
                 </Card.Footer>
             )}
         </Card>

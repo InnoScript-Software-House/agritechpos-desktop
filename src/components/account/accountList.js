@@ -35,7 +35,7 @@ export const AccountList = ({ dataSource, reload, selectedEdit }) => {
                 <Card>
                     <Card.Header>
                         <Card.Title className='p-2'>
-                            <span> Account List </span>
+                            <span> {t('account')} </span>
                         </Card.Title>
                     </Card.Header>
 

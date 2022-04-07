@@ -31,7 +31,7 @@ export const CategoryListTableComponent = ({ props, dataSource }) => {
         <Card className="mt-3">
             <Card.Header>
                 <Card.Title>
-                    <span className="title"> Category List </span>
+                    <span className="title"> {t('category')} </span>
                 </Card.Title> 
             </Card.Header>
 

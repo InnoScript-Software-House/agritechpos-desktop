@@ -3,7 +3,7 @@ import { FormControl, InputGroup } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { setDeviceTypeAction } from "../../redux/actions/config.action";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
-import { t, zawgyi } from "../../utilities/translation.utility";
+import { t } from "../../utilities/translation.utility";
 
 export const DeviceTypeComponent = ({ props }) => {
 
@@ -22,7 +22,7 @@ export const DeviceTypeComponent = ({ props }) => {
     return(
         <>
             <div className="d-md-flex flex-md-column">
-                <p className={`${zawgyi(lang)}`}> {t('config-devicetype-description')} </p>
+                <p> {t('config-devicetype-description')} </p>
 
                 <InputGroup className="config-input">
                     <FormControl 
@@ -30,8 +30,8 @@ export const DeviceTypeComponent = ({ props }) => {
                         value={device}
                         onChange={e => setDeviceType(e)}
                     >
-                        <option value="laptop"> Laptop </option>
-                        <option value="pc"> PC Desktop </option>
+                        <option value="laptop"> {t('laptop')} </option>
+                        <option value="pc"> {t('computer')} </option>
                     </FormControl>
                 </InputGroup>
             </div>

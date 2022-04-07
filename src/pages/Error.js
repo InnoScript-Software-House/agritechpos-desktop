@@ -8,7 +8,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { t, zawgyi } from '../utilities/translation.utility';
+import { t } from '../utilities/translation.utility';
 import { Button } from 'react-bootstrap';
 import { checkLicense } from '../services/license.service.js';
 import { ArrowLeft } from 'react-bootstrap-icons';
@@ -113,12 +113,12 @@ class ErrorPage extends Component {
             </div>
             <div className='d-md-flex flex-column justify-content-start align-items-center mt-3'>
                 <div className='col-md-4'>
-                    <h3 className={`error-title ${zawgyi(lang)}`}> {title} </h3>
-                    <p className={`error-message-description ${zawgyi(lang)}`}> {errorMessage} </p>
+                    <h3 className='error-title'> {title} </h3>
+                    <p className='error-message-description'> {errorMessage} </p>
 
                     {Number(status) === 0 && (
                     <Button 
-                        className={`${zawgyi(lang)}`}
+                        
                         disabled={is_loading}
                         onClick={() => this.retry()}
                     > 

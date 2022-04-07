@@ -181,7 +181,7 @@ class InvoicePage extends Component {
                             <div className='col-md-12'>
                                 <InvoiceDataComponent invoiceDetail={invoiceData} />
                                 <div className='d-flex flex-row justify-content-end'>
-                                    {!is_print? (<Button className='mt-2' onClick={() => this.print()}> Print </Button>) : (<></>)}
+                                    {!is_print? (<Button className='mt-2' onClick={() => this.print()}> {t('print')} </Button>) : (<></>)}
                                 </div>
                             </div>
                         </div>
@@ -224,7 +224,7 @@ class InvoicePage extends Component {
                                     </div>
                                     <div className='col'>
                                         <div className='d-md-flex flex-md-row justify-content-end align-items-center'>
-                                            <h3> {t('total-sold-amount')} - {numeral(totalSoldAmount).format('0,0') +' MMk'} </h3>
+                                            <h3> {t('total-sold-amount')} - {`${numeral(totalSoldAmount).format('0,0')} ${t('mmk')}`} </h3>
                                         </div>
                                     </div>
                                 </Card.Header>

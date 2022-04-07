@@ -161,7 +161,7 @@ class SalePage extends Component {
                             <Button className="btn btn-small" onClick={() => this.setState({
                                 openRecentInvoice: !openRecentInvoice
                             })}> 
-                                {openRecentInvoice ? 'Close Recent Invoice' : 'Open Recent Invoice'} 
+                                {openRecentInvoice ? `${t('close-recent-invoice')}` : `${t('open-recent-invoice')}` } 
                             </Button>
                         </div>
                     </div>

@@ -3,6 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import { ArrowLeft } from "react-bootstrap-icons";
 import { useDispatch } from 'react-redux';
 import { setOpenToastAction } from "../../redux/actions/toast.action";
+import { t } from 'i18next';
 
 export const PlanComponent = ({ retrivePlan, backStep }) => {
 
@@ -30,7 +31,7 @@ export const PlanComponent = ({ retrivePlan, backStep }) => {
 
     const submit = () => {
         if(activation === '' || duration === '' || device === '') {
-            dispatch(setOpenToastAction('Plan','All fields are required','danger'));
+            dispatch(setOpenToastAction('Plan',`${t('all-fields-are-requried')}`,'danger'));
             return;
         }
         
@@ -95,7 +96,7 @@ export const PlanComponent = ({ retrivePlan, backStep }) => {
                 </Form.Group>
 
                 <Form.Group className="me-3">
-                    <Button className="btn-plan-enter ms-3" onClick={() => submit()}> Submit </Button>
+                    <Button className="btn-plan-enter ms-3" onClick={() => submit()}> {t('confirm')} </Button>
                 </Form.Group>
             </div>
         </div>

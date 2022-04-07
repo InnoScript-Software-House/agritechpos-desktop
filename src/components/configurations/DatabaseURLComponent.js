@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setDatabaseUrl } from "../../redux/actions/config.action";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
+import { t } from 'i18next';
 
 export const DatabaseURLComponent = () => {
 
@@ -15,13 +16,13 @@ export const DatabaseURLComponent = () => {
     const saveUrl = () => {
 
         if(url === '') {
-            dispatch(setOpenToastAction('Configuration Setting', 'IP address is required', 'danger'));
+            dispatch(setOpenToastAction('Configuration Setting', `${t('ip-address-is-required')}`, 'danger'));
             return;
         }
 
         dispatch(setDatabaseUrl(url));
 
-        dispatch(setOpenToastAction('Configuration Setting', 'Database url is updated', 'success'));
+        dispatch(setOpenToastAction('Configuration Setting', `${t('database-url-is-updated')}` , 'success'));
         history.push('/');
         return;
     };
@@ -29,17 +30,17 @@ export const DatabaseURLComponent = () => {
     return(
         <>
             <div className="d-md-flex flex-md-column">
-                <p> Enter IP address for database connection </p>
+                <p> {t('enter-ip-address-for-database-connection')} </p>
 
                 <InputGroup className="config-input-500">
                     <FormControl 
                         type="text"
-                        placeholder="Enter database IP address"
+                        placeholder={t('enter-database-ip-address')}
                         value={url}
                         onChange={e => setUrl(e.target.value)}
                     />
 
-                    <Button className="btn btn-samll" onClick={() => saveUrl()}> Submit </Button>
+                    <Button className="btn btn-samll" onClick={() => saveUrl()}> {t('confirm')} </Button>
                 </InputGroup>
             </div>
         </>

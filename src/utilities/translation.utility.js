@@ -5,10 +5,10 @@ import zawgyiTranslation from '../assets/i18n/zawgyi.json';
 import { env } from '../environment';
 import { LANG_VALUE } from '../redux/actionTypes';
 
-export const zawgyi = (lng) => {
-    const language = lng === 'zawgyi' ? 'zawgyi' : '';
-    return language;
-}
+// export const zawgyi = (lng) => {
+//     const language = lng === 'zawgyi' ? 'zawgyi' : '';
+//     return language;
+// }
 
 export const t = (value) => {
     return i18n.t(value);
@@ -20,7 +20,7 @@ i18n.init({
     resources : {
         en: { translation: enTranslation },
         unicode: { translation: unicodeTranslation },
-        zawgyi: { translation: zawgyiTranslation }
+        // zawgyi: { translation: zawgyiTranslation }
     },
     lng: getLng,
     fallbackLng: getLng,
