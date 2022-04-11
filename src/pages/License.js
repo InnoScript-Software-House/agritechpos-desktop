@@ -7,6 +7,7 @@ import { PlanComponent } from '../components/license/PlanComponent';
 import { Activation } from '../components/license/activation';
 import { Button, ToastContainer } from "react-bootstrap";
 import { AppToast } from '../components/general/toasts';
+import { SideSection } from '../components/general/sideSection';
 
 class LicensePage extends Component {
 
@@ -79,52 +80,44 @@ class LicensePage extends Component {
         </div>
 
         <div className='row g-0'>
-          <div className='col-md-6 login-left-side'>
-            <div className='d-md-flex flex-md-column justify-content-center align-items-center login-opacity'>
-              <div className='login-card'>
-                <h3> Agricultural Equipment POS Software </h3>
-                <p>
-                  AgriTech is desktop pos software for agriculture machinery equipment businesses.
-                  We are focusing on IoT products for agriculture sector.
-                </p>
-
-                <Button className='btn btn-learn-more'> Learn More </Button>
-              </div>
-            </div>
+          <div className='col-md-6 background-image-layout'>
+            <SideSection />
           </div>
 
-          <div className='col-md-6 login-layout-flex-center'>
-            <img className="logo" src="build/assets/images/logo.png" />
-            
-            {!serialNumber && (
-              <SerialKeyComponent 
-                retriveSerialKey={(e) => this.getSerialKey(e)} 
-              />
-            )}
+          <div className='col-md-6'>
+            <div className='flex-col-center-layout'>
+              <img className="logo" src="build/assets/images/logo.png" />
+              
+              {!serialNumber && (
+                  <SerialKeyComponent 
+                    retriveSerialKey={(e) => this.getSerialKey(e)} 
+                  />
+                )}
 
-            {(serialNumber && !userInfo) && (
-              <CustomerInformationComponent 
-                retriveUserInfo={(e) => this.getUserInfo(e)}
-                backStep={(e) => this.getBackStep(e)}
-              />
-            )}
+                {(serialNumber && !userInfo) && (
+                  <CustomerInformationComponent 
+                    retriveUserInfo={(e) => this.getUserInfo(e)}
+                    backStep={(e) => this.getBackStep(e)}
+                  />
+                )}
 
-            {(serialNumber && userInfo && !plan) && (
-              <PlanComponent 
-                retrivePlan={(e) => this.getPlan(e)}
-                backStep={(e) => this.getBackStep(e)}
-              />
-            )}
+                {(serialNumber && userInfo && !plan) && (
+                  <PlanComponent 
+                    retrivePlan={(e) => this.getPlan(e)}
+                    backStep={(e) => this.getBackStep(e)}
+                  />
+                )}
 
-            {(serialNumber && userInfo && plan) && (
-              <Activation 
-                serial={serialNumber}
-                user={userInfo}
-                plan={plan}
-                backStep={(e) => this.getBackStep(e)}
-                history={this.props.history}
-              />
-            )}
+                {(serialNumber && userInfo && plan) && (
+                  <Activation 
+                    serial={serialNumber}
+                    user={userInfo}
+                    plan={plan}
+                    backStep={(e) => this.getBackStep(e)}
+                    history={this.props.history}
+                  />
+                )}
+            </div>
           </div>
         </div>
       </div>

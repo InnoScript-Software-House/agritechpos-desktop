@@ -75,27 +75,27 @@ export const Activation = ({ serial, user, plan, backStep, history }) => {
                 <div className="d-md-flex flex-md-row justify-content-between mb-3">
                     <div className="col-md-6">
                         <div className="d-md-flex">
-                            <label className="info-label"> Serial Number </label>
+                            <label className="info-label"> {t('serial-number')} </label>
                             <span className="info-text me-3"> {serial} </span>
                         </div>
 
                         <div className="d-md-flex mt-3">
-                            <label className="info-label"> Register Name </label>
+                            <label className="info-label"> {t('name')} </label>
                             <span className="info-text me-3"> {user.display_name} </span>
                         </div>
 
                         <div className="d-md-flex">
-                            <label className="info-label"> Phone </label>
+                            <label className="info-label"> {t('phone')} </label>
                             <span className="info-text me-3"> {user.phone} </span>
                         </div>
 
                         <div className="d-md-flex">
-                            <label className="info-label"> Email </label>
+                            <label className="info-label"> {t('email')} </label>
                             <span className="info-text me-3"> {user.email} </span>
                         </div>
 
                         <div className="d-md-flex">
-                            <label className="info-label"> Address </label>
+                            <label className="info-label"> {t('address')} </label>
                             <span className="info-text me-3"> {user.address} </span>
                         </div>
 
@@ -110,7 +110,7 @@ export const Activation = ({ serial, user, plan, backStep, history }) => {
                         </div>
 
                         <div className="d-md-flex">
-                            <label className="info-label"> Devices </label>
+                            <label className="info-label"> {t('devices')} </label>
                             <span className="info-text me-3"> {plan.device} </span>
                         </div>
                     </div>
@@ -119,7 +119,7 @@ export const Activation = ({ serial, user, plan, backStep, history }) => {
                         <div className="col-md-6"> 
                             <div className="d-md-flex flex-column">
                                 <code className="text-break"> {encKey} </code>
-                                <Button className="mt-3" onClick={() => save()} disabled={loading}> Save </Button>
+                                <Button className="mt-3" onClick={() => save()} disabled={loading}> {t('confirm')} </Button>
                             </div>
                         </div>
                     )}

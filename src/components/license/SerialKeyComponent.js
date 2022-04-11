@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { useDispatch } from 'react-redux';
+import { t } from "i18next";
+import { messageBoxType } from "../../utilities/native.utility";
 
 export const SerialKeyComponent = ({ retriveSerialKey }) => {
 
@@ -14,14 +16,18 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
     const [key05, setKey05] = useState('');
     const [key06, setKey06] = useState('');
 
+    const messageboxTitle = t('license-key');
+
     const submit = () => {
+        const { nativeApi } = window;
+
         if(key01 === '' || key02 === '' || key03 === '' || key04 === '' || key05 === '' || key06 === '') {
-            dispatch(setOpenToastAction('License Key', 'License key is required', 'danger'));
+            nativeApi.messageBox.open({ title: messageboxTitle, message: t('license-key-is-required'), type: messageBoxType.info});
             return;
         }
 
         if(key01.length < 4 || key02.length < 4 || key03.length < 4 || key04.length < 4 || key05.length < 4 || key06.length < 4) {
-            dispatch(setOpenToastAction('License Key', 'Invalid license key', 'danger'));
+            nativeApi.messageBox.open({ title: messageboxTitle, message: t('invalid-license-key'), type: messageBoxType.info});
             return;
         }
 
@@ -32,7 +38,7 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
 
     return (
         <div className="d-md-flex flex-md-column">
-            <label className="serial-key-label mb-3 mt-3"> License Key </label>
+            <label className="title-default mb-3 mt-3"> {t('license-key')} </label>
 
             <div className="d-md-flex flex-md-row">
                 <InputGroup className="serial-key-input">
@@ -107,7 +113,7 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
                     />
                 </InputGroup>
 
-                <Button className="btn-serial-key-enter" onClick={() => submit()}> Submit </Button>
+                <Button className="btn-serial-key-enter" onClick={() => submit()}> {t('confirm')} </Button>
             </div>
         </div>
     )

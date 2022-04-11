@@ -117,7 +117,7 @@ export const itemColumns = (props) => {
         },
         {
             name: <span className="database-header"> {t('total')} </span>,
-            selector: row => `${numeral(row.price * row.qty).format('0,0')} MMK`,
+            selector: row => `${numeral(row.price * row.qty).format('0,0')}  ${t('mmk')}`,
             sortable: true
         },
         {
@@ -127,7 +127,7 @@ export const itemColumns = (props) => {
         },
         {
             name: <span className="database-header"> {t('sale-price')} </span>,
-            selector: row =>  `${numeral(Number(row.price) + (Number(row.price) * Number((row.percentage/100)))).format('0,0')} MMK`,
+            selector: row =>  `${numeral(Number(row.price) + (Number(row.price) * Number((row.percentage/100)))).format('0,0')}  ${t('mmk')}`,
             sortFunction: (rowA, rowB) => sortSellPrice(rowA, rowB),
         },
         {

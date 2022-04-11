@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { delRequest, postRequest } from '../../services/api.service';
+import { t } from 'i18next';
 
 export const DeleteDialog = ({ props, reload }) => {
 

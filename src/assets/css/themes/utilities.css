@@ -17,7 +17,8 @@
 
 .title, .title-default, .title-primary, .title-secondary {
 	font-weight: 500;
-	font-size: 30px;
+	font-size: 25px;
+	margin-bottom: 20px;
 }
 
 /* Button */
@@ -42,6 +43,10 @@
     border: 2px solid #4E8D28;
     background-color: transparent!important;
     color: #4E8D28;
+}
+
+.btn-border-right {
+	border-radius: 0px 3px 3px 0px;
 }
 
 .btn-border:hover {

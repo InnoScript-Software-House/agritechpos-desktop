@@ -39,7 +39,7 @@ export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
             <Card className='mt-3'>
                 <Card.Header>
                     <div className='d-md-flex flex-md-row justify-content-between'>
-                        <span className='title'>Customer List</span>
+                        <span className='title'> {t('customer')}</span>
                     </div>
                 </Card.Header>
 

@@ -3,6 +3,7 @@ import {Button, Card, FormControl, InputGroup} from 'react-bootstrap';
 import {updateShop} from '../../services/shop.service';
 import {useDispatch} from 'react-redux';
 import {setOpenToastAction} from '../../redux/actions/toast.action';
+import { t } from 'i18next';
 
 export const EditShopFormComponent = ({dataSource, retrive}) => {
 	const [name, setName] = useState('');
@@ -72,7 +73,7 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 	return (
 		<Card>
 			<Card.Header>
-				<Card.Title> Update Shop Information </Card.Title>
+				<Card.Title> {t('update-shop-information')} </Card.Title>
 			</Card.Header>
 
 			<Card.Body>
@@ -80,7 +81,7 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 					<FormControl
 						type="text"
 						value={name}
-						placeholder="Shop Name"
+						placeholder={t('name')}
 						onChange={e => setName(e.target.value)}
 					/>
 				</InputGroup>
@@ -89,7 +90,7 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 					<FormControl
 						type="text"
 						value={description}
-						placeholder="Description"
+						placeholder={t('description')}
 						onChange={e => setDescription(e.target.value)}
 					/>
 				</InputGroup>
@@ -98,7 +99,7 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 					<FormControl
 						as="textarea"
 						value={address}
-						placeholder="Address"
+						placeholder={t('address')}
 						onChange={e => setAddress(e.target.value)}
 					/>
 				</InputGroup>
@@ -108,14 +109,14 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 						className="me-3"
 						type="text"
 						value={phone}
-						placeholder="Phone"
+						placeholder={t('phone')}
 						onChange={e => setPhone(e.target.value)}
 					/>
 
 					<FormControl
 						type="email"
 						value={email}
-						placeholder="Email"
+						placeholder={t('email')}
 						onChange={e => setEmail(e.target.value)}
 					/>
 				</InputGroup>
@@ -123,7 +124,8 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 				<div className="d-flex flex-row justify-content-start align-items-center">
 					<Button onClick={() => update()} disabled={loading}>
 						{' '}
-						Create Shop{' '}
+						{t('confirm')}
+						{' '}
 					</Button>
 				</div>
 			</Card.Body>

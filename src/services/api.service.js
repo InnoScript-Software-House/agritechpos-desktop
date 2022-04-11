@@ -1,11 +1,10 @@
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import { ACCESS_TOKEN, LICENSE, SET_DATABASE_URL, SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from "../redux/actionTypes";
 import history from "../utilities/histroy";
 
-axios.defaults.baseURL = localStorage.getItem(SET_DATABASE_URL) ? `http://${ localStorage.getItem(SET_DATABASE_URL)}/api` : null;
-axios.defaults.headers.common['ip'] = localStorage.getItem(SET_NETWORK_ADDRESS) ? localStorage.getItem(SET_NETWORK_ADDRESS) : null;
-axios.defaults.headers.common['mac'] = localStorage.getItem(SET_NETWORK_MAC) ? localStorage.getItem(SET_NETWORK_MAC) : null;
+axios.defaults.baseURL = localStorage.getItem(SET_DATABASE_URL) ? `${ localStorage.getItem(SET_DATABASE_URL)}/api` : null;
+// axios.defaults.headers.common['ip'] = localStorage.getItem(SET_NETWORK_ADDRESS) ? localStorage.getItem(SET_NETWORK_ADDRESS) : null;
+// axios.defaults.headers.common['mac'] = localStorage.getItem(SET_NETWORK_MAC) ? localStorage.getItem(SET_NETWORK_MAC) : null;
 axios.defaults.headers.common['license'] = localStorage.getItem(LICENSE) ? localStorage.getItem(LICENSE) : null;
 axios.defaults.headers.common['Authorization'] = localStorage.getItem(ACCESS_TOKEN) ? `Bearer ${localStorage.getItem(ACCESS_TOKEN) }` : null;
 

@@ -24,7 +24,7 @@ i18n.init({
     },
     lng: getLng,
     fallbackLng: getLng,
-    //debug: env === 0 ? true : false,
+    debug: env === 0 ? true : false,
     debug: false,
     interpolation: {
         escapeValue: false

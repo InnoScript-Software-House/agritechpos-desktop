@@ -50,7 +50,7 @@ export const CreateCategoryComponent = ({ reload }) => {
         <Card className='mt-3'>
         <Card.Header>
             <Card.Title>
-                <span className="title"> Create Category </span>
+                <span className="title"> {t('create-category')} </span>
             </Card.Title>
         </Card.Header>
 
@@ -78,7 +78,7 @@ export const CreateCategoryComponent = ({ reload }) => {
                 disabled={loading}
                 onClick={() => createCategory()}
             > 
-                {t('create')}
+                {t('confirm')}
             </Button>
         </Card.Body>
     </Card>

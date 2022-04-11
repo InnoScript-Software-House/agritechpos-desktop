@@ -95,7 +95,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
             <Card>
                 <Card.Header>
                     <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center"> 
-                        <span className="title"> Update Item Percentage </span>
+                        <span className="title"> {t('item-percentage')}</span>
                         <BsArrowCounterclockwise size={20} className="btn-icon" onClick={() => reload()} />
                     </Card.Title>
                 </Card.Header>
@@ -111,10 +111,10 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
                     <Card.Body className="d-md-flex flex-md-column">
                         <div className="row-md-6 pe-3">
                             <div className="d-md-flex flex-md-column align-items-center">
-                                <label className="mb-2 title"> Sell Percentage </label>
-                                <label> Price - <span className="ms-3"> { numeral(Number(item.price)).format('0,0') } MMK </span> </label>
-                                <label> Percentage - <span className="ms-3"> { Number(percentage)} </span> </label>
-                                <label> Total - <span className="ms-3"> { numeral(Number(item.price) + ((Number(item.price) * Number(percentage)) / 100)).format('0,0') } MMK </span> </label>
+                                <label className="mb-2 title"> {t('percentage')} </label>
+                                <label> {t('price')} - <span className="ms-3"> { numeral(Number(item.price)).format('0,0') } {t('mmk')} </span> </label>
+                                <label> {t('percentage')} - <span className="ms-3"> { Number(percentage)} </span> </label>
+                                <label> {t('total')} - <span className="ms-3"> { numeral(Number(item.price) + ((Number(item.price) * Number(percentage)) / 100)).format('0,0') } {t('mmk')} </span> </label>
                             </div>
 
                             <InputGroup className="d-md-flex flex-md-row mt-3 justify-content-center align-items-center">
@@ -137,7 +137,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
 
                 { !loadingData && (
                     <Card.Footer>
-                        <Button onClick={() => update()} disabled={loading}> {t('update')} </Button>
+                        <Button onClick={() => update()} disabled={loading}> {t('confirm')} </Button>
                     </Card.Footer>
                 )}
             </Card>

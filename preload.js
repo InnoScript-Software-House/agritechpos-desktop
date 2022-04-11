@@ -7,6 +7,11 @@ contextBridge.exposeInMainWorld('nativeApi', {
             return ipcRenderer.send('show-message-box', data);
         }
     },
+    webView: {
+        open(url) {
+            return ipcRenderer.send('open-webview', url);
+        }
+    },
     device: {
         get(data) {
             return data(device);
@@ -36,6 +41,11 @@ contextBridge.exposeInMainWorld('nativeApi', {
             return ipcRenderer.on('reload', (event, res) => {
                 return data(res);
             });
+        }
+    },
+    notification: {
+        show(data) {
+            return ipcRenderer.send('notification:show', data);
         }
     }
 });

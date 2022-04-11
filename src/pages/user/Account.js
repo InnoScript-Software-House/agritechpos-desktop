@@ -160,7 +160,7 @@ class AccountPage extends Component {
                 <Card.Header>
                   <Card.Title>
                     <div className='d-md-flex flex-md-row justify-content-between align-items-center'>
-                      <span> {edit === null ? 'Create Account' : 'Edit Account'} </span>
+                      <span> {edit === null ? `${t('create-account')}` : `${t('edit-account')}` } </span>
 
                       {edit && (<BsArrowLeftRight size={20} className="btn-icon" onClick={() => this.switchBtn()} />)}
                     </div> 
@@ -216,7 +216,7 @@ class AccountPage extends Component {
                     <FormControl 
                       className="mb-2"
                       type='password'
-                      placeholder={t('comfirm-password')}
+                      placeholder={t('confirm-password')}
                       value={this.state.confirm_password}
                       onChange={(e) => this.setState({
                         confirm_password: e.target.value
@@ -231,7 +231,7 @@ class AccountPage extends Component {
                         onClick={() => this.create()}
                         disabled={this.state.loading}
                       > 
-                        {t('create')}
+                        {t('confirm')}
                       </Button>
                     ) : (
                       <Button 
@@ -239,7 +239,7 @@ class AccountPage extends Component {
                         onClick={() => this.update()}
                         disabled={this.state.loading}
                       > 
-                        {t('update')}
+                        {t('confirm')}
                       </Button>
                     )}
                   </div>

@@ -111,7 +111,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 				<div className="d-flex flex-row justify-content-start align-items-center">
 					<Button onClick={() => create()} disabled={loading}>
 						{' '}
-						{t('create')} {' '}
+						{t('confirm')} {' '}
 					</Button>
 				</div>
 			</Card.Body>

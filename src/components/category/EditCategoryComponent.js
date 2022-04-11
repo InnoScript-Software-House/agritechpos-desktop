@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { updateCategory } from "../../services/category.service";
 import { setOpenDelModal } from "../../redux/actions/openDelModal.action";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
+import { t } from 'i18next';
 
 export const EditCategoryComponent = ({ props, category, isDelete, reload}) => {
 
@@ -73,7 +74,7 @@ export const EditCategoryComponent = ({ props, category, isDelete, reload}) => {
             <Card>
                 <Card.Header>
                     <Card.Title className="d-md-flex flex-md-row justify-content-between align-items-center"> 
-                        <span> Update Category </span>
+                        <span> {t('category')} </span>
                         <BsArrowCounterclockwise size={20} className="btn-icon" onClick={() => setData()} />
                     </Card.Title>
                 </Card.Header>
@@ -87,7 +88,7 @@ export const EditCategoryComponent = ({ props, category, isDelete, reload}) => {
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder="Category Name"
+                            placeholder={t('name')}
                             value={name || ''}
                             onChange={e => setName(e.target.value)}
                         />
@@ -96,7 +97,7 @@ export const EditCategoryComponent = ({ props, category, isDelete, reload}) => {
                     <InputGroup className="mb-3">
                         <FormControl 
                             type="text"
-                            placeholder="Description"
+                            placeholder={t('description')}
                             value={description  || ''}
                             onChange={e => setDescription(e.target.value)}
                         />
@@ -109,7 +110,7 @@ export const EditCategoryComponent = ({ props, category, isDelete, reload}) => {
                         disabled={loading}
                         onClick={() => update()}
                     >
-                        Update
+                        {t('confirm')}
                     </Button>
 
                     {isDelete && (

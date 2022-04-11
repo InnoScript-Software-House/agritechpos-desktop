@@ -1,54 +1,45 @@
 import React, { Component } from 'react'
-import { Button, FormControl, InputGroup, ToastContainer } from 'react-bootstrap';
+import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { SideSection } from '../components/general/sideSection';
-import { AppToast } from '../components/general/toasts';
 import { setDatabaseUrl } from '../redux/actions/config.action';
-import { setOpenToastAction } from '../redux/actions/toast.action';
-
+import { zawgyi, t } from '../utilities/translation.utility';
+import { messageBoxType } from '../utilities/native.utility';
 
 class ConfigurationPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            url: ""
+            url: "",
+            messageboxTitle: t('title-db-config')
         }
     }
 
-    saveUrl = () => {
-        const { url } = this.state;
-        const { setToast, setDatabaseUrl, history } = this.props;
+    saveUrl = async () => {
+        const { url, messageboxTitle } = this.state;
+        const { setDatabaseUrl, history } = this.props;
         const { nativeApi } = window;
         
         if(url === '') {
-            nativeApi.messageBox.open({ title: 'Configuration Setting', message: 'IP address is required', type: 'none' });
+            nativeApi.messageBox.open({ title: messageboxTitle, message: t('require-db-url'), type: messageBoxType.info});
             return;
         }
 
+        await nativeApi.notification.show({title: messageboxTitle, body: t('success-db-url'), tag: 'Configuration'});
+
         setDatabaseUrl(url);
-        setToast('Configuration Setting', 'Database url is updated', 'success')
         history.push('/');
         return;
     };
 
     render() {
         const { url } = this.state;
+        const { lang } = this.props;
 
         return (
             <div className='container-fluid g-0'>
-                <div className='row g-0'>
-                    <div className='col-md-12'>
-                        <ToastContainer
-                            className='app-toast-container'
-                            position='top-end'
-                        >
-                            <AppToast props={this.props} />
-                        </ToastContainer>
-                    </div>
-                </div>
-
                 <div className='row g-0'>
                     <div className='col-md-6 background-image-layout'>
                         <SideSection />
@@ -59,17 +50,18 @@ class ConfigurationPage extends Component {
                         <img className="logo" src="build/assets/images/logo.png" />
 
                         <div className='col-md-7'>
-                            <h3 className="title-default mt-3"> Configuration </h3>
+                            <h3 className={`title-default mt-3 ${zawgyi(lang)}`}> {t('title-db-config')} </h3>
 
                             <InputGroup className="config-input-500">
                                 <FormControl 
                                     type="text"
-                                    placeholder="Enter database IP address"
+                                    placeholder={t('placeholder-db-url')}
                                     value={url}
                                     onChange={e => this.setState({ url: e.target.value })}
+                                    onKeyPress={e => e.code === 'Enter' && this.saveUrl()}
                                 />
 
-                                <Button className="btn btn-samll" onClick={() => this.saveUrl()}> Submit </Button>
+                                <Button className="btn btn-samll btn-border-right" onClick={() => this.saveUrl()}> {t('btn-submit')} </Button>
                             </InputGroup>
                         </div>
                     </div>
@@ -85,7 +77,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setToast: (title, message, status) => dispatch(setOpenToastAction(title, message, status)),
     setDatabaseUrl: (url) => dispatch(setDatabaseUrl(url))
 });
 

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setNetworkAddress, setNetworkMAC, setNetworkTypeAction } from "../../redux/actions/config.action";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { checkNetworkConnection } from "../../utilities/networkConnection";
-import { t, zawgyi } from "../../utilities/translation.utility";
+import { t } from "../../utilities/translation.utility";
 
 export const NetworkTypeComponent = ({props}) => {
 
@@ -47,14 +47,14 @@ export const NetworkTypeComponent = ({props}) => {
             { networkInfo && (
                 <div className="d-md-flex flex-md-row justify-content-between align-item-center">
                     <div className="d-md-flex flex-md-column">
-                        <h3 className={`title mb-3 ${zawgyi(lang)}`}> {t('config-networktype-info')} </h3>
+                        <h3 className='title mb-3'> {t('config-networktype-info')} </h3>
             
                         <span> IP Address - {networkInfo.address} </span>
                         <span> MAC - {networkInfo.mac} </span>
                     </div>
             
                     <div className="d-md-flex flex-md-column">
-                        <p className={`${zawgyi(lang)}`}> {t('config-networktype-description')} </p>
+                        <p> {t('config-networktype-description')} </p>
             
                         <InputGroup className="config-input mb-3">
                             <FormControl 

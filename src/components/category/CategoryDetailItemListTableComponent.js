@@ -33,7 +33,7 @@ export const CategoryDetailItemListTableComponent = ({ props, items }) => {
         <Card>
             <Card.Header>
                 <div className="d-md-flex flex-md-row justify-content-between">
-                    <span className="card-title"> Item List </span>
+                    <span className="card-title"> {t('item-list')} </span>
                     <ChangeNumberFormatBtn props={props} />
                 </div>
             </Card.Header>
@@ -47,7 +47,7 @@ export const CategoryDetailItemListTableComponent = ({ props, items }) => {
                             type={'Items'}
                             dataSource={itemList} 
                             searchColumns={searchColumns} 
-                            placeholder={t('input-item-search')}
+                            placeholder={t('search')}
                             filterResult={e => getFilterResult(e)}
                             selectedRows={selectedRows}
                         />

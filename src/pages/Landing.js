@@ -29,7 +29,7 @@ class LandingPage extends Component {
             return;
         }
 
-        axios.defaults.baseURL = `http://${config.api_url}/api`;
+        axios.defaults.baseURL = `${config.api_url}/api`;
         return true;
     }
 

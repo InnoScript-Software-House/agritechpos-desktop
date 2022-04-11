@@ -1,4 +1,4 @@
-const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog } = require('electron');
+const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog, Notification } = require('electron');
 const path = require('path');
 
 const isDev = !app.isPackaged;
@@ -125,4 +125,29 @@ ipcMain.on('print-invoice', (events, options) => {
 
 ipcMain.on('show-message-box', (events, data) => {
 	dialog.showMessageBox(curentWindow, data);
+});
+
+ipcMain.on('open-webview', (events, url) => {
+	const menu = Menu.buildFromTemplate([]);
+	Menu.setApplicationMenu(menu);
+	let win = new BrowserWindow({
+		width: 800,
+		height: 1000,
+		type: 'MainWindow',
+		frame: true,
+		fullscreen: false,
+		...browserWindowOptions
+	});
+
+	if(!isDev){
+	    globalShortcut.register('Ctrl+Shift+I', () => {
+	        return null;
+	    })
+	}
+
+	win.loadURL(url);
+});
+
+ipcMain.on('notification:show', (events, data) => {
+	new Notification({ title: data.title, body: data.body, tag: data.tag}).show();
 });
