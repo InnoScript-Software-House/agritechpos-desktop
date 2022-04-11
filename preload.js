@@ -1,10 +1,10 @@
-const { ipcRenderer, contextBridge, app } = require('electron');
+const { ipcRenderer, contextBridge } = require('electron');
 const { device } = require('./src/node');
 
 contextBridge.exposeInMainWorld('nativeApi', {
-    notification: {
-        sendNoti(type) {
-            ipcRenderer.send('notify', type);
+    messageBox: {
+        open(data) {
+            return ipcRenderer.send('show-message-box', data);
         }
     },
     device: {

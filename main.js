@@ -1,4 +1,4 @@
-const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut} = require('electron');
+const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog } = require('electron');
 const path = require('path');
 
 const isDev = !app.isPackaged;
@@ -121,4 +121,8 @@ ipcMain.on('print-invoice', (events, options) => {
 	curentWindow.webContents.print(options, (success, failureReason) => {
 		curentWindow.webContents.send('reload', success ? success : failureReason);
 	});
+});
+
+ipcMain.on('show-message-box', (events, data) => {
+	dialog.showMessageBox(curentWindow, data);
 });

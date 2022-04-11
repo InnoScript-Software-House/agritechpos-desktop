@@ -38,3 +38,6 @@ export const SET_DATABASE_URL = 'SET_DATABASE_URL';
 export const SET_SELL_PRICE = 'SET_SELL_PRICE';
 
 export const SET_INVOICE = 'SET_INVOICE';
+
+export const OPEN_DIALOG = 'OPEN_DIALOG';
+export const CLOSE_DIALOG = 'CLOSE_DIALOG';

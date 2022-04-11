@@ -20,9 +20,10 @@ class ConfigurationPage extends Component {
     saveUrl = () => {
         const { url } = this.state;
         const { setToast, setDatabaseUrl, history } = this.props;
-
+        const { nativeApi } = window;
+        
         if(url === '') {
-            setToast('Configuration Setting', 'IP address is required', 'danger')
+            nativeApi.messageBox.open({ title: 'Configuration Setting', message: 'IP address is required', type: 'none' });
             return;
         }
 
