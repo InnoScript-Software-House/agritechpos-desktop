@@ -5,7 +5,7 @@ import { SerialKeyComponent } from '../components/license/SerialKeyComponent';
 import { CustomerInformationComponent } from '../components/license/CustomerInformationComponent';
 import { PlanComponent } from '../components/license/PlanComponent';
 import { Activation } from '../components/license/activation';
-import { ToastContainer } from "react-bootstrap";
+import { Button, ToastContainer } from "react-bootstrap";
 import { AppToast } from '../components/general/toasts';
 
 class LicensePage extends Component {
@@ -66,8 +66,8 @@ class LicensePage extends Component {
     const { lang } = this.props.reducer; 
 
     return(
-      <div className='container-fluid'>
-        <div className='row'>
+      <div className='container-fluid g-0'>
+        <div className='row g-0'>
           <div className='col-md-12'>
             <ToastContainer
               className='app-toast-container'
@@ -78,14 +78,24 @@ class LicensePage extends Component {
           </div>
         </div>
 
-        <div className='row mt-3'>
-          <div className='col-md-4'>
-            <img src="build/assets/images/side_image.jpeg" className='img-fluid' />
+        <div className='row g-0'>
+          <div className='col-md-6 login-left-side'>
+            <div className='d-md-flex flex-md-column justify-content-center align-items-center login-opacity'>
+              <div className='login-card'>
+                <h3> Agricultural Equipment POS Software </h3>
+                <p>
+                  AgriTech is desktop pos software for agriculture machinery equipment businesses.
+                  We are focusing on IoT products for agriculture sector.
+                </p>
+
+                <Button className='btn btn-learn-more'> Learn More </Button>
+              </div>
+            </div>
           </div>
 
-          <div className='col-md-8'>
-            <h3 className="title"> Agricultural Equipment POS Software </h3>
-
+          <div className='col-md-6 login-layout-flex-center'>
+            <img className="logo" src="build/assets/images/logo.png" />
+            
             {!serialNumber && (
               <SerialKeyComponent 
                 retriveSerialKey={(e) => this.getSerialKey(e)} 

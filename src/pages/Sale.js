@@ -29,7 +29,7 @@ class SalePage extends Component {
                 buy: 0
             },
             saveInvoice: null,
-            openRecentInvoice: false
+            openRecentInvoice: false,
         };
     };
 
@@ -135,6 +135,10 @@ class SalePage extends Component {
             address: e.customer_address
         }
         this.setState({ customer: customer});
+    }
+
+    getnewVoucher(e){
+        console.log(e)
     }
 
     getSaveInvoice(e) {

@@ -7,11 +7,9 @@ import { setTokenAction } from '../../redux/actions/auth.action';
 import { setAccountAction } from '../../redux/actions/account.action';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { AppToast } from '../../components/general/toasts';
-import { ToastContainer } from 'react-bootstrap';
-import {t} from 'i18next';
-
-import '../../assets/css/login.css';
+import { t } from 'i18next';
 import { BsFacebook, BsGoogle, BsInstagram, BsLinkedin, BsYoutube } from 'react-icons/bs';
+import { SideSection } from '../../components/general/sideSection';
 
 class LoginPage extends Component {
 
@@ -72,36 +70,21 @@ class LoginPage extends Component {
             <div className='container-fluid g-0'>
                 <div className='row g-0'>
                     <div className='col-md-12'>
-                        <ToastContainer
-                            className='app-toast-container'
-                            position='top-end'
-                        >
-                            <AppToast props={this.props} />
-                        </ToastContainer>
+                        <AppToast props={this.props} />
                     </div>
                 </div>
 
                 <div className='row g-0'>
-                    <div className='col-md-6 login-left-side'>
-                        <div className='d-md-flex flex-md-column justify-content-center align-items-center login-opacity'>
-                            <div className='login-card'>
-                                <h3> Agricultural Equipment POS Software </h3>
-                                <p> 
-                                    AgriTech is desktop pos software for agriculture machinery equipment businesses.
-                                    We are focusing on IoT products for agriculture sector.
-                                </p>
-
-                                <Button className='btn btn-learn-more'> Learn More </Button>
-                            </div>
-                        </div>
+                    <div className='col-md-6 background-image-layout'>
+                        <SideSection />
                     </div>
 
                     <div className='col-md-6'>
-                        <div className='login-layout-flex-center'>
+                        <div className='flex-col-center-layout'>
                             <img className="logo" src="build/assets/images/logo.png" />
 
                             <div className='col-md-4'>
-                                <h3 className="title mt-3"> {t('login-account')} </h3>
+                                <h3 className="title-default mt-3"> {t('login-account')} </h3>
 
                                 <InputGroup className='mt-3'>
                                     <FormControl
@@ -124,19 +107,19 @@ class LoginPage extends Component {
                                 </InputGroup>
 
                                 <InputGroup className='mt-3'>
-                                    <Button disabled={is_loading} onClick={() => this.login()} className="btn btn-small"> {t('login-btn-enter')} </Button>
-                                    <Button onClick={() => this.quitDevice()} className="btn btn-small"> {t('quit-btn-enter')} </Button>
+                                    <Button disabled={is_loading} onClick={() => this.login()} className="btn-primary me-3"> {t('login-btn-enter')} </Button>
+                                    <Button onClick={() => this.quitDevice()} className="btn-primary"> {t('quit-btn-enter')} </Button>
                                 </InputGroup>
                             </div>
 
                             <label className='login-separte-text'> Connect with </label>
 
                             <div className='social-media-wrapper'>
-                                <BsInstagram className="me-3 rounded-circle" size={40} color="#01a3a6" cursor={'pointer'} />
-                                <BsFacebook className="me-3" size={40} color="#01a3a6" cursor={'pointer'} />
-                                <BsYoutube className='me-3 rounded-circle' size={40} color="#01a3a6"cursor={'pointer'} />
-                                <BsGoogle className='me-3 rounded-circle' size={40} color="#01a3a6" cursor={'pointer'} />
-                                <BsLinkedin className='me-3 rounded-circle' size={40} color="#01a3a6" cursor={'pointer'} />
+                                <BsInstagram className="me-3" size={40} color="#2759D4" cursor={'pointer'} />
+                                <BsFacebook className="me-3" size={40} color="#2759D4" cursor={'pointer'} />
+                                <BsYoutube className='me-3' size={40} color="#2759D4"cursor={'pointer'} />
+                                <BsGoogle className='me-3' size={40} color="#2759D4" cursor={'pointer'} />
+                                <BsLinkedin className='me-3' size={40} color="#2759D4" cursor={'pointer'} />
                             </div>
                         </div>
                     </div>

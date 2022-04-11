@@ -26,20 +26,21 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 		item.totalAmount = Number(e) * Number(item.sell_price);
 		item.totalOriginAmount = Number(e) * Number(item.price);
 
-		const getCurrentInvoice = localStorage.getItem('CURRENT_INVOICE') ? JSON.parse(localStorage.getItem('CURRENT_INVOICE')) : [];
-		const checkItem = getCurrentInvoice.filter(value => value.code === item.code);
+		const getCurrentInvoice = localStorage.getItem('CURRENT_INVOICE')
+			? JSON.parse(localStorage.getItem('CURRENT_INVOICE'))
+			: [];
+		// const checkItem = getCurrentInvoice.filter(value => value.code === item.code);
 
-		if(checkItem.length > 0) {
-			dispatch(setOpenToastAction('Item', "Item is already exist", 'danger'));
-			return;
-		}
+		// if (checkItem.length > 0) {
+		// 	dispatch(setOpenToastAction('Item', 'Item is already exist', 'danger'));
+		// 	return;
+		// }
 
 		getCurrentInvoice.push(item);
 		localStorage.setItem('CURRENT_INVOICE', JSON.stringify(getCurrentInvoice));
-		
+
 		retrive(item);
 		selectedItem(null);
-
 	};
 
 	useEffect(

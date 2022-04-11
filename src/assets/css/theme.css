@@ -27,49 +27,64 @@ body {
 	font-weight: 800 !important;
 }
 
+.logo {
+    width: 300px;
+    margin-bottom: 30px;
+}
+
+.text {
+	color: #333;
+	font-size: 18px;
+}
+
+/** Lgin Component **/
+.login-card > h3 {
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.login-card > p {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.login-card > .btn-learn-more {
+    background-color: transparent!important;
+    border: 1px solid #333!important;
+    margin-left: 20px;
+    color: #333;
+}
+
+
+.login-card > .btn-learn-more:hover {
+    background-color: #01a3a6!important;
+    border: 1px solid #01a3a6!important;
+}
+
+.login-separte-text {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.social-media-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
 /* Layout */
 .full-height {
 	height: 100vh !important;
 }
 
-/* Title & Header */
-.title {
-	color: #01a3a6;
-}
-
 /* Form, Input, Button */
-.btn {
-	border-radius: 0px;
-	color: #fff;
-	font-size: large;
-	cursor: pointer;
-	border: 0px;
-}
 
-.btn-primary {
-	background-color: #4ca6aa !important;
-}
-
-.btn-danger {
-	background-color: #dc3545 !important;
-}
-
-.btn-search {
-	margin-top: 0px;
-}
-
-.btn-default {
-	background-color: #01a3a6;
-	border: 1px solid #01a3a6;
-}
-
-.btn-default:active {
-	background-color: rgba(1, 163, 166, 0.5);
-}
-
-.btn-is-error {
-	background-color: rgba(1, 163, 166, 0.5);
-}
 .form-control,
 textarea,
 textarea.form-control,
@@ -120,16 +135,6 @@ input[type="number"]:focus,
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
-
-.btn-check:active + .btn-primary:focus,
-.btn-check:checked + .btn-primary:focus,
-.btn-primary.active:focus,
-.btn-primary:active:focus,
-.show > .btn-primary.dropdown-toggle:focus,
-.btn-check:focus + .btn-primary,
-.btn-primary:focus {
-	box-shadow: initial !important;
 }
 
 .err,
@@ -278,6 +283,7 @@ input[type="number"]:focus,
 .w-300 {
 	width: 300px;
 }
+
 /** License Key **/
 .serial-key-label {
 	color: #01a3a6;
@@ -349,16 +355,9 @@ input[type="number"]:focus,
 /** Navigation **/
 .navigation-wrapper {
 	width: 100%;
-	background-color: #4ca6aa;
+	background-color: #2759D4;
 }
 
-.btn-nav {
-	border: 1px solid rgb(220, 220, 220) !important;
-}
-
-.btn-nav:hover {
-	border: 1px solid rgb(255, 255, 255) !important;
-}
 
 /** Item Table Header **/
 .table-header {

@@ -32,10 +32,6 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
 
     return (
         <div className="d-md-flex flex-md-column">
-            <p className="mt-3">
-                To use this software, you need to enter a serial number and confirm. You can find the serial number on the software CD.
-            </p>
-
             <label className="serial-key-label mb-3 mt-3"> License Key </label>
 
             <div className="d-md-flex flex-md-row">
@@ -46,6 +42,7 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
                         minLength={4}
                         required={true}
                         value={key01}
+                        placeholder={"XXXX"}
                         onChange={(e) => setKey01(e.target.value)}
                     />
                 </InputGroup>
@@ -57,6 +54,7 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
                         minLength={4}
                         required={true}
                         value={key02}
+                        placeholder={"XXXX"}
                         onChange={(e) => setKey02(e.target.value)}
                     />
                 </InputGroup>
@@ -68,6 +66,7 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
                         minLength={4}
                         required={true}
                         value={key03}
+                        placeholder={"XXXX"}
                         onChange={(e) => setKey03(e.target.value)}
                     />
                 </InputGroup>
@@ -79,6 +78,7 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
                         minLength={4}
                         required={true}
                         value={key04}
+                        placeholder={"XXXX"}
                         onChange={(e) => setKey04(e.target.value)}
                     />
                 </InputGroup>
@@ -90,6 +90,7 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
                         minLength={4}
                         required={true}
                         value={key05}
+                        placeholder={"XXXX"}
                         onChange={(e) => setKey05(e.target.value)}
                     />
                 </InputGroup>
@@ -101,6 +102,7 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
                         minLength={4}
                         required={true}
                         value={key06}
+                        placeholder={"XXXX"}
                         onChange={(e) => setKey06(e.target.value)}
                     />
                 </InputGroup>
