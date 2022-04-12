@@ -18,10 +18,23 @@ let browserWindowOptions = {
 
 const template = [
 	{
-		label: 'File',
+		label: 'App',
 		submenu: [
-			{ role: 'Quit'}
+			{ role: 'Quit'},
+			{ 
+				label: 'Setting', 
+				accelerator: process.platform == 'darwin' ? 'Command+S' :'Ctrl+S',
+				click() {
+					curentWindow.webContents.send('navigate', '/setting');
+				}
+			}
 		]
+	},
+	{
+		label: 'အရောင်း',
+		click() {
+			curentWindow.webContents.send('navigate', '/sale');
+		}
 	},
 	{
 		label: 'View',
@@ -128,8 +141,6 @@ ipcMain.on('show-message-box', (events, data) => {
 });
 
 ipcMain.on('open-webview', (events, url) => {
-	const menu = Menu.buildFromTemplate([]);
-	Menu.setApplicationMenu(menu);
 	let win = new BrowserWindow({
 		width: 800,
 		height: 1000,
@@ -150,4 +161,11 @@ ipcMain.on('open-webview', (events, url) => {
 
 ipcMain.on('notification:show', (events, data) => {
 	new Notification({ title: data.title, body: data.body, tag: data.tag}).show();
+});
+
+ipcMain.on('auth:login', (events, status) => {
+	if(status === true) {
+		const menu = Menu.buildFromTemplate(template);
+		Menu.setApplicationMenu(menu);
+	}
 });

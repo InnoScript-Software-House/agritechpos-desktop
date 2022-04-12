@@ -1,10 +1,9 @@
-
 import React from "react";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { t, zawgyi } from "../../utilities/translation.utility";
 
-export const SideSection = () => {
+export const SideSectionComponent = () => {
 
     const state = useSelector(state => state);
     const { lang } = state;

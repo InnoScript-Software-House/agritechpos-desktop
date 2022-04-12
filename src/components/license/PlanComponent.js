@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { ArrowLeft } from "react-bootstrap-icons";
-import { useDispatch } from 'react-redux';
-import { setOpenToastAction } from "../../redux/actions/toast.action";
-import { t } from 'i18next';
+import { useSelector } from 'react-redux';
+import { zawgyi, t } from "../../utilities/translation.utility";
+import { messageBoxType } from '../../utilities/native.utility';
+import moment from "moment";
 
 export const PlanComponent = ({ retrivePlan, backStep }) => {
+    
+    const state = useSelector(state => state);
+    const { lang } = state;
+    const { nativeApi } = window;
 
-    const [activation, setActivation] = useState('');
+    const [activation, setActivation] = useState(moment().format('Y-MM-DD'));
     const [duration, setDuration] = useState(1);
     const [device, setDevice] = useState(1);
 
-    const dispatch = useDispatch();
+    const messageTitle = t('title-plan');
 
     const NumOfPC = () => {
         let pcs = [];
@@ -31,7 +36,12 @@ export const PlanComponent = ({ retrivePlan, backStep }) => {
 
     const submit = () => {
         if(activation === '' || duration === '' || device === '') {
-            dispatch(setOpenToastAction('Plan',`${t('all-fields-are-requried')}`,'danger'));
+            nativeApi.messageBox.open({title: messageTitle, message: t('all-fields-are-requried'), type: messageBoxType.info});
+            return;
+        }
+
+        if(moment(moment().format('Y-MM-DD')).isAfter(activation)) {
+            nativeApi.messageBox.open({title: messageTitle, message: t('invalid-date'), type: messageBoxType.info});
             return;
         }
         
@@ -46,16 +56,15 @@ export const PlanComponent = ({ retrivePlan, backStep }) => {
 
     return (
         <div className="d-md-flex flex-md-column">
-            <p className="mt-3"> Please choose software plan and number of device information </p>
 
             <div className="d-flex flex-column">
                 <ArrowLeft className="back-arrow" size={40} onClick={(e) => backStep('user-info')} />
-                <label className="plan-label mb-3 mt-3">  Plan Information </label>
+                <p className={`${zawgyi(lang)} mt-3 mb-3`}> {t('description-planinfo')} </p>
             </div>
 
-            <div className="d-flex flex-row justify-content-start mb-3">
-                <Form.Group className="me-3">
-                    <Form.Label> Activation Date </Form.Label>
+            <div className="d-md-flex flex-md-column justify-content-start mb-3">
+                <Form.Group className="mb-3">
+                    <Form.Label className={`${zawgyi(lang)}`}> {t('label-activation-date')}</Form.Label>
                     <Form.Control
                         type="date"
                         value={activation}
@@ -63,8 +72,8 @@ export const PlanComponent = ({ retrivePlan, backStep }) => {
                     />
                 </Form.Group>
 
-                <Form.Group className="me-3">
-                    <Form.Label> Duration (Year) </Form.Label>
+                <Form.Group className="mb-3">
+                    <Form.Label className={`${zawgyi(lang)}`}> {t('label-service-life')} </Form.Label>
                     <Form.Control 
                         className="select-device"
                         as="select"
@@ -79,8 +88,8 @@ export const PlanComponent = ({ retrivePlan, backStep }) => {
                     </Form.Control>
                 </Form.Group>
 
-                <Form.Group className="me-3">
-                    <Form.Label> Use Device </Form.Label>
+                <Form.Group className="mb-3">
+                    <Form.Label className={`${zawgyi(lang)}`}> {t('label-device')} </Form.Label>
                     <Form.Control
                         className="select-device"
                         as="select"
@@ -95,9 +104,7 @@ export const PlanComponent = ({ retrivePlan, backStep }) => {
                     </Form.Control>
                 </Form.Group>
 
-                <Form.Group className="me-3">
-                    <Button className="btn-plan-enter ms-3" onClick={() => submit()}> {t('confirm')} </Button>
-                </Form.Group>
+                <Button className={`${zawgyi(lang)}`} onClick={() => submit()}> {t('confirm')} </Button>
             </div>
         </div>
     )

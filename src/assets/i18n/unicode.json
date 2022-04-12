@@ -28,16 +28,17 @@
     "error-btn-retry": "Retry",
 
     "license-key-is-required" : "လိုင်စင်ကီး ထည့်သွင်းရန်လိုအပ်ပါသည်",
-    "license-key" : "လိုင်စင်ကီး",
+    "license-key" : "လိုင်စင်ကီးထည့်သွင်းရန်",
     "invalid-license-key" : "လိုင်စင်ကီး မှန်ကန်မှုမရှိပါ",
     "serial-key-info" : "To use this software, you need to enter a serial number and confirm. You can find the serial number on the software CD.",
 
-    "invalid-email-address": "Invalid Email Address",
-    "all-fields-are-requried": "All Fields are Required",
+    "invalid-email-address": "အီးမေးလ်လိပ်စာ မှန်ကန်မှုမရှိပါ",
+    "all-fields-are-requried": "အချက်အလက်အားလုံး ဖြည့်စွက်ရန်လိုအပ်ပါသည်",
     "invalid-phone-number": "ဖုန်းနံပါတ်မှားယွင်းနေပါတယ်",
+    "invalid-date" : "ရက်စွဲမှန်ကန်မှုမရှိပါ",
 
     "devices" : "Devices",
-    "serial-number" : "Serial Number",
+    "serial-number" : "လိုင်စင်နံပါတ်",
     
     "dashboard-page" : "Dashboard",
     "sale-page" : "ရောင်းစာရင်း",
@@ -48,7 +49,7 @@
     "profile-page" : "ကိုယ်ရေးကျဉ်းချုပ်",
     "account-page" : "အကောင့်",
     "setting-page" : "ဆက်တင်",
-    "logout-page": "ထွက်ရန်",
+    "logout-page": "ထွက်မည်",
 
     "account" : "အကောင့်",
     "amount" : "Amount",
@@ -58,17 +59,17 @@
     "black" : "Black",
     "bought-price" : "Bought Price",
     "credit-id" : "Credit ID",
-    "create" : "အသစ်ထည့်ရန်",
+    "create" : "အသစ်ပြုလုပ်မည်",
     "clear" : "ဖျက်ရန်",
     "close" : "ပိတ်မည်",
     "confirm" : "အတည်ပြုမည်",
     "customer" : "ဝယ်သူ",
     "color-print" : "Color Print",
     "color" : "Color",
-    "create-account" : "အကောင့်အသစ်ထည့်ရန်",
+    "create-account" : "အကောင့်အသစ်ပြုလုပ်မည်",
     "change-password" : "Change Password",
     "current-password" : "Current Password",
-    "confirm-password" : "အတည်ပြုလျှို့ဝှကနံပါတ်",
+    "confirm-password" : "အတည်ပြုလျှို့ဝှက်နံပါတ်",
     "credit-amount" : "ပေးချေရန် ကျန်ငွေ",
     "character" : "Character",
     "create-shop-information" : "ဆိုင်အချက်အလက်ထည့်ရန်",
@@ -86,11 +87,11 @@
     "end-date" : "End Date",
     "edit-account" : "အကောင့်ပြောင်းလဲရန်",
     "english-name-is-required" : "English Name Is Required",
-    "first-name" : "First Name",
-    "last-name" : "Last Name",
-    "go-back" : "Go Back",
-    "login-account" : "Login Account",
-    "login-btn-enter": "ဝင်ရန်",
+    "first-name" : "နာမည်၏ ပထမစာလုံးထည့်ရန်",
+    "last-name" : "နာမည်၏ နောက်ဆုံးစာလုံးထည့်ရန်",
+    "go-back" : "နောက်သို့",
+    "login-account" : "အကောင့်ထဲသို့၀င်ရန်",
+    "login-btn-enter": "ဝင်မည်",
     "location" : "နေရာ",
     "learn-more" : "Learn More",
     "last-day" : "Last Day",
@@ -162,7 +163,7 @@
     "total-sell-amount" : "Total Sell Amount",
     "total-sold-amount" : "စုစုပေါင်းရောင်းရငွေ",
     "total-amount" : "စုစုပေါင်းကျသင့်ငွေ",
-    "username" : "အကောင့်ဝင်ရန်",
+    "username" : "အကောင့်အမည်",
     "user-profile" : "User Profile",
     "update-profile" : "Update Profile",
     "update" : "Update",
@@ -176,12 +177,27 @@
 
     "title-db-config" : "ဒေတာဘေ့စ်ချိတ်ဆက်သည့်ပြင်ဆင်မှု ဆက်တင်",
     "title-intro" : "စိုက်ပျိုးရေးသုံးစက်ပစ္စည်း အရောင်းဆော့စ်၀ဲ",
+    "title-customer-info" : "သုံးစွဲသူအချက်အလက် ဖြည့်စွက်ရန်",
+    "title-plan" : "ဝန်ဆောင်မှုသက်တမ်းနှင့် ယူနစ်အရေအတွက်",
+    "title-license-confirmation" : "လိုင်စင်အတည်ပြုချက်",
+    "title-first-user" : "အသုံးပြုသူအကောင့်ပြုလုပ်ရန်",
 
     "description-intro" : "AgriTech သည် စိုက်ပျိုးရေးသုံးစက်ပစ္စည်းအရောင်းဆိုင်များအသုံးပြုနိုင်သည့် Desktop POS Software ဖြစ်သည်။ စိုက်ပျိုးရေးကဏ္ဍအတွက် IoT ထုတ်ကုန်တွေကို အဓိကထား ထုတ်လုပ်သော ကုမ္ပဏီဖြစ်သည်။",
+    "description-userinfo" : "လိုင်စင်မှတ်ပုံတင်ခြင်းလုပ်ငန်းစဉ်အတွက် သုံးစွဲသူအချက်အလက်ကို ဖြည့်စွက်ပါ။",
+    "description-planinfo" : "ဝန်ဆောင်မှုသက်တမ်းနှင့် စက်အလုံးအရည်အတွက် ရွေးရန်",
 
     "require-db-url" : "ဒေတာဘေ့စ်ချိတ်ဆက်မည့် URL ထည့်သွင်းရန်လိုအပ်ပါသည်။",
 
     "placeholder-db-url" : "ဒေတာဘေ့စ် url ကိုထည့်သွင်းရန် (eg: http://localhost:8000)",
 
-    "success-db-url" : "ဒေတာဘေ့စ် url ထည့်သွင်းခြင်း အောင်မြင်ပါသည်။"
+    "success-db-url" : "ဒေတာဘေ့စ် url ထည့်သွင်းခြင်း အောင်မြင်ပါသည်။",
+    "label-activation-date" : "စတင်အသုံးပြုမည့်ရက်စွဲ",
+    "label-service-life" : "အသုံးပြုမည့်သက်တမ်း (နှစ်)",
+    "label-device" : "အသုံးပြုမည့်စက်အလုံးအရည်အတွက်",
+    "success-license-store" : "လိုင်စင်မှတ်ပုံတင်ခြင်း အောင်မြင်ပါသည်",
+
+    "account-name" : "အကောင့်အမည်",
+    "password-does-not-match" : "အတည်ပြုလျှို့ဝှက်နံပါတ် မှန်ကန်မှုမရှိပါ",
+
+    "connect-social-media" : "ဆိုရှယ်မီဒီယာများမှဆက်သွယ်ရန်"
 }

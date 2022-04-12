@@ -47,5 +47,17 @@ contextBridge.exposeInMainWorld('nativeApi', {
         show(data) {
             return ipcRenderer.send('notification:show', data);
         }
+    },
+    auth: {
+        login(data) {
+            return ipcRenderer.send('auth:login', data);
+        }
+    },
+    app: {
+        navigateTo(retrive) {
+            return ipcRenderer.on('navigate', (event, response) => {
+                return retrive(response);
+            })
+        }
     }
 });

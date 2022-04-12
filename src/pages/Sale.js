@@ -35,6 +35,13 @@ class SalePage extends Component {
 
     async loadingData() {
         const { openToast } = this.props;
+        const { nativeApi } = window;
+        
+        nativeApi.app.navigateTo((url) => {
+            this.props.history.push(url)
+        });
+
+        
         const response = await getItems();
 
         if(response && response.success === false) {

@@ -4,10 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { SerialKeyComponent } from '../components/license/SerialKeyComponent';
 import { CustomerInformationComponent } from '../components/license/CustomerInformationComponent';
 import { PlanComponent } from '../components/license/PlanComponent';
-import { Activation } from '../components/license/activation';
-import { Button, ToastContainer } from "react-bootstrap";
-import { AppToast } from '../components/general/toasts';
-import { SideSection } from '../components/general/sideSection';
+import { ActivationComponent } from '../components/license/ActivationComponent';
+import { SideSectionComponent } from '../components/general/SideSectionComponent';
 
 class LicensePage extends Component {
 
@@ -33,7 +31,6 @@ class LicensePage extends Component {
   }
 
   getPlan(planData) {
-    console.log(planData);
     this.setState({
       plan: planData
     });
@@ -69,19 +66,8 @@ class LicensePage extends Component {
     return(
       <div className='container-fluid g-0'>
         <div className='row g-0'>
-          <div className='col-md-12'>
-            <ToastContainer
-              className='app-toast-container'
-              position='top-end'
-            >
-              <AppToast props={this.props} />
-            </ToastContainer>
-          </div>
-        </div>
-
-        <div className='row g-0'>
           <div className='col-md-6 background-image-layout'>
-            <SideSection />
+            <SideSectionComponent />
           </div>
 
           <div className='col-md-6'>
@@ -89,34 +75,34 @@ class LicensePage extends Component {
               <img className="logo" src="build/assets/images/logo.png" />
               
               {!serialNumber && (
-                  <SerialKeyComponent 
-                    retriveSerialKey={(e) => this.getSerialKey(e)} 
-                  />
-                )}
+                <SerialKeyComponent 
+                  retriveSerialKey={(e) => this.getSerialKey(e)} 
+                />
+              )}
 
-                {(serialNumber && !userInfo) && (
-                  <CustomerInformationComponent 
-                    retriveUserInfo={(e) => this.getUserInfo(e)}
-                    backStep={(e) => this.getBackStep(e)}
-                  />
-                )}
+              {(serialNumber && !userInfo) && (
+                <CustomerInformationComponent 
+                  retriveUserInfo={(e) => this.getUserInfo(e)}
+                  backStep={(e) => this.getBackStep(e)}
+                />
+              )}
 
-                {(serialNumber && userInfo && !plan) && (
-                  <PlanComponent 
-                    retrivePlan={(e) => this.getPlan(e)}
-                    backStep={(e) => this.getBackStep(e)}
-                  />
-                )}
+              {(serialNumber && userInfo && !plan) && (
+                <PlanComponent 
+                  retrivePlan={(e) => this.getPlan(e)}
+                  backStep={(e) => this.getBackStep(e)}
+                />
+              )}
 
-                {(serialNumber && userInfo && plan) && (
-                  <Activation 
-                    serial={serialNumber}
-                    user={userInfo}
-                    plan={plan}
-                    backStep={(e) => this.getBackStep(e)}
-                    history={this.props.history}
-                  />
-                )}
+              {(serialNumber && userInfo && plan) && (
+                <ActivationComponent 
+                  serial={serialNumber}
+                  user={userInfo}
+                  plan={plan}
+                  backStep={(e) => this.getBackStep(e)}
+                  history={this.props.history}
+                />
+              )}
             </div>
           </div>
         </div>

@@ -7,9 +7,10 @@ import { setTokenAction } from '../../redux/actions/auth.action';
 import { setAccountAction } from '../../redux/actions/account.action';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { AppToast } from '../../components/general/toasts';
-import { t } from 'i18next';
 import { BsFacebook, BsGoogle, BsInstagram, BsLinkedin, BsYoutube } from 'react-icons/bs';
-import { SideSection } from '../../components/general/sideSection';
+import { SideSectionComponent } from '../../components/general/SideSectionComponent';
+import { messageBoxType } from '../../utilities/native.utility';
+import { zawgyi, t } from '../../utilities/translation.utility';
 
 class LoginPage extends Component {
 
@@ -19,7 +20,8 @@ class LoginPage extends Component {
             username: '',
             password: '',
             is_loading: false,
-            err_message: null
+            err_message: null,
+            messageBoxTitle: t('login-account')
         }
     }
 
@@ -28,15 +30,21 @@ class LoginPage extends Component {
         quit.quitApp();
     }
 
+    openSocialMedia(url) {
+        const { nativeApi } = window;
+        nativeApi.webView.open(url);
+    }
+
     componentDidMount() {
     }
 
     async login() {
-        const { username, password } = this.state;
+        const { username, password, messageBoxTitle } = this.state;
         const { history } = this.props;
+        const { nativeApi } = window;
 
         if(username === '' || password === '') {
-            return this.props.openToast('Login', 'Username and password is required', 'danger');
+            return nativeApi.messageBox.open({title: messageBoxTitle, message: t('all-fields-are-requried'), type: messageBoxType.info});
         }
 
         const requestBody = {
@@ -50,7 +58,7 @@ class LoginPage extends Component {
 
         const response = await login(requestBody);
         if(response.success === false) {
-            this.props.openToast('Login', response.message, 'danger');
+            nativeApi.messageBox.open({title: messageBoxTitle, message: response.message, type: messageBoxType.info});
             this.setState({
                 is_loading: false,
             });
@@ -59,12 +67,15 @@ class LoginPage extends Component {
 
        await this.props.setToken(response.access_token);
        await this.props.setAccount(response.account);
+
+       nativeApi.auth.login(true);
        
        history.push('/sale');
     }
 
     render() {
         const { username, password, is_loading } = this.state;
+        const { lang } = this.props;
         
         return (
             <div className='container-fluid g-0'>
@@ -76,7 +87,7 @@ class LoginPage extends Component {
 
                 <div className='row g-0'>
                     <div className='col-md-6 background-image-layout'>
-                        <SideSection />
+                        <SideSectionComponent />
                     </div>
 
                     <div className='col-md-6'>
@@ -84,10 +95,11 @@ class LoginPage extends Component {
                             <img className="logo" src="build/assets/images/logo.png" />
 
                             <div className='col-md-4'>
-                                <h3 className="title-default mt-3"> {t('login-account')} </h3>
+                                <h3 className={`title-default mt-3 ${zawgyi(lang)}`}> {t('login-account')} </h3>
 
                                 <InputGroup className='mt-3'>
                                     <FormControl
+                                        className={`${zawgyi(lang)}`}
                                         type="text"
                                         placeholder={t('username')}
                                         value={username}
@@ -98,6 +110,7 @@ class LoginPage extends Component {
 
                                 <InputGroup className='mt-3'>
                                     <FormControl
+                                        className={`${zawgyi(lang)}`}
                                         type="password"
                                         placeholder={t('password')}
                                         value={password}
@@ -107,19 +120,21 @@ class LoginPage extends Component {
                                 </InputGroup>
 
                                 <InputGroup className='mt-3'>
-                                    <Button disabled={is_loading} onClick={() => this.login()} className="btn-primary me-3"> {t('login-btn-enter')} </Button>
-                                    <Button onClick={() => this.quitDevice()} className="btn-primary"> {t('quit-btn-enter')} </Button>
+                                    <Button disabled={is_loading} onClick={() => this.login()} className={`btn-primary me-3 ${zawgyi(lang)}`}> {t('login-btn-enter')} </Button>
+                                    <Button onClick={() => this.quitDevice()} className={`btn-primary ${zawgyi(lang)}`}> {t('quit-btn-enter')} </Button>
                                 </InputGroup>
                             </div>
 
-                            <label className='login-separte-text'> Connect with </label>
-
-                            <div className='social-media-wrapper'>
-                                <BsInstagram className="me-3" size={40} color="#2759D4" cursor={'pointer'} />
-                                <BsFacebook className="me-3" size={40} color="#2759D4" cursor={'pointer'} />
-                                <BsYoutube className='me-3' size={40} color="#2759D4"cursor={'pointer'} />
-                                <BsGoogle className='me-3' size={40} color="#2759D4" cursor={'pointer'} />
-                                <BsLinkedin className='me-3' size={40} color="#2759D4" cursor={'pointer'} />
+                            <div className='social-media-wrapper d-md-flex flex-md-column justify-content-end align-items-center mt-3 mb-3'>
+                                <label className={`mt-3 mb-3 ${zawgyi(lang)}`}> {t('connect-social-media')}</label>
+                                
+                                <div className='d-md-flex flex-md-row'>
+                                    <BsInstagram className="btn-social me-3" size={40} color="#2759D4" cursor={'pointer'} onClick={() => this.openSocialMedia('https://www.instagram.com/agritech_pos/')} />
+                                    <BsFacebook className="btn-social me-3" size={40} color="#2759D4" cursor={'pointer'} onClick={() => this.openSocialMedia('https://www.facebook.com/agritechpos')} />
+                                    {/* <BsYoutube className='btn-social me-3' size={40} color="#2759D4"cursor={'pointer'} onClick={() => this.openSocialMedia('')} />
+                                    <BsGoogle className='btn-social me-3' size={40} color="#2759D4" cursor={'pointer'} onClick={() => this.openSocialMedia('')} /> */}
+                                    <BsLinkedin className='btn-social me-3' size={40} color="#2759D4" cursor={'pointer'} onClick={() => this.openSocialMedia('https://www.linkedin.com/company/79565077/')} />
+                                </div>
                             </div>
                         </div>
                     </div>

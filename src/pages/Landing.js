@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { Button, Card, Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { LICENSE, SET_NETWORK_ADDRESS, SET_NETWORK_MAC } from '../redux/actionTypes';
+import { LICENSE } from '../redux/actionTypes';
 import { checkLicense } from '../services/license.service.js';
 import { checkFirstUser } from '../services/user.service';
 import axios from 'axios';
-import { getFirstDevice } from '../services/device.service';
 import { setOpenToastAction } from '../redux/actions/toast.action';
-import { checkNetworkConnection } from '../utilities/networkConnection';
 
 class LandingPage extends Component {
 
@@ -67,43 +65,6 @@ class LandingPage extends Component {
 
         localStorage.setItem(LICENSE, response.token);
         axios.defaults.headers.common["license"] = response.token;
-
-        //const firstDevice = await getFirstDevice();
-
-        // if (firstDevice.length === 0) {
-        //     history.push('/device/first');
-        //     return;
-        // }
-
-        // localStorage.setItem(SET_NETWORK_ADDRESS, firstDevice.ip);
-        // localStorage.setItem(SET_NETWORK_MAC, firstDevice.mac);
-
-        // const checkNetwork = checkNetworkConnection();
-
-        // if(checkNetwork.wifi && checkNetwork.wifi.address !== firstDevice.ip) {
-        //     this.setState({
-        //         is_message: {
-        //             title: 'Network Error [Wifi]',
-        //             message: "Incorrect IP address. Please check your wifi connection to connect database",
-        //         },
-        //         is_loading: false
-        //     });
-        //     return;
-        // }
-
-        // if(!checkNetwork.wifi && checkNetwork.localhost && checkNetwork.localhost.address !== firstDevice.ip) {
-        //     this.setState({
-        //         is_message: {
-        //             title: 'Network Connection Error [Localhost]',
-        //             message: "Incorrect IP address. Please check your localhost network connection to connect database",
-        //         },
-        //         is_loading: false
-        //     });
-        //     return;
-        // }
-
-        // axios.defaults.headers.common["ip"] = firstDevice.ip;
-        // axios.defaults.headers.common['mac'] = firstDevice.mac;
 
         const firstUser = await checkFirstUser();
 

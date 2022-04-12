@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { setOpenToastAction } from "../../redux/actions/toast.action";
-import { useDispatch } from 'react-redux';
-import { t } from "i18next";
 import { messageBoxType } from "../../utilities/native.utility";
+import { zawgyi } from "../../utilities/translation.utility";
+import { useSelector } from "react-redux";
+import { t } from "i18next";
 
 export const SerialKeyComponent = ({ retriveSerialKey }) => {
 
-    const dispatch = useDispatch();
+    const state = useSelector(state => state);
+    const { lang } = state;
 
     const [key01, setKey01] = useState('');
     const [key02, setKey02] = useState('');
@@ -38,82 +39,78 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
 
     return (
         <div className="d-md-flex flex-md-column">
-            <label className="title-default mb-3 mt-3"> {t('license-key')} </label>
+            <label className={`${zawgyi(lang)} title-default ps-3 pe-3`}> {t('license-key')} </label>
 
-            <div className="d-md-flex flex-md-row">
-                <InputGroup className="serial-key-input">
+            <div className="d-md-flex flex-md-row ps-3 pe-3">
+                <InputGroup>
                     <FormControl
+                        className="serial-key-input"
                         type="text"
                         maxLength={4}
                         minLength={4}
                         required={true}
                         value={key01}
                         placeholder={"XXXX"}
-                        onChange={(e) => setKey01(e.target.value)}
+                        onChange={(e) => setKey01(e.target.value.toUpperCase())}
                     />
-                </InputGroup>
 
-                <InputGroup className="serial-key-input">
                     <FormControl
+                        className="serial-key-input"
                         type="text"
                         maxLength={4}
                         minLength={4}
                         required={true}
                         value={key02}
                         placeholder={"XXXX"}
-                        onChange={(e) => setKey02(e.target.value)}
+                        onChange={(e) => setKey02(e.target.value.toUpperCase())}
                     />
-                </InputGroup>
 
-                <InputGroup className="serial-key-input">
                     <FormControl
+                        className="serial-key-input"
                         type="text"
                         maxLength={4}
                         minLength={4}
                         required={true}
                         value={key03}
                         placeholder={"XXXX"}
-                        onChange={(e) => setKey03(e.target.value)}
+                        onChange={(e) => setKey03(e.target.value.toUpperCase())}
                     />
-                </InputGroup>
 
-                <InputGroup className="serial-key-input">
                     <FormControl
+                        className="serial-key-input"
                         type="text"
                         maxLength={4}
                         minLength={4}
                         required={true}
                         value={key04}
                         placeholder={"XXXX"}
-                        onChange={(e) => setKey04(e.target.value)}
+                        onChange={(e) => setKey04(e.target.value.toUpperCase())}
                     />
-                </InputGroup>
 
-                <InputGroup className="serial-key-input">
                     <FormControl
+                        className="serial-key-input"
                         type="text"
                         maxLength={4}
                         minLength={4}
                         required={true}
                         value={key05}
                         placeholder={"XXXX"}
-                        onChange={(e) => setKey05(e.target.value)}
+                        onChange={(e) => setKey05(e.target.value.toUpperCase())}
                     />
-                </InputGroup>
 
-                <InputGroup className="serial-key-input">
                     <FormControl
+                        className="serial-key-input"
                         type="text"
                         maxLength={4}
                         minLength={4}
                         required={true}
                         value={key06}
                         placeholder={"XXXX"}
-                        onChange={(e) => setKey06(e.target.value)}
+                        onChange={(e) => setKey06(e.target.value.toUpperCase())}
                     />
-                </InputGroup>
 
-                <Button className="btn-serial-key-enter" onClick={() => submit()}> {t('confirm')} </Button>
+                    <Button className={`${zawgyi(lang)} btn btn-samll btn-border-right`} onClick={() => submit()}> {t('confirm')} </Button>
+                </InputGroup>
             </div>
         </div>
     )

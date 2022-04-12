@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { ArrowLeft } from "react-bootstrap-icons";
-import { useDispatch } from 'react-redux';
-import { setOpenToastAction } from "../../redux/actions/toast.action";
+import { useSelector } from 'react-redux';
+import { zawgyi } from "../../utilities/translation.utility";
+import { messageBoxType } from "../../utilities/native.utility";
 import { t } from 'i18next';
 
 export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
 
-    const dispatch = useDispatch();
+    const state = useSelector(state => state);
+    const { lang } = state;
+    const { nativeApi } = window;
+
+    const messageboxTitle = t('title-customer-info');
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -20,17 +25,17 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
 
     const submit = () => {
         if(firstName === '' || lastName === '' || email === '' || phone === '' || address === '') {
-            dispatch(setOpenToastAction('User Registeration', `${t('all-fields-are-requried')}` ,'danger'));
+            nativeApi.messageBox.open({title: messageboxTitle, message: t('all-fields-are-requried'), type: messageBoxType.info});
             return;
         }
 
         if(!checkEmail.test(email)){
-            dispatch(setOpenToastAction('User Registeration', `${t('invalid-email-address')}`,'danger'));
+            nativeApi.messageBox.open({title: messageboxTitle, message: t('invalid-email-address'), type: messageBoxType.info});
             return;
         }
 
         if(!checkPhone.test(phone)){
-            dispatch(setOpenToastAction('User Registeration', `${t('invalid-phone-number')}` ,'danger'));
+            nativeApi.messageBox.open({title: messageboxTitle, message: t('invalid-phone-number'), type: messageBoxType.info});
             return;
         }
 
@@ -48,17 +53,16 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
 
     return (
         <div className="d-md-flex flex-md-column"> 
-            <p className="mt-3"> Please fill customer information for license registeration process. </p>
-
             <div className="d-md-flex flex-md-column">
                 <ArrowLeft className="back-arrow" size={40} onClick={(e) => backStep('serial-key')} />
-                <label className="user-label mb-3 mt-3"> Customer Information </label>
+                <p className={`${zawgyi(lang)} mt-3`}> {t('description-userinfo')} </p>
             </div>
 
             <div className="d-md-flex flex-md-column">
                 <div className="d-md-flex flex-md-row justify-content-between mb-3">
-                    <InputGroup className="input-between me-3">
+                    <InputGroup className="me-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             required={true}
                             value={firstName}
@@ -67,8 +71,9 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
                         />
                     </InputGroup>
 
-                    <InputGroup className="input-between ms-3">
+                    <InputGroup>
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             required={true}
                             value={lastName}
@@ -79,8 +84,9 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
                 </div>
 
                 <div className="d-md-flex flex-md-row justify-content-between mb-3">
-                    <InputGroup className="input-between me-3">
+                    <InputGroup>
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             required={true}
                             value={phone}
@@ -89,8 +95,9 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
                         />
                     </InputGroup>
 
-                    <InputGroup className="input-between ms-3">
+                    <InputGroup className="ms-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="email"
                             required={true}
                             value={email}
@@ -101,8 +108,9 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
                 </div>
 
                 <div className="d-md-flex flex-md-row justify-content-between mb-3">
-                    <InputGroup className="address-input me-3">
+                    <InputGroup>
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             as="textarea"
                             rows={3}
                             required={true}
@@ -113,7 +121,7 @@ export const CustomerInformationComponent = ({ retriveUserInfo, backStep }) => {
                     </InputGroup>
                 </div>
 
-                <Button onClick={() => submit()}> {t('confirm')} </Button>
+                <Button onClick={() => submit()} className={`${zawgyi(lang)}`}> {t('confirm')} </Button>
             </div>
         </div>
     )

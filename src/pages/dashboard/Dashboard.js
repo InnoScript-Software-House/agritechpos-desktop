@@ -101,6 +101,12 @@ class DashboardPage extends Component {
     }
 
     async componentDidMount() {
+        const { nativeApi } = window;
+        
+        nativeApi.app.navigateTo((url) => {
+            this.props.history.push(url)
+        });
+
         this.loadingData();
         this.creditData();
     }

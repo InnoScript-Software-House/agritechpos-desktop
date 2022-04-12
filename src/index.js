@@ -6,7 +6,6 @@ import App from './App';
 import './utilities/translation.utility';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/css/theme.css';
 import './assets/css/themes/layout.css';
 import './assets/css/themes/utilities.css';
 
