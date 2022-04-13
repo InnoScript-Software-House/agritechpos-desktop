@@ -25,7 +25,6 @@
 .btn {
 	border-radius: 0px;
 	color: #fff;
-	font-size: large;
 	cursor: pointer;
 }
 
@@ -58,8 +57,13 @@
     color: #4E8D28;
 }
 
+.btn-social:hover {
+	color: #4E8D28;
+}
+
 .btn-nav {
 	border: 1px solid #fff !important;
+	justify-items: center;
 }
 
 .btn-nav-active {

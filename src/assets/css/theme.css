@@ -41,7 +41,6 @@ body {
 	cursor: pointer;
 }
 
-.social-media-wrapper {
-	height: 300px;
-	margin-top: 50px;
+.full-w {
+    width: 100%;
 }

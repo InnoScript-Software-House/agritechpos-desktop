@@ -67,8 +67,6 @@ class LoginPage extends Component {
 
        await this.props.setToken(response.access_token);
        await this.props.setAccount(response.account);
-
-       nativeApi.auth.login(true);
        
        history.push('/sale');
     }

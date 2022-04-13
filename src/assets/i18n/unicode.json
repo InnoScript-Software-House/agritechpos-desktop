@@ -199,5 +199,8 @@
     "account-name" : "အကောင့်အမည်",
     "password-does-not-match" : "အတည်ပြုလျှို့ဝှက်နံပါတ် မှန်ကန်မှုမရှိပါ",
 
-    "connect-social-media" : "ဆိုရှယ်မီဒီယာများမှဆက်သွယ်ရန်"
+    "connect-social-media" : "ဆိုရှယ်မီဒီယာများမှဆက်သွယ်ရန်",
+
+    "nav-dashboard": "Dashboard",
+    "nav-sale" : "ရောင်းရန်ပြေစာ"
 }

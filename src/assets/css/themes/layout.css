@@ -21,6 +21,11 @@
     align-items: center;
 }
 
-.full-w {
-    width: 100%;
+.social-media-wrapper {
+	height: 300px;
+	margin-top: 50px;
+}
+
+.navigation-wrapper {
+    background-color: #2759D4;
 }

@@ -88,7 +88,6 @@ class LandingPage extends Component {
         if(isConfig) {
             this.checkLicenseData();
         }
-
     }
 
     render() {
@@ -97,10 +96,9 @@ class LandingPage extends Component {
         return (
             <>
                 {is_loading && (
-                    <div className='d-flex flex-column full-height justify-content-center align-items-center'>
-                        <Spinner animation="border" role="status">
-                            <span className="visually-hidden"> Loading... </span>
-                        </Spinner>
+                    <div className='flex-col-center-layout'>
+                        <img className="logo" src="build/assets/images/logo.png" />
+                        <Spinner animation="border" role="status"></Spinner>
                     </div>
                 )}
 
@@ -110,11 +108,11 @@ class LandingPage extends Component {
                             <div className='col-md-12 mt-3'>
                                 <Card>
                                     <Card.Header>
-                                        <Card.Title> { is_message.title } </Card.Title>
+                                        <Card.Title> {is_message.title } </Card.Title>
                                     </Card.Header>
 
                                     <Card.Body>
-                                        <p> { is_message.message } </p>
+                                        <p> {is_message.message } </p>
                                     </Card.Body>
 
                                     <Card.Footer>

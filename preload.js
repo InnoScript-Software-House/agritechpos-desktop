@@ -48,11 +48,6 @@ contextBridge.exposeInMainWorld('nativeApi', {
             return ipcRenderer.send('notification:show', data);
         }
     },
-    auth: {
-        login(data) {
-            return ipcRenderer.send('auth:login', data);
-        }
-    },
     app: {
         navigateTo(retrive) {
             return ipcRenderer.on('navigate', (event, response) => {

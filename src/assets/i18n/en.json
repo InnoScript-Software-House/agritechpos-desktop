@@ -200,5 +200,8 @@
 
     "account-name" : "Account Name",
     "password-does-not-match" : "Password does not match",
-    "connect-social-media" : "Contact us on social media"
+    "connect-social-media" : "Contact us on social media",
+
+    "nav-dashboard": "Dashboard",
+    "nav-sale" : "Sale Invoice"
 }

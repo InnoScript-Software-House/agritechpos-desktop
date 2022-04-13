@@ -25,6 +25,7 @@ export const Language = () => {
     const state = useSelector((state) => state);
     const { lang } = state;
     const [lng, setLang] = useState(lang);
+
     const dispatch = useDispatch();
 
     const changeLang = (selectedValue) => {
@@ -38,7 +39,7 @@ export const Language = () => {
 
             <InputGroup className='lang-input-group'>
                 <FormSelect 
-                    // className={zawgyi(lng)}
+                    className={zawgyi(lng)}
                     onChange={(e) => changeLang(e.target.value)}
                     defaultValue={lng}
                 >
@@ -46,7 +47,7 @@ export const Language = () => {
                         languages.map((value, index) => {
                             return(
                                 <option 
-                                    // className={zawgyi(lng)}
+                                    className={zawgyi(lng)}
                                     key={`lang_id_${index}`} 
                                     value={value.value}
                                 > 

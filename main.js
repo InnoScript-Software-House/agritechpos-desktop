@@ -20,21 +20,8 @@ const template = [
 	{
 		label: 'App',
 		submenu: [
-			{ role: 'Quit'},
-			{ 
-				label: 'Setting', 
-				accelerator: process.platform == 'darwin' ? 'Command+S' :'Ctrl+S',
-				click() {
-					curentWindow.webContents.send('navigate', '/setting');
-				}
-			}
+			{ role: 'Quit'}
 		]
-	},
-	{
-		label: 'အရောင်း',
-		click() {
-			curentWindow.webContents.send('navigate', '/sale');
-		}
 	},
 	{
 		label: 'View',
@@ -88,8 +75,9 @@ const template = [
 	  }
 ];
 
-// const menu = Menu.buildFromTemplate(template);
-// Menu.setApplicationMenu(menu);
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
+
 let curentWindow = null;
 
 let mainWindow = () => {
@@ -121,6 +109,10 @@ if (isDev) {
 app.whenReady().then(() => {
 	curentWindow = mainWindow();
 });
+
+app.on('window-all-closed', () => {
+	app.quit();
+})
 
 ipcMain.on('restart-app', () => {
 	app.quit();
@@ -163,9 +155,3 @@ ipcMain.on('notification:show', (events, data) => {
 	new Notification({ title: data.title, body: data.body, tag: data.tag}).show();
 });
 
-ipcMain.on('auth:login', (events, status) => {
-	if(status === true) {
-		const menu = Menu.buildFromTemplate(template);
-		Menu.setApplicationMenu(menu);
-	}
-});
