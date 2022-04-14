@@ -39,9 +39,9 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
 
     return (
         <div className="d-md-flex flex-md-column">
-            <label className={`${zawgyi(lang)} title-default ps-3 pe-3`}> {t('license-key')} </label>
+            <label className={`${zawgyi(lang)} title-default`}> {t('license-key')} </label>
 
-            <div className="d-md-flex flex-md-row ps-3 pe-3">
+            <div className="d-md-flex flex-md-row">
                 <InputGroup>
                     <FormControl
                         className="serial-key-input"
@@ -109,7 +109,7 @@ export const SerialKeyComponent = ({ retriveSerialKey }) => {
                         onChange={(e) => setKey06(e.target.value.toUpperCase())}
                     />
 
-                    <Button className={`${zawgyi(lang)} btn btn-samll btn-border-right`} onClick={() => submit()}> {t('confirm')} </Button>
+                    <Button className={`${zawgyi(lang)} btn btn-samll btn-border-right mb-3`} onClick={() => submit()}> {t('confirm')} </Button>
                 </InputGroup>
             </div>
         </div>

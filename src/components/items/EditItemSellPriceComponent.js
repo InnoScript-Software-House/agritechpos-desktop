@@ -7,6 +7,7 @@ import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { updateItem } from "../../services/item.service";
 import { LoadingComponent } from "../general/Loading";
 import { t } from 'i18next';
+import { messageBoxType } from "../../utilities/native.utility";
 
 
 export const EditItemSellPriceComponent = ({ props, item, reload }) => {
@@ -21,6 +22,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
     const [status, setStatus] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loadingData, setLoadingData] = useState(false);
+    const [messageBoxTitle, setMessageBoxTitle] = useState('Update Item Percentage');
 
     const tostHeader = 'Update Item Selling Amount';
 
@@ -33,7 +35,11 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
     const update = async () => {
 
         if(!Number(percentage)){
-            dispatch(setOpenToastAction('Update Item Percentage', 'Invalid Input', 'danger'))
+            window.nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: 'Invalid Input',
+				type: messageBoxType.error
+			});
             return;
         }
 
@@ -47,7 +53,11 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
         const response = await updateItem(id, requestBody);
 
         if(response && response.success === false) {
-            dispatch(setOpenToastAction('Update Item Percentage', response.message, 'danger'));
+            window.nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: response.message,
+				type: messageBoxType.error
+			});
             setLoading(false);
             setLoadingData(false);
             return;
@@ -55,7 +65,11 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
 
         setLoadingData(false);
         setLoading(false);
-        dispatch(setOpenToastAction('Update Item Percentage','Item percentage is updated', 'success'));
+        window.nativeApi.messageBox.open({
+            title: messageBoxTitle,
+            message: 'Item percentage is updated',
+            type: messageBoxType.info
+        });
         reload();
         return;
     }

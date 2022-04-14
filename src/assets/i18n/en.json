@@ -203,5 +203,6 @@
     "connect-social-media" : "Contact us on social media",
 
     "nav-dashboard": "Dashboard",
-    "nav-sale" : "Sale Invoice"
+    "nav-sale" : "Sale Invoice",
+    "change-language": "Change Language"
 }

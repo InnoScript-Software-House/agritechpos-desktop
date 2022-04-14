@@ -81,7 +81,7 @@
     "description" : "အကြောင်းအရာ",
     "delete-all" : "အကုန်ဖျက်ရန်",
     "discount" : "လျှော့စျေး",
-    "email" : "အီးမေလ်",
+    "email" : "အီးမေးလ်",
     "export" : "ကြည့်ရန်",
     "edit-number-specification" : "Edit Number Specification",
     "end-date" : "End Date",
@@ -202,5 +202,6 @@
     "connect-social-media" : "ဆိုရှယ်မီဒီယာများမှဆက်သွယ်ရန်",
 
     "nav-dashboard": "Dashboard",
-    "nav-sale" : "ရောင်းရန်ပြေစာ"
+    "nav-sale" : "ရောင်းရန်ပြေစာ",
+    "change-language" : "ဘာသာစကားပြောင်းရန်"
 }

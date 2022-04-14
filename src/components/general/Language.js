@@ -35,7 +35,7 @@ export const Language = () => {
 
     return(
         <div className='lang-wrapper'>
-            <h3 className='lang-title'> {t('change-language')} </h3>
+            <label className='label-default'> {t('change-language')} </label>
 
             <InputGroup className='lang-input-group'>
                 <FormSelect 

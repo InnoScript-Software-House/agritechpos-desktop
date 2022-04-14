@@ -6,6 +6,7 @@ import { SideSectionComponent } from '../components/general/SideSectionComponent
 import { setDatabaseUrl } from '../redux/actions/config.action';
 import { zawgyi, t } from '../utilities/translation.utility';
 import { messageBoxType } from '../utilities/native.utility';
+import { Language } from '../components/general/Language';
 
 class ConfigurationPage extends Component {
 
@@ -46,10 +47,14 @@ class ConfigurationPage extends Component {
                     </div>
 
                     <div className='col-md-6'>
+                        <div className="d-flex flex-row justify-content-end">
+						    <Language />
+						</div>
+
                         <div className='flex-col-center-layout'>
                             <img className="logo" src="build/assets/images/logo.png" />
 
-                            <div className='col-md-7'>
+                            <div className='col-11 col-sm-7 col-md-11 col-lg-7'>
                                 <h3 className={`title-default mt-3 ${zawgyi(lang)}`}> {t('title-db-config')} </h3>
 
                                 <InputGroup>

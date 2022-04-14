@@ -14,6 +14,7 @@ import { RecentInvoice } from "../components/sale/RecentInvoice";
 import { AutoCompleteDropDown } from "../components/general/autoCompleteDropDown";
 import { getInvoice } from "../services/invoice.service";
 import { SelectedItemDetail } from "../components/sale/SelectedItemDetail";
+import { AppToast } from "../components/general/toasts";
   
 class SalePage extends Component {
     constructor(props){
@@ -30,6 +31,7 @@ class SalePage extends Component {
             },
             saveInvoice: null,
             openRecentInvoice: false,
+            messageBoxTitle: 'Sale'
         };
     };
 
@@ -45,14 +47,14 @@ class SalePage extends Component {
         const response = await getItems();
 
         if(response && response.success === false) {
-            openToast('Add to card', response.message, 'danger');
+            nativeApi.messageBox.open({title: messageBoxTitle, message: response.message, type: messageBoxType.info});
             return;
         }
         
         const customers = await getInvoice();
 
         if(customers && customers.success === false) {
-            openToast('Customer', customers.message, 'danger');
+            nativeApi.messageBox.open({title: messageBoxTitle, message: response.message, type: messageBoxType.info});
             return;
         }
 
@@ -167,6 +169,11 @@ class SalePage extends Component {
                 <Navigation props={this.props} />
                 
                 <div className="container-fluid">
+                <div className="row g-0">
+					<div className="col-md-12">
+						<AppToast props={this.props} />
+					</div>
+				</div>
                     <div className="row mt-3">
                         <div className="col-md-12">
                             <Button className="btn btn-small" onClick={() => this.setState({
