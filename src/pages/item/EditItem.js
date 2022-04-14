@@ -8,6 +8,7 @@ import { EditItemSellPriceComponent } from '../../components/items/EditItemSellP
 import { itemDetail } from '../../services/item.service';
 import { ItemQRComponent } from '../../components/items/ItemQRCode';
 import { ItemBarCodeComponent } from '../../components/items/ItemBarCode';
+import { messageBoxType } from '../../utilities/native.utility';
 
 class EditItemPage extends Component {
 
@@ -15,17 +16,19 @@ class EditItemPage extends Component {
         super(props);
         this.state = {
             is_loading: true,
-            item: null
+            item: null,
+            messageBoxTitle: 'Edit Item'
         }
     }
 
     async loadingData() {
         const { id } = this.props.match.params;
         const { openToast } = this.props;
+        const {nativeApi} = window;
 
         const response = await itemDetail(id);
         if(response && response.success === false) {
-            openToast('Item Update', response.message, 'danger');
+            nativeApi.messageBox.open({title: messageBoxTitle, message: response.message, type: messageBoxType.error});
             return;
         }
 

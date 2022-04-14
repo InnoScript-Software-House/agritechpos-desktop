@@ -2,23 +2,34 @@ import React, {useEffect, useState} from 'react';
 import {FormControl, InputGroup} from 'react-bootstrap';
 import {useDispatch} from 'react-redux';
 import {setOpenToastAction} from '../../redux/actions/toast.action';
+import {messageBoxType} from '../../utilities/native.utility';
 import {t} from '../../utilities/translation.utility';
 import {AutoCompleteDropDown} from '../general/autoCompleteDropDown';
+import {AppToast} from '../general/toasts';
 
-export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) => {
+export const SaleVoucherInputComponent = ({props, dataSource, retrive, selectedItem}) => {
 	const dispatch = useDispatch();
 	const [qty, setQty] = useState('');
 	const [items, setItems] = useState([]);
 	const [item, setItem] = useState(null);
+	const [messageBoxTitle, setMessageBoxTitle] = useState('Sale');
 
 	const addItem = e => {
 		if (!Number(qty)) {
-			dispatch(setOpenToastAction('Item', 'Invalid qty', 'danger'));
+			window.nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: 'Invalid qty',
+				type: messageBoxType.info
+			});
 			return;
 		}
 
 		if (Number(item.totalQty) < Number(e) || Number(e) <= 0) {
-			dispatch(setOpenToastAction('Item', "Invalid request item's qty", 'danger'));
+			window.nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: 'Invalid qty',
+				type: messageBoxType.info
+			});
 			return;
 		}
 

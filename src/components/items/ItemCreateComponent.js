@@ -5,6 +5,7 @@ import { Button, Card, FormControl, FormLabel, InputGroup } from "react-bootstra
 import { saveItem } from "../../services/item.service";
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { t } from 'i18next';
+import { messageBoxType } from '../../utilities/native.utility';
 export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
 
     const [btnLoading, setBtnLoading] = useState(false);
@@ -19,13 +20,14 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
     const [location, setLocation] = useState('');
     const [code, setCode] = useState('');
     const [percentage, setPercentage] = useState(0);
+    const [messageBoxTitle, setMessageBoxTitle] = useState('Create Item');
 
     const dispatch = useDispatch();
 
     const itemSave = async () => {
 
         if(eng_name === '') {
-            dispatch(setOpenToastAction('Create Item', `${t('english-name-is-required')}`, 'danger'));
+            window.nativeApi.messageBox.open({title: messageBoxTitle, message: `${t('english-name-is-required')}`, type: messageBoxType.error});
             return;
         }
 
@@ -45,7 +47,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
 
         const response = await saveItem(requestBody);
         if(response && response.success === false) {
-            dispatch(setOpenToastAction('Create Item', response.message, 'danger'));
+            window.nativeApi.messageBox.open({title: messageBoxTitle, message: response.message, type: messageBoxType.error});
             setBtnLoading(false);
             return;
         }
