@@ -11,6 +11,7 @@ import { BsFacebook, BsGoogle, BsInstagram, BsLinkedin, BsYoutube } from 'react-
 import { SideSectionComponent } from '../../components/general/SideSectionComponent';
 import { messageBoxType } from '../../utilities/native.utility';
 import { zawgyi, t } from '../../utilities/translation.utility';
+import { BsFillKeyFill, BsPower } from 'react-icons/bs';
 
 class LoginPage extends Component {
 
@@ -118,8 +119,22 @@ class LoginPage extends Component {
                                 </InputGroup>
 
                                 <InputGroup className='mt-3'>
-                                    <Button disabled={is_loading} onClick={() => this.login()} className={`btn-primary me-3 ${zawgyi(lang)}`}> {t('login-btn-enter')} </Button>
-                                    <Button onClick={() => this.quitDevice()} className={`btn-primary ${zawgyi(lang)}`}> {t('quit-btn-enter')} </Button>
+                                    <Button 
+                                        disabled={is_loading} 
+                                        onClick={() => this.login()} 
+                                        className={`btn-primary me-3 ${zawgyi(lang)}`}
+                                    > 
+                                        <BsFillKeyFill className='me-2' size={20} />
+                                        {t('login-btn-enter')} 
+                                    </Button>
+                                    
+                                    <Button 
+                                        onClick={() => this.quitDevice()} 
+                                        className={`btn-primary ${zawgyi(lang)}`}
+                                    > 
+                                        <BsPower className='me-2' size={20} />
+                                        {t('quit-btn-enter')} 
+                                    </Button>
                                 </InputGroup>
                             </div>
 

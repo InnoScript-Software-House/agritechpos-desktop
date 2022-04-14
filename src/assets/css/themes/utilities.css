@@ -33,6 +33,10 @@
     color: #fff;
 }
 
+.btn-primary:hover {
+	background-color: #4E8D28!important;
+}
+
 .btn-danger {
 	background-color: #dc3545 !important;
     color: #fff;
@@ -58,7 +62,7 @@
 }
 
 .btn-social:hover {
-	color: #4E8D28;
+	color: #4E8D28!important;
 }
 
 .btn-nav {

@@ -15,7 +15,7 @@ export const SideSectionComponent = () => {
     }
 
     return(
-        <div className='d-md-flex flex-md-column justify-content-center align-items-center background-opacity-layout'>
+        <div className='d-flex flex-column justify-content-center align-items-center background-opacity-layout'>
             <div className='description-card'>
                 <h3 className={`title-default ${zawgyi(lang)}`}> {t('title-intro')} </h3>
                 <p className={`text ${zawgyi(lang)}`}>  {t('description-intro')} </p>

@@ -1,4 +1,4 @@
-const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog, Notification } = require('electron');
+const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog, Notification, screen } = require('electron');
 const path = require('path');
 
 const isDev = !app.isPackaged;
@@ -80,14 +80,21 @@ Menu.setApplicationMenu(menu);
 
 let curentWindow = null;
 
-let mainWindow = () => {
-	let win = new BrowserWindow({
-		width: 1800,
-		height: 1000,
-		type: 'MainWindow',
-		frame: true,
+if (isDev) {
+	require('electron-reload')(__dirname, {
+		electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+	});
+}
+
+app.whenReady().then(() => {
+
+	const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+	curentWindow = new BrowserWindow({
+		width: parseInt(width),
+		height: parseInt(height),
 		fullscreen: false,
-		...browserWindowOptions
+		...browserWindowOptions,
+		icon: `${__dirname}/assets/icons/logo.ico`
 	});
 
 	if(!isDev){
@@ -96,20 +103,8 @@ let mainWindow = () => {
 	    })
 	}
 
-	win.loadFile('./index.html');
-	return win;
-};
-
-if (isDev) {
-	require('electron-reload')(__dirname, {
-		electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
-	});
-}
-
-app.whenReady().then(() => {
-	curentWindow = mainWindow();
+	curentWindow.loadFile('./index.html');
 });
-
 app.on('window-all-closed', () => {
 	app.quit();
 })
