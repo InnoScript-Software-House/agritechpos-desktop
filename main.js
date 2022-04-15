@@ -1,4 +1,4 @@
-const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog, Notification, screen } = require('electron');
+const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog, Notification, screen} = require('electron');
 const path = require('path');
 
 const isDev = !app.isPackaged;
@@ -19,60 +19,55 @@ let browserWindowOptions = {
 const template = [
 	{
 		label: 'App',
-		submenu: [
-			{ role: 'Quit'}
-		]
+		submenu: [{role: 'Quit'}]
 	},
 	{
 		label: 'View',
 		submenu: [
-		  { role: 'reload' },
-		  { role: 'forceReload' },
-		  { type: 'separator' },
-		  { role: 'resetZoom' },
-		  { role: 'zoomIn' },
-		  { role: 'zoomOut' },
-		  { type: 'separator' },
-		  { role: 'togglefullscreen' },
-		  { role: 'toggleDevTools' },
+			{role: 'reload'},
+			{role: 'forceReload'},
+			{type: 'separator'},
+			{role: 'resetZoom'},
+			{role: 'zoomIn'},
+			{role: 'zoomOut'},
+			{type: 'separator'},
+			{role: 'togglefullscreen'},
+			{role: 'toggleDevTools'}
 		]
-	  },
-	  {
+	},
+	{
 		label: 'Window',
-		submenu: [
-		  { role: 'minimize' },
-		  { role: 'zoom' }
-		]
-	  },
-	  {
+		submenu: [{role: 'minimize'}, {role: 'zoom'}]
+	},
+	{
 		role: 'help',
 		submenu: [
-		  {
-			label: 'User Guide',
-			click: async () => {
-			  await shell.openExternal('https://agritechpos.com/userguide')
+			{
+				label: 'User Guide',
+				click: async () => {
+					await shell.openExternal('https://agritechpos.com/userguide');
+				}
+			},
+			{
+				label: 'Documentations',
+				click: async () => {
+					await shell.openExternal('https://agritechpos.com/documentaions');
+				}
+			},
+			{
+				label: 'About Software',
+				click: async () => {
+					await shell.openExternal('https://agritechpos.com/about-software');
+				}
+			},
+			{
+				label: 'Support',
+				click: async () => {
+					await shell.openExternal('https://agritechpos.com/support');
+				}
 			}
-		  },
-		  {
-			label: 'Documentations',
-			click: async () => {
-			  await shell.openExternal('https://agritechpos.com/documentaions')
-			}
-		  },
-		  {
-			label: 'About Software',
-			click: async () => {
-			  await shell.openExternal('https://agritechpos.com/about-software')
-			}
-		  },
-		  {
-			label: 'Support',
-			click: async () => {
-			  await shell.openExternal('https://agritechpos.com/support')
-			}
-		  }
 		]
-	  }
+	}
 ];
 
 const menu = Menu.buildFromTemplate(template);
@@ -87,8 +82,7 @@ if (isDev) {
 }
 
 app.whenReady().then(() => {
-
-	const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+	const {width, height} = screen.getPrimaryDisplay().workAreaSize;
 	curentWindow = new BrowserWindow({
 		width: parseInt(width),
 		height: parseInt(height),
@@ -97,17 +91,17 @@ app.whenReady().then(() => {
 		icon: `${__dirname}/assets/icons/logo.ico`
 	});
 
-	if(!isDev){
-	    globalShortcut.register('Ctrl+Shift+I', () => {
-	        return null;
-	    })
+	if (!isDev) {
+		globalShortcut.register('Ctrl+Shift+I', () => {
+			return null;
+		});
 	}
 
 	curentWindow.loadFile('./index.html');
 });
 app.on('window-all-closed', () => {
 	app.quit();
-})
+});
 
 ipcMain.on('restart-app', () => {
 	app.quit();
@@ -137,16 +131,15 @@ ipcMain.on('open-webview', (events, url) => {
 		...browserWindowOptions
 	});
 
-	if(!isDev){
-	    globalShortcut.register('Ctrl+Shift+I', () => {
-	        return null;
-	    })
+	if (!isDev) {
+		globalShortcut.register('Ctrl+Shift+I', () => {
+			return null;
+		});
 	}
 
 	win.loadURL(url);
 });
 
 ipcMain.on('notification:show', (events, data) => {
-	new Notification({ title: data.title, body: data.body, tag: data.tag}).show();
+	new Notification({title: data.title, body: data.body, tag: data.tag}).show();
 });
-
