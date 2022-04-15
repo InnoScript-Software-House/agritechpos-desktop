@@ -53,6 +53,15 @@ contextBridge.exposeInMainWorld('nativeApi', {
             return ipcRenderer.on('navigate', (event, response) => {
                 return retrive(response);
             })
+        },
+        changeLang(menus) {
+            return ipcRenderer.send('app:change-language', menus);
+        },
+        setMenu(menus) {
+            return ipcRenderer.send('app:set-menu', menus);
+        },
+        setDefaultMenu(menus) {
+            return ipcRenderer.send('app:default-menu', menus);
         }
     }
 });

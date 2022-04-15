@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormSelect, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { setLangAction } from '../../redux/actions/lang.action';
-
 import '../../assets/css/components/language.css';
 
 const languages = [
@@ -23,6 +22,7 @@ const languages = [
 
 export const Language = () => {
     const state = useSelector((state) => state);
+
     const { lang } = state;
     const [lng, setLang] = useState(lang);
 
@@ -32,6 +32,7 @@ export const Language = () => {
         dispatch(setLangAction(selectedValue));
         setLang(selectedValue);
     };
+
 
     return(
         <div className='lang-wrapper'>
