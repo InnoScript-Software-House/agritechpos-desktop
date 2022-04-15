@@ -1,7 +1,9 @@
 const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog, Notification, screen} = require('electron');
 const path = require('path');
+const {setMenu} = require('./src/utilities/nativeInterface.utility');
 
 const isDev = !app.isPackaged;
+const devTools = [{role: 'toggleDevTools'}];
 
 let webPreferences = {
 	nodeIntegration: true,
@@ -10,10 +12,6 @@ let webPreferences = {
 	webSecurity: false,
 	allowRunningInsecureContent: false,
 	preload: path.join(__dirname, 'preload.js')
-};
-
-let browserWindowOptions = {
-	webPreferences
 };
 
 const template = [
@@ -25,7 +23,6 @@ const template = [
 		label: 'View',
 		submenu: [
 			{role: 'reload'},
-			{role: 'forceReload'},
 			{type: 'separator'},
 			{role: 'resetZoom'},
 			{role: 'zoomIn'},
@@ -83,6 +80,10 @@ if (isDev) {
 
 app.whenReady().then(() => {
 	const {width, height} = screen.getPrimaryDisplay().workAreaSize;
+
+	const browserWindowOptions = {
+		webPreferences
+	};
 	curentWindow = new BrowserWindow({
 		width: parseInt(width),
 		height: parseInt(height),
@@ -142,4 +143,51 @@ ipcMain.on('open-webview', (events, url) => {
 
 ipcMain.on('notification:show', (events, data) => {
 	new Notification({title: data.title, body: data.body, tag: data.tag}).show();
+});
+
+ipcMain.on('app:set-menu', (events, menus) => {
+	const buildTemplate = setMenu(menus, curentWindow);
+
+	if (isDev) {
+		buildTemplate.concat(devTools);
+	}
+
+	const menu = Menu.buildFromTemplate(buildTemplate);
+
+	Menu.setApplicationMenu(menu);
+});
+
+ipcMain.on('app:default-menu', events => {
+	Menu.setApplicationMenu(menu);
+});
+
+ipcMain.on('app:change-language', (events, menus) => {
+	let buildTemplate = [];
+
+	menus.map(value => {
+		buildTemplate.push({
+			label: value.label,
+			click() {
+				curentWindow.webContents.send('navigate', value.url);
+			}
+		});
+	});
+
+	buildTemplate.push({
+		label: 'View',
+		submenu: [
+			{role: 'reload'},
+			{role: 'forceReload'},
+			{type: 'separator'},
+			{role: 'resetZoom'},
+			{role: 'zoomIn'},
+			{role: 'zoomOut'},
+			{type: 'separator'},
+			{role: 'togglefullscreen'},
+			{role: 'toggleDevTools'}
+		]
+	});
+
+	const menu = Menu.buildFromTemplate(buildTemplate);
+	Menu.setApplicationMenu(menu);
 });

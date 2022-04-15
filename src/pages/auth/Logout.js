@@ -1,7 +1,9 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { removeTokenAction } from '../../redux/actions/auth.action';
 import { SET_ACCEASS_TOEKN } from '../../redux/actionTypes';
 import { logout } from '../../services/auth.service';
 
@@ -15,15 +17,14 @@ class LogoutPage extends Component {
     }
 
     async componentDidMount() {
-        const { history } = this.props;
-        //await logout();
-        localStorage.removeItem(SET_ACCEASS_TOEKN);
+        const { history,  logoutAction } = this.props;
+        await logoutAction();
 
         this.setState({
             is_loading: false
-        }, () => {
-            history.push('/');
         });
+
+        history.push('/');
     }
 
     render() {
@@ -48,6 +49,7 @@ const mapStateToProps = (state) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
+    logoutAction: () => dispatch(removeTokenAction()),
 });
 
 export default connect(

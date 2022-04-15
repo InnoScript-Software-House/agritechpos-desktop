@@ -157,6 +157,12 @@ class SalePage extends Component {
     }
     
     async componentDidMount(){
+        const { nativeApi } = window;
+        
+        nativeApi.app.navigateTo((url) => {
+            this.props.history.push(url)
+        });
+        
         await this.loadingData();
     }
 

@@ -115,7 +115,7 @@ class DashboardPage extends Component {
         const { count, totalSellAmount, qty, totalCreditCustomerAmount, totalCreditCustomerList } = this.state;
         return (
             <>
-                <Navigation props={this.props} />
+                {/* <Navigation props={this.props} /> */}
 
                 <div className='container-fluid'>
                     <Card className='mt-3'>

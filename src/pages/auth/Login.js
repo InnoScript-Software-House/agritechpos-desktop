@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, memo} from 'react';
 import {Button, FormControl, InputGroup} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
@@ -9,7 +9,7 @@ import {setOpenToastAction} from '../../redux/actions/toast.action';
 import {AppToast} from '../../components/general/toasts';
 import {BsFacebook, BsGoogle, BsInstagram, BsLinkedin, BsYoutube} from 'react-icons/bs';
 import {SideSectionComponent} from '../../components/general/SideSectionComponent';
-import {messageBoxType} from '../../utilities/native.utility';
+import {menus, messageBoxType} from '../../utilities/native.utility';
 import {zawgyi, t} from '../../utilities/translation.utility';
 import {Language} from '../../components/general/Language';
 
@@ -71,7 +71,13 @@ class LoginPage extends Component {
 		await this.props.setToken(response.access_token);
 		await this.props.setAccount(response.account);
 
-		history.push('/sale');
+		const getMenuList = menus.map(value => {
+			value.label = t(value.label);
+			return value;
+		});
+
+		nativeApi.app.setMenu(getMenuList);
+		history.push('/dashboard');
 	}
 
 	render() {
