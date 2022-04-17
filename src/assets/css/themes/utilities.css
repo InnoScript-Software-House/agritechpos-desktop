@@ -113,6 +113,14 @@
 	box-shadow: initial !important;
 }
 
+.btn-width {
+	width: 373px;
+}
+
+.btn-fix-width {
+	width: 253px;
+}
+
 /** Input **/
 .form-control,
 textarea,

@@ -3,7 +3,10 @@ import { menus } from '../../utilities/native.utility';
 import { LANG_SET, LANG_VALUE } from "../actionTypes";
 
 export const setLangAction = (lang) => async (dispatch) => {
+    const { nativeApi } = window;
+
     localStorage.setItem(LANG_VALUE, lang);
+
     i18next.changeLanguage(lang, () => {
         let getMenus = []
         menus.map((value) => {
@@ -13,7 +16,6 @@ export const setLangAction = (lang) => async (dispatch) => {
             })
         });
 
-        const { nativeApi } = window;
 
         nativeApi.app.changeLang(getMenus);
     });

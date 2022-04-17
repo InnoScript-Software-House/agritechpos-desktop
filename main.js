@@ -3,7 +3,14 @@ const path = require('path');
 const { setMenu } = require('./src/utilities/nativeInterface.utility');
 
 const isDev = !app.isPackaged;
-const devTools = [{role: 'toggleDevTools'}];
+
+const devTools = {
+	label: 'Development',
+	submenu: [
+		{role: 'toggleDevTools'},
+		{role: 'reload'}
+	]
+};
 
 let webPreferences = {
 	nodeIntegration: true,
@@ -154,9 +161,8 @@ ipcMain.on('app:set-menu', (events, menus) => {
 	const buildTemplate = setMenu(menus, curentWindow);
 
 	if(isDev) {
-		buildTemplate.concat(devTools);
+		buildTemplate.push(devTools);
 	}
-
 	const menu = Menu.buildFromTemplate(buildTemplate);
 
 	Menu.setApplicationMenu(menu);

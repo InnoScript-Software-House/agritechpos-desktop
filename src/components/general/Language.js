@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormSelect, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { setLangAction } from '../../redux/actions/lang.action';
 import '../../assets/css/components/language.css';
@@ -22,7 +23,7 @@ const languages = [
 
 export const Language = () => {
     const state = useSelector((state) => state);
-
+    const history = useHistory();
     const { lang } = state;
     const [lng, setLang] = useState(lang);
 
@@ -31,6 +32,10 @@ export const Language = () => {
     const changeLang = (selectedValue) => {
         dispatch(setLangAction(selectedValue));
         setLang(selectedValue);
+
+        window.nativeApi.app.navigateTo((url) => {
+            history.push(url);
+        });
     };
 
 

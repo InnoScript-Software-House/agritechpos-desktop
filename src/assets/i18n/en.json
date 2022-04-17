@@ -183,12 +183,17 @@
     "title-license-confirmation" : "License Confirmation",
     "title-first-user" : "Create User Account",
 
+    "title-dialog-create-customer" : "Create New Customer",
+    "title-request-item-qty" : "Request item qty",
+    "title-update-item-percentage" : "Update item's sale percentage",
+
     "description-intro" : "AgriTech is a desktop POS software for agricultural equipment stores. The company specializes in the production of IoT products for the agricultural sector",
     "description-userinfo" : "Please fill customer information for license registeration process.",
     "description-planinfo" : "Select the service life and the number of units",
 
     "require-db-url" : "Database url is required!",
     "require-all" : "All fields are required",
+    "require-number-only" : "Support number only",
 
     "placeholder-db-url" : "Enter database url. (eg: http://localhost:8000)",
 
@@ -197,6 +202,7 @@
     "label-service-life" : "Service Life Time (Year)",
     "label-device" : "Number of device",
     "success-license-store" : "License registration is successfully",
+    "success-item-percentage-update" : "Item's percentage is update successfully",
 
     "account-name" : "Account Name",
     "password-does-not-match" : "Password does not match",
@@ -204,5 +210,36 @@
 
     "nav-dashboard": "Dashboard",
     "nav-sale" : "Sale Invoice",
-    "change-language": "Change Language"
+    "change-language": "Change Language",
+
+    "btn-create-customer" : "Create new customer",
+    "btn-cancel" : "Cancel",
+    "btn-save" : "Save",
+    "btn-update": "update",
+
+    "input-customer-name" : "Enter customer name",
+    "input-customer-phone" : "Enter customer phone number",
+    "input-customer-email" : "Enter customer email address",
+    "input-customer-address" : "Enter customer address",
+
+    "required-name-and-phone" : "Customer name and phone number is required",
+
+    "success-create-customer" : "New customer registration successful",
+    "success-create-customer-description" : "It can be viewed on the customer list and used to issue invoices.",
+
+    "placeholder-customer-search" : "Customer search",
+    "placeholder-item-search" : "Item search",
+    "placeholder-update-percentage": "Update percentage",
+
+    "label-brand": "brand",
+    "label-sale-invoice" : "Sale Invoice",
+
+    "invalid-qty" : "Invalid item qty",
+    "invalid-percentage": "Invalid sale percentage",
+    "invalid-number" : "Support number only",
+    "exit-item" : "Item is already exist",
+
+    "open-invoice" : "Open Invoice",
+    "over-discount" : "The discount amount exceeds the down payment",
+    "over-net-amount" : ""
 }
