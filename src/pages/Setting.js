@@ -50,15 +50,15 @@ class SettingPage extends Component {
 
         return (
             <>
-                <Navigation props={this.props} />
+                {/* <Navigation props={this.props} /> */}
 
                 <div className='container-fluid'>
                     <div className='row'>
-                        <div className='g-0 col-md-2'>
+                        {/* <div className='g-0 col-md-2'>
                             <SideBarComponent getComponent={e => this.selectedComponent(e) }/>
-                        </div>
+                        </div> */}
 
-                        <div className='col-md-10 mt-3'>
+                        <div className='col-md-12 mt-3'>
                             {openComponent && openComponent === 'ShopComponent' && (<ShopComponent props={this.props} />)}
                             {openComponent && openComponent === 'NumberSpecificationComponent' && (<NumberSpecificationComponent props={this.props} />)}
                             {/* {openComponent && openComponent === 'DeviceComponent' && (<DeviceComponent props={this.props} />)} */}

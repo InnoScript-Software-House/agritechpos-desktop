@@ -143,7 +143,7 @@ class ProfilePage extends Component {
     const { user, is_loading, update_name, update_email, update_phone, current_password, new_password, confirm_password } = this.state;
     return (
       <>
-        <Navigation props={this.props} />
+        {/* <Navigation props={this.props} /> */}
 
         <div className='container-fluid'>
           <div className='row mt-3'>

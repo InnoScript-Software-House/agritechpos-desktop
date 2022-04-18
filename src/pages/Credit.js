@@ -125,11 +125,11 @@ class CreditPage extends Component {
     } = this.state;
     return (
       <>
-      {
+      {/* {
         !isPrint? (
           <Navigation props={this.props} />
         ):(<> </>)
-      }
+      } */}
 
         <div className="container-fluid">
           <div className="row mt-3">

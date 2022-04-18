@@ -173,7 +173,7 @@ class InvoicePage extends Component {
         const { start_date, end_date, invoices, tableloading, preview, searchText, is_print, invoiceData, totalSoldAmount } = this.state; 
         return (
             <>
-                {!is_print?(<Navigation props={this.props} />): (<></>)}
+                {/* {!is_print?(<Navigation props={this.props} />): (<></>)} */}
 
                 <div className='container-fluid'>
                     { preview && (

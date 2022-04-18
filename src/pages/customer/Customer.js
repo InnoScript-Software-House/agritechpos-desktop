@@ -42,7 +42,7 @@ class CustomerPage extends Component {
 
         return (
         <>
-            <Navigation props={this.props} />
+            {/* <Navigation props={this.props} /> */}
 
             <div className='container-fluid'>
                 <div className='row'>
