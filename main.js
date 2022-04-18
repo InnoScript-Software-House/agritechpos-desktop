@@ -2,8 +2,7 @@ const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog, Notific
 const path = require('path');
 const {setMenu} = require('./src/utilities/nativeInterface.utility');
 
-const isDev = !app.isPackaged;
-const devTools = [{role: 'toggleDevTools'}];
+const isProduction = app.isPackaged;
 
 let webPreferences = {
 	nodeIntegration: true,
@@ -72,7 +71,7 @@ Menu.setApplicationMenu(menu);
 
 let curentWindow = null;
 
-if (isDev) {
+if (!isProduction) {
 	require('electron-reload')(__dirname, {
 		electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
 	});
@@ -92,7 +91,7 @@ app.whenReady().then(() => {
 		icon: `${__dirname}/assets/icons/logo.ico`
 	});
 
-	if (!isDev) {
+	if (!isProduction) {
 		globalShortcut.register('Ctrl+Shift+I', () => {
 			return null;
 		});
@@ -132,7 +131,7 @@ ipcMain.on('open-webview', (events, url) => {
 		...browserWindowOptions
 	});
 
-	if (!isDev) {
+	if (!isProduction) {
 		globalShortcut.register('Ctrl+Shift+I', () => {
 			return null;
 		});
@@ -146,14 +145,16 @@ ipcMain.on('notification:show', (events, data) => {
 });
 
 ipcMain.on('app:set-menu', (events, menus) => {
-	const buildTemplate = setMenu(menus, curentWindow);
+	let buildTemplate = setMenu(menus, curentWindow);
 
-	if (isDev) {
-		buildTemplate.concat(devTools);
+	if(isProduction === false) {
+		buildTemplate.push({label: 'development', submenu: [
+			{role: 'toggleDevTools'},
+			{role: 'reload'}
+		]});
 	}
 
 	const menu = Menu.buildFromTemplate(buildTemplate);
-
 	Menu.setApplicationMenu(menu);
 });
 

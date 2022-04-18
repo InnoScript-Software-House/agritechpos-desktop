@@ -3,83 +3,52 @@ import { FormControl, InputGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { t, zawgyi } from "../../utilities/translation.utility";
 
-export const CustomerComponent = ({ input, retrive }) => {
-
-    const [customerName, setCustomerName] = useState('');
-    const [customerPhone, setCustomerPhone] = useState('');
-    const [customerEmail, setCustomerEmail] = useState('');
-    const [customerAddress, setCustomerAddress] = useState('');
-
+export const CustomerComponent = ({ dataSource }) => {
     const state = useSelector(state => state);
+
     const { lang } = state;
 
-    const updateCustomerInfo = (e, type) => {
-        let customer = {
-            name: customerName,
-            phone: customerPhone,
-            email: customerEmail,
-            address: customerAddress
-        }
-
-        customer.name = type === 'name' ? e : customerName;
-        customer.phone = type === 'phone' ? e : customerPhone;
-        customer.email = type === 'email' ? e : customerEmail;
-        customer.address = type === 'address' ? e : customerAddress;
-
-        retrive(customer);
-        return;
-    }
+    const [customer, setCustomer] = useState(null);
 
     useEffect(() => {
-        if(input) {
-            setCustomerAddress(input.address? input.address: '');
-            setCustomerEmail(input.email? input.email: '');
-            setCustomerName(input.name);
-            setCustomerPhone(input.phone? input.phone: '');
+        if(dataSource) {
+            setCustomer(dataSource);
         }
-    }, [input]);
+    }, [dataSource]);
 
     return(
-        <>
-            <InputGroup>
-                <FormControl 
-                    className='me-3'
-                    type="text"
-                    placeholder={t('name')}
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    onBlur={(e) => updateCustomerInfo(e.target.value, 'name')}
-                />
+        <div className="row mt-2 mb-3">
+            {customer && (
+                <>
+                    <div className="col-md-3">
+                        <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                            <label className={`${zawgyi(lang)}`}> {t('name')} </label>
+                            <label className={`${zawgyi(lang)}`}> {customer.name} </label>
+                        </div>
 
-                <FormControl 
-                    className='me-3'
-                    type="text"
-                    placeholder={t('phone')}
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
-                    onBlur={(e) => updateCustomerInfo(e.target.value, 'phone')}
+                        <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                            <label className={`${zawgyi(lang)}`}> {t('phone')} </label>
+                            <label className={`${zawgyi(lang)}`}> {customer.phone} </label>
+                        </div>
+                    </div>
 
-                />
+                    <div className="col-md-3">
+                        {customer.email && (
+                            <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                                <label className={`${zawgyi(lang)}`}> {t('email')} </label>
+                                <label className={`${zawgyi(lang)}`}> {customer.email} </label>
+                            </div>
+                        )}
 
-                <FormControl 
-                    className='me-3'
-                    type="text"
-                    placeholder={t('email')}
-                    value={customerEmail}
-                    onChange={(e) => setCustomerEmail(e.target.value)}
-                    onBlur={(e) => updateCustomerInfo(e.target.value, 'email')}
-                />
-            </InputGroup>
-
-            <InputGroup className='me-3'>
-                <FormControl
-                    as={'textarea'}
-                    placeholder={t('address')}
-                    value={customerAddress}
-                    onChange={(e) => setCustomerAddress(e.target.value)}
-                    onBlur={(e) => updateCustomerInfo(e.target.value, 'address')}
-                />
-            </InputGroup>
-        </>
+                        {customer.address && (
+                            <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                                <label className={`${zawgyi(lang)}`}> {t('address')} </label>
+                                <label className={`${zawgyi(lang)}`}> {customer.address} </label>
+                            </div>
+                        )}
+                    </div>
+                </>
+            )}
+        </div>
     )
 }

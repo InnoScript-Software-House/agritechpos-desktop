@@ -52,6 +52,74 @@ body {
     width: 100%;
 }
 
+.customer-dropdown-wrapper,
+.item-dropdown-wrapper {
+	z-index: 1;
+	position: absolute;
+	background-color: #2759D4;
+	width: 100%;
+	max-height: 100px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+
+.item-dropdown-wrapper {
+	width: 100%!important;
+}
+
+.customer-dropdown-wrapper::-webkit-scrollbar,
+.item-dropdown-wrapper::-webkit-scrollbar {
+	width: 8px!important;
+	background-color: #5b5b5b!important;
+}
+
+.customer-dropdown-wrapper::-webkit-scrollbar-thumb,
+.item-dropdown-wrapper::-webkit-scrollbar-thumb {
+	background: #4E8D28;
+}
+
+.dropdown-item > span {
+	color: #fff;
+	font-size:medium;
+}
+
+.dropdown-item:hover,
+.dropdown-item:active,
+.dropdown-item:focus {
+	background-color: #4E8D28!important;
+	border: 0px!important;
+	outline: 0;
+}
+
+.item-autosearch-input {
+	width: 100%;
+}
+
+.clickable {
+	background-color: #2759D4;
+	color: #fff;
+	cursor: pointer;
+	padding: 0px 10px 0px 10px;
+	border-radius: 3px;
+}
+
+.clickable:hover {
+	background-color: #4E8D28;
+}
+
+.selected-item-table > tbody > tr > td:last-child,
+.selected-item-table > thead > tr > td:last-child {
+	min-width: 100px;
+}
+
+.request-item-table > tbody > tr > td,
+.request-item-table > thead > tr > td {
+	min-width: 200px;
+}
+
+.request-item-table-input {
+	max-width: 150px;
+}
 
 @media only screen and (max-width: 1024px) {
 	.logo {

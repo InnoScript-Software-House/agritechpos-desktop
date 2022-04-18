@@ -76,8 +76,13 @@ class LoginPage extends Component {
 			return value;
 		});
 
+		console.log(getMenuList);
+
 		nativeApi.app.setMenu(getMenuList);
-		history.push('/dashboard');
+		nativeApi.app.navigateTo((url) => {
+        	history.push(url);
+        });
+		history.push('/sale');
 	}
 
 	render() {

@@ -9,6 +9,7 @@ import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { BsArrowLeftRight } from 'react-icons/bs';
 import { DeleteDialog } from '../../components/general/deleteDialog';
 import { t } from 'i18next';
+import { messageBoxType } from '../../utilities/native.utility';
 
 const checkphone = /^(\+?(95)|[09])\d{10}/g;
 const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -27,15 +28,21 @@ class AccountPage extends Component {
       loading: false,
       userList: [],
       edit: null,
-      edit_id: null
+      edit_id: null,
+      messageBoxTitle: 'Account'
     }
   }
 
   async fetchData() {
+    const {nativeApi} = window;
     const response = await getUsers();
 
     if(response && response.success === false) {
-      this.props.openToast('Account', response.message, 'danger');
+      nativeApi.messageBox.open({
+        title: this.state.messageBoxTitle,
+        message: response.message,
+        type: messageBoxType.error
+      })
       this.setState({
         loading: false
       })
@@ -71,25 +78,42 @@ class AccountPage extends Component {
   }
 
   async create() {
+    const {nativeApi} = window;
     const { name, phone, email, password, confirm_password } = this.state;
 
     if(name === '' || phone === '' || email === '' || password === '' || confirm_password === '') {
-      this.props.openToast('Account', 'All fields are required', 'danger');
+      nativeApi.messageBox.open({
+        title: this.state.messageBoxTitle,
+        message: 'All fields are required',
+        type: messageBoxType.error
+      })
       return;
     }
 
     if(!pattern.test(email)){
-      this.props.openToast('Account', 'Invalid email address', 'danger');
+      nativeApi.messageBox.open({
+        title: this.state.messageBoxTitle,
+        message: 'Invalid email address',
+        type: messageBoxType.error
+      })
       return;
     }
 
     if(!checkphone.test(phone)){
-      this.props.openToast('Account', 'Invalid phone number', 'danger');
+      nativeApi.messageBox.open({
+        title: this.state.messageBoxTitle,
+        message: 'Invalid phone number',
+        type: messageBoxType.error
+      })
       return;
     }
 
     if(password !== confirm_password) {
-      this.props.openToast('Account', 'password does not match', 'danger');
+      nativeApi.messageBox.open({
+        title: this.state.messageBoxTitle,
+        message: 'Password does not match',
+        type: messageBoxType.error
+      })
       return;
     }
 
@@ -107,7 +131,11 @@ class AccountPage extends Component {
     const response = await createAccount(resquestBody);
 
     if(response && response.success === false) {
-      this.props.openToast('Account', response.message, 'danger');
+      nativeApi.messageBox.open({
+        title: this.state.messageBoxTitle,
+        message: response.message,
+        type: messageBoxType.error
+      })
       this.setState({
         loading: false
       })
@@ -115,7 +143,12 @@ class AccountPage extends Component {
     }
 
     this.fetchData();
-    return this.props.openToast('Account', 'Account Create Successful', 'success');
+    nativeApi.messageBox.open({
+      title: this.state.messageBoxTitle,
+      message: 'Account Successfully Created',
+      type: messageBoxType.info
+    })
+    return;
   }
 
   async update() {
@@ -129,13 +162,21 @@ class AccountPage extends Component {
     const updateUser = await editUser(edit_id, updateRequest);
 
     if(updateUser && updateUser.success === false) {
-      this.props.openToast('Account', updateUser.message, 'danger');
+      nativeApi.messageBox.open({
+        title: this.state.messageBoxTitle,
+        message: updateUser.message,
+        type: messageBoxType.error
+      });
       this.setState({
         loading: false
       });
       return;
     }
-
+    nativeApi.messageBox.open({
+      title: this.state.messageBoxTitle,
+      message: 'Account Successfully Updated',
+      type: messageBoxType.error
+    })
     return this.fetchData();
   }
 

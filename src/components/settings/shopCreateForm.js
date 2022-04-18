@@ -3,7 +3,8 @@ import {Button, Card, FormControl, InputGroup} from 'react-bootstrap';
 import {createShop} from '../../services/shop.service';
 import {useDispatch} from 'react-redux';
 import {setOpenToastAction} from '../../redux/actions/toast.action';
-import { t } from 'i18next';
+import {t} from 'i18next';
+import {messageBoxType} from '../../utilities/native.utility';
 
 export const CreateShopFormComponent = ({retrive}) => {
 	const [name, setName] = useState('');
@@ -12,6 +13,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 	const [email, setEmail] = useState('');
 	const [address, setAddress] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [messageBoxTitle, setMessageBoxTitle] = useState('Create Shop');
 
 	const dispatch = useDispatch();
 
@@ -19,8 +21,14 @@ export const CreateShopFormComponent = ({retrive}) => {
 	const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	const create = async () => {
+		const {nativeApi} = window;
 		if (name === '' || description === '' || phone === '' || address === '') {
-			return dispatch(setOpenToastAction('Create Shop', 'All fields are required', 'danger'));
+			nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: 'All fields are required',
+				type: messageBoxType.error
+			});
+			return;
 		}
 
 		// if(!checkphone.test(phone)) {
@@ -44,13 +52,21 @@ export const CreateShopFormComponent = ({retrive}) => {
 		const response = await createShop(requestBody);
 
 		if (response.success === false) {
-			dispatch(setOpenToastAction('Create Shop', response.message, 'danger'));
+			nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: response.message,
+				type: messageBoxType.error
+			});
 			setLoading(false);
 			return;
 		}
 
 		if (response) {
-			dispatch(setOpenToastAction('Create Shop', 'Shop is created', 'success'));
+			nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: 'Shop is created',
+				type: messageBoxType.info
+			});
 			setLoading(false);
 			retrive(response);
 			return;

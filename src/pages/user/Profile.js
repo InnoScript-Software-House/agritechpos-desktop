@@ -8,6 +8,8 @@ import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { editUser } from '../../services/user.service';
 import { changePassword } from '../../services/user.service';
 import { t } from 'i18next';
+import { ArrowReturnLeft } from 'react-bootstrap-icons';
+import { messageBoxType } from '../../utilities/native.utility';
 
 const checkphone = /^(\+?(95)|[09])\d{9}/g;
 const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -27,12 +29,19 @@ class ProfilePage extends Component {
       confirm_password: '',
       error: null,
       password_error: null,
+      messageBoxTitle: 'Profile Update'
     }
   }
 
   httpHandler(response){
+    const {nativeApi} = window;
     if(response && response.success === false) {
-      return this.props.openToast('Profile Update', response.message, 'danger');
+      nativeApi.messageBox.open({
+				title: this.state.messageBoxTitle,
+				message: response.message,
+				type: messageBoxType.error
+			});
+      ArrowReturnLeft;
     }
     return response;
   }
@@ -42,7 +51,12 @@ class ProfilePage extends Component {
     const response = await getProfile();
 
     if(response && response.success === false) {
-      return openToast('Profile Update', response.message, 'danger');
+      nativeApi.messageBox.open({
+				title: this.state.messageBoxTitle,
+				message: response.message,
+				type: messageBoxType.error
+			});
+      return;
     }
 
     this.setState({
@@ -65,15 +79,30 @@ class ProfilePage extends Component {
     const { openToast } = this.props;
 
     if(update_email === '' || update_name === '' || update_phone === '') {
-      return openToast('Profile Update', 'All fileds are required', 'danger');
+      nativeApi.messageBox.open({
+				title: this.state.messageBoxTitle,
+				message: 'All fileds are required',
+				type: messageBoxType.error
+			});
+      return;
     }
 
     if(!checkphone.test(update_phone)) {
-      return openToast('Profile Update', 'Invalid phone number', 'danger');
+      nativeApi.messageBox.open({
+				title: this.state.messageBoxTitle,
+				message:  'Invalid phone number',
+				type: messageBoxType.error
+			});
+      return;
     }
 
     if(!pattern.test(update_email)){
-      return openToast('Profile Update', 'Invalid email address', 'danger');
+      nativeApi.messageBox.open({
+				title: this.state.messageBoxTitle,
+				message:  'Invalid email address',
+				type: messageBoxType.error
+			});
+      return;
   }
     const requestBody = {
       name: update_name, 
@@ -96,11 +125,21 @@ class ProfilePage extends Component {
     const response = await editUser(this.state.user.id, requestBody);
 
     if(response && response.success === false) {
-      return openToast('Profile Update', response.message, 'danger');
+      nativeApi.messageBox.open({
+				title: this.state.messageBoxTitle,
+				message:  response.message,
+				type: messageBoxType.error
+			});
+      return;
     }
 
     this.loadingData();
-    return this.props.openToast('Profile Update', 'Profile Update Successful', 'success');
+    nativeApi.messageBox.open({
+      title: this.state.messageBoxTitle,
+      message: 'Profile Update Successful',
+      type: messageBoxType.info
+    });
+    return;
   }
 
   async changePassword() {
@@ -108,11 +147,21 @@ class ProfilePage extends Component {
     const { openToast, history } = this.props;
 
     if(current_password === '' || new_password === '' || confirm_password === '') {
-      return openToast('Change Password', 'All fields are required', 'danger');
+      nativeApi.messageBox.open({
+        title: 'Change Password',
+        message: 'All fields are required',
+        type: messageBoxType.error
+      });
+      return;
     }
 
     if(confirm_password !== new_password) {
-      return openToast('Change Password', 'new password does not match', 'danger');
+      nativeApi.messageBox.open({
+        title: 'Change Password',
+        message: 'new password does not match',
+        type: messageBoxType.error
+      });
+      return;
     }
 
     this.setState({
@@ -127,14 +176,23 @@ class ProfilePage extends Component {
     const response = await changePassword(this.state.user.id, requestBody);
 
     if(response && response.success === false) {
-      return openToast('Change Password', response.message, 'danger');
+      nativeApi.messageBox.open({
+        title: 'Change Password',
+        message: response.message,
+        type: messageBoxType.error
+      });
+      return;
     }
 
     this.setState({
       is_loading: false,
     });
 
-    this.props.openToast('Change Password', 'Password Change Successfully', 'success');
+    nativeApi.messageBox.open({
+      title: 'Change Password',
+      message: 'Password Change Successfully',
+      type: messageBoxType.info
+    });
     history.push('/logout');
     return;
   }

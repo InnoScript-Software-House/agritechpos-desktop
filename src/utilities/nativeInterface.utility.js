@@ -17,7 +17,6 @@ module.exports = {
 				}
 			});
 		});
-
 		return buildTemplate;
 	},
 
@@ -27,5 +26,9 @@ module.exports = {
 		contextIsolation: true,
 		webSecurity: false,
 		allowRunningInsecureContent: false
-	}
+	},
+
+	devMenus : [
+
+	]
 };

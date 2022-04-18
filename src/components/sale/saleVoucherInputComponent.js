@@ -1,51 +1,44 @@
 import React, {useEffect, useState} from 'react';
 import {FormControl, InputGroup} from 'react-bootstrap';
-import {useDispatch} from 'react-redux';
-import {setOpenToastAction} from '../../redux/actions/toast.action';
+import { useSelector} from 'react-redux';
 import {messageBoxType} from '../../utilities/native.utility';
-import {t} from '../../utilities/translation.utility';
-import {AutoCompleteDropDown} from '../general/autoCompleteDropDown';
-import {AppToast} from '../general/toasts';
+import { t, zawgyi } from '../../utilities/translation.utility';
+import { ItemAutoCompleteDropDown } from './utilities/ItemAutoCompleteDropDown';
 
-export const SaleVoucherInputComponent = ({props, dataSource, retrive, selectedItem}) => {
-	const dispatch = useDispatch();
+export const SaleVoucherInputComponent = ({ dataSource, retrive, selectedItem }) => {
+	const state = useSelector(state => state);
+	
+	const { lang } = state;
+	const { nativeApi } = window; 
+
 	const [qty, setQty] = useState('');
 	const [items, setItems] = useState([]);
 	const [item, setItem] = useState(null);
-	const [messageBoxTitle, setMessageBoxTitle] = useState('Sale');
+	const [isDisable, setDisable] = useState(true);
 
-	const addItem = e => {
+	const messageBoxTitle = t('title-request-item-qty');
+
+	const addItem = (e) => {
 		if (!Number(qty)) {
-			window.nativeApi.messageBox.open({
-				title: messageBoxTitle,
-				message: 'Invalid qty',
-				type: messageBoxType.info
-			});
-			return;
+			setQty('');
+			return nativeApi.messageBox.open({ title: messageBoxTitle, message: t('invalid-qty'), type: messageBoxType.info });
 		}
 
-		if (Number(item.totalQty) < Number(e) || Number(e) <= 0) {
-			window.nativeApi.messageBox.open({
-				title: messageBoxTitle,
-				message: 'Invalid qty',
-				type: messageBoxType.info
-			});
-			return;
+		if(Number(item.totalQty) < Number(e) || Number(e) <= 0) {
+			return nativeApi.messageBox.open({ title: messageBoxTitle, message: t('invalid-qty'), type: messageBoxType.info });
 		}
 
 		item.requestQty = Number(e);
 		item.totalAmount = Number(e) * Number(item.sell_price);
 		item.totalOriginAmount = Number(e) * Number(item.price);
 
-		const getCurrentInvoice = localStorage.getItem('CURRENT_INVOICE')
-			? JSON.parse(localStorage.getItem('CURRENT_INVOICE'))
-			: [];
-		// const checkItem = getCurrentInvoice.filter(value => value.code === item.code);
+		const getCurrentInvoice = localStorage.getItem('CURRENT_INVOICE') ? JSON.parse(localStorage.getItem('CURRENT_INVOICE')) : [];
 
-		// if (checkItem.length > 0) {
-		// 	dispatch(setOpenToastAction('Item', 'Item is already exist', 'danger'));
-		// 	return;
-		// }
+		const checkItem = getCurrentInvoice.filter(value => value.code === item.code);
+
+		if(checkItem.length > 0) {
+			return nativeApi.messageBox.open({ title: messageBoxTitle, message: t('exit-item'), type: messageBoxType.info });
+		}
 
 		getCurrentInvoice.push(item);
 		localStorage.setItem('CURRENT_INVOICE', JSON.stringify(getCurrentInvoice));
@@ -69,15 +62,9 @@ export const SaleVoucherInputComponent = ({props, dataSource, retrive, selectedI
 
 	return (
 		<div className="d-md-flex flex-md-row align-items-start justify-content-end">
-			<AutoCompleteDropDown
+			<ItemAutoCompleteDropDown 
 				dataSource={items}
-				inputOption={{
-					type: 'text',
-					placeholder: t('materail-code'),
-					search_name: 'code',
-					for: 'items'
-				}}
-				chooseItem={e =>
+				chooseItem={e => {
 					setItem({
 						id: e.id,
 						name: e.eng_name,
@@ -86,22 +73,36 @@ export const SaleVoucherInputComponent = ({props, dataSource, retrive, selectedI
 						price: Number(e.price),
 						totalQty: Number(e.qty),
 						percentage: Number(e.percentage),
-						sell_price: Number(e.price) * Number(e.percentage) / 100 + Number(e.price),
-						location: e.location
-					})}
+						sell_price: parseInt(Number(e.price) * Number(e.percentage) / 100 + Number(e.price)),
+						location: e.location,
+						category: e.category
+					});
+					
+					setDisable(false);
+				}}
+				setDisable={e => setDisable(e)}
 			/>
 
 			<InputGroup>
 				<FormControl
+					className={`w-120 ${zawgyi(lang)}`}
 					type="text"
 					placeholder={t('quantity')}
 					value={qty}
-					onChange={e => setQty(e.target.value)}
+					onChange={e => {
+						if(!Number(e.target.value)) {
+							nativeApi.messageBox.open({ title: messageBoxTitle, message: t('require-number-only'), type: messageBoxType.info});
+							return setQty('');
+						}
+
+						return setQty(e.target.value);
+					}}
 					onKeyPress={e => {
 						if (e.code === 'Enter') {
 							addItem(e.target.value);
 						}
 					}}
+					disabled={isDisable}
 				/>
 			</InputGroup>
 		</div>

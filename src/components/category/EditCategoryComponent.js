@@ -6,6 +6,7 @@ import { updateCategory } from "../../services/category.service";
 import { setOpenDelModal } from "../../redux/actions/openDelModal.action";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { t } from 'i18next';
+import { messageBoxType } from "../../utilities/native.utility";
 
 export const EditCategoryComponent = ({ props, category, isDelete, reload}) => {
 
@@ -24,8 +25,13 @@ export const EditCategoryComponent = ({ props, category, isDelete, reload}) => {
     }
 
     const update = async () => {
+        const {nativeApi} = window;
         if(name === '') {
-            dispatch(setOpenToastAction('Update Category','Category name is required', 'danger'));
+            nativeApi.messageBox.open({
+                title: 'Update Category',
+                message: 'Category name is required',
+                type: messageBoxType.error
+            })
             return;
         }
 
@@ -41,12 +47,19 @@ export const EditCategoryComponent = ({ props, category, isDelete, reload}) => {
         const response = await updateCategory(id, requestBody);
 
         if(response && response.success===false){
-            dispatch(setOpenToastAction('Update Category',response.message, 'danger'));
+            nativeApi.messageBox.open({
+                title: 'Update Category',
+                message: response.message,
+                type: messageBoxType.error
+            })
             setLoading(false);
             return;
         };
-
-        dispatch(setOpenToastAction('Update Category', 'Category is updated', 'success'));
+        nativeApi.messageBox.open({
+            title: 'Update Category',
+            message: 'Category is updated',
+            type: messageBoxType.info
+        })
         setLoading(false);
         reload();
         return;

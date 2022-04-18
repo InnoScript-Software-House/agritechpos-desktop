@@ -3,7 +3,8 @@ import {Button, Card, FormControl, InputGroup} from 'react-bootstrap';
 import {updateShop} from '../../services/shop.service';
 import {useDispatch} from 'react-redux';
 import {setOpenToastAction} from '../../redux/actions/toast.action';
-import { t } from 'i18next';
+import {t} from 'i18next';
+import {messageBoxType} from '../../utilities/native.utility';
 
 export const EditShopFormComponent = ({dataSource, retrive}) => {
 	const [name, setName] = useState('');
@@ -12,11 +13,13 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 	const [email, setEmail] = useState('');
 	const [address, setAddress] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [messageBoxTitle, setMessageBoxTitle] = useState('Update Shop');
 
 	const checkphone = /^(\+?(95)|[09])\d{10}/g;
 	const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	const dispatch = useDispatch();
+	const {nativeApi} = window;
 
 	useEffect(
 		() => {
@@ -33,7 +36,12 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 
 	const update = async () => {
 		if (name === '' || description === '' || phone === '' || email === '' || address === '') {
-			return dispatch(setOpenToastAction('Shop Create', 'All fileds are required', 'danger'));
+			nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: 'All fileds are required',
+				type: messageBoxType.error
+			});
+			return;
 		}
 
 		// if(!checkphone.test(phone)) {
@@ -41,7 +49,12 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 		// }
 
 		if (!pattern.test(email)) {
-			return dispatch(setOpenToastAction('Shop Create', 'Invalid email address', 'danger'));
+			nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: 'Invalid email address',
+				type: messageBoxType.error
+			});
+			return;
 		}
 
 		const requestBody = {
@@ -58,12 +71,20 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 
 		if (response && response.success === false) {
 			setLoading(false);
-			dispatch(setOpenToastAction('Shop Update', response.message, 'danger'));
+			nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: response.message,
+				type: messageBoxType.error
+			});
 			return;
 		}
 
 		if (response) {
-			dispatch(setOpenToastAction('Shop Update', 'Shop info is updated', 'success'));
+			nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: 'Shop info is updated',
+				type: messageBoxType.info
+			});
 			setLoading(false);
 			retrive(response);
 			return;
@@ -124,8 +145,7 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 				<div className="d-flex flex-row justify-content-start align-items-center">
 					<Button onClick={() => update()} disabled={loading}>
 						{' '}
-						{t('confirm')}
-						{' '}
+						{t('confirm')}{' '}
 					</Button>
 				</div>
 			</Card.Body>

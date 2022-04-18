@@ -75,6 +75,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
     }
 
     const updateStatus = async () => {
+        const {nativeApi} = window;
         const requestBody = {
             active: status
         }
@@ -84,14 +85,22 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
         const response = await updateItem(id, requestBody);
 
         if(response && response.success === false) {
-            dispatch(setOpenToastAction('Update Item Status', response.message, 'danger'));
+            nativeApi.messageBox.open({
+                title: messageBoxTitle,
+                message: response.message,
+                type: messageBoxType.error
+            });
             setLoading(false);
             setLoadingData(false);
             return;
         }
 
         setLoading(false);
-        dispatch(setOpenToastAction('Update Item Percentage', 'Item status is updated', 'success'));
+        nativeApi.messageBox.open({
+            title: messageBoxTitle,
+            message: 'Item Status Updated Successfully',
+            type: messageBoxType.info
+        });
         reload();
         return;
     }

@@ -8,6 +8,7 @@ import { BsArrowLeftCircle } from 'react-icons/bs';
 import { EditCategoryComponent } from '../../components/category/EditCategoryComponent';
 import { CategoryDetailItemListTableComponent } from '../../components/category/CategoryDetailItemListTableComponent';
 import { DeleteDialog } from '../../components/general/deleteDialog';
+import { messageBoxType } from '../../utilities/native.utility';
 
 class EditCategoryPage extends Component {
 
@@ -21,12 +22,17 @@ class EditCategoryPage extends Component {
     };
 
     async loadingData(){
+        const {nativeApi} = window;
         const { id } = this.props.match.params;
 
         const response = await categoryDetail(id);
 
         if(response && response.success === false){
-            this.props.openToast('Category', response.message, 'danger');
+            nativeApi.messageBox.open({
+                title: 'Category',
+                message: response.message,
+                type: messageBoxType.error
+            })
             this.setState({
                 loading: false
             })
@@ -50,7 +56,7 @@ class EditCategoryPage extends Component {
         const { delModal } = this.props.reducer;
         return(
             <>
-                <Navigation props={this.props} />
+                {/* <Navigation props={this.props} /> */}
 
                 <div className='container-fluid'>
                     <div className='row mt-1'>
