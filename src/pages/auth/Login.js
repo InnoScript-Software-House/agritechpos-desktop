@@ -38,9 +38,9 @@ class LoginPage extends Component {
 	componentDidMount() {}
 
 	async login() {
-		const { username, password, messageBoxTitle } = this.state;
-		const { history } = this.props;
-		const { nativeApi } = window;
+		const {username, password, messageBoxTitle} = this.state;
+		const {history} = this.props;
+		const {nativeApi} = window;
 
 		if (username === '' || password === '') {
 			return nativeApi.messageBox.open({
@@ -71,15 +71,17 @@ class LoginPage extends Component {
 		await this.props.setToken(response.access_token);
 		await this.props.setAccount(response.account);
 
-		const getMenuList = menus.map((value) => {
+		const getMenuList = menus.map(value => {
 			value.label = t(value.label);
 			return value;
 		});
-		
+
+		console.log(getMenuList);
+
 		nativeApi.app.setMenu(getMenuList);
-		// nativeApi.app.navigateTo((url) => {
-        // 	history.push(url);
-        // });
+		nativeApi.app.navigateTo((url) => {
+        	history.push(url);
+        });
 		history.push('/sale');
 	}
 

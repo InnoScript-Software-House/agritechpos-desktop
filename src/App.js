@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Route, HashRouter } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Route, HashRouter} from 'react-router-dom';
 import history from './utilities/histroy';
 
 import ConfigurationPage from './pages/Configuration';
@@ -28,49 +28,54 @@ import './assets/css/theme.css';
 import Invoice from './pages/Invoice';
 import CreditPage from './pages/Credit';
 import Repayment from './components/repayment/Repayment';
+import {NumberSpecificationComponent} from './components/settings/numberSpecification';
+import {InvoiceComponent} from './components/settings/InvoiceSetting';
+import BackUpComponent from './components/settings/backup';
 
 class App extends Component {
+	render() {
+		return (
+			<HashRouter history={history}>
+				<Route exact path={'/'} component={LandingPage} />
 
-  render() {
+				<Route exact path={'/configuration'} component={ConfigurationPage} />
+				<Route exact path={'/license'} component={LicensePage} />
+				<Route exact path={'/dashboard'} component={DashboardPage} />
+				<Route exact path={'/error/:status'} component={ErrorPage} />
+				<Route exact path={'/user/first'} component={FirstUserRegisterPage} />
 
-    return(
-      <HashRouter history={history}>
-        <Route exact path={'/'} component={LandingPage} />
-        
-        <Route exact path={'/configuration'} component={ConfigurationPage} />
-        <Route exact path={'/license'} component={LicensePage} />
-        <Route exact path={'/dashboard'} component={DashboardPage} />
-        <Route exact path={'/error/:status'} component={ErrorPage} />
-        <Route exact path={'/user/first'} component={FirstUserRegisterPage} />
+				<Route exact path={'/login'} component={LoginPage} />
+				<Route exact path={'/logout'} component={LogoutPage} />
 
-        <Route exact path={'/login'} component={LoginPage} />
-        <Route exact path={'/logout'} component={LogoutPage} />
+				<Route exact path={'/numberspecification'} component={NumberSpecificationComponent} />
+				<Route exact path={'/invoicesetting'} component={InvoiceComponent} />
+				<Route exact path={'/backup'} component={BackUpComponent} />
 
-        <Route exact path={'/profile'} component={ProfilePage} />
-        <Route exact path={'/setting'} component={SettingPage} />
+				<Route exact path={'/profile'} component={ProfilePage} />
+				<Route exact path={'/setting'} component={SettingPage} />
 
-        <Route exact path={'/device/first'} component={FirstDevice} />
-        <Route exact path={'/account'} component={AccountPage} />
+				<Route exact path={'/device/first'} component={FirstDevice} />
+				<Route exact path={'/account'} component={AccountPage} />
 
-        <Route exact path={'/inventory'} component={InventoryPage} />
-        <Route exact path={'/item/:id'} component={EditItemPage} />
+				<Route exact path={'/inventory'} component={InventoryPage} />
+				<Route exact path={'/item/:id'} component={EditItemPage} />
 
-        <Route exact path={'/category'} component={CategoryListPage} />
-        <Route exact path={'/category/:id'} component={EditCategoryPage} />
+				<Route exact path={'/category'} component={CategoryListPage} />
+				<Route exact path={'/category/:id'} component={EditCategoryPage} />
 
-        <Route exact path={'/invoiceReport'} component={InvoiceReportPage} />
-        <Route exact path={'/invoice'} component={InvociePage} />
+				<Route exact path={'/invoiceReport'} component={InvoiceReportPage} />
+				<Route exact path={'/invoice'} component={InvociePage} />
 
-        <Route exact path={'/credit'} component={CreditPage} />
-        <Route exact path={'/repayment/:id'} component={Repayment} />
+				<Route exact path={'/credit'} component={CreditPage} />
+				<Route exact path={'/repayment/:id'} component={Repayment} />
 
-        <Route exact path={'/sale'} component={SalePage} />
+				<Route exact path={'/sale'} component={SalePage} />
 
-        <Route exact path={'/customer'} component={CustomerPage} />
-        <Route exact path={'/editcustomer/:id'} component={EditCustomerPage} />
-      </HashRouter>
-    );
-  }
+				<Route exact path={'/customer'} component={CustomerPage} />
+				<Route exact path={'/editcustomer/:id'} component={EditCustomerPage} />
+			</HashRouter>
+		);
+	}
 }
 
 export default App;

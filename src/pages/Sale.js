@@ -2,7 +2,6 @@ import React, { Component} from "react";
 import {  Button, Card } from "react-bootstrap";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Navigation } from "../components/general/Navigation";
 import { setOpenToastAction } from "../redux/actions/toast.action";
 import { getItems } from "../services/item.service";
 import { setInvoiceAction } from "../redux/actions/invoice.action";
@@ -11,7 +10,6 @@ import { SaleVoucherInputComponent } from "../components/sale/saleVoucherInputCo
 import { SaleVoucherComponent } from "../components/sale/saleVocherComponent";
 import { t, zawgyi } from "../utilities/translation.utility";
 import { RecentInvoice } from "../components/sale/RecentInvoice";
-import { AutoCompleteDropDown } from "../components/general/autoCompleteDropDown";
 import { getInvoice } from "../services/invoice.service";
 import { SelectedItemDetail } from "../components/sale/SelectedItemDetail";
 import { getCustomerList } from "../services/customer.service";
@@ -128,7 +126,7 @@ class SalePage extends Component {
     }
 
     render(){
-        const { customer, customers, items, requestItems, totalAmount, saveInvoice, selectedItem, openRecentInvoice } = this.state;
+        const { customer, saveInvoice, selectedItem, openRecentInvoice } = this.state;
         const { lang } = this.props.reducer;
 
         return(

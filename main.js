@@ -1,16 +1,8 @@
-const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog, Notification, screen } = require('electron');
+const {BrowserWindow, app, Menu, ipcMain, shell, globalShortcut, dialog, Notification, screen} = require('electron');
 const path = require('path');
-const { setMenu } = require('./src/utilities/nativeInterface.utility');
+const {setMenu} = require('./src/utilities/nativeInterface.utility');
 
-const isDev = !app.isPackaged;
-
-const devTools = {
-	label: 'Development',
-	submenu: [
-		{role: 'toggleDevTools'},
-		{role: 'reload'}
-	]
-};
+const isProduction = app.isPackaged;
 
 let webPreferences = {
 	nodeIntegration: true,
@@ -24,59 +16,54 @@ let webPreferences = {
 const template = [
 	{
 		label: 'App',
-		submenu: [
-			{ role: 'Quit'}
-		]
+		submenu: [{role: 'Quit'}]
 	},
 	{
 		label: 'View',
 		submenu: [
-		  { role: 'reload' },
-		  { type: 'separator' },
-		  { role: 'resetZoom' },
-		  { role: 'zoomIn' },
-		  { role: 'zoomOut' },
-		  { type: 'separator' },
-		  { role: 'togglefullscreen' },
-		  { role: 'toggleDevTools' },
+			{role: 'reload'},
+			{type: 'separator'},
+			{role: 'resetZoom'},
+			{role: 'zoomIn'},
+			{role: 'zoomOut'},
+			{type: 'separator'},
+			{role: 'togglefullscreen'},
+			{role: 'toggleDevTools'}
 		]
-	  },
-	  {
+	},
+	{
 		label: 'Window',
-		submenu: [
-		  { role: 'minimize' },
-		  { role: 'zoom' }
-		]
-	  },
-	  {
+		submenu: [{role: 'minimize'}, {role: 'zoom'}]
+	},
+	{
 		role: 'help',
 		submenu: [
-		  {
-			label: 'User Guide',
-			click: async () => {
-			  await shell.openExternal('https://agritechpos.com/userguide')
+			{
+				label: 'User Guide',
+				click: async () => {
+					await shell.openExternal('https://agritechpos.com/userguide');
+				}
+			},
+			{
+				label: 'Documentations',
+				click: async () => {
+					await shell.openExternal('https://agritechpos.com/documentaions');
+				}
+			},
+			{
+				label: 'About Software',
+				click: async () => {
+					await shell.openExternal('https://agritechpos.com/about-software');
+				}
+			},
+			{
+				label: 'Support',
+				click: async () => {
+					await shell.openExternal('https://agritechpos.com/support');
+				}
 			}
-		  },
-		  {
-			label: 'Documentations',
-			click: async () => {
-			  await shell.openExternal('https://agritechpos.com/documentaions')
-			}
-		  },
-		  {
-			label: 'About Software',
-			click: async () => {
-			  await shell.openExternal('https://agritechpos.com/about-software')
-			}
-		  },
-		  {
-			label: 'Support',
-			click: async () => {
-			  await shell.openExternal('https://agritechpos.com/support')
-			}
-		  }
 		]
-	  }
+	}
 ];
 
 const menu = Menu.buildFromTemplate(template);
@@ -84,14 +71,14 @@ Menu.setApplicationMenu(menu);
 
 let curentWindow = null;
 
-if (isDev) {
+if (!isProduction) {
 	require('electron-reload')(__dirname, {
 		electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
 	});
 }
 
 app.whenReady().then(() => {
-	const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+	const {width, height} = screen.getPrimaryDisplay().workAreaSize;
 
 	const browserWindowOptions = {
 		webPreferences
@@ -104,17 +91,17 @@ app.whenReady().then(() => {
 		icon: `${__dirname}/assets/icons/logo.ico`
 	});
 
-	if(!isDev){
-	    globalShortcut.register('Ctrl+Shift+I', () => {
-	        return null;
-	    })
+	if (!isProduction) {
+		globalShortcut.register('Ctrl+Shift+I', () => {
+			return null;
+		});
 	}
 
 	curentWindow.loadFile('./index.html');
 });
 app.on('window-all-closed', () => {
 	app.quit();
-})
+});
 
 ipcMain.on('restart-app', () => {
 	app.quit();
@@ -144,63 +131,64 @@ ipcMain.on('open-webview', (events, url) => {
 		...browserWindowOptions
 	});
 
-	if(!isDev){
-	    globalShortcut.register('Ctrl+Shift+I', () => {
-	        return null;
-	    })
+	if (!isProduction) {
+		globalShortcut.register('Ctrl+Shift+I', () => {
+			return null;
+		});
 	}
 
 	win.loadURL(url);
 });
 
 ipcMain.on('notification:show', (events, data) => {
-	new Notification({ title: data.title, body: data.body, tag: data.tag}).show();
+	new Notification({title: data.title, body: data.body, tag: data.tag}).show();
 });
 
 ipcMain.on('app:set-menu', (events, menus) => {
-	const buildTemplate = setMenu(menus, curentWindow);
+	let buildTemplate = setMenu(menus, curentWindow);
 
-	if(isDev) {
-		buildTemplate.push(devTools);
+	if(isProduction === false) {
+		buildTemplate.push({label: 'development', submenu: [
+			{role: 'toggleDevTools'},
+			{role: 'reload'}
+		]});
 	}
-	const menu = Menu.buildFromTemplate(buildTemplate);
 
+	const menu = Menu.buildFromTemplate(buildTemplate);
 	Menu.setApplicationMenu(menu);
 });
 
-ipcMain.on('app:default-menu', (events, menus) => {
-	const menu = Menu.buildFromTemplate(menus);
+ipcMain.on('app:default-menu', events => {
 	Menu.setApplicationMenu(menu);
 });
 
 ipcMain.on('app:change-language', (events, menus) => {
 	let buildTemplate = [];
 
-	menus.map((value) => {
+	menus.map(value => {
 		buildTemplate.push({
 			label: value.label,
 			click() {
-				curentWindow.webContents.send('navigate', value.url)
+				curentWindow.webContents.send('navigate', value.url);
 			}
 		});
 	});
-	
+
 	buildTemplate.push({
 		label: 'View',
 		submenu: [
-		  { role: 'reload' },
-		  { role: 'forceReload' },
-		  { type: 'separator' },
-		  { role: 'resetZoom' },
-		  { role: 'zoomIn' },
-		  { role: 'zoomOut' },
-		  { type: 'separator' },
-		  { role: 'togglefullscreen' },
-		  { role: 'toggleDevTools' },
+			{role: 'reload'},
+			{role: 'forceReload'},
+			{type: 'separator'},
+			{role: 'resetZoom'},
+			{role: 'zoomIn'},
+			{role: 'zoomOut'},
+			{type: 'separator'},
+			{role: 'togglefullscreen'},
+			{role: 'toggleDevTools'}
 		]
-	  },);
-	
+	});
+
 	const menu = Menu.buildFromTemplate(buildTemplate);
 	Menu.setApplicationMenu(menu);
-})
-
+});
