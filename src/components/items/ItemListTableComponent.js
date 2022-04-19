@@ -1,15 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import {Card, Button} from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
-import {itemColumns} from '../columns/item.columns';
+import {ItemColumns} from './Item.columns';
 import {ChangeNumberFormatBtn} from '../general/changeNumberFormatBtn';
-import {paginationComponentOptions} from '../table/paginationOptions';
+import {paginationComponentOptions, paginationPerPage, paginationRowsPerPageOptions} from '../../utilities/tablePagination.utility';
 import {TableHeaderComponent} from '../table/tableHeader';
 import {TableLoadingComponent} from '../table/tableLoading';
 import { BsEye, BsEyeSlash, BsListTask } from "react-icons/bs";
-import { t } from "i18next";
+import { t } from '../../utilities/translation.utility';
+import { ItemRowExpandComponent } from './ItemRowExpandComponent';
+import { jsPDF } from "jspdf";
+import 'jspdf-autotable';
 
-const searchColumns = ['code', 'eng_name', 'mm_name', 'category_title', 'location'];
+const itemConditionalRowStyles = [
+	{
+		when: row => row.qty === 0,
+		style: row => ({
+			backgroundColor: row.qty === 0 ? 'red' : '',
+			color: row.qty === 0 ? 'white' : 'black'
+		})
+	},
+	{
+		when: row => row.percentage === 0 || row.percentage < 0,
+		style: row => ({
+			backgroundColor: row.percentage === 0 || row.percentage < 0 ? 'red' : '',
+			color: row.percentage === 0 || row.percentage < 0 ? 'white' : 'black'
+		})
+	}
+];
 
 export const ItemListTableComponent = ({props, dataSource, reload, openCreateItem, open}) => {
 	const [tableLoading, setTableLoading] = useState(true);
@@ -20,18 +38,40 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 		setItemList(e);
 	};
 
-	useEffect(
-		() => {
-			if (dataSource) {
-				setItemList(dataSource);
-				setTableLoading(false);
-			}
-		},
-		[dataSource]
-	);
+	const exportPDF = () => {
+		const doc = new jsPDF({
+			orientation: 'landscape',
+			unit: 'in',
+		});
+
+		const result = itemList.map((value) => {
+			return [
+				value.code, value.eng_name, value.model, value.qty, value.location,
+				value.percentage, value.price, value.sell_price
+			]
+		});
+
+		doc.autoTable({
+			head: [[
+				'Material Code', 'Name', 'Model','Qty', 'Location',
+				'Percentage', 'Purchase Price', 'Sell Price',
+			]],
+			body: result
+		});
+
+		doc.save('inventory.pdf');
+	}
+
+	useEffect(() => {
+		if (dataSource) {
+			setItemList(dataSource);
+			console.log(dataSource);
+			setTableLoading(false);
+		}
+	},[dataSource]);
 
 	return (
-		<Card className="mt-3">
+		<Card className="mt-1">
 			<Card.Header>
 				<div className="d-md-flex flex-md-row justify-content-between">
 					<div className=''>
@@ -57,25 +97,13 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 
 			<Card.Body>
 				<DataTable
-					fixedHeaderScrollHeight="400px"
-					subHeader={true}
-					subHeaderComponent={
-						<TableHeaderComponent
-							type={'Items'}
-							dataSource={dataSource}
-							searchColumns={searchColumns}
-							placeholder={t('search')}
-							filterResult={e => getFilterResult(e)}
-							selectedRows={selectedRows}
-							reload={e => reload(e)}
-						/>
-					}
+					responsive={true}
+					fixedHeader={true}
+					fixedHeaderScrollHeight='400px'
 					pagination
-					fixedHead
-					columns={itemColumns(props)}
+					columns={ItemColumns()}
 					data={itemList}
 					paginationComponentOptions={paginationComponentOptions}
-					keyField
 					progressPending={tableLoading}
 					progressComponent={<TableLoadingComponent />}
 					dense
@@ -83,9 +111,16 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 					pointerOnHover
 					selectableRows={true}
 					selectableRowsHighlight={true}
+					expandableRows={true}
+					expandOnRowDoubleClicked={true}
 					onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
-					paginationPerPage={50}
-					paginationRowsPerPageOptions={[50, 100, 150, 200, 500]}
+					paginationPerPage={paginationPerPage}
+					paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+					conditionalRowStyles={itemConditionalRowStyles}
+					expandableRowsComponent={ItemRowExpandComponent}
+					expandableRowsComponentProps={{'refresh': (e) => {
+						reload(e)
+					}}}
 				/>
 			</Card.Body>
 		</Card>

@@ -103,6 +103,10 @@ class DashboardPage extends Component {
     async componentDidMount() {
         this.loadingData();
         this.creditData();
+        const {history} = this.props;
+		window.nativeApi.app.navigateTo((url) => {
+        	history.push(url);
+        });
     }
 
     render() {

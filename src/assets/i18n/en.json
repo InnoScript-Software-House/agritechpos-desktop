@@ -109,6 +109,7 @@
     "make-payment" : "Make Payment",
     "materail-code" : "Material code",
     "model" : "Model",
+    "total-sale-price": "Total Sale Price",
     "myanmar-name" : "Myanmar Name",
     "mmk" : "MMK",
     "name" : "Name",
@@ -134,6 +135,7 @@
     "invoice-header" : "Invoice Header",
     "invoice-footer" : "Invoice Footer",
     "profit" : "Profit",
+    "total-profit" : "Total Profit",
     "phone" : "Phone Number",
     "print" : "Print",
     "quit-btn-enter": "Quit",
@@ -156,6 +158,7 @@
     "shop" : "Shop" ,
     "shop-information" : "Shop Information",
     "total" : "Total",
+    "total-purchase": "Total Purchase",
     "total-quantity" : "Total Qty",
     "total-credit-customer" : "Total Credit Customer",
     "total-credit-customer-amount" : "Total Credit Customer Amount",
@@ -186,6 +189,7 @@
     "title-dialog-create-customer" : "Create New Customer",
     "title-request-item-qty" : "Request item qty",
     "title-update-item-percentage" : "Update item's sale percentage",
+    "title-update-item" : "Update item",
 
     "description-intro" : "AgriTech is a desktop POS software for agricultural equipment stores. The company specializes in the production of IoT products for the agricultural sector",
     "description-userinfo" : "Please fill customer information for license registeration process.",
@@ -203,6 +207,7 @@
     "label-device" : "Number of device",
     "success-license-store" : "License registration is successfully",
     "success-item-percentage-update" : "Item's percentage is update successfully",
+    "success-item-update" : "Item's information is update successfully",
 
     "account-name" : "Account Name",
     "password-does-not-match" : "Password does not match",
@@ -237,9 +242,11 @@
     "invalid-qty" : "Invalid item qty",
     "invalid-percentage": "Invalid sale percentage",
     "invalid-number" : "Support number only",
+    "invalid-empty" : "Empty data",
     "exit-item" : "Item is already exist",
 
     "open-invoice" : "Open Invoice",
     "over-discount" : "The discount amount exceeds the down payment",
-    "over-net-amount" : ""
+    "over-net-amount" : "",
+    "network-error" : "Connection Error"
 }

@@ -70,7 +70,7 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive, selectedItem })
 						name: e.eng_name,
 						model: e.model,
 						code: e.code,
-						price: Number(e.price),
+						price: parseInt(e.price),
 						totalQty: Number(e.qty),
 						percentage: Number(e.percentage),
 						sell_price: parseInt(Number(e.price) * Number(e.percentage) / 100 + Number(e.price)),

@@ -121,6 +121,18 @@ body {
 	max-width: 150px;
 }
 
+.fix-table {
+	max-height: 300px!important;
+}
+
+.green {
+	color: #4E8D28;
+}
+
+.bold {
+	font-weight: 900!important;
+}
+
 @media only screen and (max-width: 1024px) {
 	.logo {
 		width: 200px;

@@ -76,8 +76,6 @@ class LoginPage extends Component {
 			return value;
 		});
 
-		console.log(getMenuList);
-
 		nativeApi.app.setMenu(getMenuList);
 		nativeApi.app.navigateTo((url) => {
         	history.push(url);
