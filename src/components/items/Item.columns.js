@@ -72,7 +72,11 @@ export const ItemColumns = () => {
         },
         {
             name: <span className={`${zawgyi(lang)}`}> {`${t('profit')} (${t('mmk')})`} </span>,
-            selector: row => numeral(row.profit).format('0,0'),
+            selector: row =>  {
+                return(
+                    <span className={`${row.profit === 0 || row.profit < 0 ? 'red' : 'green'}`}> {numeral(row.profit).format('0,0')} </span>
+                )
+            },
             sortable: true,
             sortFunction: (rowA, rowB) => SortByNumber(rowA, rowB, 'profit')
         },
@@ -95,7 +99,11 @@ export const ItemColumns = () => {
         },
         {
             name: <span className={`${zawgyi(lang)}`}> {`${t('total-profit')} (${t('mmk')})`} </span>,
-            selector: row =>  numeral(row.total_profit).format('0,0'),
+            selector: row =>  {
+                return(
+                    <span className={`${row.total_profit === 0 || row.total_profit < 0 ? 'red' : 'green'}`}> {numeral(row.total_profit).format('0,0')} </span>
+                )
+            },
             sortable: true,
             sortFunction: (rowA, rowB) => SortByNumber(rowA, rowB, 'total_profit')
         },

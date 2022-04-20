@@ -9,25 +9,8 @@ import {TableLoadingComponent} from '../table/tableLoading';
 import { BsEye, BsEyeSlash, BsListTask } from "react-icons/bs";
 import { t } from '../../utilities/translation.utility';
 import { ItemRowExpandComponent } from './ItemRowExpandComponent';
-import { jsPDF } from "jspdf";
-import 'jspdf-autotable';
-
-const itemConditionalRowStyles = [
-	{
-		when: row => row.qty === 0,
-		style: row => ({
-			backgroundColor: row.qty === 0 ? 'red' : '',
-			color: row.qty === 0 ? 'white' : 'black'
-		})
-	},
-	{
-		when: row => row.percentage === 0 || row.percentage < 0,
-		style: row => ({
-			backgroundColor: row.percentage === 0 || row.percentage < 0 ? 'red' : '',
-			color: row.percentage === 0 || row.percentage < 0 ? 'white' : 'black'
-		})
-	}
-];
+import { ItemConditionalRowStyles } from '../../utilities/tableConditionalRowStylesutility';
+import { ItemTableHeaderComponent } from './ItemTableHeaderComponent';
 
 export const ItemListTableComponent = ({props, dataSource, reload, openCreateItem, open}) => {
 	const [tableLoading, setTableLoading] = useState(true);
@@ -38,34 +21,9 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 		setItemList(e);
 	};
 
-	const exportPDF = () => {
-		const doc = new jsPDF({
-			orientation: 'landscape',
-			unit: 'in',
-		});
-
-		const result = itemList.map((value) => {
-			return [
-				value.code, value.eng_name, value.model, value.qty, value.location,
-				value.percentage, value.price, value.sell_price
-			]
-		});
-
-		doc.autoTable({
-			head: [[
-				'Material Code', 'Name', 'Model','Qty', 'Location',
-				'Percentage', 'Purchase Price', 'Sell Price',
-			]],
-			body: result
-		});
-
-		doc.save('inventory.pdf');
-	}
-
 	useEffect(() => {
 		if (dataSource) {
 			setItemList(dataSource);
-			console.log(dataSource);
 			setTableLoading(false);
 		}
 	},[dataSource]);
@@ -102,6 +60,8 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 					fixedHeaderScrollHeight='400px'
 					pagination
 					columns={ItemColumns()}
+					subHeader={true}
+					subHeaderComponent={<ItemTableHeaderComponent dataSource={selectedRows} />}
 					data={itemList}
 					paginationComponentOptions={paginationComponentOptions}
 					progressPending={tableLoading}
@@ -116,7 +76,7 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 					onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
 					paginationPerPage={paginationPerPage}
 					paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-					conditionalRowStyles={itemConditionalRowStyles}
+					conditionalRowStyles={ItemConditionalRowStyles}
 					expandableRowsComponent={ItemRowExpandComponent}
 					expandableRowsComponentProps={{'refresh': (e) => {
 						reload(e)

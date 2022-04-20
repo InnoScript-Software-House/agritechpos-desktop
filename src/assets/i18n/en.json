@@ -221,6 +221,8 @@
     "btn-cancel" : "Cancel",
     "btn-save" : "Save",
     "btn-update": "update",
+    "btn-export-pdf" : "Export PDF",
+    "btn-export-excel" : "Export Excel",
 
     "input-customer-name" : "Enter customer name",
     "input-customer-phone" : "Enter customer phone number",

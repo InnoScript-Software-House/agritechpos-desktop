@@ -221,6 +221,8 @@
     "btn-cancel" : "ပယ်ဖျက်မည်",
     "btn-save" : "သိမ်းမည်",
     "btn-update": "ပြင်ဆင်မည်",
+    "btn-export-pdf" : "PDF ဖိုင်ထုတ်မည်",
+    "btn-export-excel" : "Excel ဖိုင်ထုတ်မည်",
 
     "input-customer-name" : "ဖောက်သည် နာမည်ထည့်ရန်",
     "input-customer-phone" : "ဖောက်သည် ဖုန်းနံပါတ်ထည့်ရန်",
