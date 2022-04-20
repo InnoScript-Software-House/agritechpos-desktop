@@ -250,5 +250,9 @@
     "open-invoice" : "Open Invoice",
     "over-discount" : "The discount amount exceeds the down payment",
     "over-net-amount" : "",
-    "network-error" : "Connection Error"
+    "network-error" : "Connection Error",
+    "change-number-format": "Change Number Format",
+
+    "inventory-list": "Item List",
+    "item-create": "Create New Item"
 }

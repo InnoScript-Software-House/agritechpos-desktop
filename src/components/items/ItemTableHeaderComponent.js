@@ -10,8 +10,8 @@ export const ItemTableHeaderComponent = ({ dataSource }) => {
     const { lang } = state;
 
     const [data, setData] = useState([]);
-
     const columns = ['Material Code', 'Name', 'Brand', 'Model', 'Location', 'Purchase Price', 'Percentage', 'Sell Price'];
+    
     useEffect(() => {
         if(dataSource) {
             const getValue = dataSource.map((value) => {
@@ -20,7 +20,6 @@ export const ItemTableHeaderComponent = ({ dataSource }) => {
                     value.location, value.price, value.percentage, value.sell_price
                 ];
             });
-
             setData(getValue);
         }
     }, [dataSource]);
@@ -32,14 +31,14 @@ export const ItemTableHeaderComponent = ({ dataSource }) => {
                         className={`${zawgyi(lang)}`}
                         onClick={() => pdf(columns, data, `inventory_${moment().format('D_M_Y')}`)}
                     > 
-                        { t('btn-export-pdf')}
+                        {t('btn-export-pdf')}
                     </Button>
 
                     <Button
                         className={`ms-1 ${zawgyi(lang)}`}
                         onClick={() => pdf(columns, data, `inventory_${moment().format('D_M_Y')}`)}
                     > 
-                        { t('btn-export-excel')}
+                        {t('btn-export-excel')}
                     </Button>
                 </div>
             )}

@@ -1,25 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Button} from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
-import {ItemColumns} from './Item.columns';
-import {ChangeNumberFormatBtn} from '../general/changeNumberFormatBtn';
-import {paginationComponentOptions, paginationPerPage, paginationRowsPerPageOptions} from '../../utilities/tablePagination.utility';
-import {TableHeaderComponent} from '../table/tableHeader';
-import {TableLoadingComponent} from '../table/tableLoading';
-import { BsEye, BsEyeSlash, BsListTask } from "react-icons/bs";
-import { t } from '../../utilities/translation.utility';
+import { ItemColumns } from './Item.columns';
+import { ChangeNumberFormatBtn } from '../general/changeNumberFormatBtn';
+import { paginationComponentOptions, paginationPerPage, paginationRowsPerPageOptions } from '../../utilities/tablePagination.utility';
+import { TableLoadingComponent } from '../table/tableLoading';
 import { ItemRowExpandComponent } from './ItemRowExpandComponent';
 import { ItemConditionalRowStyles } from '../../utilities/tableConditionalRowStylesutility';
 import { ItemTableHeaderComponent } from './ItemTableHeaderComponent';
+import { ItemSearchComponent } from './ItemSearchComponent';
+import { ItemPercentageChangeComponent } from './ItemPercentageChangeComponent';
 
-export const ItemListTableComponent = ({props, dataSource, reload, openCreateItem, open}) => {
+export const ItemListTableComponent = ({ dataSource, reload }) => {
 	const [tableLoading, setTableLoading] = useState(true);
 	const [itemList, setItemList] = useState([]);
 	const [selectedRows, setSelectedRows] = useState([]);
-
-	const getFilterResult = e => {
-		setItemList(e);
-	};
 
 	useEffect(() => {
 		if (dataSource) {
@@ -31,25 +26,16 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 	return (
 		<Card className="mt-1">
 			<Card.Header>
-				<div className="d-md-flex flex-md-row justify-content-between">
-					<div className=''>
-						<Button
-                            className='btn-small mt-3 me-3'
-                            onClick={(e) => open(!openCreateItem)}
-                        >
-                            {openCreateItem ? (<BsEyeSlash size={20} />) :  <BsEye size={20} />}
-                        	<span className='me-3'> {openCreateItem ? `${t('hide-create-item-from')}` : `${t('show-create-item-form')}` }</span>
-                        </Button>
-
-						<Button
-                            className='btn-small mt-3 ms-3'
-                            onClick={() => props.history.push('/category')}
-                        >
-                            <BsListTask size={20} />
-                            <span className='me-3'> {t('category')} </span>
-                        </Button>
+				<div className="d-md-flex flex-md-row justify-content-between align-items-center">
+					<div className='d-md-flex flex-md-row justify-content-start aligen-items-center'>
+						<ItemSearchComponent 
+							dataSource={dataSource} 
+							retrive={e => setItemList(e)}
+						/>
+						<ItemPercentageChangeComponent reload={e => reload(e)} />
 					</div>
-					<ChangeNumberFormatBtn props={props} />
+					
+					<ChangeNumberFormatBtn />
 				</div>
 			</Card.Header>
 
@@ -61,7 +47,11 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 					pagination
 					columns={ItemColumns()}
 					subHeader={true}
-					subHeaderComponent={<ItemTableHeaderComponent dataSource={selectedRows} />}
+					subHeaderComponent={
+						<ItemTableHeaderComponent 
+							dataSource={selectedRows}
+						/>
+					}
 					data={itemList}
 					paginationComponentOptions={paginationComponentOptions}
 					progressPending={tableLoading}

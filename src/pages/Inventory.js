@@ -6,7 +6,6 @@ import { ItemCreateComponent } from '../components/items/ItemCreateComponent';
 import { ItemListTableComponent } from '../components/items/ItemListTableComponent';
 import { getItems } from '../services/item.service';
 import { DeleteDialog } from '../components/general/deleteDialog';
-import { setOpenToastAction } from '../redux/actions/toast.action';
 import { t } from '../utilities/translation.utility';
 import { messageBoxType } from '../utilities/native.utility';
 
@@ -62,9 +61,7 @@ class InventoryPage extends Component {
     
     render() {
         const { delModal } = this.props.reducer;
-        const { categories, items, openCreateItem , totalItemPriceList, totalProfitList , totalQtyList, totalSellPriceList, outOfStock} = this.state;
-        const { history } = this.props;
-
+        const { categories, items, openCreateItem } = this.state;
         return(
             <>
                 <div className='container-fluid'>
@@ -91,6 +88,10 @@ class InventoryPage extends Component {
                             />
                         </div>
                     </div>
+
+                    <div className='row'>
+                        
+                    </div>
                 </div>
 
                 {delModal && delModal.open === true && (
@@ -107,7 +108,6 @@ const mapStateToProps = (state) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
-    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
 });
 
 export default connect(

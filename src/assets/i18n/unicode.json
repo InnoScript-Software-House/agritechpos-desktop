@@ -42,7 +42,7 @@
     
     "dashboard-page" : "Dashboard",
     "sale-page" : "ရောင်းစာရင်း",
-    "inventory-page" : "ပစ္စည်းစာရင်း",
+    "inventory-page" : "ပစ္စည်းများစီမံခန့်ခွဲရန်",
     "invoice-page" : "ပြေစာစာရင်:",
     "credit-page" : "အကြွေးစာရင်း",
     "customer-page" : "ဝယ်သူစာရင်း",
@@ -71,7 +71,7 @@
     "current-password" : "Current Password",
     "confirm-password" : "အတည်ပြုလျှို့ဝှက်နံပါတ်",
     "credit-amount" : "ပေးချေရန် ကျန်ငွေ",
-    "character" : "Character",
+    "character" : "အက္ခရာ",
     "create-shop-information" : "ဆိုင်အချက်အလက်ထည့်ရန်",
     "credit" : "အကြွေး",
     "category" : "အမျိုးအစား",
@@ -113,7 +113,7 @@
     "myanmar-name" : "နာမည်(မြန်မာ)",
     "mmk" : "ကျပ်",
     "name" : "အမည်",
-    "number" : "Number",
+    "number" : "နံပါတ်",
     "net-amount" : "စုစုပေါင်းကျသင့်ငွေ",
     "number-specification" : "Number Specification",
     "no" : "NO",
@@ -250,5 +250,9 @@
     "over-discount" : "လျှော့စျေးပမာဏသည် ပေးချေရမည့်ပမာဏထက် ကျော်လွန်နေပါသည်",
     "over-net-amount": "ပေးချေရမည့်ပမာဏထက် ကျော်လွန်နေပါသည်",
     
-    "network-error" : "ကွန်ရက်ချိတ်ဆက်မှု"
+    "network-error" : "ကွန်ရက်ချိတ်ဆက်မှု",
+    "change-number-format" : "နံပါတ်ပုံစံပြောင်းရန်",
+
+    "inventory-list": "ပစ္စည်းစာရင်း",
+    "item-create": "ပစ္စည်းအသစ်ထည့်သွင်းရန်"
 }

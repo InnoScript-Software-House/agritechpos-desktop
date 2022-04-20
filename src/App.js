@@ -31,6 +31,7 @@ import Repayment from './components/repayment/Repayment';
 import {NumberSpecificationComponent} from './components/settings/numberSpecification';
 import {InvoiceComponent} from './components/settings/InvoiceSetting';
 import BackUpComponent from './components/settings/backup';
+import CreateItemPage from './pages/item/CreateItemPage';
 
 class App extends Component {
 	render() {
@@ -58,6 +59,7 @@ class App extends Component {
 				<Route exact path={'/account'} component={AccountPage} />
 
 				<Route exact path={'/inventory'} component={InventoryPage} />
+				<Route exact path={'/item-create'} component={CreateItemPage} />
 				<Route exact path={'/item/:id'} component={EditItemPage} />
 
 				<Route exact path={'/category'} component={CategoryListPage} />

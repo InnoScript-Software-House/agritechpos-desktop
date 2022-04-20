@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { FormSelect, InputGroup } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setNumberFormatAction } from "../../redux/actions/numberFormat.action";
 import { setOpenToastAction } from "../../redux/actions/toast.action";
 import { getNumberSpecList } from "../../services/numberSpecification.service";
 import { setCharAction } from '../../redux/actions/charaster.action';
+import { t, zawgyi } from "../../utilities/translation.utility";
 
 export const ChangeNumberFormatBtn = ({ props }) => {
-    const { numberFormat } = props.reducer;
-
+    const state = useSelector(state => state);
+    const { lang, numberFormat } = state;
+    
     const [format, setFormat] = useState(numberFormat);
     const dispatch = useDispatch();
 
@@ -45,14 +47,15 @@ export const ChangeNumberFormatBtn = ({ props }) => {
 
     return(
         <div className="d-md-flex flex-md-column justify-content-start align-items-center">
-            <label className="me-3"> Change Number Format </label>
+            <label className={`mb-1 ${zawgyi(lang)}`}> {t('change-number-format')} </label>
             <InputGroup className='select-input-group'>
                 <FormSelect 
+                    className={`${zawgyi(lang)}`}
                     onChange={(e) => changeNumberFormat(e.target.value)}
                     defaultValue={format}
                 >
-                    <option value='number'> Number </option>
-                    <option value='character'> Character </option>
+                    <option value='number'> {t('number')} </option>
+                    <option value='character'> {t('character')} </option>
                 </FormSelect>
             </InputGroup>
         </div>
