@@ -1,70 +1,99 @@
-import React, {useEffect, useState} from 'react';
+import React, {Component} from 'react';
 import {Card} from 'react-bootstrap';
 import {CreateShopFormComponent} from './shopCreateForm';
 import {getShop} from '../../services/shop.service';
 import {EditShopFormComponent} from './shopEditForm';
 import {t} from 'i18next';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-export const ShopComponent = ({props}) => {
-	const [shop, setShop] = useState(null);
+class ShopComponent extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			shop: null
+		};
+	}
 
-	const getShopInfo = e => {
-		setShop(e);
-	};
+	getShopInfo(e) {
+		this.setState({
+			shop: e
+		});
+	}
 
-	useEffect(async () => {
+	async loadingData() {
 		const response = await getShop();
 		if (response) {
-			setShop(response);
+			this.setState({
+				shop: response
+			});
 		}
-	}, []);
+	}
 
-	return (
-		<div className="row mt-3">
-			<div className="col-md-4">
-				<Card>
-					<Card.Header>
-						<Card.Title> {t('shop-information')} </Card.Title>
-					</Card.Header>
+	async componentDidMount() {
+		const {history} = this.props;
+		await this.loadingData();
 
-					{shop && (
-						<Card.Body>
-							<Card.Text className="d-flex flex-row justify-content-between">
-								<label className="me"> {t('name')} </label>
-								<label> {shop.name} </label>
-							</Card.Text>
+		nativeApi.app.navigateTo(url => {
+			history.push(url);
+		});
+	}
+	render() {
+		const {props, shop} = this.state;
+		return (
+			<div className="row mt-3">
+				<div className="col-md-4">
+					<Card>
+						<Card.Header>
+							<Card.Title> {t('shop-information')} </Card.Title>
+						</Card.Header>
 
-							<Card.Text className="d-flex flex-row justify-content-between">
-								<label className="me"> {t('description')} </label>
-								<label>{shop.description}</label>
-							</Card.Text>
+						{shop && (
+							<Card.Body>
+								<Card.Text className="d-flex flex-row justify-content-between">
+									<label className="me"> {t('name')} </label>
+									<label> {shop.name} </label>
+								</Card.Text>
 
-							<Card.Text className="d-flex flex-row justify-content-between">
-								<label className="me"> {t('phone')} </label>
-								<label> {shop.phone} </label>
-							</Card.Text>
+								<Card.Text className="d-flex flex-row justify-content-between">
+									<label className="me"> {t('description')} </label>
+									<label>{shop.description}</label>
+								</Card.Text>
 
-							<Card.Text className="d-flex flex-row justify-content-between">
-								<label className="me"> {t('email')} </label>
-								<label> {shop.email} </label>
-							</Card.Text>
+								<Card.Text className="d-flex flex-row justify-content-between">
+									<label className="me"> {t('phone')} </label>
+									<label> {shop.phone} </label>
+								</Card.Text>
 
-							<Card.Text className="d-flex flex-row justify-content-between">
-								<label className="me"> {t('address')} </label>
-								<label>{shop.address}</label>
-							</Card.Text>
-						</Card.Body>
+								<Card.Text className="d-flex flex-row justify-content-between">
+									<label className="me"> {t('email')} </label>
+									<label> {shop.email} </label>
+								</Card.Text>
+
+								<Card.Text className="d-flex flex-row justify-content-between">
+									<label className="me"> {t('address')} </label>
+									<label>{shop.address}</label>
+								</Card.Text>
+							</Card.Body>
+						)}
+					</Card>
+				</div>
+
+				<div className="col-md-8">
+					{shop === null ? (
+						<CreateShopFormComponent props={props} retrive={e => this.getShopInfo(e)} />
+					) : (
+						<EditShopFormComponent props={props} dataSource={shop} retrive={e => this.getShopInfo(e)} />
 					)}
-				</Card>
+				</div>
 			</div>
+		);
+	}
+}
 
-			<div className="col-md-8">
-				{shop === null ? (
-					<CreateShopFormComponent props={props} retrive={e => getShopInfo(e)} />
-				) : (
-					<EditShopFormComponent props={props} dataSource={shop} retrive={e => getShopInfo(e)} />
-				)}
-			</div>
-		</div>
-	);
-};
+const mapStateToProps = state => ({
+	reducer: state
+});
+
+const mapDispatchToProps = dispatch => ({});
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ShopComponent));

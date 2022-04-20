@@ -165,8 +165,13 @@ class InvoicePage extends Component {
     }
 
     async componentDidMount(){
+        const {history} = this.props;
         await this.loadingData();
         this.todayInvoices();
+
+        nativeApi.app.navigateTo((url) => {
+        	history.push(url);
+        });
     }
 
     render() {

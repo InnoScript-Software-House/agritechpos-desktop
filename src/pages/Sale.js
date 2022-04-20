@@ -65,6 +65,13 @@ class SalePage extends Component {
 		});
 	}
 
+	getItemList(item) {
+		const delitems = localStorage.setItem('CURRENT_INVOICE', JSON.stringify(item));
+		this.setState({
+			requestItems: item
+		});
+	}
+
 	async loadingCustomer() {
 		const response = await getCustomerList();
 
@@ -146,7 +153,12 @@ class SalePage extends Component {
 	}
 
 	async componentDidMount() {
+		const {history} = this.props;
 		await this.loadingData();
+
+		nativeApi.app.navigateTo(url => {
+			history.push(url);
+		});
 	}
 
 	render() {
@@ -250,6 +262,7 @@ class SalePage extends Component {
 								<SaleVoucherComponent
 									dataSource={this.state.requestItems}
 									total={this.state.total}
+									retrive={item => this.getItemList(item)}
 									// getcustomer={this.state.customer}
 									// save={(e) => this.getSaveInvoice(e)}
 									// reloadRequestItem={() => this.loadingRequestItems()}

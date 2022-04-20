@@ -87,8 +87,13 @@ class InventoryPage extends Component {
     }
 
     async componentDidMount() { 
+        const {history} = this.props;
         await this.loadingData('category');
         await this.loadingData('item');
+
+        nativeApi.app.navigateTo((url) => {
+        	history.push(url);
+        });
     }
     
 

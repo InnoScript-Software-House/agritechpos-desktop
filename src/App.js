@@ -29,7 +29,7 @@ import Invoice from './pages/Invoice';
 import CreditPage from './pages/Credit';
 import Repayment from './components/repayment/Repayment';
 import {NumberSpecificationComponent} from './components/settings/numberSpecification';
-import {InvoiceComponent} from './components/settings/InvoiceSetting';
+import InvoiceSetting from './components/settings/InvoiceSetting';
 import BackUpComponent from './components/settings/backup';
 
 class App extends Component {
@@ -48,7 +48,7 @@ class App extends Component {
 				<Route exact path={'/logout'} component={LogoutPage} />
 
 				<Route exact path={'/numberspecification'} component={NumberSpecificationComponent} />
-				<Route exact path={'/invoicesetting'} component={InvoiceComponent} />
+				<Route exact path={'/invoicesetting'} component={InvoiceSetting} />
 				<Route exact path={'/backup'} component={BackUpComponent} />
 
 				<Route exact path={'/profile'} component={ProfilePage} />

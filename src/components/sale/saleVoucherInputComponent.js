@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {FormControl, InputGroup} from 'react-bootstrap';
-import { useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {messageBoxType} from '../../utilities/native.utility';
-import { t, zawgyi } from '../../utilities/translation.utility';
-import { ItemAutoCompleteDropDown } from './utilities/ItemAutoCompleteDropDown';
+import {t, zawgyi} from '../../utilities/translation.utility';
+import {ItemAutoCompleteDropDown} from './utilities/ItemAutoCompleteDropDown';
 
-export const SaleVoucherInputComponent = ({ dataSource, retrive, selectedItem }) => {
+export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) => {
 	const state = useSelector(state => state);
-	
-	const { lang } = state;
-	const { nativeApi } = window; 
+
+	const {lang} = state;
+	const {nativeApi} = window;
 
 	const [qty, setQty] = useState('');
 	const [items, setItems] = useState([]);
@@ -18,26 +18,40 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive, selectedItem })
 
 	const messageBoxTitle = t('title-request-item-qty');
 
-	const addItem = (e) => {
+	const addItem = e => {
 		if (!Number(qty)) {
 			setQty('');
-			return nativeApi.messageBox.open({ title: messageBoxTitle, message: t('invalid-qty'), type: messageBoxType.info });
+			return nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: t('invalid-qty'),
+				type: messageBoxType.info
+			});
 		}
 
-		if(Number(item.totalQty) < Number(e) || Number(e) <= 0) {
-			return nativeApi.messageBox.open({ title: messageBoxTitle, message: t('invalid-qty'), type: messageBoxType.info });
+		if (Number(item.totalQty) < Number(e) || Number(e) <= 0) {
+			return nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: t('invalid-qty'),
+				type: messageBoxType.info
+			});
 		}
 
 		item.requestQty = Number(e);
 		item.totalAmount = Number(e) * Number(item.sell_price);
 		item.totalOriginAmount = Number(e) * Number(item.price);
 
-		const getCurrentInvoice = localStorage.getItem('CURRENT_INVOICE') ? JSON.parse(localStorage.getItem('CURRENT_INVOICE')) : [];
+		const getCurrentInvoice = localStorage.getItem('CURRENT_INVOICE')
+			? JSON.parse(localStorage.getItem('CURRENT_INVOICE'))
+			: [];
 
 		const checkItem = getCurrentInvoice.filter(value => value.code === item.code);
 
-		if(checkItem.length > 0) {
-			return nativeApi.messageBox.open({ title: messageBoxTitle, message: t('exit-item'), type: messageBoxType.info });
+		if (checkItem.length > 0) {
+			return nativeApi.messageBox.open({
+				title: messageBoxTitle,
+				message: t('exit-item'),
+				type: messageBoxType.info
+			});
 		}
 
 		getCurrentInvoice.push(item);
@@ -62,7 +76,7 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive, selectedItem })
 
 	return (
 		<div className="d-md-flex flex-md-row align-items-start justify-content-end">
-			<ItemAutoCompleteDropDown 
+			<ItemAutoCompleteDropDown
 				dataSource={items}
 				chooseItem={e => {
 					setItem({
@@ -77,7 +91,7 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive, selectedItem })
 						location: e.location,
 						category: e.category
 					});
-					
+
 					setDisable(false);
 				}}
 				setDisable={e => setDisable(e)}
@@ -90,8 +104,12 @@ export const SaleVoucherInputComponent = ({ dataSource, retrive, selectedItem })
 					placeholder={t('quantity')}
 					value={qty}
 					onChange={e => {
-						if(!Number(e.target.value)) {
-							nativeApi.messageBox.open({ title: messageBoxTitle, message: t('require-number-only'), type: messageBoxType.info});
+						if (!Number(e.target.value)) {
+							nativeApi.messageBox.open({
+								title: messageBoxTitle,
+								message: t('require-number-only'),
+								type: messageBoxType.info
+							});
 							return setQty('');
 						}
 
