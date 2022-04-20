@@ -11,7 +11,7 @@ import { messageBoxType } from "../../utilities/native.utility";
 
 const tableHeader = [t('materail-code'), t('name'), t('model'), t('quantity'), t('price'), t('total')];
 
-export const SaleVoucherComponent = ({ dataSource, total, retrive }) => {
+export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) => {
 
     const history = useHistory();
     const state = useSelector(state => state);
@@ -26,6 +26,8 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive }) => {
     const [grandAmount, setGrandAmount] = useState('');
     const [tax, setTax] = useState('');
     const [changes, setChanges] = useState('');
+    const [btnDisable, setBtnDisable] = useState(true);
+    const [reload, setReload] = useState(false);
 
     const messageBoxTitle = t('open-invoice');
 
@@ -68,20 +70,50 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive }) => {
         setCreditAmount(Number(getGrandAmount));
     }
 
-    const makePayment = () => {
-        const amounts = {
-            total_amount: totalAmount,
-            tax: tax,
-            actual_amount: netAmount,
-            grand_amount: grandAmount,
-            discount: discount,
-            pay_amount: payAmount,
-            changes: changes,
-            credit_amount: creditAmount
+    const makePayment = (type) => {
+        if(type === 'cash'){
+            const amounts = {
+                total_amount: totalAmount,
+                tax: tax,
+                actual_amount: netAmount,
+                grand_amount: grandAmount,
+                discount: discount,
+                pay_amount: payAmount,
+                changes: changes,
+                credit_amount: creditAmount
+            }
+            localStorage.setItem('AMOUNTS', JSON.stringify(amounts));
+            localStorage.setItem('INVOICE', JSON.stringify(dataSource));
+            history.push('/invoiceReport');
+            return;
         }
-        localStorage.setItem('AMOUNTS', JSON.stringify(amounts));
-        localStorage.setItem('INVOICE', JSON.stringify(dataSource));
-        history.push('/invoiceReport')
+        if(type === 'save'){
+            const amounts = {
+                total_amount: totalAmount,
+                tax: tax,
+                actual_amount: netAmount,
+                grand_amount: grandAmount,
+                discount: discount,
+                pay_amount: payAmount,
+                changes: changes,
+                credit_amount: creditAmount
+            }
+            const customer = localStorage.getItem('CUSTOMER') ? JSON.parse(localStorage.getItem('CUSTOMER')) : null;
+            const storeData = {
+                customer: customer,
+                items: dataSource,
+                amounts: amounts
+            }
+            const storeInvoices = localStorage.getItem('STORE_INVOICES') ? JSON.parse(localStorage.getItem('STORE_INVOICES')): [];
+            storeInvoices.push(storeData);
+            localStorage.setItem('STORE_INVOICES', JSON.stringify(storeInvoices));
+            localStorage.removeItem('CUSTOMER');
+            localStorage.removeItem('CURRENT_INVOICE');
+        }
+        setItems([]);
+        setBtnDisable(true);
+        setReload(true);
+        refresh();
     }
 
     const calculateCredit = (e) => {
@@ -106,7 +138,6 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive }) => {
 
     const removeItem = (item) => {
         const delitems = items.filter(e => e.id !== item.id);
-        console.log(delitems);
         setItems(delitems);
         retrive(delitems);
     }
@@ -115,6 +146,7 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive }) => {
         setItems(dataSource);
 
         if(dataSource.length > 0) {
+            setBtnDisable(false);
             const totalAmounts = dataSource.map(value => value.totalAmount);
             const totaPaidAmount = totalAmounts.reduce((a,b) => a + b);
             setTotalAmount(totaPaidAmount);
@@ -126,12 +158,18 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive }) => {
             setGrandAmount(getTax + totaPaidAmount);
             setCreditAmount(getTax + totaPaidAmount)
         }
+        if(dataSource.length === 0 ){
+            setBtnDisable(true);
+        }
 
     }, [dataSource, total]);
 
     return (
         <>
             <div className="table-responsive">
+                <div className="d-md-flex flex-md-row justify-content-end align-items-center">
+                    <Button className="btn w-full mt-3" onClick={() => makePayment('save')} disabled={btnDisable}> <span> {t('save-invoice')}  </span> </Button>
+                </div>  
                 <table className="table request-item-table">
                     <thead>
                         <tr>

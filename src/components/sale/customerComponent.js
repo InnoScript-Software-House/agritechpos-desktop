@@ -9,6 +9,7 @@ export const CustomerComponent = ({ dataSource }) => {
     const { lang } = state;
 
     const [customer, setCustomer] = useState(null);
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
         if(dataSource) {

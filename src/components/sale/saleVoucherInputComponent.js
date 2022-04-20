@@ -61,6 +61,13 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 		selectedItem(null);
 	};
 
+	const disableHandler = item => {
+		if (item.qty === 0) {
+			return setDisable(true);
+		}
+		return setDisable(false);
+	};
+
 	useEffect(
 		() => {
 			if (dataSource) {
@@ -92,7 +99,7 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 						category: e.category
 					});
 
-					setDisable(false);
+					disableHandler(e);
 				}}
 				setDisable={e => setDisable(e)}
 			/>
@@ -105,11 +112,7 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 					value={qty}
 					onChange={e => {
 						if (!Number(e.target.value)) {
-							nativeApi.messageBox.open({
-								title: messageBoxTitle,
-								message: t('require-number-only'),
-								type: messageBoxType.info
-							});
+							e.preventDefault;
 							return setQty('');
 						}
 

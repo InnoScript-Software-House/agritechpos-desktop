@@ -31,18 +31,18 @@ export const InvoiceReportPage = () => {
 
 
     const saveInvoice = async () => {
-        if (invoice) {
+        if (invoice && amounts) {
             const requestBody = {
                 invoice_no: invoiceId,
                 customer_name: customer ? customer.name : null,
                 customer_phone: customer ? customer.phone : null,
                 customer_address: customer ? customer.address : null,
                 customer_email: customer ? customer.email : null,
-                total_amount: invoice.totalAmount,
-                pay_amount: invoice.payAmount,
-                discount: invoice.discount,
-                invoice_data: invoice.bought_items,
-                credit_amount: invoice.creditAmount,
+                total_amount: amounts.total_amount,
+                pay_amount: amounts.pay_amount,
+                discount: amounts.discount === '' ? 0 : amounts.discount,
+                invoice_data: invoice,
+                credit_amount: amounts.credit_amount,
             }
 
             const response = await createInvoice(requestBody);
@@ -61,6 +61,7 @@ export const InvoiceReportPage = () => {
         const { print } = window.nativeApi;
         setIsPrint(true);
         setDisplay('display');
+        console.log(invoice)
 
         const getPrintOptions = localStorage.getItem("PRINT_SETTING") ? JSON.parse(localStorage.getItem("PRINT_SETTING")) : printOptions;
         
