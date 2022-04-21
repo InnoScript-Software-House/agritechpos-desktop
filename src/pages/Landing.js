@@ -84,7 +84,7 @@ class LandingPage extends Component {
 
     componentDidMount() {
         const isConfig = this.checkConfig();
-
+    
         if(isConfig) {
             this.checkLicenseData();
         }

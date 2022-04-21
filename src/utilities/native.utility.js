@@ -64,7 +64,16 @@ export const messageBoxType = {
 export const menus = [
 	{label: 'dashboard-page', url: '/dashboard'},
 	{label: 'sale-page', url: '/sale'},
-	{label: 'inventory-page', url: '/inventory'},
+	{label: 'inventory-page', submenu: [
+		{
+			label: t('inventory-list'),
+			url: '/inventory'
+		},
+		{
+			label: t('item-create'),
+			url: 'item-create'
+		}
+	]},
 	{label: 'invoice-page', url: '/invoice'},
 	{label: 'credit-page', url: '/credit'},
 	{label: 'customer-page', url: '/customer'},

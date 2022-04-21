@@ -104,8 +104,7 @@ class DashboardPage extends Component {
         const {history} = this.props;
         this.loadingData();
         this.creditData();
-
-        nativeApi.app.navigateTo((url) => {
+		window.nativeApi.app.navigateTo((url) => {
         	history.push(url);
         });
     }

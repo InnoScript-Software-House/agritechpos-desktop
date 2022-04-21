@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { t } from '../../utilities/translation.utility';
-import { itemColumns } from '../columns/item.columns';
+
 import { ChangeNumberFormatBtn } from '../general/changeNumberFormatBtn';
+import { itemColumns } from '../items/Item.columns';
 import { paginationComponentOptions } from '../table/paginationOptions';
 import { TableHeaderComponent } from '../table/tableHeader';
 import { TableLoadingComponent } from '../table/tableLoading';

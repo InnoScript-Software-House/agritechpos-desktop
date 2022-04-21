@@ -1,81 +1,59 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Button} from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
-import {itemColumns} from '../columns/item.columns';
-import {ChangeNumberFormatBtn} from '../general/changeNumberFormatBtn';
-import {paginationComponentOptions} from '../table/paginationOptions';
-import {TableHeaderComponent} from '../table/tableHeader';
-import {TableLoadingComponent} from '../table/tableLoading';
-import { BsEye, BsEyeSlash, BsListTask } from "react-icons/bs";
-import { t } from "i18next";
+import { ItemColumns } from './Item.columns';
+import { ChangeNumberFormatBtn } from '../general/changeNumberFormatBtn';
+import { paginationComponentOptions, paginationPerPage, paginationRowsPerPageOptions } from '../../utilities/tablePagination.utility';
+import { TableLoadingComponent } from '../table/tableLoading';
+import { ItemRowExpandComponent } from './ItemRowExpandComponent';
+import { ItemConditionalRowStyles } from '../../utilities/tableConditionalRowStylesutility';
+import { ItemTableHeaderComponent } from './ItemTableHeaderComponent';
+import { ItemSearchComponent } from './ItemSearchComponent';
+import { ItemPercentageChangeComponent } from './ItemPercentageChangeComponent';
 
-const searchColumns = ['code', 'eng_name', 'mm_name', 'category_title', 'location'];
-
-export const ItemListTableComponent = ({props, dataSource, reload, openCreateItem, open}) => {
+export const ItemListTableComponent = ({ dataSource, reload }) => {
 	const [tableLoading, setTableLoading] = useState(true);
 	const [itemList, setItemList] = useState([]);
 	const [selectedRows, setSelectedRows] = useState([]);
 
-	const getFilterResult = e => {
-		setItemList(e);
-	};
-
-	useEffect(
-		() => {
-			if (dataSource) {
-				setItemList(dataSource);
-				setTableLoading(false);
-			}
-		},
-		[dataSource]
-	);
+	useEffect(() => {
+		if (dataSource) {
+			setItemList(dataSource);
+			setTableLoading(false);
+		}
+	},[dataSource]);
 
 	return (
-		<Card className="mt-3">
+		<Card className="mt-1">
 			<Card.Header>
-				<div className="d-md-flex flex-md-row justify-content-between">
-					<div className=''>
-						<Button
-                            className='btn-small mt-3 me-3'
-                            onClick={(e) => open(!openCreateItem)}
-                        >
-                            {openCreateItem ? (<BsEyeSlash size={20} />) :  <BsEye size={20} />}
-                        	<span className='me-3'> {openCreateItem ? `${t('hide-create-item-from')}` : `${t('show-create-item-form')}` }</span>
-                        </Button>
-
-						<Button
-                            className='btn-small mt-3 ms-3'
-                            onClick={() => props.history.push('/category')}
-                        >
-                            <BsListTask size={20} />
-                            <span className='me-3'> {t('category')} </span>
-                        </Button>
+				<div className="d-md-flex flex-md-row justify-content-between align-items-center">
+					<div className='d-md-flex flex-md-row justify-content-start aligen-items-center'>
+						<ItemSearchComponent 
+							dataSource={dataSource} 
+							retrive={e => setItemList(e)}
+						/>
+						<ItemPercentageChangeComponent reload={e => reload(e)} />
 					</div>
-					<ChangeNumberFormatBtn props={props} />
+					
+					<ChangeNumberFormatBtn />
 				</div>
 			</Card.Header>
 
 			<Card.Body>
 				<DataTable
-					fixedHeaderScrollHeight="400px"
+					responsive={true}
+					fixedHeader={true}
+					fixedHeaderScrollHeight='400px'
+					pagination
+					columns={ItemColumns()}
 					subHeader={true}
 					subHeaderComponent={
-						<TableHeaderComponent
-							type={'Items'}
-							dataSource={dataSource}
-							searchColumns={searchColumns}
-							placeholder={t('search')}
-							filterResult={e => getFilterResult(e)}
-							selectedRows={selectedRows}
-							reload={e => reload(e)}
+						<ItemTableHeaderComponent 
+							dataSource={selectedRows}
 						/>
 					}
-					pagination
-					fixedHead
-					columns={itemColumns(props)}
 					data={itemList}
 					paginationComponentOptions={paginationComponentOptions}
-					keyField
 					progressPending={tableLoading}
 					progressComponent={<TableLoadingComponent />}
 					dense
@@ -83,9 +61,16 @@ export const ItemListTableComponent = ({props, dataSource, reload, openCreateIte
 					pointerOnHover
 					selectableRows={true}
 					selectableRowsHighlight={true}
+					expandableRows={true}
+					expandOnRowDoubleClicked={true}
 					onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
-					paginationPerPage={50}
-					paginationRowsPerPageOptions={[50, 100, 150, 200, 500]}
+					paginationPerPage={paginationPerPage}
+					paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+					conditionalRowStyles={ItemConditionalRowStyles}
+					expandableRowsComponent={ItemRowExpandComponent}
+					expandableRowsComponentProps={{'refresh': (e) => {
+						reload(e)
+					}}}
 				/>
 			</Card.Body>
 		</Card>

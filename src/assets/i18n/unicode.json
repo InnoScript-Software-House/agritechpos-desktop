@@ -42,7 +42,7 @@
     
     "dashboard-page" : "Dashboard",
     "sale-page" : "ရောင်းစာရင်း",
-    "inventory-page" : "ပစ္စည်းစာရင်း",
+    "inventory-page" : "ပစ္စည်းများစီမံခန့်ခွဲရန်",
     "invoice-page" : "ပြေစာစာရင်:",
     "credit-page" : "အကြွေးစာရင်း",
     "customer-page" : "ဝယ်သူစာရင်း",
@@ -71,7 +71,7 @@
     "current-password" : "Current Password",
     "confirm-password" : "အတည်ပြုလျှို့ဝှက်နံပါတ်",
     "credit-amount" : "ပေးချေရန် ကျန်ငွေ",
-    "character" : "Character",
+    "character" : "အက္ခရာ",
     "create-shop-information" : "ဆိုင်အချက်အလက်ထည့်ရန်",
     "credit" : "အကြွေး",
     "category" : "အမျိုးအစား",
@@ -107,10 +107,13 @@
     "make-payment" : "ပြေစာထုတ်ရန်",
     "materail-code" : "ကုဒ်နံပါတ်",
     "model" : "မော်ဒယ်",
+    "profit" : "အမြတ်",
+    "total-profit" : "အမြတ် စုစုပေါင်း",
+    "total-sale-price": "ရောင်းစျေး စုစုပေါင်း",
     "myanmar-name" : "နာမည်(မြန်မာ)",
     "mmk" : "ကျပ်",
     "name" : "အမည်",
-    "number" : "Number",
+    "number" : "နံပါတ်",
     "net-amount" : "စုစုပေါင်းကျသင့်ငွေ",
     "number-specification" : "Number Specification",
     "no" : "NO",
@@ -125,13 +128,12 @@
     "pay-date" : "Pay Date",
     "password" : "လျှို့ဝှက်နံပါတ်",
     "paid-count" : "ပေးချေသည့်အကြိမ်ရေ",
-    "percentage" : "ရာခိုင်နှုန်း",
+    "percentage" : "ရောင်းစျေး ရာခိုင်နှုန်း",
     "price" : "ဈေးနှုန်း",
     "print-background" : "Print Background",
     "print-silent" : "Print Silent",
     "invoice-header" : "Invoice Header",
     "invoice-footer" : "Invoice Footer",
-    "profit" : "Profit",
     "phone" : "ဖုန်းနံပါတ်",
     "print" : "Print",
     "quit-btn-enter": "ထွက်ရန်",
@@ -156,6 +158,7 @@
     "shop-information" : "ဆိုင်အချက်အလက်",
     "total" : "စုစုပေါင်း",
     "total-quantity" : "Total Qty",
+    "total-purchase": "ဝယ်စျေး စုစုပေါင်း",
     "total-credit-customer" : "Total Credit Customer",
     "total-credit-customer-amount" : "Total Credit Customer Amount",
     "total-customer" : "Total Customer",
@@ -183,7 +186,8 @@
     "title-first-user" : "အသုံးပြုသူအကောင့်ပြုလုပ်ရန်",
     "title-dialog-create-customer" : "ဖောက်သည်အသစ်စာရင်းသွင်းမည်",
     "title-request-item-qty" : "ပစ္စည်းအရေအတွက်တောင်းဆိုခြင်း",
-    "title-update-item-percentage" : "ပစ္စည်းအရောင်ရာခိုင်နှုန်းပြောင်းလဲခြင်း",
+    "title-update-item-percentage" : "အရောင်ရာခိုင်နှုန်းပြောင်းလဲခြင်း",
+    "title-update-item" : "ပစ္စည်းအချက်အလက်များ ပြင်ဆင်ခြင်း",
 
     "description-intro" : "AgriTech သည် စိုက်ပျိုးရေးသုံးစက်ပစ္စည်းအရောင်းဆိုင်များအသုံးပြုနိုင်သည့် Desktop POS Software ဖြစ်သည်။ စိုက်ပျိုးရေးကဏ္ဍအတွက် IoT ထုတ်ကုန်တွေကို အဓိကထား ထုတ်လုပ်သော ကုမ္ပဏီဖြစ်သည်။",
     "description-userinfo" : "လိုင်စင်မှတ်ပုံတင်ခြင်းလုပ်ငန်းစဉ်အတွက် သုံးစွဲသူအချက်အလက်ကို ဖြည့်စွက်ပါ။",
@@ -202,6 +206,7 @@
 
     "success-license-store" : "လိုင်စင်မှတ်ပုံတင်ခြင်း အောင်မြင်ပါသည်",
     "success-item-percentage-update" : "ပစ္စည်းအရောင်းရာခိုင်နှုန်း အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီး။",
+    "success-item-update" : "ပစ္စည်းအချက်အလက်ပြင်ဆင်ခြင်း အောင်မြင်ပါသည်",
 
     "account-name" : "အကောင့်အမည်",
     "password-does-not-match" : "အတည်ပြုလျှို့ဝှက်နံပါတ် မှန်ကန်မှုမရှိပါ",
@@ -216,6 +221,8 @@
     "btn-cancel" : "ပယ်ဖျက်မည်",
     "btn-save" : "သိမ်းမည်",
     "btn-update": "ပြင်ဆင်မည်",
+    "btn-export-pdf" : "PDF ဖိုင်ထုတ်မည်",
+    "btn-export-excel" : "Excel ဖိုင်ထုတ်မည်",
 
     "input-customer-name" : "ဖောက်သည် နာမည်ထည့်ရန်",
     "input-customer-phone" : "ဖောက်သည် ဖုန်းနံပါတ်ထည့်ရန်",
@@ -235,10 +242,17 @@
     "invalid-qty" : "ပစ္စည်းအရေအတွက်မှန်ကန်မှုမရှိပါ",
     "invalid-percentage": "ပစ္စည်းအရောင်းရာခိုင်နှုန်း မှန်ကန်မှုမရှိပါ",
     "invalid-number" : "နံပါတ်များသာထည့်သွင်းအသုံးပြုနိုင်ပါသည်",
+    "invalid-empty" : "အချက်အလက်မရှိသောကြောင့် ပြင်ဆင်မှုမပြုလုပ်နိုင်ပါ",
 
     "exit-item" : "ပစ္စည်းအမျိုးအစားသည် ရောင်းချရန် စာရင်းသွင်းပြီးသားဖြစ်နေသည်",
 
     "open-invoice" : "အရောင်းပြေစာဖွင့်လစ်ခြင်း",
     "over-discount" : "လျှော့စျေးပမာဏသည် ပေးချေရမည့်ပမာဏထက် ကျော်လွန်နေပါသည်",
-    "over-net-amount": "ပေးချေရမည့်ပမာဏထက် ကျော်လွန်နေပါသည်"
+    "over-net-amount": "ပေးချေရမည့်ပမာဏထက် ကျော်လွန်နေပါသည်",
+    
+    "network-error" : "ကွန်ရက်ချိတ်ဆက်မှု",
+    "change-number-format" : "နံပါတ်ပုံစံပြောင်းရန်",
+
+    "inventory-list": "ပစ္စည်းစာရင်း",
+    "item-create": "ပစ္စည်းအသစ်ထည့်သွင်းရန်"
 }
