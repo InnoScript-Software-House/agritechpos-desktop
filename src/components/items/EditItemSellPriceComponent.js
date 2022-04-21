@@ -65,11 +65,7 @@ export const EditItemSellPriceComponent = ({ props, item, reload }) => {
 
         setLoadingData(false);
         setLoading(false);
-        window.nativeApi.messageBox.open({
-            title: messageBoxTitle,
-            message: 'Item percentage is updated',
-            type: messageBoxType.info
-        });
+        window.nativeApi.notification.show({title: messageBoxTitle, body: 'Item percentage is updated'});
         reload();
         return;
     }

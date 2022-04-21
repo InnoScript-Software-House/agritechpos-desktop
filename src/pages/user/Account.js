@@ -148,11 +148,8 @@ class AccountPage extends Component {
     }
 
     this.fetchData();
-    nativeApi.messageBox.open({
-      title: this.state.messageBoxTitle,
-      message: 'Account Successfully Created',
-      type: messageBoxType.info
-    })
+
+    nativeApi.notification.show({title: this.state.messageBoxTitle, body: 'Account Successfully Created'});
     return;
   }
 
@@ -177,11 +174,8 @@ class AccountPage extends Component {
       });
       return;
     }
-    nativeApi.messageBox.open({
-      title: this.state.messageBoxTitle,
-      message: 'Account Successfully Updated',
-      type: messageBoxType.error
-    })
+
+    nativeApi.notification.show({title: this.state.messageBoxTitle, body: 'Account Successfully Updated'});
     return this.fetchData();
   }
 

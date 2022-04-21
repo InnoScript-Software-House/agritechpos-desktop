@@ -15,7 +15,7 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 	const [loading, setLoading] = useState(false);
 	const [messageBoxTitle, setMessageBoxTitle] = useState('Update Shop');
 
-	const checkphone = /^(\+?(95)|[09])\d{10}/g;
+	const checkphone = /^(\+?(95)|[09])\d{9}/g;
 	const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	const dispatch = useDispatch();
@@ -80,11 +80,7 @@ export const EditShopFormComponent = ({dataSource, retrive}) => {
 		}
 
 		if (response) {
-			nativeApi.messageBox.open({
-				title: messageBoxTitle,
-				message: 'Shop info is updated',
-				type: messageBoxType.info
-			});
+			nativeApi.notification.show({title: messageBoxTitle, body: 'Shop is updated'});
 			setLoading(false);
 			retrive(response);
 			return;

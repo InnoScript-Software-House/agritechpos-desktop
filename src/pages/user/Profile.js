@@ -139,11 +139,7 @@ class ProfilePage extends Component {
     }
 
     this.loadingData();
-    nativeApi.messageBox.open({
-      title: this.state.messageBoxTitle,
-      message: 'Profile Update Successful',
-      type: messageBoxType.info
-    });
+    nativeApi.notification.show({title: this.state.messageBoxTitle, body: 'Profile Update Successful'});
     return;
   }
 
@@ -198,6 +194,7 @@ class ProfilePage extends Component {
       message: 'Password Change Successfully',
       type: messageBoxType.info
     });
+    nativeApi.notification.show({title: 'Change Password', body: 'Password Change Successfully'});
     history.push('/logout');
     return;
   }
@@ -206,7 +203,6 @@ class ProfilePage extends Component {
     const { user, is_loading, update_name, update_email, update_phone, current_password, new_password, confirm_password } = this.state;
     return (
       <>
-        {/* <Navigation props={this.props} /> */}
 
         <div className='container-fluid'>
           <div className='row mt-3'>

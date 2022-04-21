@@ -77,11 +77,7 @@ export const EditItemComponent = ({props, item, reload}) => {
 				return;
 			}
 
-			window.nativeApi.messageBox.open({
-				title: messageBoxTitle,
-				message: `${t('item-is-updated')}`,
-				type: messageBoxType.info
-			});
+			nativeApi.notification.show({title: messageBoxTitle, body: t('item-is-updated')});
 			setLoading(false);
 			reload();
 		}

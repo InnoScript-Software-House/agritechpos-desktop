@@ -17,7 +17,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 
 	const dispatch = useDispatch();
 
-	const checkphone = /^(\+?(95)|[09])\d{10}/g;
+	const checkphone = /^(\+?(95)|[09])\d{9}/g;
 	const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	const create = async () => {
@@ -62,11 +62,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 		}
 
 		if (response) {
-			nativeApi.messageBox.open({
-				title: messageBoxTitle,
-				message: 'Shop is created',
-				type: messageBoxType.info
-			});
+			nativeApi.notification.show({title: messageBoxTitle, body: 'Shop is created'});
 			setLoading(false);
 			retrive(response);
 			return;
