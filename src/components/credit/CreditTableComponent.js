@@ -69,7 +69,7 @@ export const CreditTableComponent = ({data, retrive, refresh}) => {
 		return lastRepaymentDate;
 	};
 
-	const exportCredit = () => {	
+	const exportCredit = () => {
 		const excelData = tableData.map(e => ({
 			invoice_no: e.invoice_no,
 			invoiceDate: moment(e.created_at).format('DD,MM,YYYY'),
@@ -132,15 +132,15 @@ export const CreditTableComponent = ({data, retrive, refresh}) => {
 							}}
 						/>
 					</div>
-					<div className="d-md-flex flex-md-column ms-3">
-						<Button className="btn btn-margin-top" onClick={() => exportCredit()}>
+					<div className="d-md-flex flex-md-column ms-3 mt-2">
+						<Button className="btn mt-4" onClick={() => exportCredit()}>
 							{' '}
 							Export{' '}
 						</Button>
 					</div>
 
-					<div className="d-md-flex flex-md-column ms-3">
-						<Button className="btn btn-margin-top" onClick={() => clear()}>
+					<div className="d-md-flex flex-md-column ms-3 mt-2">
+						<Button className="btn mt-4" onClick={() => clear()}>
 							{' '}
 							Clear{' '}
 						</Button>
