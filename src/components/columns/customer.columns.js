@@ -33,25 +33,25 @@ export const customerColumns = props => {
 			name: <span className="database-header"> {t('address')} </span>,
 			selector: row => row.address,
 			sortable: true
-		},
-		{
-			name: <span className="database-header"> {t('credit')} </span>,
-			selector: row => row.credit_amount,
-			sortable: true
-		},
-		{
-			name: <span className="database-header"> {t('paid-count')} </span>,
-			selector: row => {
-				console.log(row);
-			},
-			sortable: true
-		},
-		{
-			name: <span className="database-header"> {t('total-amount')} </span>,
-			selector: row => numeral(row.total_amount).format('0,0') + ' MMK',
-			sortable: true,
-			width: '175px'
 		}
+		// {
+		// 	name: <span className="database-header"> {t('credit')} </span>,
+		// 	selector: row => row.credit_amount,
+		// 	sortable: true
+		// },
+		// {
+		// 	name: <span className="database-header"> {t('paid-count')} </span>,
+		// 	selector: row => {
+		// 		console.log(row);
+		// 	},
+		// 	sortable: true
+		// },
+		// {
+		// 	name: <span className="database-header"> {t('total-amount')} </span>,
+		// 	selector: row => numeral(row.total_amount).format('0,0') + ' MMK',
+		// 	sortable: true,
+		// 	width: '175px'
+		// }
 		// {
 		//   name: <span className='database-header'>Option</span>,
 		//   selector: (row) => {

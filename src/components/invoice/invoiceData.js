@@ -29,6 +29,7 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                 dispatch(setOpenToastAction('Shop', shopinfo.success, 'danger'));
                 return;
             }
+            console.log(invoiceDetail);
             setShop(shopinfo);
             setInvoice(invoiceDetail && invoiceDetail[0]);
             importData();   
