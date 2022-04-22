@@ -86,7 +86,8 @@
     "edit-number-specification" : "Edit Number Specification",
     "end-date" : "End Date",
     "edit-account" : "အကောင့်ပြောင်းလဲရန်",
-    "english-name-is-required" : "English Name Is Required",
+    "english-name-is-required" : "ပစ္စည်းနာမည်ထည့်သွင်းရန်လိုအပ်ပါသည်",
+    "code-is-required" : "ပစ္စည်းကုတ်နံပါတ်ထည့်သွင်းရန်လိုအပ်ပါသည်",
     "first-name" : "နာမည်၏ ပထမစာလုံးထည့်ရန်",
     "last-name" : "နာမည်၏ နောက်ဆုံးစာလုံးထည့်ရန်",
     "go-back" : "နောက်သို့",
@@ -188,6 +189,7 @@
     "title-request-item-qty" : "ပစ္စည်းအရေအတွက်တောင်းဆိုခြင်း",
     "title-update-item-percentage" : "အရောင်ရာခိုင်နှုန်းပြောင်းလဲခြင်း",
     "title-update-item" : "ပစ္စည်းအချက်အလက်များ ပြင်ဆင်ခြင်း",
+    "title-item-create" : "ပစ္စည်းအသစ်ထည့်သွင်းရန်",
 
     "description-intro" : "AgriTech သည် စိုက်ပျိုးရေးသုံးစက်ပစ္စည်းအရောင်းဆိုင်များအသုံးပြုနိုင်သည့် Desktop POS Software ဖြစ်သည်။ စိုက်ပျိုးရေးကဏ္ဍအတွက် IoT ထုတ်ကုန်တွေကို အဓိကထား ထုတ်လုပ်သော ကုမ္ပဏီဖြစ်သည်။",
     "description-userinfo" : "လိုင်စင်မှတ်ပုံတင်ခြင်းလုပ်ငန်းစဉ်အတွက် သုံးစွဲသူအချက်အလက်ကို ဖြည့်စွက်ပါ။",
@@ -207,6 +209,7 @@
     "success-license-store" : "လိုင်စင်မှတ်ပုံတင်ခြင်း အောင်မြင်ပါသည်",
     "success-item-percentage-update" : "ပစ္စည်းအရောင်းရာခိုင်နှုန်း အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီး။",
     "success-item-update" : "ပစ္စည်းအချက်အလက်ပြင်ဆင်ခြင်း အောင်မြင်ပါသည်",
+    "success-item-create" : "ပစ္စည်းအသစ်ထည့်သွင်းခြင်းအောင်မြင်ပါသည်",
 
     "account-name" : "အကောင့်အမည်",
     "password-does-not-match" : "အတည်ပြုလျှို့ဝှက်နံပါတ် မှန်ကန်မှုမရှိပါ",
@@ -228,6 +231,13 @@
     "input-customer-phone" : "ဖောက်သည် ဖုန်းနံပါတ်ထည့်ရန်",
     "input-customer-email" : "ဖောက်သည် အီးမေးလ်လိပ်စာထည့်ရန်",
     "input-customer-address" : "ဖောက်သည် နေရပ်လိပ်စာထည့်ရန်",
+    "input-item-code" : "ကုတ်နံပါတ်ထည့်ရန်",
+    "input-item-eng-name" : "နာမည်ထည့်ရန် (အင်္ဂလိပ်)",
+    "input-item-myanmar" : "နာမည်ထည့်ရန် (မြန်မာ)",
+    "input-item-model" : "မော်ဒယ်နံပါတ်ထည့်ရန်",
+    "input-item-percentage" : "ရာခိုင်နှုန်းထည့်ရန်",
+    "input-item-price" : "ဝယ်စျေးထည့်ရန်",
+    "input-item-location" : "နေရာထည့်ရန်",
 
     "required-name-and-phone" : "ဖောက်သည် နာမည်နှင့် ဖုန်းနံပါတ်ထည့်ရန် လိုအပ်ပါသည်",
 

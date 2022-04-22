@@ -1,17 +1,20 @@
-import '../../assets/css/theme.css';
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import { Button, Card, FormControl, FormLabel, InputGroup } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { saveItem } from "../../services/item.service";
-import { setOpenToastAction } from '../../redux/actions/toast.action';
-import { t } from 'i18next';
 import { messageBoxType } from '../../utilities/native.utility';
-export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
+import { t, zawgyi } from "../../utilities/translation.utility";
+
+export const ItemCreateComponent = ({ categoriesList }) => {
+    const state = useSelector(state => state);
+    const { lang } = state;
+
+    const history = useHistory();
 
     const [btnLoading, setBtnLoading] = useState(false);
     const [categories, setCategories] = useState(categoriesList);
     const [category, setCategory] = useState('');
-
     const [eng_name, setEngName] = useState('');
     const [mm_name, setMName] = useState('');
     const [model, setModel] = useState('');
@@ -20,14 +23,17 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
     const [location, setLocation] = useState('');
     const [code, setCode] = useState('');
     const [percentage, setPercentage] = useState(0);
-    const [messageBoxTitle, setMessageBoxTitle] = useState('Create Item');
 
-    const dispatch = useDispatch();
+    const messageBoxTitle = t('title-item-create');
 
     const itemSave = async () => {
-
+        if(code === '') {
+            window.nativeApi.messageBox.open({title: messageBoxTitle, message: `${t('code-is-required')}`, type: messageBoxType.info});
+            return;
+        }
+        
         if(eng_name === '') {
-            window.nativeApi.messageBox.open({title: messageBoxTitle, message: `${t('english-name-is-required')}`, type: messageBoxType.error});
+            window.nativeApi.messageBox.open({title: messageBoxTitle, message: `${t('english-name-is-required')}`, type: messageBoxType.info});
             return;
         }
 
@@ -47,12 +53,13 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
 
         const response = await saveItem(requestBody);
         if(response && response.success === false) {
-            window.nativeApi.messageBox.open({title: messageBoxTitle, message: response.message, type: messageBoxType.error});
+            window.nativeApi.messageBox.open({title: messageBoxTitle, message: response.message, type: messageBoxType.info});
             setBtnLoading(false);
             return;
         }
         setBtnLoading(false);
-        reload();
+        window.nativeApi.notification.show({title: messageBoxTitle, body: t('success-item-create')});
+        history.push('/inventory');
     }
 
     useEffect(() => {
@@ -71,7 +78,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
 
             <Card.Body>
                 <>
-                    <FormLabel> {t('category')} </FormLabel>
+                    <FormLabel className={`${zawgyi(lang)}`}> {t('category')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
                             as="select"
@@ -89,6 +96,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                     <FormLabel> {t('materail-code')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             placeholder={t('materail-code')}
                             value={code}
@@ -96,9 +104,10 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
                     
-                    <FormLabel> {t('name')} </FormLabel>
+                    <FormLabel className={`${zawgyi(lang)}`}> {t('name')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             placeholder={t('name')}
                             value={eng_name}
@@ -106,9 +115,10 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
                     
-                    <FormLabel> {t('myanmar-name')} </FormLabel>
+                    <FormLabel className={`${zawgyi(lang)}`}> {t('myanmar-name')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             placeholder={t('myanmar-name')}
                             value={mm_name}
@@ -116,9 +126,10 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
                     
-                    <FormLabel> {t('model')} </FormLabel>
+                    <FormLabel className={`${zawgyi(lang)}`}> {t('model')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             placeholder={t('model')}
                             value={model}
@@ -126,9 +137,10 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> {t('quantity')} </FormLabel>
+                    <FormLabel className={`${zawgyi(lang)}`}> {t('quantity')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             placeholder={t('quantity')}
                             value={qty}
@@ -136,9 +148,10 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> {t('price')} </FormLabel>
+                    <FormLabel className={`${zawgyi(lang)}`}> {t('price')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             placeholder={t('price')}
                             value={price}
@@ -146,9 +159,10 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
 
-                    <FormLabel> {t('percentage')} </FormLabel>
+                    <FormLabel className={`${zawgyi(lang)}`}> {t('percentage')} </FormLabel>
                     <InputGroup className="mb-3">
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             placeholder={t('percentage')}
                             value={percentage}
@@ -156,9 +170,10 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
                         />
                     </InputGroup>
                     
-                    <FormLabel> {t('location')} </FormLabel>
+                    <FormLabel className={`${zawgyi(lang)}`}> {t('location')} </FormLabel>
                     <InputGroup>
                         <FormControl
+                            className={`${zawgyi(lang)}`}
                             type="text"
                             placeholder={t('location')}
                             value={location}
@@ -170,7 +185,7 @@ export const ItemCreateComponent = ({ props, categoriesList, reload }) => {
 
             <Card.Footer className="d-flex flex-column">
                 <Button 
-                    className="btn-small mb-3"
+                    className={`btn-small mb-3 ${zawgyi(lang)}`}
                     onClick={() => itemSave()}
                     disabled={btnLoading}
                 >
