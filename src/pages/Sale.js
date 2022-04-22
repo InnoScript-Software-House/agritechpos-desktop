@@ -210,26 +210,6 @@ class SalePage extends Component {
 				</div>
 
 				<div className="row">
-					{/* {openRecentInvoice && (
-						<div className="col-md-3 mt-3">
-							<RecentInvoice
-								dataSource={saveInvoice}
-								retrive={e => {
-									this.setState(
-										{
-											requestItems: []
-										},
-										() => {
-											for (let x = 0; x < e.bought_items.length; x++) {
-												this.addItem(e.bought_items[x]);
-											}
-										}
-									);
-								}}
-							/>
-						</div>
-					)} */}
-
 					<div className="col-md-12">
 						<Card className="mt-1">
 							<Card.Header>
