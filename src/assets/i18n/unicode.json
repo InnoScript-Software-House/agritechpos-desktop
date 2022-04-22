@@ -121,7 +121,7 @@
     "new-password" : "New Password",
     "number-specification-history-log" : "Number Specification History Log",
     "no-preview" : "No Preview",
-    "open-recent-invoice" : "ဘောင်ချာပြန်ကြည့်ရန်",
+    "open-recent-invoice" : "သိမ်းထားသော ဘောင်ချာပြန်ကြည့်ရန်",
     "close-recent-invoice" : "နောက်သို့",
     "open-recent-invoice-list" : "ဘောင်ချာများ",
     "option" : "ပြင်ဆင်ရန်",
@@ -187,9 +187,8 @@
     "title-first-user" : "အသုံးပြုသူအကောင့်ပြုလုပ်ရန်",
     "title-dialog-create-customer" : "ဖောက်သည်အသစ်စာရင်းသွင်းမည်",
     "title-request-item-qty" : "ပစ္စည်းအရေအတွက်တောင်းဆိုခြင်း",
-    "title-update-item-percentage" : "အရောင်ရာခိုင်နှုန်းပြောင်းလဲခြင်း",
-    "title-update-item" : "ပစ္စည်းအချက်အလက်များ ပြင်ဆင်ခြင်း",
-    "title-item-create" : "ပစ္စည်းအသစ်ထည့်သွင်းရန်",
+    "title-update-item-percentage" : "ပစ္စည်းအရောင်ရာခိုင်နှုန်းပြောင်းလဲခြင်း",
+    "title-save-invoice" : "သိမ်းထားသောပြေစာများ",
 
     "description-intro" : "AgriTech သည် စိုက်ပျိုးရေးသုံးစက်ပစ္စည်းအရောင်းဆိုင်များအသုံးပြုနိုင်သည့် Desktop POS Software ဖြစ်သည်။ စိုက်ပျိုးရေးကဏ္ဍအတွက် IoT ထုတ်ကုန်တွေကို အဓိကထား ထုတ်လုပ်သော ကုမ္ပဏီဖြစ်သည်။",
     "description-userinfo" : "လိုင်စင်မှတ်ပုံတင်ခြင်းလုပ်ငန်းစဉ်အတွက် သုံးစွဲသူအချက်အလက်ကို ဖြည့်စွက်ပါ။",
@@ -259,10 +258,5 @@
     "open-invoice" : "အရောင်းပြေစာဖွင့်လစ်ခြင်း",
     "over-discount" : "လျှော့စျေးပမာဏသည် ပေးချေရမည့်ပမာဏထက် ကျော်လွန်နေပါသည်",
     "over-net-amount": "ပေးချေရမည့်ပမာဏထက် ကျော်လွန်နေပါသည်",
-    
-    "network-error" : "ကွန်ရက်ချိတ်ဆက်မှု",
-    "change-number-format" : "နံပါတ်ပုံစံပြောင်းရန်",
-
-    "inventory-list": "ပစ္စည်းစာရင်း",
-    "item-create": "ပစ္စည်းအသစ်ထည့်သွင်းရန်"
+    "save-invoice-id": "ပြေစာအမှတ်"
 }

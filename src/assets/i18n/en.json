@@ -190,8 +190,7 @@
     "title-dialog-create-customer" : "Create New Customer",
     "title-request-item-qty" : "Request item qty",
     "title-update-item-percentage" : "Update item's sale percentage",
-    "title-update-item" : "Update item",
-    "title-item-create" : "Create Item",
+    "title-save-invoice" : "Save Invoice",
 
     "description-intro" : "AgriTech is a desktop POS software for agricultural equipment stores. The company specializes in the production of IoT products for the agricultural sector",
     "description-userinfo" : "Please fill customer information for license registeration process.",
@@ -259,10 +258,7 @@
 
     "open-invoice" : "Open Invoice",
     "over-discount" : "The discount amount exceeds the down payment",
-    "over-net-amount" : "",
-    "network-error" : "Connection Error",
-    "change-number-format": "Change Number Format",
+    "over-net-amount" : "Over pay amount",
 
-    "inventory-list": "Item List",
-    "item-create": "Create New Item"
+    "save-invoice-id" : "Saved Invoice"
 }
