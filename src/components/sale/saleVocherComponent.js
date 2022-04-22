@@ -11,8 +11,9 @@ import { messageBoxType } from "../../utilities/native.utility";
 
 const tableHeader = [t('materail-code'), t('name'), t('model'), t('quantity'), t('price'), t('total')];
 
-export const SaleVoucherComponent = ({ dataSource, total }) => {
-    
+export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) => {
+
+    const history = useHistory();
     const state = useSelector(state => state);
     const { lang } = state;
 
@@ -24,6 +25,9 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
     const [netAmount, setNetAmount] = useState('');
     const [grandAmount, setGrandAmount] = useState('');
     const [tax, setTax] = useState('');
+    const [changes, setChanges] = useState('');
+    const [btnDisable, setBtnDisable] = useState(true);
+    const [reload, setReload] = useState(false);
 
     const messageBoxTitle = t('open-invoice');
 
@@ -33,15 +37,83 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
             return;
         }
 
+        if(payAmount !== ''){
+            const getGrandAmount = (Number(netAmount)-Number(payAmount)) - Number(e);
+
+            if(e > grandAmount) {
+                nativeApi.messageBox.open({title:messageBoxTitle, message: t('over-discount'), type: messageBoxType.info});
+                return;
+            }
+
+            if(Number(getGrandAmount) < 0) {
+                setCreditAmount(0);
+                setChanges(Math.abs(getGrandAmount));
+                setDiscount(e);
+                return;
+            }
+            setDiscount(e);
+            setChanges(Number(getGrandAmount) > 0 ? 0 : Math.abs(getGrandAmount));
+            setGrandAmount(Number(netAmount) - Number(e));
+            setCreditAmount(Number(getGrandAmount));
+            return;
+        }
+
         const getGrandAmount = Number(netAmount) - Number(e);
 
-        if(getGrandAmount < 0) {
+        if(e > grandAmount) {
             nativeApi.messageBox.open({title:messageBoxTitle, message: t('over-discount'), type: messageBoxType.info});
             return;
         }
 
         setDiscount(e);
         setGrandAmount(Number(getGrandAmount));
+        setCreditAmount(Number(getGrandAmount));
+    }
+
+    const makePayment = (type) => {
+        if(type === 'cash'){
+            const amounts = {
+                total_amount: totalAmount,
+                tax: tax,
+                actual_amount: netAmount,
+                grand_amount: grandAmount,
+                discount: discount,
+                pay_amount: payAmount,
+                changes: changes,
+                credit_amount: creditAmount
+            }
+            localStorage.setItem('AMOUNTS', JSON.stringify(amounts));
+            localStorage.setItem('INVOICE', JSON.stringify(dataSource));
+            history.push('/invoiceReport');
+            return;
+        }
+        if(type === 'save'){
+            const amounts = {
+                total_amount: totalAmount,
+                tax: tax,
+                actual_amount: netAmount,
+                grand_amount: grandAmount,
+                discount: discount,
+                pay_amount: payAmount,
+                changes: changes,
+                credit_amount: creditAmount
+            }
+            const customer = localStorage.getItem('CUSTOMER') ? JSON.parse(localStorage.getItem('CUSTOMER')) : null;
+            const storeData = {
+                customer: customer,
+                items: dataSource,
+                amounts: amounts
+            }
+            const storeInvoices = localStorage.getItem('STORE_INVOICES') ? JSON.parse(localStorage.getItem('STORE_INVOICES')): [];
+            storeInvoices.push(storeData);
+            localStorage.setItem('STORE_INVOICES', JSON.stringify(storeInvoices));
+            localStorage.removeItem('CUSTOMER');
+            localStorage.removeItem('CURRENT_INVOICE');
+        }
+        setItems([]);
+        setBtnDisable(true);
+        setReload(true);
+        refresh();
     }
 
     const calculateCredit = (e) => {
@@ -50,21 +122,31 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
             nativeApi.messageBox.open({title:messageBoxTitle, message: t('invalid-number'), type: messageBoxType.info});
             return;
         }  
-        const getCreditAmount = Number(grandAmount) - Number(e);
+        const getCreditAmount = (Number(netAmount) - Number(discount)) - Number(e);
 
         if(getCreditAmount < 0) {
-            nativeApi.messageBox.open({title:messageBoxTitle, message: t('over-net-amount'), type: messageBoxType.info});
+            const getChanges = (Number(netAmount) - Number(discount)) - Number(e);
+            setChanges(Math.abs(getChanges));
+            setCreditAmount(0);
+            setPayAmount(e);
             return;
         }
-
+        setChanges(getCreditAmount < 0 ? Math.abs(getCreditAmount) : 0);
         setPayAmount(e);
         setCreditAmount(getCreditAmount);
+    }
+
+    const removeItem = (item) => {
+        const delitems = items.filter(e => e.id !== item.id);
+        setItems(delitems);
+        retrive(delitems);
     }
 
     useEffect(() => {
         setItems(dataSource);
 
         if(dataSource.length > 0) {
+            setBtnDisable(false);
             const totalAmounts = dataSource.map(value => value.totalAmount);
             const totaPaidAmount = totalAmounts.reduce((a,b) => a + b);
             setTotalAmount(totaPaidAmount);
@@ -74,6 +156,10 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
             setTax(getTax);
             setNetAmount(getTax + totaPaidAmount);
             setGrandAmount(getTax + totaPaidAmount);
+            setCreditAmount(getTax + totaPaidAmount)
+        }
+        if(dataSource.length === 0 ){
+            setBtnDisable(true);
         }
 
     }, [dataSource, total]);
@@ -81,6 +167,9 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
     return (
         <>
             <div className="table-responsive">
+                <div className="d-md-flex flex-md-row justify-content-end align-items-center">
+                    <Button className="btn w-full mt-3" onClick={() => makePayment('save')} disabled={btnDisable}> <span> {t('save-invoice')}  </span> </Button>
+                </div>  
                 <table className="table request-item-table">
                     <thead>
                         <tr>
@@ -119,8 +208,8 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
                                     <td colSpan={5}></td>
                                     <td colSpan={3}>
                                         <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h4 className={`${zawgyi(lang)}`}> {t('total-amount')} </h4>
-                                            <h4> {numeral(totalAmount).format('0,0')} MMK </h4>
+                                            <h5 className={`${zawgyi(lang)}`}> {t('total-amount')} </h5>
+                                            <h5> {numeral(totalAmount).format('0,0')} MMK </h5>
                                         </div> 
                                         
                                     </td>
@@ -130,8 +219,8 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
                                     <td colSpan={5}></td>
                                     <td colSpan={3}>
                                         <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h4 className={`${zawgyi(lang)}`}> TAX (15%) </h4>
-                                            <h4> { numeral(tax).format('0,0')} MMK </h4>
+                                            <h5 className={`${zawgyi(lang)}`}> TAX (15%) </h5>
+                                            <h5> { numeral(tax).format('0,0')} MMK </h5>
                                         </div>
                                     </td>
                                 </tr>
@@ -140,8 +229,8 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
                                     <td colSpan={5}></td>
                                     <td colSpan={3}>
                                         <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h4 className={`${zawgyi(lang)}`}> {t('actural-amount')} </h4>
-                                            <h4> { numeral(netAmount).format('0,0')} MMK </h4>
+                                            <h5 className={`${zawgyi(lang)}`}> {t('actural-amount')} </h5>
+                                            <h5> { numeral(netAmount).format('0,0')} MMK </h5>
                                         </div>
                                     </td>
                                 </tr>
@@ -150,8 +239,8 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
                                     <td colSpan={5}></td>
                                     <td colSpan={3}>
                                         <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h4 className={`${zawgyi(lang)}`}> {t('grand-amount')} </h4>
-                                            <h4> { numeral(grandAmount).format('0,0')} MMK </h4>
+                                            <h5 className={`${zawgyi(lang)}`}> {t('grand-amount')} </h5>
+                                            <h5> { numeral(grandAmount).format('0,0')} MMK </h5>
                                         </div>
                                     </td>
                                 </tr>
@@ -160,7 +249,7 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
                                     <td colSpan={5}></td>
                                     <td colSpan={3}>
                                         <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h4 className={`${zawgyi(lang)}`}> {t('discount')} </h4>
+                                            <h5 className={`${zawgyi(lang)}`}> {t('discount')} </h5>
                                             <InputGroup className="request-item-table-input">
                                                 <FormControl
                                                     className={`${zawgyi(lang)}`}
@@ -178,7 +267,7 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
                                     <td colSpan={5}></td>
                                     <td colSpan={3}>
                                         <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h4 className={`${zawgyi(lang)}`}> {t('pay-amount')} </h4>
+                                            <h5 className={`${zawgyi(lang)}`}> {t('pay-amount')} </h5>
                                             <InputGroup className="request-item-table-input">
                                                 <FormControl
                                                     className={`${zawgyi(lang)}`}
@@ -190,14 +279,29 @@ export const SaleVoucherComponent = ({ dataSource, total }) => {
                                         </div>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colSpan={5}></td>
+                                    <td colSpan={3}>
+                                        <div className="d-flex flex-row justify-content-between align-items-center">
+                                            <h5 className={`${zawgyi(lang)}`}> {t('changes')} </h5>
+                                            <h5> { numeral(changes).format('0,0')} MMK </h5>
+                                        </div>
+                                    </td>
+                                </tr>
 
                                 <tr>
                                     <td colSpan={5}></td>
                                     <td colSpan={3}>
                                         <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h4 className={`${zawgyi(lang)}`}> {t('credit-amount')} </h4>
-                                            <h4> { numeral(creditAmount).format('0,0')} MMK </h4>
+                                            <h5 className={`${zawgyi(lang)}`}> {t('credit-amount')} </h5>
+                                            <h5> { numeral(creditAmount).format('0,0')} MMK </h5>
                                         </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={5}></td>
+                                    <td colSpan={3}>
+                                        <Button className="large-btn" onClick={() => makePayment('cash')}> <span> {t('make-payment')} </span> </Button>
                                     </td>
                                 </tr>
                             </>

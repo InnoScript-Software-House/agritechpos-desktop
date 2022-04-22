@@ -71,7 +71,12 @@ class ProfilePage extends Component {
   }
 
   async componentDidMount() {
+    const {history} = this.props;
     this.loadingData();
+
+    nativeApi.app.navigateTo((url) => {
+      history.push(url);
+    });
   }
 
   async update() {

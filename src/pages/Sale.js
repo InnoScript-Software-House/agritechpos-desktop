@@ -24,6 +24,7 @@ import {
 import {CreateCustomerDialog} from '../components/customer/utilities/CreateCustomerDialog';
 import {CustomerAutoCompleteDropDown} from '../components/customer/utilities/CustomerAutoCompleteDropDown';
 import {ItemAutoCompleteDropDown} from '../components/sale/utilities/ItemAutoCompleteDropDown';
+import {RecentInvoiceDialog} from '../components/invoice/recentInvoicesDidalog';
 
 class SalePage extends Component {
 	constructor(props) {
@@ -43,7 +44,8 @@ class SalePage extends Component {
 			disableInvoice: false,
 			saveInvoice: null,
 			openRecentInvoice: false,
-			messageBoxTitle: t('sale-invoice')
+			messageBoxTitle: t('sale-invoice'),
+			reloadCustomer: false
 		};
 	}
 
@@ -62,6 +64,13 @@ class SalePage extends Component {
 		return this.setState({
 			items: response,
 			disableInvoice: response.length === 0 ? false : true
+		});
+	}
+
+	getItemList(item) {
+		const delitems = localStorage.setItem('CURRENT_INVOICE', JSON.stringify(item));
+		this.setState({
+			requestItems: item
 		});
 	}
 
@@ -87,8 +96,10 @@ class SalePage extends Component {
 		const requestItems = localStorage.getItem('CURRENT_INVOICE')
 			? JSON.parse(localStorage.getItem('CURRENT_INVOICE'))
 			: [];
+		const currentCustomer = localStorage.getItem('CUSTOMER') ? JSON.parse(localStorage.getItem('CUSTOMER')) : null;
 		this.setState({
-			requestItems: requestItems
+			requestItems: requestItems,
+			customer: currentCustomer
 		});
 
 		if (requestItems.length > 0) {
@@ -139,18 +150,34 @@ class SalePage extends Component {
 		return;
 	}
 
+	setCustRefrersh() {
+		this.setState({
+			customer: null,
+			requestItems: []
+		});
+	}
+
 	getSaveInvoice(e) {
 		this.setState({
 			saveInvoice: e
 		});
 	}
 
+	async reloadComponent() {
+		await this.loadingRequestItems();
+	}
+
 	async componentDidMount() {
+		const {history} = this.props;
 		await this.loadingData();
+
+		nativeApi.app.navigateTo(url => {
+			history.push(url);
+		});
 	}
 
 	render() {
-		const {customer, saveInvoice, selectedItem, openRecentInvoice} = this.state;
+		const {customer, saveInvoice, selectedItem, openRecentInvoice, reloadCustomer} = this.state;
 		const {lang} = this.props.reducer;
 
 		return (
@@ -183,7 +210,7 @@ class SalePage extends Component {
 				</div>
 
 				<div className="row">
-					{openRecentInvoice && (
+					{/* {openRecentInvoice && (
 						<div className="col-md-3 mt-3">
 							<RecentInvoice
 								dataSource={saveInvoice}
@@ -201,7 +228,7 @@ class SalePage extends Component {
 								}}
 							/>
 						</div>
-					)}
+					)} */}
 
 					<div className="col-md-12">
 						<Card className="mt-1">
@@ -250,6 +277,8 @@ class SalePage extends Component {
 								<SaleVoucherComponent
 									dataSource={this.state.requestItems}
 									total={this.state.total}
+									retrive={item => this.getItemList(item)}
+									refresh={() => this.setCustRefrersh()}
 									// getcustomer={this.state.customer}
 									// save={(e) => this.getSaveInvoice(e)}
 									// reloadRequestItem={() => this.loadingRequestItems()}
@@ -266,6 +295,15 @@ class SalePage extends Component {
 						this.setState({
 							openCreateCustomerDialog: e
 						})}
+				/>
+
+				<RecentInvoiceDialog
+					isopen={this.state.openRecentInvoice}
+					close={e =>
+						this.setState({
+							openRecentInvoice: e
+						})}
+					reload={() => this.reloadComponent()}
 				/>
 			</div>
 		);

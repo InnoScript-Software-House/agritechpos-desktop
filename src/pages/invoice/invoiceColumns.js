@@ -48,13 +48,16 @@ export const invoiceColumns = props => {
 		// },
 		{
 			name: <span> {t('total-amount')} </span>,
-			selector: row => `${numeral(row.total_amount).format('0,0')} MMK`,
+			selector: row => {
+				const total = Number(row.total_amount) + Number(row.total_amount) * (15 / 100);
+				return <span> {`${numeral(total).format('0,0')} MMK`} </span>;
+			},
 			sortable: true
 		},
 		{
-		    name: <span> {t('pay-amount')} </span>,
-		    selector: row => `${numeral(row.pay_amount).format('0,0')} MMK`,
-		    sortable: true
+			name: <span> {t('pay-amount')} </span>,
+			selector: row => `${numeral(row.pay_amount).format('0,0')} MMK`,
+			sortable: true
 		},
 		{
 			name: <span> {t('discount')} </span>,
@@ -62,15 +65,13 @@ export const invoiceColumns = props => {
 			sortable: true
 		},
 		{
-			name: <span> {t('net-amount')} </span>,
+			name: <span> {t('profit')} </span>,
 			selector: row => {
 				const getInvoiceItems = row.invoice_data ? JSON.parse(row.invoice_data) : [];
 				const totalSold = getInvoiceItems.map(e => Number(e.net_profit));
-				const totalAmount = totalSold.reduce((a,b) => a + b, 0);
-				
-				return(
-					`${numeral(totalAmount).format('0,0')} MMK`
-				)
+				const totalAmount = totalSold.reduce((a, b) => a + b, 0);
+
+				return `${numeral(totalAmount).format('0,0')} MMK`;
 			},
 			sortable: true
 		}

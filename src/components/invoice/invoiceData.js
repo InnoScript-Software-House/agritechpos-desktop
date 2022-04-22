@@ -13,11 +13,27 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
     const [shop, setShop] = useState (null);
     const [invoice, setInvoice] = useState (null);
     const [invoiceData, setInVoiceData] = useState(null);
+    const [actual_amount, setActualAmount] = useState(0);
+    const [taxAmount, setTaxAmount] = useState(0);
+    const [grandAmount, setGrandAmount] = useState(0);
+    const [changes, setChanges] = useState(0);
 
     const lang = useSelector(state => state.lang);
 
     const importData = () => {
         const iData = invoiceDetail && invoiceDetail.length > 0 && JSON.parse(invoiceDetail[0].invoice_data);
+        const data = invoiceDetail[0];
+        const actual_amount = (Number(data.total_amount) + (Number(data.total_amount)*(15/100)));
+        setActualAmount(actual_amount);
+        const tax = (Number(data.total_amount) * (15/100));
+        setTaxAmount(tax); 
+        const grand_amount = Number(actual_amount) - Number(data.discount);
+        setGrandAmount(grand_amount)
+        if(data.pay_amount > grand_amount){
+            const changes_amount = Number(data.pay_amount) - Number(grand_amount);
+            setChanges(changes_amount);
+            return;
+        }
         setInVoiceData(iData);
     }
 
@@ -31,7 +47,7 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
             }
             setShop(shopinfo);
             setInvoice(invoiceDetail && invoiceDetail[0]);
-            importData();   
+            importData();  
         }
 
     },[invoiceDetail]);
@@ -46,30 +62,50 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
             <Card.Body>
                 {shop && invoice && (
                     <>
-                        <div className="col-md-12 d-md-flex flex-md-row justify-content-between align-items-center mt-3 line mb-3">
-                            <div className="ps-3">
-                                <h3> {shop.name} - {shop.description} </h3>
-                                <p> {shop.address} </p>
+                        <div className="d-md-flex flex-md-column justify-content-center align-items-center">
+                            <div className="row">
+                                <h3> {shop.name} </h3>
                             </div>
-
-                            <div className="d-md-flex flex-md-column pe-3">
-                                <span> {t('phone')} - {shop.phone} </span>
-                                <span> {t('email')} - {shop.email} </span>
+                            <div className="row"> 
+                                <h5> {shop.description} </h5>
+                            </div>
+                            <div className="row">
+                                <h6> {shop.address} </h6>
                             </div>
                         </div>
+                        <div className="d-md-flex flex-md-row justify-content-between">
+                            <div className="column">
+                                <h6>{t('phone')} - {shop.phone}</h6>
+                            </div>
+                            <div className="column">
+                                <h6>{t('email')} - {shop.email}</h6>
+                            </div>
+                        </div>                                               
+                        {/* <div className="col-md-12 d-md-flex flex-md-row justify-content-center align-items-center mt-3 line mb-3">
+                            <div className="d-md-flex flex-md-col justify-content-between">
+                                <h3 className="row"> {shop.name} </h3>
+                                <h5 className="row"> {shop.description} </h5>
+                                <p className="row"> {shop.address} </p>
+                            </div>
+
+                            <div className="d-md-flex flex-md-row justify-content-between">
+                                <span className="col"> {t('phone')} - {shop.phone} </span>
+                                <span className="col"> {t('email')} - {shop.email} </span>
+                            </div>
+                        </div> */}
 
                         <div className="col-md-12 mt-3 ps-3">
                             <div className="d-md-flex flex-row justify-content-between align-items-center mb-3">
                                 <div className="invoice-info">
-                                    <h2> {t('invoice')} - AT{invoice.invoice_no} </h2>
+                                    <h4> {t('invoice')} - AT{invoice.invoice_no} </h4>
                                     <span> {t('invoice-date')} - {moment(invoice.created_at).format('DD,MM,YYYY')} </span>
                                 </div>
 
                                 <div className="customer-info">
                                     <div className="pe-3">
-                                        <h5> {t('name')} - {invoice.customer_name} </h5>
-                                        <h5> {t('phone')} - {invoice.customer_phone} </h5>
-                                        <h5> {t('address')} - {invoice.customer_address} </h5>
+                                        <h6> {t('name')} - {invoice.customer_name} </h6>
+                                        <h6> {t('phone')} - {invoice.customer_phone} </h6>
+                                        <h6> {t('address')} - {invoice.customer_address} </h6>
                                     </div>
                                 </div>
                             </div>
@@ -110,31 +146,46 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                                     )}
                                 </div>
 
-                                <table>
+                                <table className="me-5">
                                     <thead>
                                         <tr>
-                                            <td className="w-200 solid-border"> <h6> {t('total')} </h6> </td>
-                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.total_amount).format('0,0')} MMK </h6> </td>
+                                            <td className="w-200 me-2"> <h6> {t('total')} </h6> </td>
+                                            <td className="w-200"> <h6> {numeral(invoice.total_amount).format('0,0')} MMK </h6> </td>
                                         </tr>
 
                                         <tr>
-                                            <td className="w-200 solid-border"> <h6> {t('discount')} </h6> </td>
-                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
-                                        </tr>
-{/* 
-                                        <tr>
-                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h6> </td>
-                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.pay_amount).format('0,0')} MMK </h6> </td>
+                                            <td className="w-200 me-2"> <h6> TAX (15%) </h6> </td>
+                                            <td className="w-200"> <h6> {numeral(taxAmount).format('0,0')} MMK </h6> </td>
                                         </tr>
 
                                         <tr>
-                                            <td className="w-200 solid-border"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-credit-amount')} </h6> </td>
-                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.credit_amount).format('0,0')} MMK </h6> </td>
-                                        </tr> */}
+                                            <td className="w-200 me-2"> <h6> {t('actual_amount')} </h6> </td>
+                                            <td className="w-200"> <h6> {numeral(actual_amount).format('0,0')} MMK </h6> </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td className="w-200 me-2"> <h6> {t('grand_amount')} </h6> </td>
+                                            <td className="w-200"> <h6> {numeral(grandAmount).format('0,0')} MMK </h6> </td>
+                                        </tr>
 
                                         <tr>
-                                            <td className="w-200 solid-border"> <h6> {t('net-amount')} </h6> </td>
-                                            <td className="w-200 solid-border"> <h6> {numeral(invoice.total_amount).format('0,0')} MMK </h6> </td>
+                                            <td className="w-200 me-2"> <h6> {t('discount')} </h6> </td>
+                                            <td className="w-200"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td className="w-200 me-2"> <h6> {t('pay_amount')} </h6> </td>
+                                            <td className="w-200"> <h6> {numeral(invoice.pay_amount).format('0,0')} MMK </h6> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td className="w-200 me-2"> <h6> {t('changes')} </h6> </td>
+                                            <td className="w-200"> <h6> {numeral(changes).format('0,0')} MMK </h6> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td className="w-200 me-2"> <h6> {t('credit-amount')} </h6> </td>
+                                            <td className="w-200"> <h6> {numeral(invoice.credit_amount).format('0,0')} MMK </h6> </td>
                                         </tr>
                                     </thead>
                                 </table>

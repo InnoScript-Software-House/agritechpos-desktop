@@ -57,7 +57,12 @@ class AccountPage extends Component {
   }
 
   componentDidMount() {
+    const {history} = this.props;
     this.fetchData();
+
+    nativeApi.app.navigateTo((url) => {
+      history.push(url);
+    });
   }
 
   async getRefresh(e) {

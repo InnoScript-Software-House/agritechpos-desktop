@@ -1,7 +1,7 @@
 import numeral from 'numeral';
 import moment from 'moment';
 import React from 'react';
-import { t } from 'i18next';
+import {t} from 'i18next';
 
 export const CreditTableColumns = () => {
 	const columns = [
@@ -24,7 +24,10 @@ export const CreditTableColumns = () => {
 
 		{
 			name: <span> {t('total-amount')} </span>,
-			selector: row => `${numeral(row.invoice.total_amount).format('0,0')} MMK`,
+			selector: row => {
+				const total = Number(row.invoice.total_amount) + Number(row.invoice.total_amount) * (15 / 100);
+				return <span> {`${numeral(total).format('0,0')} MMK`} </span>;
+			},
 			sortable: true
 		},
 
@@ -58,7 +61,8 @@ export const CreditTableColumns = () => {
 				const repaymentAmounts = repayments.map(value => value.pay_amount);
 				const totalRepayment = repaymentAmounts.reduce((a, b) => a + b, 0);
 				const balance = totalRepayment + Number(row.invoice.discount);
-				let remainBalance = row.invoice.total_amount - balance;
+				const total = Number(row.invoice.total_amount) + Number(row.invoice.total_amount) * (15 / 100);
+				let remainBalance = total - balance;
 				if (remainBalance < 0) {
 					remainBalance = 0;
 					return <span> {`${numeral(remainBalance).format('0,0')} MMK`} </span>;

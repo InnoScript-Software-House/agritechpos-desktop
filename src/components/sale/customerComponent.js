@@ -9,24 +9,28 @@ export const CustomerComponent = ({ dataSource }) => {
     const { lang } = state;
 
     const [customer, setCustomer] = useState(null);
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
         if(dataSource) {
             setCustomer(dataSource);
+            localStorage.setItem('CUSTOMER', JSON.stringify(dataSource));
         }
+        const custData = localStorage.getItem('CUSTOMER') ? JSON.parse(localStorage.getItem('CUSTOMER')): null;
+        setCustomer(custData);
     }, [dataSource]);
 
     return(
-        <div className="row mt-2 mb-3">
+        <div className="d-md-flex flex-md-row justify-content-between align-items-center mt-3 mb-3">
             {customer && (
                 <>
                     <div className="col-md-3">
-                        <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                        <div className="d-md-flex flex-md-row justify-content-between align-items-center mb-3">
                             <label className={`${zawgyi(lang)}`}> {t('name')} </label>
                             <label className={`${zawgyi(lang)}`}> {customer.name} </label>
                         </div>
 
-                        <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                        <div className="d-md-flex flex-md-row justify-content-between align-items-center mb-3">
                             <label className={`${zawgyi(lang)}`}> {t('phone')} </label>
                             <label className={`${zawgyi(lang)}`}> {customer.phone} </label>
                         </div>
@@ -34,14 +38,14 @@ export const CustomerComponent = ({ dataSource }) => {
 
                     <div className="col-md-3">
                         {customer.email && (
-                            <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                            <div className="d-md-flex flex-md-row justify-content-between align-items-center mb-3">
                                 <label className={`${zawgyi(lang)}`}> {t('email')} </label>
                                 <label className={`${zawgyi(lang)}`}> {customer.email} </label>
                             </div>
                         )}
 
                         {customer.address && (
-                            <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                            <div className="d-md-flex flex-md-row justify-content-between align-items-center mb-3">
                                 <label className={`${zawgyi(lang)}`}> {t('address')} </label>
                                 <label className={`${zawgyi(lang)}`}> {customer.address} </label>
                             </div>

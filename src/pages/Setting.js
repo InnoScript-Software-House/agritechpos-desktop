@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 // import { UpdateComponent } from '../components/settings/Update';
 // import { LicenseComponent } from '../components/settings/License';
 import { SideBarComponent } from '../components/settings/sidebar';
-import { ShopComponent } from '../components/settings/shop';
+import ShopComponent from '../components/settings/shop'
 import { Navigation } from '../components/general/Navigation';
 import { NumberSpecificationComponent } from '../components/settings/numberSpecification';
 // import { DeviceComponent } from '../components/settings/device';
@@ -58,7 +58,7 @@ class SettingPage extends Component {
                             <SideBarComponent getComponent={e => this.selectedComponent(e) }/>
                         </div> */}
 
-                        <div className='col-md-12 mt-3'>
+                        <div className='col-md-12'>
                             {openComponent && openComponent === 'ShopComponent' && (<ShopComponent props={this.props} />)}
                             {openComponent && openComponent === 'NumberSpecificationComponent' && (<NumberSpecificationComponent props={this.props} />)}
                             {/* {openComponent && openComponent === 'DeviceComponent' && (<DeviceComponent props={this.props} />)} */}

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Navigation } from '../../components/general/Navigation';
 import { CustomerListTableComponent } from '../../components/customer/CustomerListTableComponent';
 import { getInvoice } from '../../services/invoice.service';
+import { getCustomerList } from '../../services/customer.service';
 
 class CustomerPage extends Component {
  
@@ -18,7 +19,7 @@ class CustomerPage extends Component {
 
     async loadingData() {
         const { openToast } = this.props; 
-        const response = await getInvoice();
+        const response = await getCustomerList();
 
         if(response && response.success === false) {
             openToast('Customer', response.message, 'danger');
@@ -33,7 +34,11 @@ class CustomerPage extends Component {
     }
 
     async componentDidMount() {
+        const {history} = this.props;
         await this.loadingData();
+        nativeApi.app.navigateTo((url) => {
+        	history.push(url);
+        });
     }
  
     render() {

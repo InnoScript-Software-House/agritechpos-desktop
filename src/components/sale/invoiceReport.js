@@ -26,21 +26,23 @@ export const InvoiceReportPage = () => {
     const [success, setSuccess] = useState(false);
     const [isPrint, setIsPrint] = useState(false);
     const [reload, setReload] = useState(false);
+    const [customer, setCustomer] = useState(null);
+    const [amounts, setAmounts] = useState(null);
 
 
     const saveInvoice = async () => {
-        if (invoice) {
+        if (invoice && amounts) {
             const requestBody = {
                 invoice_no: invoiceId,
-                customer_name: invoice.customer ? invoice.customer.name : null,
-                customer_phone: invoice.customer ? invoice.customer.phone : null,
-                customer_address: invoice.customer ? invoice.customer.address : null,
-                customer_email: invoice.customer ? invoice.customer.email : null,
-                total_amount: invoice.totalAmount,
-                pay_amount: invoice.payAmount,
-                discount: invoice.discount,
-                invoice_data: invoice.bought_items,
-                credit_amount: invoice.creditAmount,
+                customer_name: customer ? customer.name : null,
+                customer_phone: customer ? customer.phone : null,
+                customer_address: customer ? customer.address : null,
+                customer_email: customer ? customer.email : null,
+                total_amount: amounts.total_amount,
+                pay_amount: amounts.pay_amount,
+                discount: amounts.discount === '' ? 0 : amounts.discount,
+                invoice_data: invoice,
+                credit_amount: amounts.credit_amount,
             }
 
             const response = await createInvoice(requestBody);
@@ -59,6 +61,7 @@ export const InvoiceReportPage = () => {
         const { print } = window.nativeApi;
         setIsPrint(true);
         setDisplay('display');
+        console.log(invoice)
 
         const getPrintOptions = localStorage.getItem("PRINT_SETTING") ? JSON.parse(localStorage.getItem("PRINT_SETTING")) : printOptions;
         
@@ -69,6 +72,7 @@ export const InvoiceReportPage = () => {
             setIsPrint(false);
             localStorage.removeItem('INVOICE');
             localStorage.removeItem('CURRENT_INVOICE');
+            localStorage.removeItem('CUSTOMER');
         });
     }
 
@@ -103,6 +107,12 @@ export const InvoiceReportPage = () => {
 
         const iData = JSON.parse(localStorage.getItem('INVOICE'));
         setInvoice(iData);
+
+        const customerData = JSON.parse(localStorage.getItem('CUSTOMER'));
+        setCustomer(customerData);
+
+        const getAmounts = JSON.parse(localStorage.getItem('AMOUNTS'));
+        setAmounts(getAmounts);
     }, []);
 
     return (
@@ -132,9 +142,9 @@ export const InvoiceReportPage = () => {
                                     <tr>
                                         <td className="solid-border" colSpan={3} align='justify'>
                                             To
-                                                <h6> {t('name')}: {invoice.customer && invoice.customer.name} </h6>
-                                                <h6> {t('phone')} : {invoice.customer && invoice.customer.phone} </h6>
-                                                <h6> {t('address')} : {invoice.customer && invoice.customer.address} </h6>
+                                                <h6> {t('name')}: {customer && customer.name} </h6>
+                                                <h6> {t('phone')} : {customer && customer.phone} </h6>
+                                                <h6> {t('address')} : {customer && customer.address} </h6>
                                         </td>
                                         <td className="solid-border" colSpan={3} align='right'>
                                             Date: <small>{moment().format('DD,MM,YYYY')} </small><br/>
@@ -150,7 +160,7 @@ export const InvoiceReportPage = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        {invoice.bought_items.length > 0 && invoice.bought_items.map((value, index) => {
+                                        {invoice.length > 0 && invoice.map((value, index) => {
                                             return (
                                                 <tr className="solid-border" key={`item_id_${index}`}>
                                                     <td className='solid-border'><small>{index +1}</small></td>
@@ -162,36 +172,60 @@ export const InvoiceReportPage = () => {
                                                 </tr>
                                             )
                                         })}
-                                        <tr>
-                                            <td colSpan={4} className='no-border'></td>
-                                            <td className="solid-border"> <h6> {t('total')} </h6> </td>
-                                            <td className="solid-border"> <h6> {numeral(invoice.totalAmount).format('0,0')} MMK </h6> </td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan={4} className='no-border' />
-                                            <td className="solid-border"> <h6> {t('discount')} </h6> </td>
-                                            <td className="solid-border"> <h6> {numeral(invoice.discount).format('0,0')} MMK </h6> </td>
-                                        </tr>
-                                        {/* <tr>
-                                            <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-pay-amount')} </h6> </td>
-                                            <td className="w-200"> <h6> {numeral(invoice.payAmount).format('0,0')} MMK </h6> </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="w-200"> <h6 className={`${zawgyi(lang)}`}> {t('invoice-credit-amount')} </h6> </td>
-                                            <td className="w-200"> <h6> {numeral(invoice.creditAmount).format('0,0')} MMK </h6> </td>
-                                        </tr> */}
-                                        <tr>
-                                            <td colSpan={4} className="no-border" />
-                                            <td className="solid-border"> <h6> {t('net-amount')} </h6> </td>
-                                            <td className="solid-border"> <h6> {numeral(invoice.netAmount).format('0,0')} MMK </h6> </td>
-                                        </tr>
+                                        {
+                                            amounts && (
+                                                <>
+                                                <tr>
+                                                    <td colSpan={4} className='no-border'></td>
+                                                    <td className="solid-border"> <h6> {t('total-amount')} </h6> </td>
+                                                    <td className="solid-border"> <h6> {numeral(amounts.total_amount).format('0,0')} MMK </h6> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colSpan={4} className='no-border'></td>
+                                                    <td className="solid-border"> <h6> TAX(15%) </h6> </td>
+                                                    <td className="solid-border"> <h6> {numeral(amounts.tax).format('0,0')} MMK </h6> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colSpan={4} className='no-border'></td>
+                                                    <td className="solid-border"> <h6> {t('actural-amount')} </h6> </td>
+                                                    <td className="solid-border"> <h6> {numeral(amounts.actual_amount).format('0,0')} MMK </h6> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colSpan={4} className='no-border'></td>
+                                                    <td className="solid-border"> <h6> {t('grand-amount')} </h6> </td>
+                                                    <td className="solid-border"> <h6> {numeral(amounts.grand_amount).format('0,0')} MMK </h6> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colSpan={4} className='no-border'></td>
+                                                    <td className="solid-border"> <h6> {t('discount')} </h6> </td>
+                                                    <td className="solid-border"> <h6> {numeral(amounts.discount).format('0,0')} MMK </h6> </td>
+                                                </tr>   
+                                                <tr>
+                                                    <td colSpan={4} className='no-border'></td>
+                                                    <td className="solid-border"> <h6> {t('pay-amount')} </h6> </td>
+                                                    <td className="solid-border"> <h6> {numeral(amounts.pay_amount).format('0,0')} MMK </h6> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colSpan={4} className='no-border'></td>
+                                                    <td className="solid-border"> <h6> {t('changes')} </h6> </td>
+                                                    <td className="solid-border"> <h6> {numeral(amounts.changes).format('0,0')} MMK </h6> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colSpan={4} className='no-border'></td>
+                                                    <td className="solid-border"> <h6> {t('credit-amount')} </h6> </td>
+                                                    <td className="solid-border"> <h6> {numeral(amounts.credit_amount).format('0,0')} MMK </h6> </td>
+                                                </tr>
+                                                </>
+
+                                            )
+                                        }
                                 </tbody>        
                             </>             
                         )}
                     </table>{
                         !isPrint && (
-                        <div className="d-flex flex-row justify-content-end">
-                            <Button className={`btn btn-print mt-3 w-25${display}`} onClick={() => print()}> {t('print')} </Button>
+                        <div className="d-flex flex-row justify-content-end me-5 pe-5">
+                            <Button className={`btn btn-print mt-3 w-25 ${display}`} onClick={() => print()}> {t('print')} </Button>
                         </div> 
                         )
                     }
