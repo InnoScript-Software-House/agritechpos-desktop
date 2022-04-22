@@ -112,13 +112,12 @@ body {
 	min-width: 100px;
 }
 
-.request-item-table > tbody > tr > td,
-.request-item-table > thead > tr > td {
-	min-width: 200px;
-}
-
 .request-item-table-input {
 	max-width: 150px;
+}
+
+.save-invoice-model {
+	max-width: 50%!important;
 }
 
 @media only screen and (max-width: 1024px) {

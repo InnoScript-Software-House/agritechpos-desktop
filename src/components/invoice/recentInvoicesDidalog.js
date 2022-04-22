@@ -1,8 +1,63 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Modal} from 'react-bootstrap';
-import {BsFillCartCheckFill, BsTrashFill} from 'react-icons/bs';
+import React, { useEffect, useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import {  useSelector } from 'react-redux';
+import { BsFillCartCheckFill, BsTrashFill } from 'react-icons/bs';
+import { t, zawgyi } from '../../utilities/translation.utility';
+import DataTable from 'react-data-table-component';
+
+const headers = () => {
+
+	const state = useSelector(state => state);
+
+	const { lang } = state;
+
+	const columns = [
+		{
+			name: <span>#</span>,
+			selector: (row, index) => index + 1,
+			width: '50px'
+		},
+
+		{
+			name: <span className={`${zawgyi(lang)}`}>  {t('save-invoice-id')} </span>,
+			selector: (row, index) => {`Recent Invoice ${index + 1}`},
+		},
+
+		{
+			name: <span className={`${zawgyi(lang)}`}>  {t('name')} </span>,
+			selector: row => row.customer === null ? 'Unknown Customer' : row.customer.name,
+		},
+
+		{
+			name: <span>  {t('option')} </span>,
+			selector: (row) => {
+				return(
+					<>
+						<BsFillCartCheckFill
+							className="btn-icon"
+							onClick={() => setCart(index)}
+							size={20}
+						/>
+
+						<BsTrashFill
+							className="btn-icon ms-1"
+							onClick={() => removeInvoice(index)}
+							size={20}
+						/>
+					</>
+				)
+			},
+		},
+	];
+
+	return columns;
+};
 
 export const RecentInvoiceDialog = ({isopen, reload, close}) => {
+	const state = useSelector(state => state);
+	
+	const { lang } = state;
+
 	const [recentInvoices, SetRecentInvoices] = useState([]);
 	const [isShow, setIsShow] = useState(false);
 	const [addInvoice, setAddInvoice] = useState(null);
@@ -46,45 +101,16 @@ export const RecentInvoiceDialog = ({isopen, reload, close}) => {
 	);
 
 	return (
-		<Modal show={isShow}>
-			<Modal.Header>Recent Invoices</Modal.Header>
+		<Modal show={isShow} dialogClassName="save-invoice-model">
+			<Modal.Header className={`title-primary ${zawgyi(lang)}`}> {t('title-save-invoice')} </Modal.Header>
 			<Modal.Body>
-				<table className="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<th className="text-center"> Recent Invoice No </th>
-							<th className="text-center"> Name </th>
-							<th className="text-center"> Options </th>
-						</tr>
-					</thead>
-					<tbody>
-						{recentInvoices &&
-							recentInvoices.map((invoice, index) => (
-								<tr key={`recent invoice id ${index}`}>
-									<td align="center"> {`Recent Invoice ${index + 1}`}</td>
-									<td align="center">
-										{' '}
-										{invoice.customer === null ? 'Unknown Customer' : invoice.customer.name}
-									</td>
-									<td align="center">
-										<BsFillCartCheckFill
-											className="btn-icon"
-											onClick={() => setCart(index)}
-											size={20}
-										/>
-										<BsTrashFill
-											className="btn-icon ms-3"
-											onClick={() => removeInvoice(index)}
-											size={20}
-										/>
-									</td>
-								</tr>
-							))}
-					</tbody>
-				</table>
+				<DataTable
+					columns={headers()}
+					data={recentInvoices}
+				/>
 			</Modal.Body>
 			<Modal.Footer>
-				<Button onClick={handleClose}> Close </Button>
+				<Button onClick={handleClose}> {t('close')} </Button>
 			</Modal.Footer>
 		</Modal>
 	);
