@@ -170,173 +170,148 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) =>
                 <div className="d-md-flex flex-md-row justify-content-end align-items-center">
                     <Button className="btn w-full mt-3" onClick={() => makePayment('save')} disabled={btnDisable}> <span> {t('save-invoice')}  </span> </Button>
                 </div>  
-                <table className="table request-item-table">
-                    <thead>
-                        <tr>
-                            <th> # </th>
-                            {tableHeader.map((header, index) => {
+
+                <div className="table-responsive">
+                    <table className="table request-item-table">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                {tableHeader.map((header, index) => {
+                                    return (
+                                        <th key={`header_id_${index}`} className={`${zawgyi(lang)}`}> {header} </th>
+                                    )
+                                })}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {items.length > 0 && items.map((item, index) => {
                                 return (
-                                    <th key={`header_id_${index}`} className={`${zawgyi(lang)}`}> {header} </th>
+                                    <tr key={`cart_item_id_${index}`}>
+                                        <td> {index + 1} </td>
+                                        <td> {item.code} </td>
+                                        <td> {item.name} </td>
+                                        <td> {item.model} </td>
+                                        <td> {item.requestQty} </td>
+                                        <td> {numeral(item.sell_price).format('0,0')} MMK </td>
+                                        <td>
+                                            <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                                                <span className="me-3"> {numeral(item.sell_price * item.requestQty).format('0,0')} MMK</span>
+                                                <BsTrash className="btn-icon" size={20} onClick={() => removeItem(item)} />
+                                            </div>
+                                        </td>
+                                    </tr>  
                                 )
                             })}
-                        </tr>
-                    </thead>
 
-                    <tbody>
-                        {items.length > 0 && items.map((item, index) => {
-                            return (
-                                <tr key={`cart_item_id_${index}`}>
-                                    <td> {index + 1} </td>
-                                    <td> {item.code} </td>
-                                    <td> {item.name} </td>
-                                    <td> {item.model} </td>
-                                    <td> {item.requestQty} </td>
-                                    <td> {numeral(item.sell_price).format('0,0')} MMK </td>
-                                    <td>
-                                        <div className="d-md-flex flex-md-row justify-content-between align-items-center">
-                                            <span className="me-3"> {numeral(item.sell_price * item.requestQty).format('0,0')} MMK</span>
-                                            <BsTrash className="btn-icon" size={20} onClick={() => removeItem(item)} />
-                                        </div>
-                                    </td>
-                                </tr>  
-                            )
-                        })}
+                            { items.length > 0 && (
+                                <>
+                                    <tr>
+                                        <td colSpan={6}></td>
+                                        <td colSpan={2}>
+                                            <div className="d-flex flex-row justify-content-between align-items-center">
+                                                <h5 className={`${zawgyi(lang)}`}> {t('total-amount')} </h5>
+                                                <h5> {numeral(totalAmount).format('0,0')} MMK </h5>
+                                            </div> 
+                                            
+                                        </td>
+                                    </tr>
 
-                        { items.length > 0 && (
-                            <>
-                                <tr>
-                                    <td colSpan={5}></td>
-                                    <td colSpan={3}>
-                                        <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h5 className={`${zawgyi(lang)}`}> {t('total-amount')} </h5>
-                                            <h5> {numeral(totalAmount).format('0,0')} MMK </h5>
-                                        </div> 
-                                        
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colSpan={6}></td>
+                                        <td colSpan={2}>
+                                            <div className="d-flex flex-row justify-content-between align-items-center">
+                                                <h5 className={`${zawgyi(lang)}`}> TAX (15%) </h5>
+                                                <h5> { numeral(tax).format('0,0')} MMK </h5>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td colSpan={5}></td>
-                                    <td colSpan={3}>
-                                        <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h5 className={`${zawgyi(lang)}`}> TAX (15%) </h5>
-                                            <h5> { numeral(tax).format('0,0')} MMK </h5>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colSpan={6}></td>
+                                        <td colSpan={2}>
+                                            <div className="d-flex flex-row justify-content-between align-items-center">
+                                                <h5 className={`${zawgyi(lang)}`}> {t('actural-amount')} </h5>
+                                                <h5> { numeral(netAmount).format('0,0')} MMK </h5>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td colSpan={5}></td>
-                                    <td colSpan={3}>
-                                        <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h5 className={`${zawgyi(lang)}`}> {t('actural-amount')} </h5>
-                                            <h5> { numeral(netAmount).format('0,0')} MMK </h5>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colSpan={6}></td>
+                                        <td colSpan={2}>
+                                            <div className="d-flex flex-row justify-content-between align-items-center">
+                                                <h5 className={`${zawgyi(lang)}`}> {t('grand-amount')} </h5>
+                                                <h5> { numeral(grandAmount).format('0,0')} MMK </h5>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td colSpan={5}></td>
-                                    <td colSpan={3}>
-                                        <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h5 className={`${zawgyi(lang)}`}> {t('grand-amount')} </h5>
-                                            <h5> { numeral(grandAmount).format('0,0')} MMK </h5>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colSpan={6}></td>
+                                        <td colSpan={2}>
+                                            <div className="d-flex flex-row justify-content-between align-items-center">
+                                                <h5 className={`${zawgyi(lang)}`}> {t('discount')} </h5>
+                                                <InputGroup className="request-item-table-input">
+                                                    <FormControl
+                                                        className={`${zawgyi(lang)}`}
+                                                        type="text"
+                                                        value={discount}
+                                                        onChange={(e) => calculateDiscount(e.target.value)}
+                                                    />
+                                                </InputGroup>
+                                            </div> 
+                                            
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td colSpan={5}></td>
-                                    <td colSpan={3}>
-                                        <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h5 className={`${zawgyi(lang)}`}> {t('discount')} </h5>
-                                            <InputGroup className="request-item-table-input">
-                                                <FormControl
-                                                    className={`${zawgyi(lang)}`}
-                                                    type="text"
-                                                    value={discount}
-                                                    onChange={(e) => calculateDiscount(e.target.value)}
-                                                />
-                                            </InputGroup>
-                                        </div> 
-                                        
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colSpan={6}></td>
+                                        <td colSpan={2}>
+                                            <div className="d-flex flex-row justify-content-between align-items-center">
+                                                <h5 className={`${zawgyi(lang)}`}> {t('pay-amount')} </h5>
+                                                <InputGroup className="request-item-table-input">
+                                                    <FormControl
+                                                        className={`${zawgyi(lang)}`}
+                                                        type="text"
+                                                        value={payAmount}
+                                                        onChange={(e) => calculateCredit(e.target.value)}
+                                                    />
+                                                </InputGroup>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan={6}></td>
+                                        <td colSpan={2}>
+                                            <div className="d-flex flex-row justify-content-between align-items-center">
+                                                <h5 className={`${zawgyi(lang)}`}> {t('changes')} </h5>
+                                                <h5> { numeral(changes).format('0,0')} MMK </h5>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td colSpan={5}></td>
-                                    <td colSpan={3}>
-                                        <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h5 className={`${zawgyi(lang)}`}> {t('pay-amount')} </h5>
-                                            <InputGroup className="request-item-table-input">
-                                                <FormControl
-                                                    className={`${zawgyi(lang)}`}
-                                                    type="text"
-                                                    value={payAmount}
-                                                    onChange={(e) => calculateCredit(e.target.value)}
-                                                />
-                                            </InputGroup>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colSpan={5}></td>
-                                    <td colSpan={3}>
-                                        <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h5 className={`${zawgyi(lang)}`}> {t('changes')} </h5>
-                                            <h5> { numeral(changes).format('0,0')} MMK </h5>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td colSpan={5}></td>
-                                    <td colSpan={3}>
-                                        <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h5 className={`${zawgyi(lang)}`}> {t('credit-amount')} </h5>
-                                            <h5> { numeral(creditAmount).format('0,0')} MMK </h5>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colSpan={5}></td>
-                                    <td colSpan={3}>
-                                        <Button className="large-btn" onClick={() => makePayment('cash')}> <span> {t('make-payment')} </span> </Button>
-                                    </td>
-                                </tr>
-                            </>
-                        )}
-                    </tbody>
-                </table>
-            </div>
-
-            {/* <div className="d-md-flex flex-md-row justify-content-between align-items-center mb-3">
-                <div className="mt-3 pt-3">
-                    {items.length > 0 && (
-                        <table className="table">
-                            <thead>
-
-                                <tr>
-                                    <td className="pe-3"> <h4> {t('credit-amount')} </h4> </td>
-                                    <td className="pe-3"> <h4> {creditAmount} MMK </h4> </td>
-                                </tr>
-
-                                <tr>
-                                    <td className="pe-3"> <h4> {t('net-amount')} </h4> </td>
-                                    <td className="pe-3"> <h4> {numeral(netAmount).format('0,0')} MMK </h4> </td>
-                                </tr>
-
-                                <tr>
-                                    <td className="pe-3" colSpan={2}>
-                                        <Button className="btn w-full" onClick={() => makePayment('cash')}> <span> {t('make-payment')} </span> </Button>
-                                        <Button className="btn w-full mt-3" onClick={() => makePayment('save')}> <span> {t('save-invoice')}  </span> </Button>
-                                    </td>
-                                </tr>
-                            </thead>
-                        </table>
-                    )}
+                                    <tr>
+                                        <td colSpan={5}></td>
+                                        <td colSpan={3}>
+                                            <div className="d-flex flex-row justify-content-between align-items-center">
+                                                <h5 className={`${zawgyi(lang)}`}> {t('credit-amount')} </h5>
+                                                <h5> { numeral(creditAmount).format('0,0')} MMK </h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan={5}></td>
+                                        <td colSpan={3}>
+                                            <Button className="large-btn" onClick={() => makePayment('cash')}> <span> {t('make-payment')} </span> </Button>
+                                        </td>
+                                    </tr>
+                                </>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
-            </div> */}
+            </div>
         </>
     )
 }

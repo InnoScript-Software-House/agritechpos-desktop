@@ -2,28 +2,16 @@ import React, {Component} from 'react';
 import {Button, Card} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {setOpenToastAction} from '../redux/actions/toast.action';
 import {getItems} from '../services/item.service';
 import {setInvoiceAction} from '../redux/actions/invoice.action';
 import {CustomerComponent} from '../components/sale/customerComponent';
 import {SaleVoucherInputComponent} from '../components/sale/saleVoucherInputComponent';
 import {SaleVoucherComponent} from '../components/sale/saleVocherComponent';
 import {t, zawgyi} from '../utilities/translation.utility';
-import {RecentInvoice} from '../components/sale/RecentInvoice';
-import {getInvoice} from '../services/invoice.service';
 import {SelectedItemDetail} from '../components/sale/SelectedItemDetail';
 import {getCustomerList} from '../services/customer.service';
-import {
-	BsPlusCircle,
-	BsPeopleFill,
-	BsFillPersonLinesFill,
-	BsFillGearFill,
-	BsFillFilePersonFill,
-	BsBoxArrowInRight
-} from 'react-icons/bs';
 import {CreateCustomerDialog} from '../components/customer/utilities/CreateCustomerDialog';
 import {CustomerAutoCompleteDropDown} from '../components/customer/utilities/CustomerAutoCompleteDropDown';
-import {ItemAutoCompleteDropDown} from '../components/sale/utilities/ItemAutoCompleteDropDown';
 import {RecentInvoiceDialog} from '../components/invoice/recentInvoicesDidalog';
 
 class SalePage extends Component {
@@ -177,44 +165,28 @@ class SalePage extends Component {
 	}
 
 	render() {
-		const {customer, saveInvoice, selectedItem, openRecentInvoice, reloadCustomer} = this.state;
+		const {customer, selectedItem, openRecentInvoice } = this.state;
 		const {lang} = this.props.reducer;
 
 		return (
 			<div className="container-fluid">
-				<div className="row mt-1">
-					<div className="col-md-12">
-						<Button
-							className="btn-primary"
-							onClick={() =>
-								this.setState({
-									openRecentInvoice: !openRecentInvoice
-								})}
-						>
-							{openRecentInvoice ? `${t('close-recent-invoice')}` : `${t('open-recent-invoice')}`}
-						</Button>
-
-						{this.state.showCreateCustomerButton && (
-							<Button
-								className="ms-1"
-								onClick={() =>
-									this.setState({
-										openCreateCustomerDialog: !this.state.openCreateCustomerDialog
-									})}
-							>
-								<BsPlusCircle className="me-1" size={20} />
-								<span className={`${zawgyi(lang)}`}> {t('btn-create-customer')} </span>
-							</Button>
-						)}
-					</div>
-				</div>
-
 				<div className="row">
 					<div className="col-md-12">
 						<Card className="mt-1">
 							<Card.Header>
 								<Card.Title>
 									<div className="d-flex flex-row justify-content-between align-items-center">
+										<Button
+											className="btn-primary"
+											onClick={() => {
+												this.setState({
+													openRecentInvoice: !openRecentInvoice
+												})
+											}}
+										>
+											{t('open-recent-invoice')}
+										</Button>
+
 										<CustomerAutoCompleteDropDown
 											dataSource={this.state.customers}
 											chooseCustomer={e =>
@@ -259,9 +231,6 @@ class SalePage extends Component {
 									total={this.state.total}
 									retrive={item => this.getItemList(item)}
 									refresh={() => this.setCustRefrersh()}
-									// getcustomer={this.state.customer}
-									// save={(e) => this.getSaveInvoice(e)}
-									// reloadRequestItem={() => this.loadingRequestItems()}
 								/>
 							</Card.Body>
 						</Card>
@@ -295,7 +264,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme)),
 	setInvoice: data => dispatch(setInvoiceAction(data))
 });
 
