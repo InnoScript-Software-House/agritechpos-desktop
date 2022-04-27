@@ -2,10 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ItemCreateComponent } from '../components/items/ItemCreateComponent';
 import { ItemListTableComponent } from '../components/items/ItemListTableComponent';
 import { getItems } from '../services/item.service';
-import { DeleteDialog } from '../components/general/deleteDialog';
 import { t } from '../utilities/translation.utility';
 import { messageBoxType } from '../utilities/native.utility';
 
@@ -15,7 +13,6 @@ class InventoryPage extends Component {
         super(props);
         this.state = {
             openEdit : false,
-            categories: [],
             items: [],
             totalItemPriceList: 0,
             totalItemSellList: 0,
@@ -60,22 +57,11 @@ class InventoryPage extends Component {
     }
     
     render() {
-        const { delModal } = this.props.reducer;
-        const { categories, items, openCreateItem } = this.state;
+        const { items, openCreateItem } = this.state;
         return(
             <>
                 <div className='container-fluid'>
                     <div className='row'>
-                        { openCreateItem && (
-                        <div className='col-md-2'>
-                            <ItemCreateComponent 
-                                props={this.props} 
-                                categoriesList={categories}
-                                reload={() => this.loadingData('item')}
-                            />
-                        </div>
-                        )}
-
                         <div className="col-md-12">
                             <ItemListTableComponent 
                                 props={this.props} 
@@ -88,15 +74,7 @@ class InventoryPage extends Component {
                             />
                         </div>
                     </div>
-
-                    <div className='row'>
-                        
-                    </div>
                 </div>
-
-                {delModal && delModal.open === true && (
-                    <DeleteDialog props={this.props} reload={async () => await this.loadingData('item')} />           
-                )}
             </>
         )
     }

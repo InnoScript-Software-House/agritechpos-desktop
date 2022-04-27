@@ -263,5 +263,8 @@
     "save-invoice-id" : "Saved Invoice",
 
     "inventory-list" : "Inventory List",
-    "item-create" : "Create New Item"
+    "item-create" : "Create New Item",
+
+    "change-all-percentage" : "Change all item's percentage",
+    "change-number-format" : "Change Number Format"
 }

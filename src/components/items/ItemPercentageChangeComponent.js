@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { FormControl, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { updatePercentage } from '../../services/item.service';
@@ -40,7 +40,7 @@ export const ItemPercentageChangeComponent = ({ reload }) => {
                 <FormControl 
                     className={`${zawgyi(lang)}`}
                     type="text"
-                    placeholder={t('percentage')}
+                    placeholder={t('change-all-percentage')}
                     value={percentage}
                     onChange={e => setPercentage(e.target.value)}
                     onKeyPress={e => {
