@@ -187,6 +187,31 @@ input[type="number"]:focus,
     border-radius: 5px;
     font-size: large;
 }
+
+.card-success {
+	background-color: #4E8D28;
+	color: #fff;
+}
+
+.card-danger {
+	background-color: red;
+	color: #fff;
+}
+
+.card-info {
+	background-color: #01a3a6;
+	color: #fff;
+}
+
+.card-warm {
+	background-color: #ffd314;
+	color: #fff;
+}
+
+.label-count {
+	font-size: 35px;
+}
+
 .large-btn{
 	width: 560px;
 	height: 50px;

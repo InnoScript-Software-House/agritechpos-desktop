@@ -112,25 +112,20 @@ body {
 	min-width: 100px;
 }
 
-.request-item-table > tbody > tr > td,
-.request-item-table > thead > tr > td {
-	min-width: 200px;
-}
-
 .request-item-table-input {
 	max-width: 150px;
 }
 
-.fix-table {
-	max-height: 300px!important;
+.save-invoice-model {
+	max-width: 50%!important;
 }
 
 .green {
-	color: #4E8D28;
+	color: green;
 }
 
-.bold {
-	font-weight: 900!important;
+.red {
+	color: red;
 }
 
 @media only screen and (max-width: 1024px) {

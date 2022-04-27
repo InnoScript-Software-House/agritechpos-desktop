@@ -1,11 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Modal} from 'react-bootstrap';
-import {BsFillCartCheckFill, BsTrashFill} from 'react-icons/bs';
+import React, { useEffect, useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { BsFillCartCheckFill, BsTrashFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { t, zawgyi } from '../../utilities/translation.utility';
 
 export const RecentInvoiceDialog = ({isopen, reload, close}) => {
 	const [recentInvoices, SetRecentInvoices] = useState([]);
 	const [isShow, setIsShow] = useState(false);
 	const [addInvoice, setAddInvoice] = useState(null);
+
+	const state = useSelector(state => state);
+	const { lang } = state;
 
 	const handleClose = () => {
 		close(false);
@@ -52,9 +57,9 @@ export const RecentInvoiceDialog = ({isopen, reload, close}) => {
 				<table className="table table-bordered table-hover">
 					<thead>
 						<tr>
-							<th className="text-center"> Recent Invoice No </th>
-							<th className="text-center"> Name </th>
-							<th className="text-center"> Options </th>
+							<th className={`text-center ${zawgyi(lang)}`}> {t('save-invoice-id')} </th>
+							<th className={`text-center ${zawgyi(lang)}`}> {t('name')} </th>
+							<th className={`text-center ${zawgyi(lang)}`}> {t('option')} </th>
 						</tr>
 					</thead>
 					<tbody>
@@ -84,7 +89,7 @@ export const RecentInvoiceDialog = ({isopen, reload, close}) => {
 				</table>
 			</Modal.Body>
 			<Modal.Footer>
-				<Button onClick={handleClose}> Close </Button>
+				<Button className={`${zawgyi(lang)}`} onClick={handleClose}> { t('close') } </Button>
 			</Modal.Footer>
 		</Modal>
 	);
