@@ -7,7 +7,7 @@ import {ItemAutoCompleteDropDown} from './utilities/ItemAutoCompleteDropDown';
 
 export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) => {
 	const state = useSelector(state => state);
-
+	
 	const {lang} = state;
 	const {nativeApi} = window;
 

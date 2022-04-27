@@ -66,7 +66,6 @@ class ProfilePage extends Component {
       update_phone: response.phone,
       is_loading: false
     });
-
     return;
   }
 

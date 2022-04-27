@@ -251,7 +251,7 @@ class SalePage extends Component {
 
 								<div className="d-md-flex flex-column">
 									<h3 className={`mb-3 title-default ${zawgyi(lang)}`}> {t('receipt')} </h3>
-									<CustomerComponent className="mt-3" dataSource={customer} />
+									<CustomerComponent className="mt-3" dataSource={customer} />	
 								</div>
 
 								<SaleVoucherComponent

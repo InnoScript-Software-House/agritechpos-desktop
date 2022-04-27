@@ -15,6 +15,7 @@ export const AnalyticsComponent = ({ dataSource }) => {
     },[dataSource]);
 
     return(
-        
+        <>
+        </>
     )
 }

@@ -32,7 +32,7 @@ class InventoryPage extends Component {
             window.nativeApi.messageBox.open({ title: t('network-error'), message: getItemData.message, type: messageBoxType.info});
             return;
         }
-
+        console.log(getItemData)
         getItemData.map((value) => {
             value.percentage = parseInt(value.percentage);
             value.price = parseInt(value.price);
