@@ -266,5 +266,11 @@
     "item-create" : "Create New Item",
 
     "change-all-percentage" : "Change all item's percentage",
-    "change-number-format" : "Change Number Format"
+    "change-number-format" : "Change Number Format",
+
+    "total-item-count" : "Total Item",
+    "total-out-stock-count" : "Out Of Stock",
+
+    "total-revenue" : "Total Revenue (MMK)",
+    "total-purchese" : "Total Purchese (MMK)"
 }
