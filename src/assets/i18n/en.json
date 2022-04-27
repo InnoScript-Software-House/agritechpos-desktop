@@ -260,5 +260,8 @@
     "over-discount" : "The discount amount exceeds the down payment",
     "over-net-amount" : "Over pay amount",
 
-    "save-invoice-id" : "Saved Invoice"
+    "save-invoice-id" : "Saved Invoice",
+
+    "inventory-list" : "Inventory List",
+    "item-create" : "Create New Item"
 }
