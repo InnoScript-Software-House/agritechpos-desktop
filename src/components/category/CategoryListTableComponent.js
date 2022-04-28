@@ -9,7 +9,7 @@ import { t } from "i18next";
 
 const searchColumns = ['name'];
 
-export const CategoryListTableComponent = ({ props, dataSource }) => {
+export const CategoryListTableComponent = ({ props, categoriesList }) => {
 
     const [tableLoading, setTableLoading] = useState(true);
     const [categoryList, setCategoryList] = useState([]);
@@ -20,11 +20,11 @@ export const CategoryListTableComponent = ({ props, dataSource }) => {
     }
 
     useEffect(() => {
-        if(dataSource){
-            setCategoryList(dataSource);
+        if(categoriesList){
+            setCategoryList(categoriesList);
             setTableLoading(false);
         }
-    },[dataSource]); 
+    },[categoriesList]); 
 
 
     return(
@@ -42,7 +42,7 @@ export const CategoryListTableComponent = ({ props, dataSource }) => {
                         <TableHeaderComponent
                             props={props} 
                             type={'Category'}
-                            dataSource={dataSource} 
+                            dataSource={categoriesList} 
                             searchColumns={searchColumns} 
                             placeholder={t('search')}
                             filterResult={e => getFilterResult(e)}

@@ -272,5 +272,7 @@
     "total-out-stock-count" : "Out Of Stock",
 
     "total-revenue" : "Total Revenue (MMK)",
-    "total-purchese" : "Total Purchese (MMK)"
+    "total-purchese" : "Total Purchese (MMK)",
+
+    "total-categories" : "Total Categories"
 }
