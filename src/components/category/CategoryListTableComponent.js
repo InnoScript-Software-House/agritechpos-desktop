@@ -3,20 +3,18 @@ import { Card } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import { TableLoadingComponent } from "../table/tableLoading";
 import { categoryColumns } from "../columns/category.columns";
-import { TableHeaderComponent } from "../table/tableHeader";
 import { t } from "i18next";
 import { paginationComponentOptions, paginationPerPage, paginationRowsPerPageOptions } from "../../utilities/tablePagination.utility";
-import { ItemConditionalRowStyles } from "../../utilities/tableConditionalRowStylesutility";
-import { ItemRowExpandComponent } from "../items/ItemRowExpandComponent";
-import CategorySearchComponent from "./CategorySearchComponent";
+import { CategorySearchComponent} from "./CategorySearchComponent";
+import { CategoryRowExpandComponent } from "./CategoryRowExpandComponent";
+import { CategoryConditionalRowStyles } from "../../utilities/tableConditionalRowStylesutility";
 
 const searchColumns = ['name'];
 
-export const CategoryListTableComponent = ({ categoriesList  }) => {
+export const CategoryListTableComponent = ({ categoriesList ,reload  }) => {
 
     const [tableLoading, setTableLoading] = useState(true);
     const [categoryList, setCategoryList] = useState([]);
-    const [selectedRows, setSelectedRows] = useState([]); 
 
     useEffect(() => {
         if(categoriesList){
@@ -34,7 +32,7 @@ export const CategoryListTableComponent = ({ categoriesList  }) => {
                         <span className="title"> {t('category')} </span>
                     </Card.Title>
                     <div className="col-md-2">
-                        <CategorySearchComponent categoriesList={categoriesList} reload={e => setCategoryList(e)}  />
+                        <CategorySearchComponent categoriesList={categoriesList} retrive={e => setCategoryList(e)}  />
                     </div>
                 </div>
             </Card.Header>
@@ -58,11 +56,10 @@ export const CategoryListTableComponent = ({ categoriesList  }) => {
 					selectableRowsHighlight={true}
 					expandableRows={true}
 					expandOnRowDoubleClicked={true}
-					onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
 					paginationPerPage={paginationPerPage}
 					paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-					conditionalRowStyles={ItemConditionalRowStyles}
-					expandableRowsComponent={ItemRowExpandComponent}
+					conditionalRowStyles={CategoryConditionalRowStyles}
+					expandableRowsComponent={CategoryRowExpandComponent}
 					expandableRowsComponentProps={{'refresh': (e) => {
 						reload(e) }}}
                 />

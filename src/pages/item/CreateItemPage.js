@@ -47,6 +47,7 @@ class CreateItemPage extends Component {
 
   render() {
     const { lang } = this.props.reducer;
+    
 
     return (
       <div className='container-fluid'>
@@ -74,7 +75,7 @@ class CreateItemPage extends Component {
                 </Card>
               </div>
               <div className='col-md-12'>
-                <CategoryListTableComponent categoriesList={this.state.categoriesList} />
+                <CategoryListTableComponent props={this.props} categoriesList={this.state.categoriesList} reload={() => this.loadingCategory()} />
               </div>
             </div>
           </div>

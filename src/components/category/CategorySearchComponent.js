@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormControl, InputGroup } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { zawgyi, t } from '../../utilities/translation.utility';
 
-const CategorySearchComponent = ({ categoriesList , reload }) => {
+export const CategorySearchComponent = ({ categoriesList , retrive }) => {
 
     const state = useSelector(state => state)
     const { lang } = state;
@@ -16,10 +16,25 @@ const CategorySearchComponent = ({ categoriesList , reload }) => {
         setText(value);
 
         if(value === '') {
-            reload(categoriesList)
+            retrive(categoriesList)
             return;
         }
+
+        const suggestionResultForName = items.filter((item) => item.name !== null && item.name.toLowerCase().includes(text.toLowerCase()))
+        const suggestionResultForDescription = items.filter((item) => item.description !== null && item.description.toLowerCase().includes(text.toLowerCase()))
+
+        const suggestionResult = suggestionResultForName.concat(suggestionResultForDescription)
+
+        reload(suggestionResult)
+        return;
     }
+
+    useEffect(() => {
+        if(categoriesList) {
+            setItems(categoriesList)
+        }
+    },[categoriesList])
+    
 
     return (
         <>
@@ -40,5 +55,3 @@ const CategorySearchComponent = ({ categoriesList , reload }) => {
         </>
     )
 }
-
-export default CategorySearchComponent
