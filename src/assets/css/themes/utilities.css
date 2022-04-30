@@ -6,12 +6,12 @@
 
 .title-primary,
 .label-primary {
-	color: #2759D4;
+	color: #2759D4!important;
 }
 
 .title-secondary,
 .label-secondary {
-	color: #4E8D28;
+	color: #4E8D28!important;
 }
 
 .title,
@@ -21,7 +21,6 @@
 
 .title, .title-default, .title-primary, .title-secondary {
 	font-weight: 500;
-	font-size: 25px;
 	margin-bottom: 20px;
 }
 
@@ -91,6 +90,11 @@
 .btn-default {
 	background-color: #01a3a6;
 	border: 1px solid #01a3a6;
+}
+
+.btn-success {
+	background-color: #4E8D28!important;
+	color: #fff;
 }
 
 .btn-default:active {
@@ -186,6 +190,11 @@ input[type="number"]:focus,
     padding: 20px;
     border-radius: 5px;
     font-size: large;
+}
+
+.card-default {
+	background-color: #2759D4;
+	color: #fff;
 }
 
 .card-success {

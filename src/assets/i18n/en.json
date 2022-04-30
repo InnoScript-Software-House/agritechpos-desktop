@@ -186,11 +186,11 @@
     "title-plan" : "Service life and the number of units",
     "title-license-confirmation" : "License Confirmation",
     "title-first-user" : "Create User Account",
-
     "title-dialog-create-customer" : "Create New Customer",
     "title-request-item-qty" : "Request item qty",
     "title-update-item-percentage" : "Update item's sale percentage",
     "title-save-invoice" : "Save Invoice",
+    "title-create-category" : "Create Category",
 
     "description-intro" : "AgriTech is a desktop POS software for agricultural equipment stores. The company specializes in the production of IoT products for the agricultural sector",
     "description-userinfo" : "Please fill customer information for license registeration process.",
@@ -210,6 +210,7 @@
     "success-item-percentage-update" : "Item's percentage is updated successfully",
     "success-item-update" : "Item's information is updated successfully",
     "success-item-create" : "New item is created successfully",
+    "success-create-category" : "New category is created successfully",
 
     "account-name" : "Account Name",
     "password-does-not-match" : "Password does not match",
@@ -274,5 +275,8 @@
     "total-revenue" : "Total Revenue (MMK)",
     "total-purchese" : "Total Purchese (MMK)",
 
-    "total-categories" : "Total Categories"
+    "total-categories" : "Total Categories",
+    "category-name-is-required" : "Category name is required",
+    "table-loading-message" : "Loading Data",
+    "table-no-data" : "There is no data record"
 }

@@ -18,12 +18,11 @@ class CreateItemPage extends Component {
       categoriesList: [],
       categoriesTotal : 0
     }
-    
   }
 
   async loadingCategory() {
     const categoryResponse = await getCategories();
-    console.log(categoryResponse)
+
     if (categoryResponse && categoryResponse.success === false) {
       window.nativeApi.messageBox.open({ title: t('title-item-create'), message: categoryResponse.message, type: messageBoxType.info });
       return;
@@ -55,15 +54,17 @@ class CreateItemPage extends Component {
           <div className='col-md-3'>
             <ItemCreateComponent categoriesList={this.state.categoriesList} />
           </div>
+
           <div className='col-md-9'>
             <div className='row'>
               <div className='col-md-6'>
-                <CreateCategoryComponent />
+                <CreateCategoryComponent reload={() => this.loadingCategory()} />
               </div>
+
               <div className='col-md-6 mt-3'>
                 <Card>
                   <Card.Header className='card-success'>
-                    <Card.Title className={`${zawgyi(lang)}`}> {t('total-categories')} </Card.Title>
+                    <Card.Title className={`title-secondary ${zawgyi(lang)}`}> {t('total-categories')} </Card.Title>
                   </Card.Header>
 
                   <Card.Body>
@@ -74,8 +75,12 @@ class CreateItemPage extends Component {
                   </Card.Body>
                 </Card>
               </div>
+
               <div className='col-md-12'>
-                <CategoryListTableComponent props={this.props} categoriesList={this.state.categoriesList} reload={() => this.loadingCategory()} />
+                <CategoryListTableComponent 
+                  dataSource={this.state.categoriesList} 
+                  reload={() => this.loadingCategory()} 
+                />
               </div>
             </div>
           </div>
