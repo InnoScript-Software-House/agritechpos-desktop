@@ -19,11 +19,7 @@ export const CategorySearchComponent = ({ dataSource , retrive }) => {
             return;
         }
 
-        const suggestionResultForName = categories.filter((category) => category.name !== null && category.name.toLowerCase().includes(text.toLowerCase()));
-        const suggestionResultForDescription = categories.filter((category) => category.description !== null && category.description.toLowerCase().includes(text.toLowerCase()));
-
-        const suggestionResult = suggestionResultForName.concat(suggestionResultForDescription);
-
+        const suggestionResult = categories.filter((category) => category.name !== null && category.name.toLowerCase().includes(text.toLowerCase()));
         retrive(suggestionResult);
         return;
     }
