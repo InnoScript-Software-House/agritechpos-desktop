@@ -16,26 +16,21 @@ export const CategoryRowExpandComponent = ({ data , refresh }) => {
 
     const update = async (value, fieldName) => {
         if(value === ''){
-            window.nativeApi.messageBox.open({title: t('title-update-item'), message: t('invalid-empty'), type: messageBoxType.info});
+            window.nativeApi.messageBox.open({title: t('title-update-category'), message: t('invalid-empty'), type: messageBoxType.info});
             return;
         }
 
-        setName(category.name);
-        setDescription(category.description);
-    
-
-        const requestBody = category;
+        const requestBody = {};
         requestBody[fieldName] = value;
-        console.log(requestBody);
 
-        const updateResponse = updateCategory(category.id, requestBody)
+        const updateResponse = await updateCategory(category.id, requestBody);
 
-        if(updateResponse && updateResponse.status === false) {
-            window.nativeApi.messageBox.open({title: t('title-update-item'), message: updateResponse.message, type: messageBoxType.info});
+        if(updateResponse && updateResponse.success === false) {
+            window.nativeApi.messageBox.open({title: t('title-update-category'), message: updateResponse.message, type: messageBoxType.info});
             return;
         }
 
-        window.nativeApi.notification.show({title: t('title-update-item'), body: t('success-item-update')});
+        window.nativeApi.notification.show({title: t('title-update-category'), body: t('success-category-update')});
         refresh(true);
         return;
     }
@@ -47,16 +42,15 @@ export const CategoryRowExpandComponent = ({ data , refresh }) => {
             setDescription(data.description)
         }
     },[data])
+
   return (
-    <>
-        <div className='container-fluid'>
-            <div className='row'>
-                <div className='col-md-2 mt-3 mb-3'>
-                    <FormLabel className={`${zawgyi(lang)}`}>
-                        {t('name')}
-                    </FormLabel> 
-                    <InputGroup>
-                        <FormControl 
+    <div className='container-fluid'>
+        <div className='row'>
+             <div className='col-md-3 mt-1 mb-1'>
+                <FormLabel className={`${zawgyi(lang)}`}> {t('name')} </FormLabel> 
+                
+                <InputGroup>
+                    <FormControl 
                         className={`${zawgyi(lang)}`}
                         type='text'
                         placeholder={t('name')}
@@ -67,15 +61,14 @@ export const CategoryRowExpandComponent = ({ data , refresh }) => {
                                 update((name) , 'name')
                             }
                         }}
-                        />
-                    </InputGroup>   
-                </div>
-                <div className='col-md-2 mt-3 mb-3'>
-                    <FormLabel className={`${zawgyi(lang)}`}>
-                        {t('description')}
-                    </FormLabel> 
-                    <InputGroup>
-                        <FormControl 
+                    />
+                </InputGroup>  
+            </div>
+
+            <div className='col-md-4 mt-1 mb-1'>
+                <FormLabel className={`${zawgyi(lang)}`}> {t('description')} </FormLabel> 
+                <InputGroup>
+                    <FormControl 
                         className={`${zawgyi(lang)}`}
                         type='text'
                         placeholder={t('description')}
@@ -86,11 +79,10 @@ export const CategoryRowExpandComponent = ({ data , refresh }) => {
                                 update((description) , 'description')
                             }
                         }}
-                        />
-                    </InputGroup>   
-                </div>
+                    />
+                </InputGroup>   
             </div>
         </div>
-    </>
+    </div>
   )
 }

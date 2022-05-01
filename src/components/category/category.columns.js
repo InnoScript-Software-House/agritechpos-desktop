@@ -1,10 +1,10 @@
 import React from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { changeNumberFormat } from "../../utilities/number.utility";
+import { useDispatch, useSelector } from "react-redux";
 import { t, zawgyi } from "../../utilities/translation.utility";
-import numeral from 'numeral';
 import { SortByAlphabet, SortByNumber } from "../../utilities/tableSort.utility";
+import { BsTrash } from "react-icons/bs";
+import { setOpenDelModal } from "../../redux/actions/openDelModal.action";
 
 const OverlayToolTip = (row, filedName) => {
     return(
@@ -16,10 +16,21 @@ const OverlayToolTip = (row, filedName) => {
 
 export const CategoryColumns = () => {
     const state = useSelector(state => state);
-    const { numberFormat, char, lang } = state;
+    const { lang } = state;
 
-    const num = (value) => {
-        return changeNumberFormat(value, numberFormat, char);
+    const dispatch = useDispatch();
+
+    const delCategory = async (id) => {
+
+        dispatch(setOpenDelModal({
+            title: t('delete-title'),
+            message: t('delete-message'),
+            open: true,
+            type: 'category',
+            id: id
+        }))
+        
+        return;
     }
 
     const columns = [
@@ -37,6 +48,27 @@ export const CategoryColumns = () => {
         {
             name: <span className={`${zawgyi(lang)}`}> {t('description')} </span>,
             selector: row => OverlayToolTip(row, 'description')
+        },
+        {
+            name: <span className={`${zawgyi(lang)}`}> {t('total-item-count')} </span>,
+            selector: row => row.total_item,
+            sortable: true,
+            sortFunction: (rowA, rowB) => SortByNumber(rowA, rowB,  'total_item')
+        },
+        {
+            name: <span className={`${zawgyi(lang)}`}> {t('option')} </span>,
+            selector: row => {
+                if(row.total_item === 0) {
+                    return(
+                        <BsTrash 
+                            className="btn-icon" 
+                            color={"red"} 
+                            size={20} 
+                            onClick={() => delCategory(row.id)}
+                        />
+                    )
+                }
+            }
         },
     ];
 

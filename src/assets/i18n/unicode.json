@@ -139,7 +139,7 @@
     "print" : "Print",
     "quit-btn-enter": "ထွက်ရန်",
     "quantity" : "အရေအတွက်",
-    "records-are-deleted" : "Records are Deleted",
+    "records-are-deleted" : "အချက်အလက်များ ဖျက်သိမ်းခြင်း အောင်မြင်ပါသည်",
     "receipt" : "ပြေစာ",
     "enter-repayment-amount" : "Enter Repayment Amount",
     "save-receipt" : "Save Receipt",
@@ -222,7 +222,7 @@
     "change-language" : "ဘာသာစကားပြောင်းရန်",
 
     "btn-create-customer" : "ဖောက်သည်အသစ်စာရင်းသွင်းရန်",
-    "btn-cancel" : "ပယ်ဖျက်မည်",
+    "btn-cancel" : "အလုပ်ဆောင်ပါ",
     "btn-save" : "သိမ်းမည်",
     "btn-update": "ပြင်ဆင်မည်",
     "btn-export-pdf" : "PDF ဖိုင်ထုတ်မည်",
@@ -268,7 +268,7 @@
     "change-all-percentage" : "အရောင်းရာခိုင်နှုန်းအားလုံးပြောင်းရန်",
     "change-number-format" : "နံပါတ်သက်မှတ်ချက်ပြောင်းရန်",
 
-    "total-item-count" : "စုစုပေါင်းပစ္စည်းစာအရေအတွက်",
+    "total-item-count" : "စုစုပေါင်းပစ္စည်းစာရင်းအရေအတွက်",
     "total-out-stock-count" : "လက်ကျန်မရှိသည့် ပစ္စည်းအရေအတွက်",
 
     "total-revenue" : "အမြတ်စုစုပေါင်း (ကျပ်)",
@@ -277,5 +277,13 @@
     "total-categories" : "ပစ္စည်းအမျိုးအစားများ",
     "category-name-is-required" : "အမျိုးအစားနာမည်ထည့်ရန်လိုအပ်ပါသည်",
     "table-loading-message" : "အချက်အလက်များလုပ်ဆောင်နေပါသည်",
-    "table-no-data" : "အချက်အလက်များ မရှိပါ"
+    "table-no-data" : "အချက်အလက်များ မရှိပါ",
+
+    "response-error": "အချက်အလက်များရနိုင်ခြင်းမရှိပါ",
+    "title-delete-record" : "သိမ်းထားသောအချက်အလက်များကို ဖျက်မည်",
+    "delete-title" : "အချက်အလက်များဖျက်သိမ်းခြင်း",
+    "delete-message" : "အချက်အလက်များကို ဖျက်ရန် သေချာပါသလား",
+    "btn-delete" : "ဖျက်မည်",
+    "title-update-category" : "ပစ္စည်းအမျိုးအစားအချက်အလက်များ ပြုပြင်မည်",
+    "success-category-update" : "ပစ္စည်းအမျိုးအစားအချက်အလက်များ ပြင်ဆင်မှုအောင်မြင်ပါသည်"
 }

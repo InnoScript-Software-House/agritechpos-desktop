@@ -278,5 +278,13 @@
     "total-categories" : "Total Categories",
     "category-name-is-required" : "Category name is required",
     "table-loading-message" : "Loading Data",
-    "table-no-data" : "There is no data record"
+    "table-no-data" : "There is no data record",
+
+    "response-error": "Can't retrive data",
+    "title-delete-record": "Delete record",
+    "delete-title" : "Deleting information",
+    "delete-message" : "Are you sure to delete this record?",
+    "btn-delete" : "Delete",
+    "title-update-category" : "Update Category",
+    "success-category-update" : "Category is updated successfully"
 }

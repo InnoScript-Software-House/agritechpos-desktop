@@ -1,4 +1,4 @@
-import { getRequest, postRequest, putRequest } from "./api.service";
+import { delRequest, getRequest, postRequest, putRequest } from "./api.service";
 
 const url = 'category';
 
@@ -14,6 +14,11 @@ export const getCategories = async () => {
     return handlerException(response);
 }
 
+export const getCategoriesWithItems = async () => {
+    const response = await getRequest(`${url}/item/true`);
+    return handlerException(response);
+}
+
 export const saveCategory = async (requestBody) => {
     const response = await postRequest(url, requestBody);
     return handlerException(response);
@@ -26,5 +31,10 @@ export const categoryDetail = async (id) => {
 
 export const updateCategory = async (id, requestBody) => {
     const response = await putRequest(`${url}/${id}`, requestBody);
+    return handlerException(response);
+}
+
+export const deleteCategory = async (id) => {
+    const response = await delRequest(`${url}/${id}`);
     return handlerException(response);
 }

@@ -9,6 +9,7 @@ import { messageBoxType } from '../utilities/native.utility';
 import { Card } from 'react-bootstrap';
 import { BsServer, BsGraphDown, BsGraphUp, BsCurrencyDollar } from "react-icons/bs";
 import numeral from 'numeral';
+import { DeleteDialog } from '../components/general/deleteDialog';
 
 class InventoryPage extends Component {
 
@@ -74,6 +75,7 @@ class InventoryPage extends Component {
     render() {
         const { items, openCreateItem, counts } = this.state;
         const { lang } = this.props.reducer;
+        const { delModal } = this.props.reducer;
 
         return(
             <>
@@ -152,6 +154,10 @@ class InventoryPage extends Component {
                             />
                         </div>
                     </div>
+
+                   { delModal && (
+                       <DeleteDialog props={this.props} retrive={() => this.loadingItem()}/>
+                   )} 
                 </div>
             </>
         )

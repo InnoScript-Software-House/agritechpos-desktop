@@ -3,12 +3,13 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { t, zawgyi } from '../../utilities/translation.utility';
 import { ItemCreateComponent } from '../../components/items/ItemCreateComponent';
-import { getCategories } from '../../services/category.service';
+import { getCategoriesWithItems } from '../../services/category.service';
 import { messageBoxType } from '../../utilities/native.utility';
 import { CreateCategoryComponent } from '../../components/category/CreateCategoryComponent';
 import { CategoryListTableComponent } from '../../components/category/CategoryListTableComponent';
 import { BiCategory } from "react-icons/bi";
 import { Card } from 'react-bootstrap';
+import { DeleteDialog } from '../../components/general/deleteDialog';
 
 class CreateItemPage extends Component {
 
@@ -21,12 +22,17 @@ class CreateItemPage extends Component {
   }
 
   async loadingCategory() {
-    const categoryResponse = await getCategories();
+    const categoryResponse = await getCategoriesWithItems();
 
     if (categoryResponse && categoryResponse.success === false) {
-      window.nativeApi.messageBox.open({ title: t('title-item-create'), message: categoryResponse.message, type: messageBoxType.info });
+      window.nativeApi.messageBox.open({ title: t('response-error'), message: categoryResponse.message, type: messageBoxType.info });
       return;
     }
+
+    categoryResponse.map((value) => {
+      value.total_item = value.item.length;
+      return value;
+    });
 
     this.setState({
       categoriesList: categoryResponse,
@@ -45,8 +51,7 @@ class CreateItemPage extends Component {
   }
 
   render() {
-    const { lang } = this.props.reducer;
-    
+    const { lang, delModal } = this.props.reducer;
 
     return (
       <div className='container-fluid'>
@@ -84,6 +89,12 @@ class CreateItemPage extends Component {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className='row'>
+          {delModal && (
+            <DeleteDialog retrive={() => this.loadingCategory()} />
+          )}
         </div>
       </div>
     )

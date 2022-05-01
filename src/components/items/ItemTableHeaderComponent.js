@@ -3,15 +3,31 @@ import { Button } from 'react-bootstrap';
 import { pdf } from '../../utilities/export.utility';
 import moment from "moment";
 import { t, zawgyi } from '../../utilities/translation.utility';
+import { itemExportToExcel } from '../../utilities/exports/itemExport.utility';
 
 export const ItemTableHeaderComponent = ({ dataSource }) => {
-
+    
     const state = useState(state => state);
     const { lang } = state;
 
     const [data, setData] = useState([]);
+    const [ exportExcel , setExportExcel ] = useState([]);
     const columns = ['Material Code', 'Name', 'Brand', 'Model', 'Location', 'Purchase Price', 'Percentage', 'Sell Price'];
     
+    const exportCredit = () => {
+        const excelData = exportExcel.map(e => ({
+            code : e.code, 
+            eng_name : e.eng_name , 
+            category_name : e.category.name , 
+            model : e.model , 
+            location : e.location , 
+            price : e.price , 
+            percentage : e.percentage , 
+            sell_price : e.sell_price
+        }));
+        itemExportToExcel("Item List", excelData)
+    }
+
     useEffect(() => {
         if(dataSource) {
             const getValue = dataSource.map((value) => {
@@ -22,6 +38,7 @@ export const ItemTableHeaderComponent = ({ dataSource }) => {
             });
             setData(getValue);
         }
+        setExportExcel(dataSource)
     }, [dataSource]);
     return (
         <div className='mb-3'>
@@ -36,7 +53,7 @@ export const ItemTableHeaderComponent = ({ dataSource }) => {
 
                     <Button
                         className={`ms-1 ${zawgyi(lang)}`}
-                        onClick={() => pdf(columns, data, `inventory_${moment().format('D_M_Y')}`)}
+                        onClick={() => exportCredit()}
                     > 
                         {t('btn-export-excel')}
                     </Button>

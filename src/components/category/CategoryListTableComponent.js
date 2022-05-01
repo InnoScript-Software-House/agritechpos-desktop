@@ -8,8 +8,7 @@ import { CategorySearchComponent} from "./CategorySearchComponent";
 import { CategoryRowExpandComponent } from "./CategoryRowExpandComponent";
 import { CategoryColumns } from "./category.columns";
 import { useSelector } from "react-redux";
-
-const searchColumns = ['name'];
+import CategoryTableHeaderComponent from "./CategoryTableHeaderComponent";
 
 export const CategoryListTableComponent = ({ dataSource ,reload }) => {
 
@@ -21,7 +20,6 @@ export const CategoryListTableComponent = ({ dataSource ,reload }) => {
     const [selectedRows, setSelectedRows] = useState([]);
 
     useEffect(() => {
-        console.log(dataSource);
         if(dataSource){
             setCategory(dataSource);
             setTableLoading(false);
@@ -39,8 +37,8 @@ export const CategoryListTableComponent = ({ dataSource ,reload }) => {
 
                     <div className="col-md-2">
                         <CategorySearchComponent 
-                            categoriesList={categories} 
-                            retrive={e => setCategoryList(e)}  
+                            dataSource={dataSource} 
+                            retrive={e => setCategory(e)}  
                         />
                     </div>
                 </div>
@@ -48,37 +46,37 @@ export const CategoryListTableComponent = ({ dataSource ,reload }) => {
 
             <Card.Body>
 				<DataTable
-                    responsive={true}
-                    fixedHeader={true}
-                    fixedHeaderScrollHeight='400px'
-                    pagination
-                    columns={CategoryColumns()}
-                    subHeader={true}
-                    // subHeaderComponent={
-                    //     <ItemTableHeaderComponent 
-                    //         dataSource={selectedRows}
-                    //     />
-                    // }
                     data={categories}
-                    paginationComponentOptions={paginationComponentOptions}
-                    progressPending={tableLoading}
-                    progressComponent={
-                        <TableLoadingComponent dataSource={categories} />
-                    }
+                    columns={CategoryColumns()}
+                    responsive={true}
                     dense
                     highlightOnHover
                     pointerOnHover
-                    selectableRows={true}
-                    selectableRowsHighlight={true}
+                    fixedHeader={true}
+                    fixedHeaderScrollHeight='400px'
+                    subHeader={true}
+                    subHeaderComponent={
+                        <CategoryTableHeaderComponent
+                            dataSoucre={selectedRows}
+                        />
+                    }
+                    pagination
+                    paginationComponentOptions={paginationComponentOptions}
+					paginationPerPage={paginationPerPage}
+					paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+                    progressPending={tableLoading}
+                    progressComponent={
+                        <TableLoadingComponent />
+                    }
                     expandableRows={true}
                     expandOnRowDoubleClicked={true}
-                    onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
-                    paginationPerPage={paginationPerPage}
-                    paginationRowsPerPageOptions={paginationRowsPerPageOptions}
                     expandableRowsComponent={CategoryRowExpandComponent}
                     expandableRowsComponentProps={{'refresh': (e) => {
                         reload(e)
                     }}}
+                    onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
+                    selectableRows={true}
+                    selectableRowsHighlight={true}
                 />
             </Card.Body>
         </Card>

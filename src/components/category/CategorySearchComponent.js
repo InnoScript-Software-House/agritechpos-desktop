@@ -3,37 +3,36 @@ import { FormControl, InputGroup } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { zawgyi, t } from '../../utilities/translation.utility';
 
-export const CategorySearchComponent = ({ categoriesList , retrive }) => {
+export const CategorySearchComponent = ({ dataSource , retrive }) => {
 
     const state = useSelector(state => state)
     const { lang } = state;
 
     const [text, setText] = useState('');
-    const [items, setItems] = useState([]);
+    const [categories, setCategories] = useState([]);
 
-    const suggestionSearch = ( value ) => {
-
+    const suggestionSearch = (value) => {
         setText(value);
 
         if(value === '') {
-            retrive(categoriesList)
+            retrive(dataSource)
             return;
         }
 
-        const suggestionResultForName = items.filter((item) => item.name !== null && item.name.toLowerCase().includes(text.toLowerCase()))
-        const suggestionResultForDescription = items.filter((item) => item.description !== null && item.description.toLowerCase().includes(text.toLowerCase()))
+        const suggestionResultForName = categories.filter((category) => category.name !== null && category.name.toLowerCase().includes(text.toLowerCase()));
+        const suggestionResultForDescription = categories.filter((category) => category.description !== null && category.description.toLowerCase().includes(text.toLowerCase()));
 
-        const suggestionResult = suggestionResultForName.concat(suggestionResultForDescription)
+        const suggestionResult = suggestionResultForName.concat(suggestionResultForDescription);
 
-        reload(suggestionResult)
+        retrive(suggestionResult);
         return;
     }
 
     useEffect(() => {
-        if(categoriesList) {
-            setItems(categoriesList)
+        if(dataSource) {
+            setCategories(dataSource)
         }
-    },[categoriesList])
+    },[dataSource])
     
 
     return (
