@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
-import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { delRequest, postRequest } from '../../services/api.service';
-import { t } from 'i18next';
+import { messageBoxType } from '../../utilities/native.utility';
+import { t, zawgyi } from '../../utilities/translation.utility';
 
-export const DeleteDialog = ({ props, reload }) => {
+export const DeleteDialog = ({retrive}) => {
 
-    const { delModal } = props.reducer;
+    const state = useSelector(state => state);
+    const { delModal, lang } = state;
+
+    const messageTitle = t('delete-title');
+
     const dispatch = useDispatch();
 
     const [isOpen, setIsOpen] = useState(false);
@@ -21,14 +25,14 @@ export const DeleteDialog = ({ props, reload }) => {
     const confirmDelete = async () => {
         const response = await delRequest(`${delModal.type}/${delModal.id}`);
         if(response && response.success === false) {
-            dispatch(setOpenToastAction('Delete Record', response.message, 'danger'));
+            window.nativeApi.messageBox.open({ title: messageTitle, message: response.message, type: messageBoxType.info});
             closeModal();
             return;
         }
 
+        window.nativeApi.notification.show({title: messageTitle, body: t('records-are-deleted')});
         closeModal();
-        dispatch(setOpenToastAction(delModal.title, `${t('records-are-deleted')}`, 'success'));
-        reload();
+        retrive();
         return;
     }
 
@@ -39,14 +43,14 @@ export const DeleteDialog = ({ props, reload }) => {
 
         const response = await postRequest(`${delModal.type}/delete`, { data: requestBody });
         if(response && response.success === false) {
-            dispatch(setOpenToastAction('Delete Record', response.message, 'danger'));
+            window.nativeApi.messageBox.open({ title: messageTitle, message: response.message, type: messageBoxType.info});
             closeModal();
             return;
         }
 
+        window.notification.show({title: messageTitle, body: t('records-are-deleted')});
         closeModal();
-        dispatch(setOpenToastAction(delModal.title, `${t('records-are-deleted')}`, 'success'));
-        reload();
+        retrive();
         return;
     }
 
@@ -59,16 +63,16 @@ export const DeleteDialog = ({ props, reload }) => {
     return(
         <Modal show={isOpen}>
             <Modal.Header>
-                <Modal.Title> {delModal.title} </Modal.Title>
+                <Modal.Title className={`${zawgyi(lang)}`}> {delModal.title} </Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
-                <p> {delModal.message} </p>
+                <p className={`${zawgyi(lang)}`}> {delModal.message} </p>
             </Modal.Body>
 
             <Modal.Footer>
-                <Button className="btn-small" onClick={() => delModal.multiple ? multipleDeleted() : confirmDelete()}> {t('confirm')} </Button>
-                <Button className="btn-small btn-secondary" onClick={() => closeModal()}> {t('close')} </Button>
+                <Button className={`btn-primary ${zawgyi(lang)}`} onClick={() => delModal.multiple ? multipleDeleted() : confirmDelete()}> {t('btn-delete')} </Button>
+                <Button className={`btn-primary ${zawgyi(lang)}`} onClick={() => closeModal()}> {t('btn-cancel')} </Button>
             </Modal.Footer>
         </Modal>
     )

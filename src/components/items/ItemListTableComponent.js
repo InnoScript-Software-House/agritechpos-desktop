@@ -16,6 +16,7 @@ export const ItemListTableComponent = ({ dataSource, reload }) => {
 	const [itemList, setItemList] = useState([]);
 	const [selectedRows, setSelectedRows] = useState([]);
 
+
 	useEffect(() => {
 		if (dataSource) {
 			setItemList(dataSource);

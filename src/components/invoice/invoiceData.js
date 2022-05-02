@@ -21,7 +21,6 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
     const lang = useSelector(state => state.lang);
 
     const importData = () => {
-        const iData = invoiceDetail && invoiceDetail.length > 0 && JSON.parse(invoiceDetail[0].invoice_data);
         const data = invoiceDetail[0];
         const actual_amount = (Number(data.total_amount) + (Number(data.total_amount)*(15/100)));
         setActualAmount(actual_amount);
@@ -34,7 +33,6 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
             setChanges(changes_amount);
             return;
         }
-        setInVoiceData(iData);
     }
 
     useEffect(async () => {
@@ -45,6 +43,8 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                 dispatch(setOpenToastAction('Shop', shopinfo.success, 'danger'));
                 return;
             }
+            const iData = invoiceDetail && invoiceDetail.length > 0 && JSON.parse(invoiceDetail[0].invoice_data);
+            setInVoiceData(iData);
             setShop(shopinfo);
             setInvoice(invoiceDetail && invoiceDetail[0]);
             importData();  
@@ -74,7 +74,7 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                             </div>
                         </div>
                         <div className="d-md-flex flex-md-row justify-content-between">
-                            <div className="column">
+                            <div className="column ms-3">
                                 <h6>{t('phone')} - {shop.phone}</h6>
                             </div>
                             <div className="column">

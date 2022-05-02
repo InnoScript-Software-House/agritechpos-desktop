@@ -221,6 +221,13 @@ class InvoicePage extends Component {
                                             }}
                                         />
                                     </div>
+                                    <div className='d-md-flex flex-md-column ms-3 mt-4 pt-2'>
+                                            <Button className='btn btn-margin-top' onClick={() => this.exportInvoice()}> {t('export')} </Button>
+                                        </div>
+
+                                        <div className='d-md-flex flex-md-column ms-3 mt-4 pt-2'>
+                                            <Button className='btn btn-margin-top' onClick={()=> this.clear()}> {t('clear')} </Button>
+                                        </div>
                                     <div className='col'>
                                         <div className='d-md-flex flex-md-row justify-content-end align-items-center'>
                                             <h3> {t('total-sold-amount')} - {`${numeral(totalSoldAmount).format('0,0')} ${t('mmk')}`} </h3>
@@ -231,17 +238,6 @@ class InvoicePage extends Component {
                                 <Card.Body>
                                     <DataTable
                                         subHeader
-                                        subHeaderComponent={(
-                                            <>
-                                                <div className='d-md-flex flex-md-column ms-3'>
-                                                    <Button className='btn btn-margin-top' onClick={() => this.exportInvoice()}> {t('export')} </Button>
-                                                </div>
-
-                                                <div className='d-md-flex flex-md-column ms-3'>
-                                                    <Button className='btn btn-margin-top' onClick={()=> this.clear()}> {t('clear')} </Button>
-                                                </div>
-                                            </>
-                                        )}
                                         pagination={paginationComponentOptions}
                                         dense
                                         progressPending={tableloading}

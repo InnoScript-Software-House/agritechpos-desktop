@@ -120,8 +120,20 @@ body {
 	max-width: 50% !important;
 }
 
+.green {
+	color: green;
+}
+
+.red {
+	color: red;
+}
+
 @media only screen and (max-width: 1024px) {
 	.logo {
 		width: 200px;
 	}
+}
+
+.btn-icon-trash {
+	margin-top: 35px;
 }

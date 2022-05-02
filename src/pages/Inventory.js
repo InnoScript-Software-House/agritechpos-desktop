@@ -2,12 +2,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ItemCreateComponent } from '../components/items/ItemCreateComponent';
 import { ItemListTableComponent } from '../components/items/ItemListTableComponent';
 import { getItems } from '../services/item.service';
-import { DeleteDialog } from '../components/general/deleteDialog';
-import { t } from '../utilities/translation.utility';
+import { t, zawgyi } from '../utilities/translation.utility';
 import { messageBoxType } from '../utilities/native.utility';
+import { Card } from 'react-bootstrap';
+import { BsServer, BsGraphDown, BsGraphUp, BsCurrencyDollar } from "react-icons/bs";
+import numeral from 'numeral';
+import { DeleteDialog } from '../components/general/deleteDialog';
 
 class InventoryPage extends Component {
 
@@ -15,14 +17,13 @@ class InventoryPage extends Component {
         super(props);
         this.state = {
             openEdit : false,
-            categories: [],
             items: [],
-            totalItemPriceList: 0,
-            totalItemSellList: 0,
-            totalProfitList: 0,
-            totalQtyList: 0,
-            totalSellPriceList: 0,
-            outOfStock: 0,
+            counts : {
+                items: 0,
+                outStock: 0,
+                revenue: 0,
+                purchese: 0
+            }
         }
     }
 
@@ -44,8 +45,20 @@ class InventoryPage extends Component {
             return value;
         });
 
+        const getItemsCount = getItemData.map(value => value.qty);
+        const getRevenue = getItemData.map(value => value.total_profit);
+        const getPurchese = getItemData.map(value => value.total_sell_price);
+
+        const counts = {
+            items: getItemsCount.reduce((a,b) => a+b),
+            outStock: getItemData.filter(value => value.qty === 0 || value.qty === '').length,
+            revenue: getRevenue.reduce((a,b) => a+b),
+            purchese: getPurchese.reduce((a,b) => a+b)
+        }
+
         this.setState({
-            items: getItemData
+            items: getItemData,
+            counts: counts
         });
     }
 
@@ -60,22 +73,75 @@ class InventoryPage extends Component {
     }
     
     render() {
+        const { items, openCreateItem, counts } = this.state;
+        const { lang } = this.props.reducer;
         const { delModal } = this.props.reducer;
-        const { categories, items, openCreateItem } = this.state;
+
         return(
             <>
                 <div className='container-fluid'>
-                    <div className='row'>
-                        { openCreateItem && (
-                        <div className='col-md-2'>
-                            <ItemCreateComponent 
-                                props={this.props} 
-                                categoriesList={categories}
-                                reload={() => this.loadingData('item')}
-                            />
-                        </div>
-                        )}
+                    <div className='row mt-1'>
+                        <div className='col-md-3'>
+                            <Card>
+                                <Card.Header className='card-success'>
+                                    <Card.Title className={`${zawgyi(lang)}`}> {t('total-item-count')} </Card.Title>
+                                </Card.Header>
 
+                                <Card.Body>
+                                    <div className='d-md-flex flex-md-row justify-content-between align-items-center'>
+                                        <BsServer size={50} color="#4E8D28" />
+                                        <label className='label-count'> {numeral(counts.items).format('0,0')} </label>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </div>
+
+                        <div className='col-md-3'>
+                            <Card>
+                                <Card.Header className='card-danger'>
+                                    <Card.Title className={`${zawgyi(lang)}`}> {t('total-out-stock-count')} </Card.Title>
+                                </Card.Header>
+
+                                <Card.Body>
+                                    <div className='d-md-flex flex-md-row justify-content-between align-items-center'>
+                                        <BsGraphDown size={50} color="red" />
+                                        <label className='label-count'> {numeral(counts.outStock).format('0,0')} </label>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </div>
+
+                        <div className='col-md-3'>
+                            <Card>
+                                <Card.Header className='card-info'>
+                                    <Card.Title className={`${zawgyi(lang)}`}> {t('total-purchese')} </Card.Title>
+                                </Card.Header>
+
+                                <Card.Body>
+                                    <div className='d-md-flex flex-md-row justify-content-between align-items-center'>
+                                        <BsGraphUp size={50} color="#1dc6e0" />
+                                        <label className={`label-count ${zawgyi(lang)}`}> {`${numeral(counts.revenue).format('0,0')} ${t('mmk')}`} </label>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </div>
+
+                        <div className='col-md-3'>
+                            <Card>
+                                <Card.Header className='card-warm'>
+                                    <Card.Title className={`${zawgyi(lang)}`}> {t('total-purchese')} </Card.Title>
+                                </Card.Header>
+
+                                <Card.Body>
+                                    <div className='d-md-flex flex-md-row justify-content-between align-items-center'>
+                                        <BsCurrencyDollar size={50} color="#ffd314" />
+                                        <label className={`label-count ${zawgyi(lang)}`}> {`${numeral(counts.purchese).format('0,0')} ${t('mmk')}`} </label>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    </div>
+                    <div className='row'>
                         <div className="col-md-12">
                             <ItemListTableComponent 
                                 props={this.props} 
@@ -89,14 +155,10 @@ class InventoryPage extends Component {
                         </div>
                     </div>
 
-                    <div className='row'>
-                        
-                    </div>
+                   { delModal && (
+                       <DeleteDialog props={this.props} retrive={() => this.loadingItem()}/>
+                   )} 
                 </div>
-
-                {delModal && delModal.open === true && (
-                    <DeleteDialog props={this.props} reload={async () => await this.loadingData('item')} />           
-                )}
             </>
         )
     }
