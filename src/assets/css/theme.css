@@ -29,8 +29,8 @@ body {
 }
 
 .logo {
-    width: 300px;
-    margin-bottom: 20px;
+	width: 300px;
+	margin-bottom: 20px;
 	margin-top: 20px;
 }
 
@@ -49,7 +49,7 @@ body {
 }
 
 .full-w {
-    width: 100%;
+	width: 100%;
 }
 
 .customer-dropdown-wrapper,
@@ -64,13 +64,13 @@ body {
 }
 
 .item-dropdown-wrapper {
-	width: 100%!important;
+	width: 100% !important;
 }
 
 .customer-dropdown-wrapper::-webkit-scrollbar,
 .item-dropdown-wrapper::-webkit-scrollbar {
-	width: 8px!important;
-	background-color: #5b5b5b!important;
+	width: 8px !important;
+	background-color: #5b5b5b !important;
 }
 
 .customer-dropdown-wrapper::-webkit-scrollbar-thumb,
@@ -78,16 +78,16 @@ body {
 	background: #4E8D28;
 }
 
-.dropdown-item > span {
+.dropdown-item>span {
 	color: #fff;
-	font-size:medium;
+	font-size: medium;
 }
 
 .dropdown-item:hover,
 .dropdown-item:active,
 .dropdown-item:focus {
-	background-color: #4E8D28!important;
-	border: 0px!important;
+	background-color: #4E8D28 !important;
+	border: 0px !important;
 	outline: 0;
 }
 
@@ -107,8 +107,8 @@ body {
 	background-color: #4E8D28;
 }
 
-.selected-item-table > tbody > tr > td:last-child,
-.selected-item-table > thead > tr > td:last-child {
+.selected-item-table>tbody>tr>td:last-child,
+.selected-item-table>thead>tr>td:last-child {
 	min-width: 100px;
 }
 
@@ -136,4 +136,15 @@ body {
 
 .delete-btn{
 	margin-top: 33px;
+}
+
+.bought-invoice-box {
+	margin-bottom: 10px;
+	height: 30px;
+	width: 100%;
+	border: 1px;
+	border-color: #01a3a6;
+	border-style: solid;
+	border-radius: 5px;
+	background-color: whitesmoke;
 }
