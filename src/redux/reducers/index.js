@@ -11,6 +11,7 @@ import { saleReducer } from "./sale.reducer";
 import { sellPriceReducer } from "./sellprice.reducer";
 import { toastReducer } from "./toast.reducer";
 import { invoiceReducer } from "./invoice.reducer";
+import { taxReducer } from "./tax.reducer";
 
 export default combineReducers({
     auth: authReducer,
@@ -22,6 +23,7 @@ export default combineReducers({
     char: charasterReducer,
     delModal: openDelReducer,
     cartReducer: saleReducer,
+    tax: taxReducer,
     config: configReducer,
     sellPrice: sellPriceReducer,
     invoice: invoiceReducer,

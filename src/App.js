@@ -32,6 +32,7 @@ import {NumberSpecificationComponent} from './components/settings/numberSpecific
 import InvoiceSetting from './components/settings/InvoiceSetting';
 import BackUpComponent from './components/settings/backup';
 import CreateItemPage from './pages/item/CreateItemPage';
+import TaxComponent from './components/settings/Tax';
 
 class App extends Component {
 	render() {
@@ -51,6 +52,7 @@ class App extends Component {
 				<Route exact path={'/numberspecification'} component={NumberSpecificationComponent} />
 				<Route exact path={'/invoicesetting'} component={InvoiceSetting} />
 				<Route exact path={'/backup'} component={BackUpComponent} />
+				<Route exact path={'/tax'} component={TaxComponent} />
 
 				<Route exact path={'/profile'} component={ProfilePage} />
 				<Route exact path={'/setting'} component={SettingPage} />

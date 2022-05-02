@@ -44,6 +44,10 @@ export const menus = [
 			{
 				label: `${t('backup')}`,
 				url: '/backup'
+			},
+			{
+				label : `${t('tax')}`,
+				url : '/tax'
 			}
 		]
 	},
