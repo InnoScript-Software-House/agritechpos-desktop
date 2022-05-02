@@ -185,7 +185,7 @@ export const ItemCreateComponent = ({ categoriesList }) => {
 
             <Card.Footer className="d-flex flex-column">
                 <Button 
-                    className={`btn-small mb-3 ${zawgyi(lang)}`}
+                    className={`btn-primary mb-3 ${zawgyi(lang)}`}
                     onClick={() => itemSave()}
                     disabled={btnLoading}
                 >

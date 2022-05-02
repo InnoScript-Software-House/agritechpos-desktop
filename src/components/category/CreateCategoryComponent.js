@@ -1,31 +1,34 @@
-import React, {useState} from 'react';
-import {Button, Card, FormControl, InputGroup} from 'react-bootstrap';
-import {useDispatch} from 'react-redux';
-import {setOpenToastAction} from '../../redux/actions/toast.action';
-import {saveCategory} from '../../services/category.service';
-import {t} from 'i18next';
-import {messageBoxType} from '../../utilities/native.utility';
+import React, { useState } from 'react';
+import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveCategory } from '../../services/category.service';
+import { t, zawgyi } from '../../utilities/translation.utility';
+import { messageBoxType } from '../../utilities/native.utility';
 
-export const CreateCategoryComponent = ({reload}) => {
-	const dispatch = useDispatch();
+export const CreateCategoryComponent = ({ reload }) => {
+
+	const state = useSelector(state => state);
+	const { lang } = state;
 
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
 	const [loading, setLoading] = useState('');
-	const [messageBoxTitle, setMessageBoxTitle] = useState('Create Category');
+	const messageBoxTitle = t('title-create-category');
 
 	const reset = () => {
 		setName('');
 		setDescription('');
 		setLoading(false);
+		reload(true);
 	};
 
 	const createCategory = async () => {
 		const {nativeApi} = window;
+
 		if (name === '') {
 			nativeApi.messageBox.open({
 				title: messageBoxTitle,
-				message: 'category name is required',
+				message: t('category-name-is-required'),
 				type: messageBoxType.error
 			});
 			return;
@@ -50,14 +53,10 @@ export const CreateCategoryComponent = ({reload}) => {
 			return;
 		}
 
-		nativeApi.messageBox.open({
-			title: messageBoxTitle,
-			message: 'category is updated',
-			type: messageBoxType.info
-		});
+		nativeApi.notification.show({ title: messageBoxTitle, body: t('success-create-category')});
+		
 		setLoading(false);
 		reset();
-		reload(true);
 		return;
 	};
 
@@ -65,7 +64,7 @@ export const CreateCategoryComponent = ({reload}) => {
 		<Card className="mt-3">
 			<Card.Header>
 				<Card.Title>
-					<span className="title"> {t('create-category')} </span>
+					<span className={`title-default ${zawgyi(lang)}`}> {t('create-category')} </span>
 				</Card.Title>
 			</Card.Header>
 
@@ -89,7 +88,7 @@ export const CreateCategoryComponent = ({reload}) => {
 				</InputGroup>
 
 				<Button className="btn btn-samll" disabled={loading} onClick={() => createCategory()}>
-					{t('confirm')}
+					{t('btn-save')}
 				</Button>
 			</Card.Body>
 		</Card>

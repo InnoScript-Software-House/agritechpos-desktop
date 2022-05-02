@@ -2,26 +2,26 @@ import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import { TableLoadingComponent } from "../table/tableLoading";
-import { categoryColumns } from "../columns/category.columns";
-import { paginationComponentOptions } from "../table/paginationOptions";
-import { TableHeaderComponent } from "../table/tableHeader";
-import { t } from "i18next";
+import { t, zawgyi } from "../../utilities/translation.utility";
+import { paginationComponentOptions, paginationPerPage, paginationRowsPerPageOptions } from "../../utilities/tablePagination.utility";
+import { CategorySearchComponent} from "./CategorySearchComponent";
+import { CategoryRowExpandComponent } from "./CategoryRowExpandComponent";
+import { CategoryColumns } from "./category.columns";
+import { useSelector } from "react-redux";
+import CategoryTableHeaderComponent from "./CategoryTableHeaderComponent";
 
-const searchColumns = ['name'];
+export const CategoryListTableComponent = ({ dataSource ,reload }) => {
 
-export const CategoryListTableComponent = ({ props, dataSource }) => {
+    const state = useSelector(state => state);
+    const { lang } = state;
 
     const [tableLoading, setTableLoading] = useState(true);
-    const [categoryList, setCategoryList] = useState([]);
-    const [selectedRows, setSelectedRows] = useState([]); 
-
-    const getFilterResult = (e) => {
-        setCategoryList(e);
-    }
+    const [categories, setCategory] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([]);
 
     useEffect(() => {
         if(dataSource){
-            setCategoryList(dataSource);
+            setCategory(dataSource);
             setTableLoading(false);
         }
     },[dataSource]); 
@@ -30,36 +30,53 @@ export const CategoryListTableComponent = ({ props, dataSource }) => {
     return(
         <Card className="mt-3">
             <Card.Header>
-                <Card.Title>
-                    <span className="title"> {t('category')} </span>
-                </Card.Title> 
+                <div className="d-md-flex flex-md-row justify-content-between align-items-center">
+                    <Card.Title>
+                        <span className={`title-default ${zawgyi(lang)}`}> {t('category')} </span>
+                    </Card.Title>
+
+                    <div className="col-md-2">
+                        <CategorySearchComponent 
+                            dataSource={dataSource} 
+                            retrive={e => setCategory(e)}  
+                        />
+                    </div>
+                </div>
             </Card.Header>
 
             <Card.Body>
-                <DataTable
-                    subHeader={true}
-                    subHeaderComponent={
-                        <TableHeaderComponent
-                            props={props} 
-                            type={'Category'}
-                            dataSource={dataSource} 
-                            searchColumns={searchColumns} 
-                            placeholder={t('search')}
-                            filterResult={e => getFilterResult(e)}
-                            selectedRows={selectedRows}
-                        />
-                    }
-                    fixedHeaderScrollHeight="400px"
-                    fixedHeader
-                    pagination
-                    columns={categoryColumns()}
-                    paginationComponentOptions={paginationComponentOptions}
-                    data={categoryList}
+				<DataTable
+                    data={categories}
+                    columns={CategoryColumns()}
+                    responsive={true}
                     dense
                     highlightOnHover
                     pointerOnHover
+                    fixedHeader={true}
+                    fixedHeaderScrollHeight='400px'
+                    subHeader={true}
+                    subHeaderComponent={
+                        <CategoryTableHeaderComponent
+                            dataSoucre={selectedRows}
+                        />
+                    }
+                    pagination
+                    paginationComponentOptions={paginationComponentOptions}
+					paginationPerPage={paginationPerPage}
+					paginationRowsPerPageOptions={paginationRowsPerPageOptions}
                     progressPending={tableLoading}
-                    progressComponent={<TableLoadingComponent />}
+                    progressComponent={
+                        <TableLoadingComponent />
+                    }
+                    expandableRows={true}
+                    expandOnRowDoubleClicked={true}
+                    expandableRowsComponent={CategoryRowExpandComponent}
+                    expandableRowsComponentProps={{'refresh': (e) => {
+                        reload(e)
+                    }}}
+                    onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
+                    selectableRows={true}
+                    selectableRowsHighlight={true}
                 />
             </Card.Body>
         </Card>

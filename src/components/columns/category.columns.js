@@ -21,19 +21,19 @@ export const categoryColumns = () => {
         {
             name: <span className="datatable-header"> {t('description')} </span>,
             selector: row => row.description,
-        },
-        {
-            name: <span className="datatable-header"> {t('option')} </span>,
-            selector: (row) => {
-                return(
-                    <BsArrowUpRightSquare 
-                        size={20} 
-                        className="icon-btn-outline"
-                        onClick={() => history.push(`/category/${row.id}`)}
-                    />
-               )
-            },
-            sortable: true,
         }
+        // {
+        //     name: <span className="datatable-header"> {t('option')} </span>,
+        //     selector: (row) => {
+        //         return(
+        //             <BsArrowUpRightSquare 
+        //                 size={20} 
+        //                 className="icon-btn-outline"
+        //                 onClick={() => history.push(`/category/${row.id}`)}
+        //             />
+        //        )
+        //     },
+        //     sortable: true,
+        // }
     ]
 }

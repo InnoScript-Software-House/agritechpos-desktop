@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { BsArrowLeftCircle } from "react-icons/bs";
 import { Navigation } from "../../components/general/Navigation";
-import { getCategories } from '../../services/category.service';
+import { getCategoriesWithItems } from '../../services/category.service';
 import { CategoryListTableComponent } from '../../components/category/CategoryListTableComponent';
 import { t } from '../../utilities/translation.utility';
 import { setOpenToastAction } from '../../redux/actions/toast.action';
 import { CreateCategoryComponent } from '../../components/category/CreateCategoryComponent';
+import { messageBoxType } from '../../utilities/native.utility';
 
 class CategoryListPage extends Component{
     constructor(props){
@@ -21,10 +22,12 @@ class CategoryListPage extends Component{
     async loadingData() {
         const { setToast } = this.props;
 
-        const response = await getCategories();
+        const response = await getCategoriesWithItems();
 
+        console.log(response);
+        
         if(response && response.success === false) {
-            setToast(t('toast-category'), response.message, 'danger');
+            window.nativeApi.messageBox.open({title: t('title-category'), message: response.message, type: messageBoxType.info});
             return;
         }
 
@@ -53,8 +56,6 @@ class CategoryListPage extends Component{
 
         return( 
             <>
-                {/* <Navigation props={this.props} /> */}
-
                 <div className='container-fluid'>
                     <div className='row mt-1'>
                         <div className='col-md-12 d-md-flex flex-md-row justify-content-between align-items-center'>
