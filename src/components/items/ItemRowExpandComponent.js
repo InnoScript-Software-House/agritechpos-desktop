@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Form, FormControl, InputGroup } from 'react-bootstrap';
+import { Button, Form, FormControl, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateItem } from '../../services/item.service';
 import { messageBoxType } from '../../utilities/native.utility';
 import { zawgyi, t } from '../../utilities/translation.utility';
-import { BsTrash } from "react-icons/bs";
 import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 
 export const ItemRowExpandComponent = ({ data, refresh }) => {
@@ -95,14 +94,14 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
                 </div>
 
                 <div className='col-md-2 mt-3 mb-3'>
-                    <BsTrash size={35} cursor={'pointer'} className="btn-icon-trash ms-3" onClick={() => dispatch(setOpenDelModal({
+                    <Button className={`${zawgyi(lang)} delete-btn`} onClick={() => dispatch(setOpenDelModal({
                         open: true,
                         title: 'Delete Record',
                         message: 'Are you sure to delete record',
                         type: 'items',
                         id: item.id
-                    }))}
-                    />
+                    }))
+                    }> {t('btn-delete')}</Button>
                 </div>
             </div>
         </div>
