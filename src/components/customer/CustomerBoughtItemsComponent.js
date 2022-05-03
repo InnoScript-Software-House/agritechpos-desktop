@@ -18,7 +18,6 @@ const CustomerBoughtItemsComponent = ({props, customerInfo}) => {
         const getInvoices = response.filter(e => e.customer_phone === customer.phone)
         setBoughtInvoices(getInvoices);
     }
-    console.log(boughtInvoices)
 
     useEffect(() => {
         if(customerInfo){
