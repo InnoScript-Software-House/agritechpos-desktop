@@ -96,10 +96,11 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
                 <div className='col-md-2 mt-3 mb-3'>
                     <Button className={`${zawgyi(lang)} delete-btn`} onClick={() => dispatch(setOpenDelModal({
                         open: true,
-                        title: 'Delete Record',
-                        message: 'Are you sure to delete record',
+                        title: t('delete-title'),
+                        message: t('delete-message'),
                         type: 'items',
-                        id: item.id
+                        id: item.id,
+                        multiple: false
                     }))
                     }> {t('btn-delete')}</Button>
                 </div>

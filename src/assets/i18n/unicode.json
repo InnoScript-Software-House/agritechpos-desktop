@@ -79,7 +79,7 @@
     "create-new-item" : "ပစ္စည်းအသစ်ထည့်ရန်",
     "date" : "ရက်စွဲ",
     "description" : "အကြောင်းအရာ",
-    "delete-all" : "အကုန်ဖျက်ရန်",
+    "delete-all" : "အားလုံးဖျက်ရန်",
     "discount" : "လျှော့စျေး",
     "email" : "အီးမေးလ်",
     "export" : "ကြည့်ရန်",
@@ -190,6 +190,8 @@
     "title-update-item-percentage" : "ပစ္စည်းအရောင်ရာခိုင်နှုန်းပြောင်းလဲခြင်း",
     "title-save-invoice" : "သိမ်းထားသောပြေစာများ",
     "title-create-category" : "အမျိုးအစားအသစ်စာရင်းသွင်းရန်",
+    "title-item-create" : "ပစ္စည်းအသစ်စာရင်းသွင်းခြင်း",
+    "title-update-item" : "ပစ္စည်းအချက်အလက်ပြင်ဆင်ခြင်း",
 
     "description-intro" : "AgriTech သည် စိုက်ပျိုးရေးသုံးစက်ပစ္စည်းအရောင်းဆိုင်များအသုံးပြုနိုင်သည့် Desktop POS Software ဖြစ်သည်။ စိုက်ပျိုးရေးကဏ္ဍအတွက် IoT ထုတ်ကုန်တွေကို အဓိကထား ထုတ်လုပ်သော ကုမ္ပဏီဖြစ်သည်။",
     "description-userinfo" : "လိုင်စင်မှတ်ပုံတင်ခြင်းလုပ်ငန်းစဉ်အတွက် သုံးစွဲသူအချက်အလက်ကို ဖြည့်စွက်ပါ။",
@@ -222,11 +224,11 @@
     "change-language" : "ဘာသာစကားပြောင်းရန်",
 
     "btn-create-customer" : "ဖောက်သည်အသစ်စာရင်းသွင်းရန်",
-    "btn-cancel" : "အလုပ်ဆောင်ပါ",
+    "btn-cancel" : "မလုပ်ဆောင်ပါ",
     "btn-save" : "သိမ်းမည်",
-    "btn-update": "ပြင်ဆင်မည်",
-    "btn-export-pdf" : "PDF ဖိုင်ထုတ်မည်",
-    "btn-export-excel" : "Excel ဖိုင်ထုတ်မည်",
+    "btn-update": "ပြင်ဆင်ရန်",
+    "btn-export-pdf" : "PDF ဖိုင်ထုတ်ရန်",
+    "btn-export-excel" : "Excel ဖိုင်ထုတ်ရန်",
 
     "input-customer-name" : "ဖောက်သည် နာမည်ထည့်ရန်",
     "input-customer-phone" : "ဖောက်သည် ဖုန်းနံပါတ်ထည့်ရန်",
@@ -262,7 +264,7 @@
     "over-net-amount": "ပေးချေရမည့်ပမာဏထက် ကျော်လွန်နေပါသည်",
     "save-invoice-id": "ပြေစာအမှတ်",
 
-    "inventory-list" : "အရောင်းစာရင်းကြည့်ရန်",
+    "inventory-list" : "ပစ္စည်းစာရင်းကြည့်ရန်",
     "item-create" : "ပစ္စည်းစာရင်းအသစ်သွင်းရန်",
 
     "change-all-percentage" : "အရောင်းရာခိုင်နှုန်းအားလုံးပြောင်းရန်",
