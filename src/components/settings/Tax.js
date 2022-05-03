@@ -12,7 +12,7 @@ class TaxComponent extends Component {
     async loadingData () {
         const { changeTax } = this.props;
 
-        changeTax('5')
+        changeTax('amount')
     }
 
     async componentDidMount() {
@@ -21,7 +21,6 @@ class TaxComponent extends Component {
             history.push(url);
         });
         await this.loadingData()
-        console.log(this.props.reducer.tax)
     }
     render() {
         return (
