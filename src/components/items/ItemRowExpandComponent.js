@@ -93,15 +93,20 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
                     </InputGroup>
                 </div>
 
-                <div className='col-md-2 mt-3 mb-3'>
-                    <Button className={`${zawgyi(lang)} delete-btn`} onClick={() => dispatch(setOpenDelModal({
-                        open: true,
-                        title: 'Delete Record',
-                        message: 'Are you sure to delete record',
-                        type: 'items',
-                        id: item.id
-                    }))
-                    }> {t('btn-delete')}</Button>
+                <div className='col-md-2 mt-3 mb-3 align-self-end'>
+                    <Button 
+                        className={`${zawgyi(lang)}`} 
+                        onClick={() => dispatch(setOpenDelModal({
+                            open: true,
+                            title: t('delete-title'),
+                            message: t('delete-message'),
+                            type: 'items',
+                            id: item.id,
+                            multiple: false
+                        }))}
+                    > 
+                        {t('btn-delete')}
+                    </Button>
                 </div>
             </div>
         </div>
