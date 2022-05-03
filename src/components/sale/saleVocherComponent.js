@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { loadLanguages } from "i18next";
 import { messageBoxType } from "../../utilities/native.utility";
 
-const tableHeader = [t('materail-code'), t('name'), t('model'), t('quantity'), t('price'), t('total')];
+const tableHeader = ['materail-code', 'name', 'model', 'quantity', 'price', 'total'];
 
 export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) => {
 
@@ -176,7 +176,7 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) =>
                             <th> # </th>
                             {tableHeader.map((header, index) => {
                                 return (
-                                    <th key={`header_id_${index}`} className={`${zawgyi(lang)}`}> {header} </th>
+                                    <th key={`header_id_${index}`} className={`${zawgyi(lang)}`}> {t(header)} </th>
                                 )
                             })}
                         </tr>
