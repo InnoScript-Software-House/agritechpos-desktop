@@ -144,3 +144,8 @@ body {
 	border-radius: 5px;
 	background-color: whitesmoke;
 }
+
+
+.align-self-end {
+	align-self: flex-end;
+}
