@@ -134,6 +134,13 @@ body {
 	}
 }
 
-.btn-icon-trash {
-	margin-top: 35px;
+.bought-invoice-box {
+	margin-bottom: 10px;
+	height: 30px;
+	width: 100%;
+	border: 1px;
+	border-color: #01a3a6;
+	border-style: solid;
+	border-radius: 5px;
+	background-color: whitesmoke;
 }

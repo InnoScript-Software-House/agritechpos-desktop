@@ -23,7 +23,7 @@ class CreateItemPage extends Component {
 
   async loadingCategory() {
     const categoryResponse = await getCategoriesWithItems();
-
+    console.log(categoryResponse)
     if (categoryResponse && categoryResponse.success === false) {
       window.nativeApi.messageBox.open({ title: t('response-error'), message: categoryResponse.message, type: messageBoxType.info });
       return;

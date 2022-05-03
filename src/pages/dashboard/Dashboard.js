@@ -42,7 +42,6 @@ class DashboardPage extends Component {
         }
 
         const customerFilter = customerResponse.filter(value => value.customer_name !== null);
-        // console.log(customerFilter);
 
         customerResponse.map((value) => {
             value.created_at = moment(value.created_at).format('DD-MM-Y');
@@ -63,8 +62,7 @@ class DashboardPage extends Component {
 
         const itemFilter = itemResponse.filter(value => value.qty !== null);
         const qtylist = itemFilter.map(value => value.qty);
-        const totalqty = qtylist.reduce((a, b) => a + b, 0)
-        // console.log(totalqty)
+        const totalqty = qtylist.reduce((a, b) => a + b, 0);
 
         this.setState({
             count: customerFilter.length,

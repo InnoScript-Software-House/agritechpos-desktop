@@ -18,7 +18,6 @@ export const autocomplete = (dataSource, text, columnName) => {
 			}
 		});
 	}
-
 	return filterResult;
 };
 

@@ -34,6 +34,7 @@ export const InvoiceReportPage = () => {
         if (invoice && amounts) {
             const requestBody = {
                 invoice_no: invoiceId,
+                customer_id: customer ? customer.id : null,
                 customer_name: customer ? customer.name : null,
                 customer_phone: customer ? customer.phone : null,
                 customer_address: customer ? customer.address : null,
@@ -75,6 +76,7 @@ export const InvoiceReportPage = () => {
             localStorage.removeItem('CUSTOMER');
         });
     }
+    console.log(customer);
 
     useEffect(async () => {
         const shopinfo = await getShop();

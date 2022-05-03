@@ -48,7 +48,7 @@ export const DeleteDialog = ({retrive}) => {
             return;
         }
 
-        window.notification.show({title: messageTitle, body: t('records-are-deleted')});
+        window.nativeApi.notification.show({title: messageTitle, body: t('records-are-deleted')});
         closeModal();
         retrive();
         return;

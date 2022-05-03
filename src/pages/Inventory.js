@@ -33,7 +33,7 @@ class InventoryPage extends Component {
             window.nativeApi.messageBox.open({ title: t('network-error'), message: getItemData.message, type: messageBoxType.info});
             return;
         }
-
+        console.log(getItemData)
         getItemData.map((value) => {
             value.percentage = parseInt(value.percentage);
             value.price = parseInt(value.price);
@@ -49,11 +49,14 @@ class InventoryPage extends Component {
         const getRevenue = getItemData.map(value => value.total_profit);
         const getPurchese = getItemData.map(value => value.total_sell_price);
 
+
+        console.log(getItemsCount)
+
         const counts = {
-            items: getItemsCount.reduce((a,b) => a+b),
-            outStock: getItemData.filter(value => value.qty === 0 || value.qty === '').length,
-            revenue: getRevenue.reduce((a,b) => a+b),
-            purchese: getPurchese.reduce((a,b) => a+b)
+            items: getItemsCount.length > 0 ? getItemsCount.reduce((a,b) => a+b) : 0,
+            outStock: getItemData.length > 0 ? getItemData.filter(value => value.qty === 0 || value.qty === '').length : 0,
+            revenue: getRevenue.length > 0 ? getRevenue.reduce((a,b) => a+b) : 0,
+            purchese: getPurchese.length > 0 ? getPurchese.reduce((a,b) => a+b) : 0
         }
 
         this.setState({

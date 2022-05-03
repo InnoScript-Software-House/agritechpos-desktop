@@ -62,8 +62,6 @@ class InvoicePage extends Component {
         if(response && response.success === false){
            return this.props.openToast('Invoice', response.message, 'danger');
         }
-        console.log(response)
-
         response.map((value) => {
             let getInvoiceItems = value.invoice_data ? JSON.parse(value.invoice_data) : [];
             getInvoiceItems.map((item) => {
@@ -89,12 +87,6 @@ class InvoicePage extends Component {
         });
         this.totalSold();
     }
-
-    // autoSearch(text) {
-    //     const result = autocomplete(dataSource, text, filterType);
-    //     setText(text);
-    //     filterResult(result);
-    // }
 
     async dateStartRangeHandler(startdate){
         await this.loadingData();

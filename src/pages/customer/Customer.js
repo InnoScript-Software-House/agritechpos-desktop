@@ -5,6 +5,7 @@ import { Navigation } from '../../components/general/Navigation';
 import { CustomerListTableComponent } from '../../components/customer/CustomerListTableComponent';
 import { getInvoice } from '../../services/invoice.service';
 import { getCustomerList } from '../../services/customer.service';
+import CustomerBoughtItemsComponent from '../../components/customer/CustomerBoughtItemsComponent';
 
 class CustomerPage extends Component {
  
@@ -12,24 +13,32 @@ class CustomerPage extends Component {
         super(props);
         this.state = {
             openEdit: false,
-            customerLists: []
+            customerLists: [],
+            selectedCustomer: null
         }
     };
+
+    getSelectCustomerInfo(e) {
+        this.setState({
+            selectedCustomer: e
+        });
+    }
 
 
     async loadingData() {
         const { openToast } = this.props; 
         const response = await getCustomerList();
+        const filterCustomer = [];
+        let customers = [];
 
         if(response && response.success === false) {
             openToast('Customer', response.message, 'danger');
             return;
         }
-
+        customers = response.filter(e => e.customer_name !== null);
         this.setState({
             customerLists: response
-        });
-
+        })
         return;
     }
 
@@ -43,7 +52,7 @@ class CustomerPage extends Component {
  
     render() {
 
-        const { customerLists } = this.state;
+        const { customerLists, selectedCustomer } = this.state;
 
         return (
         <>
@@ -51,36 +60,18 @@ class CustomerPage extends Component {
 
             <div className='container-fluid'>
                 <div className='row'>
-                    {/* <div className='col-md-12'>
-                        <div className='d-md-flex flex-md-row justify-content-start align-items-center'>
-                            <Button className='btn-small mt-3 me-3'
-                            onClick={() => this.setState({
-                                openCreateItem: !openCreateItem
-                            })}
-                            >
-                            {openCreateItem ? (<BsEyeSlash size={20}/>) : <BsEye size={20}/>}
-                            <span className='me-3'> {openCreateItem ? 'Hide Create Item Form' : 'Show Create Item Form'}</span>
-                            </Button>
-                        </div>
-                    </div> */}
-                </div>
-                <div className='row'>
-                    {/* {openCreateItem && (
-                        <div className='col-md-2'>
-                            <CustomerCreateComponent
-                                reload={(e) => {
-                                    if(e === true) {
-                                        this.loadingData();
-                                    }
-                                }}
-                            />
-                        </div>
-                    )} */}
-                    <div className='col-md-12'>
+                    <div className='col-md-3'>
+                        <CustomerBoughtItemsComponent
+                        props={this.props}
+                        customerInfo={selectedCustomer}
+                        />
+                    </div>
+                    <div className='col-md-9'>
                         <CustomerListTableComponent 
                             props={this.props}
                             dataSource={customerLists}
-                            reload={(e) => this.loadingData()}
+                            reload={() => this.loadingData()}
+                            retrive={(e) => this.getSelectCustomerInfo(e)}
                         />
                     </div>
 
