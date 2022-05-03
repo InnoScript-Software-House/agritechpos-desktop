@@ -50,7 +50,7 @@ class InventoryPage extends Component {
     }
 
     async componentDidMount() { 
-        const {history} = this.props;
+        const { history } = this.props;
 
         window.nativeApi.app.navigateTo((url) => {
         	history.push(url);

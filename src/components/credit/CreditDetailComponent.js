@@ -14,7 +14,6 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      console.log(data)
       const repayments = JSON.parse(data[0].repayment);
 
       setDetail(data[0]);
@@ -29,7 +28,6 @@ export const CreditDetailComponent = ({ data, addRepayment }) => {
 
       if (totalPayAmount >= totalAmountWithTax) {
         setIsRepayment(true);
-        console.log(isRepayment);
       } else setIsRepayment(false);
     }
   }, [data]);

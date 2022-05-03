@@ -62,7 +62,7 @@ class InvoicePage extends Component {
         if(response && response.success === false){
            return this.props.openToast('Invoice', response.message, 'danger');
         }
-        console.log(response);
+        console.log(response)
 
         response.map((value) => {
             let getInvoiceItems = value.invoice_data ? JSON.parse(value.invoice_data) : [];
@@ -185,7 +185,7 @@ class InvoicePage extends Component {
                     { preview && (
                         <div className='row'>
                             <div className='col-md-12'>
-                                <InvoiceDataComponent invoiceDetail={invoiceData} />
+                                <InvoiceDataComponent invoiceDetail={invoiceData}  getInvoice={invoices}/>
                                 <div className='d-flex flex-row justify-content-end'>
                                     {!is_print? (<Button className='mt-2' onClick={() => this.print()}> {t('print')} </Button>) : (<></>)}
                                 </div>
@@ -221,13 +221,13 @@ class InvoicePage extends Component {
                                             }}
                                         />
                                     </div>
-                                    <div className='d-md-flex flex-md-column ms-3'>
-                                        <Button className='btn btn-margin-top' onClick={() => this.exportInvoice()}> {t('export')} </Button>
-                                    </div>
+                                    <div className='d-md-flex flex-md-column ms-3 mt-4 pt-2'>
+                                            <Button className='btn btn-margin-top' onClick={() => this.exportInvoice()}> {t('export')} </Button>
+                                        </div>
 
-                                    <div className='d-md-flex flex-md-column ms-3'>
-                                        <Button className='btn btn-margin-top' onClick={()=> this.clear()}> {t('clear')} </Button>
-                                    </div>
+                                        <div className='d-md-flex flex-md-column ms-3 mt-4 pt-2'>
+                                            <Button className='btn btn-margin-top' onClick={()=> this.clear()}> {t('clear')} </Button>
+                                        </div>
                                     <div className='col'>
                                         <div className='d-md-flex flex-md-row justify-content-end align-items-center'>
                                             <h3> {t('total-sold-amount')} - {`${numeral(totalSoldAmount).format('0,0')} ${t('mmk')}`} </h3>
@@ -238,16 +238,6 @@ class InvoicePage extends Component {
                                 <Card.Body>
                                     <DataTable
                                         subHeader
-                                        // subHeaderComponent={
-                                        //     <InputGroup>
-                                        //         <FormControl
-                                        //             type='text'
-                                        //             value={searchText}
-                                        //             placeholder='Search with Material ID'
-                                        //             onChange={e => this.autoSearch(e.target.value)}
-                                        //         />
-                                        //     </InputGroup>
-                                        // }
                                         pagination={paginationComponentOptions}
                                         dense
                                         progressPending={tableloading}

@@ -88,7 +88,8 @@
     "edit-number-specification" : "Edit Number Specification",
     "end-date" : "End Date",
     "edit-account" : "Edit Account",
-    "english-name-is-required" : "English Name Is Required",
+    "english-name-is-required" : "English name is required",
+    "code-is-required" : "code is required",
     "first-name" : "First Name",
     "last-name" : "Last Name",
     "go-back" : "Go Back",
@@ -189,7 +190,7 @@
     "title-dialog-create-customer" : "Create New Customer",
     "title-request-item-qty" : "Request item qty",
     "title-update-item-percentage" : "Update item's sale percentage",
-    "title-update-item" : "Update item",
+    "title-save-invoice" : "Save Invoice",
 
     "description-intro" : "AgriTech is a desktop POS software for agricultural equipment stores. The company specializes in the production of IoT products for the agricultural sector",
     "description-userinfo" : "Please fill customer information for license registeration process.",
@@ -206,8 +207,9 @@
     "label-service-life" : "Service Life Time (Year)",
     "label-device" : "Number of device",
     "success-license-store" : "License registration is successfully",
-    "success-item-percentage-update" : "Item's percentage is update successfully",
-    "success-item-update" : "Item's information is update successfully",
+    "success-item-percentage-update" : "Item's percentage is updated successfully",
+    "success-item-update" : "Item's information is updated successfully",
+    "success-item-create" : "New item is created successfully",
 
     "account-name" : "Account Name",
     "password-does-not-match" : "Password does not match",
@@ -228,6 +230,13 @@
     "input-customer-phone" : "Enter customer phone number",
     "input-customer-email" : "Enter customer email address",
     "input-customer-address" : "Enter customer address",
+    "input-item-code" : "Enter material code",
+    "input-item-eng-name" : "Enter item name (English)",
+    "input-item-myanmar" : "Enter item name (Myanmar)",
+    "input-item-model" : "Enter item model",
+    "input-item-percentage" : "Enter item percentage",
+    "input-item-price" : "Enter item price",
+    "input-item-location" : "Enter item location",
 
     "required-name-and-phone" : "Customer name and phone number is required",
 
@@ -249,10 +258,7 @@
 
     "open-invoice" : "Open Invoice",
     "over-discount" : "The discount amount exceeds the down payment",
-    "over-net-amount" : "",
-    "network-error" : "Connection Error",
-    "change-number-format": "Change Number Format",
+    "over-net-amount" : "Over pay amount",
 
-    "inventory-list": "Item List",
-    "item-create": "Create New Item"
+    "save-invoice-id" : "Saved Invoice"
 }

@@ -9,13 +9,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { loadLanguages } from "i18next";
 import { messageBoxType } from "../../utilities/native.utility";
 
-const tableHeader = ['materail-code', 'name', 'model', 'quantity', 'price', 'total'];
+const tableHeader = ['materail-code', 'name', 'model', 'quantity', 'price', 'total']
 
 export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) => {
 
     const history = useHistory();
     const state = useSelector(state => state);
     const { lang } = state;
+    console.log(state);
 
     const [items, setItems] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
@@ -195,8 +196,10 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) =>
                                     <td>
                                         <div className="d-md-flex flex-md-row justify-content-between align-items-center">
                                             <span className="me-3"> {numeral(item.sell_price * item.requestQty).format('0,0')} MMK</span>
-                                            <BsTrash className="btn-icon" size={20} onClick={() => removeItem(item)} />
                                         </div>
+                                    </td>
+                                    <td>
+                                        <BsTrash className="btn-icon" size={20} onClick={() => removeItem(item)} />
                                     </td>
                                 </tr>  
                             )
@@ -299,8 +302,8 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) =>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={5}></td>
-                                    <td colSpan={3}>
+                                    <td colSpan={4}></td>
+                                    <td colSpan={4} align='end'>
                                         <Button className="large-btn" onClick={() => makePayment('cash')}> <span> {t('make-payment')} </span> </Button>
                                     </td>
                                 </tr>
