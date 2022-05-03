@@ -117,7 +117,7 @@ body {
 }
 
 .save-invoice-model {
-	max-width: 50%!important;
+	max-width: 50% !important;
 }
 
 .green {
@@ -132,10 +132,6 @@ body {
 	.logo {
 		width: 200px;
 	}
-}
-
-.delete-btn{
-	margin-top: 33px;
 }
 
 .bought-invoice-box {
