@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Card} from 'react-bootstrap';
-import {CreateShopFormComponent} from './shopCreateForm';
-import {getShop} from '../../services/shop.service';
-import {EditShopFormComponent} from './shopEditForm';
 import {t} from 'i18next';
-import {withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
+import { ShopCreateForm } from './ShopSetting/ShopCreateForm';
+import { ShopEditForm } from './ShopSetting/ShopEditForm';
+import {withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
+import { getShop } from '../../services/shop.service';
 
-class ShopComponent extends Component {
+class ShopSettigPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -81,9 +81,9 @@ class ShopComponent extends Component {
 
 				<div className="col-md-8">
 					{shop === null ? (
-						<CreateShopFormComponent props={props} retrive={e => this.getShopInfo(e)} />
+						<ShopCreateForm props={props} retrive={e => this.getShopInfo(e)} />
 					) : (
-						<EditShopFormComponent props={props} dataSource={shop} retrive={e => this.getShopInfo(e)} />
+						<ShopEditForm props={props} dataSource={shop} retrive={e => this.getShopInfo(e)} />
 					)}
 				</div>
 			</div>
@@ -96,4 +96,4 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ShopComponent));
+export default connect(mapDispatchToProps , mapStateToProps)(withRouter(ShopSettigPage));

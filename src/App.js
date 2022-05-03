@@ -11,7 +11,7 @@ import LicensePage from './pages/License';
 import ErrorPage from './pages/Error';
 import FirstUserRegisterPage from './pages/user/FirstUserRegister';
 import ProfilePage from './pages/user/Profile';
-import SettingPage from './pages/Setting';
+
 import FirstDevice from './pages/device/FirstDevice';
 import AccountPage from './pages/user/Account';
 import InventoryPage from './pages/Inventory';
@@ -28,11 +28,14 @@ import './assets/css/theme.css';
 import Invoice from './pages/Invoice';
 import CreditPage from './pages/Credit';
 import Repayment from './components/repayment/Repayment';
-import {NumberSpecificationComponent} from './components/settings/numberSpecification';
 import InvoiceSetting from './components/settings/InvoiceSetting';
 import BackUpComponent from './components/settings/backup';
 import CreateItemPage from './pages/item/CreateItemPage';
 import TaxComponent from './components/settings/Tax';
+import { NumberSpecificationSettingPage } from './pages/setting/NumberSpecificationSettingPage';
+import ShopSettigPage from './pages/setting/ShopSettigPage';
+
+
 
 class App extends Component {
 	render() {
@@ -49,13 +52,13 @@ class App extends Component {
 				<Route exact path={'/login'} component={LoginPage} />
 				<Route exact path={'/logout'} component={LogoutPage} />
 
-				<Route exact path={'/numberspecification'} component={NumberSpecificationComponent} />
+				<Route exact path={'/setting'} component={ShopSettigPage} />
+				<Route exact path={'/numberspecification'} component={NumberSpecificationSettingPage} />
 				<Route exact path={'/invoicesetting'} component={InvoiceSetting} />
 				<Route exact path={'/backup'} component={BackUpComponent} />
 				<Route exact path={'/tax'} component={TaxComponent} />
 
 				<Route exact path={'/profile'} component={ProfilePage} />
-				<Route exact path={'/setting'} component={SettingPage} />
 
 				<Route exact path={'/device/first'} component={FirstDevice} />
 				<Route exact path={'/account'} component={AccountPage} />
