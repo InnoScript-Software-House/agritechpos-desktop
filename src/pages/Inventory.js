@@ -33,7 +33,7 @@ class InventoryPage extends Component {
             window.nativeApi.messageBox.open({ title: t('network-error'), message: getItemData.message, type: messageBoxType.info});
             return;
         }
-        console.log(getItemData)
+
         getItemData.map((value) => {
             value.percentage = parseInt(value.percentage);
             value.price = parseInt(value.price);
@@ -48,9 +48,6 @@ class InventoryPage extends Component {
         const getItemsCount = getItemData.map(value => value.qty);
         const getRevenue = getItemData.map(value => value.total_profit);
         const getPurchese = getItemData.map(value => value.total_sell_price);
-
-
-        console.log(getItemsCount)
 
         const counts = {
             items: getItemsCount.length > 0 ? getItemsCount.reduce((a,b) => a+b) : 0,
@@ -117,7 +114,7 @@ class InventoryPage extends Component {
                         <div className='col-md-3'>
                             <Card>
                                 <Card.Header className='card-info'>
-                                    <Card.Title className={`${zawgyi(lang)}`}> {t('total-purchese')} </Card.Title>
+                                    <Card.Title className={`${zawgyi(lang)}`}> {t('total-revenue')} </Card.Title>
                                 </Card.Header>
 
                                 <Card.Body>

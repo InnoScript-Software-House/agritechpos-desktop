@@ -70,10 +70,10 @@ const CustomerTableHeaderComponent = ({dataSource, selectedRows}) => {
 
 
     useEffect(() => {
-        if(selectedRows.length > 1){
+        if(selectedRows.length >= 1){
             setSelectedData(selectedRows);
             setIsSelected(true);
-        }
+        }else setIsSelected(false);
             
     },[selectedRows]);
 

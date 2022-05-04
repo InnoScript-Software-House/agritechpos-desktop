@@ -35,7 +35,7 @@ export const ItemTableHeaderComponent = ({ dataSource }) => {
         if (dataSource) {
             const getValue = dataSource.map((value) => {
                 return [
-                    value.code, value.eng_name, value.category.name, value.model,
+                    value.code, value.eng_name, value.category ? value.category.name : null, value.model,
                     value.location, value.price, value.percentage, value.sell_price
                 ];
             });
@@ -43,6 +43,7 @@ export const ItemTableHeaderComponent = ({ dataSource }) => {
         }
         setExportExcel(dataSource)
     }, [dataSource]);
+
     return (
         <div className='mb-3'>
             {data.length > 0 && (
@@ -51,8 +52,8 @@ export const ItemTableHeaderComponent = ({ dataSource }) => {
                         className={`ms-1 ${zawgyi(lang)}`}
                         onClick={() => dispatch(setOpenDelModal({
                             open: true,
-                            title: 'Delete Record',
-                            message: 'Are you sure to delete record',
+                            title: t('delete-title'),
+                            message: t('delete-message'),
                             type: 'items',
                             multiple: true,
                             data : dataSource

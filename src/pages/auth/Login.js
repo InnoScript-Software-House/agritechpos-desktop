@@ -1,13 +1,11 @@
-import React, {Component, memo} from 'react';
+import React, {Component} from 'react';
 import {Button, FormControl, InputGroup} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {login} from '../../services/auth.service';
 import {setTokenAction} from '../../redux/actions/auth.action';
 import {setAccountAction} from '../../redux/actions/account.action';
-import {setOpenToastAction} from '../../redux/actions/toast.action';
-import {AppToast} from '../../components/general/toasts';
-import {BsFacebook, BsGoogle, BsInstagram, BsLinkedin, BsYoutube} from 'react-icons/bs';
+import {BsFacebook, BsInstagram, BsLinkedin } from 'react-icons/bs';
 import {SideSectionComponent} from '../../components/general/SideSectionComponent';
 import {menus, messageBoxType} from '../../utilities/native.utility';
 import {zawgyi, t} from '../../utilities/translation.utility';
@@ -188,8 +186,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	setToken: accessToken => dispatch(setTokenAction(accessToken)),
-	setAccount: account => dispatch(setAccountAction(account)),
-	openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
+	setAccount: account => dispatch(setAccountAction(account))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginPage));
