@@ -17,6 +17,7 @@ import { autocomplete } from '../utilities/table.utility';
 import { itemExportToExcel } from '../utilities/exports/itemExport.utility';
 import { t } from 'i18next';
 import numeral from 'numeral';
+import PrintInvoicesComponent from '../components/invoice/printInvoicesComponent';
 
 let getToday = moment().format('YYYY-MM-DD');
 
@@ -34,28 +35,30 @@ class InvoicePage extends Component {
             display: '',
             is_print: false,
             preview: false,
-            totalSoldAmount: 0
+            totalSoldAmount: 0,
+            showDetail: 0,
+            dataToPrint: null
         }
     }
 
-    print(){
-        this.setState({
-            is_print: true
-        })
-        const { print } = window.nativeApi;
+    // print(){
+    //     this.setState({
+    //         is_print: true
+    //     })
+    //     const { print } = window.nativeApi;
 
-        this.setState({
-            display: 'display'
-        })
-        print.invoice();
-        print.reload((data) => {
-            if(data === true) {
-                this.setState({
-                    is_print: false,
-                })
-            }
-        });
-    }
+    //     this.setState({
+    //         display: 'display'
+    //     })
+    //     print.invoice();
+    //     print.reload((data) => {
+    //         if(data === true) {
+    //             this.setState({
+    //                 is_print: false,
+    //             })
+    //         }
+    //     });
+    // }
 
     async loadingData() {
         const response = await getInvoice();
@@ -143,10 +146,24 @@ class InvoicePage extends Component {
         })
     }
 
+    handlePrint(e){
+        this.setState({
+            dataToPrint: e,
+            is_print: true
+        });
+    }
+
     invoiceDataHandler(event){
         this.setState({
-            invoiceData: event,
-            preview: true
+            invoiceData: event.selectedRows,
+            preview: true,
+            showDetail: event.selectedCount
+        });
+    }
+
+    modalClose(){
+        this.setState({
+            showDetail: 0
         });
     }
 
@@ -176,19 +193,23 @@ class InvoicePage extends Component {
     }
 
     render() {
-        const { start_date, end_date, invoices, tableloading, preview, searchText, is_print, invoiceData, totalSoldAmount } = this.state; 
+        const { start_date, end_date, invoices, tableloading, preview, searchText, is_print, invoiceData, totalSoldAmount, showDetail, dataToPrint } = this.state; 
         return (
             <>
-                {/* {!is_print?(<Navigation props={this.props} />): (<></>)} */}
-
-                <div className='container-fluid'>
+            {
+                is_print ? (
+                    <PrintInvoicesComponent printData={dataToPrint} closePrint={() => this.setState({is_print: false, showDetail: 0})}/>
+                ):(
+                    <div className='container-fluid'>
                     { preview && (
                         <div className='row'>
                             <div className='col-md-12'>
-                                <InvoiceDataComponent invoiceDetail={invoiceData}  getInvoice={invoices}/>
-                                <div className='d-flex flex-row justify-content-end'>
-                                    {!is_print? (<Button className='mt-2' onClick={() => this.print()}> {t('print')} </Button>) : (<></>)}
-                                </div>
+                                <InvoiceDataComponent 
+                                setprint={(e) => this.handlePrint(e)}
+                                closeModal={() => this.modalClose()} 
+                                invoiceDetail={invoiceData} 
+                                isOpen={showDetail}  
+                                getInvoice={invoices}/>
                             </div>
                         </div>
                     )}
@@ -249,7 +270,7 @@ class InvoicePage extends Component {
                                         selectableRows={true}
                                         selectableRowsHighlight={true}
                                         onSelectedRowsChange={(e) => 
-                                            this.invoiceDataHandler(e.selectedRows)
+                                            this.invoiceDataHandler(e)
                                         }
                                         selectableRowsSingle={true}
                                         paginationPerPage={50}
@@ -261,6 +282,8 @@ class InvoicePage extends Component {
                         ): (<></>)}
                     </div>
                 </div>
+                )
+            }
             </>
             
         )

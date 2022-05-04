@@ -61,7 +61,6 @@ export const InvoiceReportPage = () => {
         const { print } = window.nativeApi;
         setIsPrint(true);
         setDisplay('display');
-        console.log(invoice)
 
         const getPrintOptions = localStorage.getItem("PRINT_SETTING") ? JSON.parse(localStorage.getItem("PRINT_SETTING")) : printOptions;
         
