@@ -19,12 +19,10 @@ import EditItemPage from './pages/item/EditItem';
 import CategoryListPage from './pages/category/CategoryList';
 import EditCategoryPage from './pages/category/EditCategory';
 import SalePage from './pages/Sale';
-import {InvoiceReportPage} from './components/sale/invoiceReport';
+import InvoiceReportPage from './components/sale/invoiceReport';
 import InvociePage from './pages/Invoice';
 import CustomerPage from './pages/customer/Customer';
 import EditCustomerPage from './components/customer/EditCustomer';
-
-import './assets/css/theme.css';
 import Invoice from './pages/Invoice';
 import CreditPage from './pages/Credit';
 import Repayment from './components/repayment/Repayment';
@@ -32,12 +30,14 @@ import InvoiceSetting from './components/settings/InvoiceSetting';
 import BackUpComponent from './components/settings/backup';
 import CreateItemPage from './pages/item/CreateItemPage';
 import TaxComponent from './components/settings/Tax';
-import { NumberSpecificationSettingPage } from './pages/setting/NumberSpecificationSettingPage';
+import NumberSpecificationSettingPage from './pages/setting/NumberSpecificationSettingPage';
 import ShopSettigPage from './pages/setting/ShopSettigPage';
+import GeneralSettingPage from './pages/general/GeneralPage';
 
-
+import './assets/css/theme.css';
 
 class App extends Component {
+
 	render() {
 		return (
 			<HashRouter history={history}>
@@ -80,6 +80,8 @@ class App extends Component {
 
 				<Route exact path={'/customer'} component={CustomerPage} />
 				<Route exact path={'/editcustomer/:id'} component={EditCustomerPage} />
+
+				<Route exact path={'general-setting'} component={GeneralSettingPage} />
 			</HashRouter>
 		);
 	}

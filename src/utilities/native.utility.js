@@ -30,6 +30,10 @@ export const menus = [
 		label: 'setting-page',
 		submenu: [
 			{
+				label: `${t('general')}`,
+				url: '/general'
+			},
+			{
 				label: `${t('shop')}`,
 				url: '/setting'
 			},
