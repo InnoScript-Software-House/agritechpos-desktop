@@ -6,6 +6,7 @@ import { CustomerListTableComponent } from '../../components/customer/CustomerLi
 import { getInvoice } from '../../services/invoice.service';
 import { getCustomerList } from '../../services/customer.service';
 import CustomerBoughtItemsComponent from '../../components/customer/CustomerBoughtItemsComponent';
+import { LoadingComponent } from '../../components/general/Loading';
 
 class CustomerPage extends Component {
  
@@ -13,8 +14,9 @@ class CustomerPage extends Component {
         super(props);
         this.state = {
             openEdit: false,
-            customerLists: [],
-            selectedCustomer: null
+            selectedCustomer: null,
+            loading: true,
+            customers: []
         }
     };
 
@@ -26,58 +28,94 @@ class CustomerPage extends Component {
 
 
     async loadingData() {
-        const { openToast } = this.props; 
         const response = await getCustomerList();
-        const filterCustomer = [];
-        let customers = [];
 
         if(response && response.success === false) {
-            openToast('Customer', response.message, 'danger');
+            window.nativeApi.messageBox({ title: t('response-error'), message: response.message, type: messageBoxType.info});
+            this.setState({ loading: false });
             return;
         }
-        customers = response.filter(e => e.customer_name !== null);
+
+        response.map((value) => {
+            value.invoice_count = value.invoice.length;
+
+            if(value.invoice.length > 0) {
+                const total_amount = value.invoice.map(data => data.total_amount);
+                value.total_amount = total_amount.reduce((a,b) => Number(a)+Number(b));
+            } else {
+                value.total_amount = 0;
+            }
+
+            if(value.credit.length > 0) {
+                const total_credit = value.credit.map(data => data.amount);
+                value.total_credit_amount = total_credit.reduce((a,b) => Number(a) + Number(b));
+
+                value.credit.map((creditData) => {
+                   const getRepayment = JSON.parse(creditData.repayment);
+                   value.repayment_time = getRepayment.length;
+
+                   const getPayAmount = getRepayment.map((repaymentData) => repaymentData.pay_amount);
+                   value.total_pay_amount = getPayAmount.reduce((a,b) => Number(a) + Number(b));
+                   
+                   value.total_repayment_remaining = Number(value.total_credit_amount) - Number(value.total_pay_amount);
+               });
+
+            } else {
+                value.total_credit_amount = 0;
+                value.repayment_time = 0;
+                value.total_pay_amount = 0;
+                value.total_repayment_remaining = 0;
+            }
+
+            return value;
+        });
+
+        console.log(response);
+
         this.setState({
-            customerLists: response
-        })
+            loading: false,
+            customers: response
+        });
+
         return;
     }
 
     async componentDidMount() {
-        const {history} = this.props;
-        await this.loadingData();
+        const { history } = this.props;
+
         nativeApi.app.navigateTo((url) => {
         	history.push(url);
         });
+
+        await this.loadingData();
     }
  
     render() {
-
-        const { customerLists, selectedCustomer } = this.state;
-
         return (
-        <>
-            {/* <Navigation props={this.props} /> */}
-
             <div className='container-fluid'>
-                <div className='row'>
-                    <div className='col-md-3'>
-                        <CustomerBoughtItemsComponent
-                        props={this.props}
-                        customerInfo={selectedCustomer}
-                        />
+                {!this.state.loading && (
+                    <div className='row mt-1'>
+                                    {/* <div className='col-md-3'>
+                                        <CustomerBoughtItemsComponent
+                                        props={this.props}
+                                        customerInfo={selectedCustomer}
+                                        />
+                                    </div> */}
+                
+                        <div className='col-md-12'>
+                            <CustomerListTableComponent 
+                                dataSource={this.state.customers}
+                                reload={() => this.loadingData()}
+                                retrive={(e) => this.getSelectCustomerInfo(e)}
+                            />
+                        </div>
                     </div>
-                    <div className='col-md-9'>
-                        <CustomerListTableComponent 
-                            props={this.props}
-                            dataSource={customerLists}
-                            reload={() => this.loadingData()}
-                            retrive={(e) => this.getSelectCustomerInfo(e)}
-                        />
-                    </div>
+                )}
 
-                </div>
+                {this.state.loading && (
+                    <LoadingComponent />
+                )}
             </div>
-        </>
         )
     }
 
@@ -89,7 +127,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    openToast: (title, message, theme) => dispatch(setOpenToastAction(title, message, theme))
 });
 
 
