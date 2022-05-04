@@ -31,10 +31,9 @@ import Repayment from './components/repayment/Repayment';
 import InvoiceSetting from './components/settings/InvoiceSetting';
 import BackUpComponent from './components/settings/backup';
 import CreateItemPage from './pages/item/CreateItemPage';
-import TaxComponent from './components/settings/Tax';
 import { NumberSpecificationSettingPage } from './pages/setting/NumberSpecificationSettingPage';
 import ShopSettigPage from './pages/setting/ShopSettigPage';
-
+import { TaxComponent } from './components/settings/Tax'
 
 
 class App extends Component {
