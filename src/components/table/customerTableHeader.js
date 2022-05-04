@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { InputGroup, FormControl, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { itemExportToExcel } from "../../utilities/exports/itemExport.utility";
 import { t } from 'i18next';
+import { pdf } from "../../utilities/export.utility";
+import { zawgyi } from "../../utilities/translation.utility";
+import { useDispatch, useSelector } from "react-redux";
+import moment from 'moment';
+import { setOpenDelModal } from "../../redux/actions/openDelModal.action";
 
-const CustomerTableHeaderComponent = ({dataSource, searchColumns, filterResult, selectedRows}) => {
-    const [filterValue, setFilterValue] = useState('customer_name');
-    const [filterType, setFilterType] = useState(searchColumns[0]);
-    const [text, setText] = useState('');
+const CustomerTableHeaderComponent = ({dataSource, selectedRows}) => {
+    const state = useSelector(state => state);
+    const {lang} = state;
+    const columns = ['Name', 'Email', 'Phone No', 'Address', 'Invoice Count', 'Total Bought Invoices', 'Total Paid Amount'];
+    const [ data, setData] = useState([]);
     const [isSelected, setIsSelected] = useState(false);
+    const [selectedData, setSelectedData] = useState([]);
+    const dispatch = useDispatch();
 
     const paidCount = (e) => {
         let repayment = JSON.parse(e.credit.repayment);
@@ -17,51 +25,54 @@ const CustomerTableHeaderComponent = ({dataSource, searchColumns, filterResult, 
 
     const exportToExcel = () => {
         const excelData = selectedRows.map(e => ({
-            name: e.customer_name,
-            email: e.customer_email,
-            phone_number: e.customer_phone,
+            name: e.name,
+            email: e.email,
+            phone_number: e.phone,
+            address: e.address,
             credit: e.credit_amount,
-            paid_count: paidCount(e),
-            total_amount: e.total_amount
+            invoice_count: e.invoice.length,
+            total_bought_amount: total(e.invoice),
+            total_credit_amount: credit(e.credit),
+            total_paid_amount: payAmount(e.invoice)
         }));
         itemExportToExcel('customerlist', excelData);
     }
 
-    const completeFilter = (type) => {
-        switch(type){
-            case 'name' : setFilterValue('customer_name'); break;
-            case 'email' : setFilterValue('customer_email'); break;
-            case 'phone' : setFilterValue('customer_phone'); break;
-        };
+    const total = (e) => {
+        const getTotal = e.map(value => Number(value.total_amount));
+        const totalBought = getTotal.reduce((a,b) => a + b , 0);
+        return totalBought;
     }
 
-    const autoSearch = (searchText) => {
-        setText(searchText);
+    const payAmount = (e) => {
+        const getPayAmount = e.map(value => Number(value.pay_amount));
+        const totalPayAmount = getPayAmount.reduce((a, b) => a + b, 0);
+        return totalPayAmount;
+    }
 
-        if(searchText === '') {
-            filterResult(dataSource);
-            return;
-        }
+    const credit = (e) => {
+        const getCredit = e.map( value => Number(value.amount));
+        const totalCredit = getCredit.reduce((a, b) => a + b, 0);
+        return totalCredit;
+    }
 
-        const suggestionResut = dataSource.filter((customer) => {
-            if(customer[filterValue]) {
-               return customer[filterValue].toLowerCase().includes(text.toLowerCase())
-            }
+    const calculateData = (e) => {
+        const pdfData = e.map(e => {
+            return [e.name, e.email, e.phone, e.address, e.invoice.length, total(e.invoice), credit(e.credit), payAmount(e.invoice)]
         });
-
-        filterResult(suggestionResut);
+        setData(pdfData);
     }
+
+    const printToPdf = (e) => {
+        calculateData(e);
+        pdf(columns, data, `customer_${moment().format('D_M_Y')}`);
+    }
+
 
     useEffect(() => {
-        if(selectedRows){
-            if(selectedRows.length > 0){
-                setIsSelected(true);
-                return;
-            }
-            else{
-                setIsSelected(false)
-                return;
-            }
+        if(selectedRows.length > 1){
+            setSelectedData(selectedRows);
+            setIsSelected(true);
         }
             
     },[selectedRows]);
@@ -72,38 +83,36 @@ const CustomerTableHeaderComponent = ({dataSource, searchColumns, filterResult, 
             {
                 isSelected && (
                     <div className="me-3">
-                        <Button onClick={() => exportToExcel()}>
-                            {t('export')}
-                        </Button>
+                    <Button
+                        className={`ms-1 ${zawgyi(lang)}`}
+                        onClick={() => dispatch(setOpenDelModal({
+                            open: true,
+                            title: 'Delete Record',
+                            message: 'Are you sure to delete record',
+                            type: 'customers',
+                            multiple: true,
+                            data : selectedData
+                        }))}
+                    >
+                        {t('delete-all')}
+                    </Button>
+                    <Button
+                        className={`ms-1 ${zawgyi(lang)}`}
+                        onClick={() => printToPdf(selectedData)}
+                    >
+                        {t('btn-export-pdf')}
+                    </Button>
+
+                    <Button
+                        className={`ms-1 ${zawgyi(lang)}`}
+                        onClick={() => exportToExcel()}
+                    >
+                        {t('btn-export-excel')}
+                    </Button>
                     </div>
                 )
             }
-            <InputGroup>
-                <FormControl
-                    className="input-small"
-                    type='text'
-                    placeholder={filterType}
-                    value={text}
-                    onChange={e => autoSearch(e.target.value)}
-                />
-                <FormControl
-                    className="select-input-group"
-                    as={'select'}
-                    value={filterType}
-                    onChange={(e) => {
-                        completeFilter(e.target.value); 
-                        setFilterType(e.target.value);
-                        setText('');
-                        filterResult(dataSource)
-                    }}
-                >
-                    {searchColumns.map((filter, index) => {
-                        return(
-                            <option key={`filter_column_id_${index}`}> {filter} </option>
-                        )
-                    })}
-                </FormControl>
-        </InputGroup>
+
             </div>
         </>
     )

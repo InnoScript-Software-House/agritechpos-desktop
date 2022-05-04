@@ -60,13 +60,13 @@ class CustomerPage extends Component {
 
             <div className='container-fluid'>
                 <div className='row'>
-                    <div className='col-md-3'>
+                    {/* <div className='col-md-3'>
                         <CustomerBoughtItemsComponent
                         props={this.props}
                         customerInfo={selectedCustomer}
                         />
-                    </div>
-                    <div className='col-md-9'>
+                    </div> */}
+                    <div className='col-md-12'>
                         <CustomerListTableComponent 
                             props={this.props}
                             dataSource={customerLists}
