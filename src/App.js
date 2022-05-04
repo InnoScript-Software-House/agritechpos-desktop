@@ -81,7 +81,7 @@ class App extends Component {
 				<Route exact path={'/customer'} component={CustomerPage} />
 				<Route exact path={'/editcustomer/:id'} component={EditCustomerPage} />
 
-				<Route exact path={'general-setting'} component={GeneralSettingPage} />
+				<Route exact path={'/general-setting'} component={GeneralSettingPage} />
 			</HashRouter>
 		);
 	}

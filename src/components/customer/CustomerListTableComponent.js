@@ -6,12 +6,13 @@ import { paginationComponentOptions } from '../table/paginationOptions';
 import CustomerTableHeaderComponent from '../table/customerTableHeader';
 import { TableLoadingComponent } from '../table/tableLoading';
 import {t} from 'i18next';
+import {CustomerRowExpandComponent} from './utilities/CustomerRowExpandComponent';
 
 const searchColumns = [
     t('name'), t('email'), t('phone')
 ];
 
-export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
+export const CustomerListTableComponent = ({ props, dataSource, reload, retrive }) => {
 
     const [tableLoading, setTableLoading] = useState(true);
     const [customerList, setCustomerList] = useState([]);
@@ -24,6 +25,11 @@ export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
     const getCustomerList = () => {
         let customerData = dataSource.filter(e => e.customer_name !== null);
         return customerData;
+    }
+
+    const boughtInvoicesHandler = (e) => {
+        setSelectedRows(e);
+        retrive(e);
     }
 
     useEffect(() => {
@@ -71,8 +77,13 @@ export const CustomerListTableComponent = ({ props, dataSource, reload }) => {
                         pointerOnHover
                         selectableRows={true}
                         selectableRowsHighlight={true}
-                        onSelectedRowsChange={e => setSelectedRows(e.selectedRows)}
+                        onSelectedRowsChange={e => boughtInvoicesHandler(e.selectedRows)}
+                        selectableRowsSingle={true}
                         paginationPerPage={50}
+                        expandableRows={true}
+                        expandOnRowClicked={true}
+                        expandableRowsComponent={CustomerRowExpandComponent}
+                        expandableRowsComponentProps={{'refresh' : e => reload(e)}}
                         paginationRowsPerPageOptions={[50, 100, 150, 200, 500]}
                     />
                 </Card.Body>

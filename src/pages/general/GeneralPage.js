@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import { Button, FormControl, InputGroup, Modal } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { CreditDetailComponent } from "../components/credit/CreditDetailComponent";
-import { CreditTableComponent } from "../components/credit/CreditTableComponent";
-import { Navigation } from "../components/general/Navigation";
-import { setOpenToastAction } from "../redux/actions/toast.action";
-import { getCreditList, updateCredit } from "../services/credit.service";
-import moment from "moment";
-import { t } from 'i18next';
+import { t, zawgyi } from "../../utilities/translation.utility";
 
 
 class GeneralSettingPage extends Component {
@@ -21,12 +15,54 @@ class GeneralSettingPage extends Component {
         }
     }
 
+    async componentDidMount() { 
+        const { history } = this.props;
+
+        window.nativeApi.app.navigateTo((url) => {
+        	history.push(url);
+        });
+    }
+
     render() {
+        const { lang } = this.props.reducer;
+
         return(
             <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-12">
-                        <h3> General Setting </h3>
+                <div className="row mt-1">
+                    <div className="col-md-4">
+                        <Card>
+                            <Card.Header> 
+                                <Card.Title className={`${zawgyi(lang)}`}> {t('title-tax-setting')} </Card.Title>
+                            </Card.Header>
+                        </Card>
+
+                        <Card.Body>
+
+                        </Card.Body>
+                    </div>
+
+                    <div className="col-md-4">
+                        <Card>
+                            <Card.Header> 
+                                <Card.Title className={`${zawgyi(lang)}`}> {t('title-print-setting')} </Card.Title>
+                            </Card.Header>
+                        </Card>
+
+                        <Card.Body>
+                            
+                        </Card.Body>
+                    </div>
+
+                    <div className="col-md-4">
+                        <Card>
+                            <Card.Header> 
+                                <Card.Title className={`${zawgyi(lang)}`}> {t('title-shop-setting')} </Card.Title>
+                            </Card.Header>
+                        </Card>
+
+                        <Card.Body>
+                            
+                        </Card.Body>
                     </div>
                 </div>
             </div>
