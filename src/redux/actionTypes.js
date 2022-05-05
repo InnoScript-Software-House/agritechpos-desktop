@@ -47,3 +47,6 @@ export const CLOSE_DIALOG = 'CLOSE_DIALOG';
 
 export const SET_TAX_CHANGE = 'SET_TAX_CHANGE';
 export const TAX_CHANGE = 'TAX_CHANGE';
+
+export const PRINT_DATA = 'PRINT_DATA';
+export const PRINT_SETTING = 'PRINT_SETTING';

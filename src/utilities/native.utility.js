@@ -34,10 +34,6 @@ export const menus = [
 				url: '/general-setting'
 			},
 			{
-				label: `${t('shop')}`,
-				url: '/setting'
-			},
-			{
 				label: `${t('number-specification')}`,
 				url: '/numberspecification'
 			},
