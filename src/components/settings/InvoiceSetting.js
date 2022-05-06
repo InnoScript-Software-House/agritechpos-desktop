@@ -76,6 +76,7 @@ class InvoiceComponent extends Component {
 					<div className="row">
 						<div className="col-md-4 mb-3">
 							<FormLabel className="me-3 w-full"> {t('invoice-prefix-name')} </FormLabel>
+
 							<InputGroup>
 								<FormControl
 									type="text"

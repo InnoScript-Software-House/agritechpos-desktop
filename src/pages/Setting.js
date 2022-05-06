@@ -14,6 +14,7 @@ import { NumberSpecificationComponent } from '../components/settings/numberSpeci
 // import { DeviceComponent } from '../components/settings/device';
 import { InvoiceComponent } from '../components/settings/InvoiceSetting';
 import BackUpComponent from '../components/settings/backup';
+import TaxComponent from '../components/settings/Tax';
 
 class SettingPage extends Component {
 
@@ -64,6 +65,7 @@ class SettingPage extends Component {
                             {/* {openComponent && openComponent === 'DeviceComponent' && (<DeviceComponent props={this.props} />)} */}
                             {openComponent && openComponent === 'InvoiceComponent' && (<InvoiceComponent props={this.props} />)}
                             {openComponent && openComponent === 'BackUpComponent' && (<BackUpComponent props={this.props}/>)}
+                            {openComponent && openComponent === 'TaxComponent' && (<TaxComponent props={this.props} />)} 
                         </div>
                     </div>
                 </div>

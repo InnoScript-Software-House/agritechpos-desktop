@@ -30,8 +30,8 @@ export const menus = [
 		label: 'setting-page',
 		submenu: [
 			{
-				label: `${t('shop')}`,
-				url: '/setting'
+				label: `${t('nav-general')}`,
+				url: '/general-setting'
 			},
 			{
 				label: `${t('number-specification')}`,
@@ -44,6 +44,10 @@ export const menus = [
 			{
 				label: `${t('backup')}`,
 				url: '/backup'
+			},
+			{
+				label : `${t('tax')}`,
+				url : '/tax'
 			}
 		]
 	},

@@ -49,6 +49,7 @@
     "address" : "လိပ်စာ",
     "add-repayment" : "Add Repayment",
     "backup" : "Backup",
+    "tax" : "Tax",
     "black" : "Black",
     "bought-price" : "Bought Price",
     "credit-id" : "Credit ID",
@@ -277,5 +278,7 @@
     "delete-message": "အချက်အလက်များကို ဖျက်ရန် သေချာပါသလား",
     "btn-delete": "ဖျက်မည်",
     "title-update-category": "ပစ္စည်းအမျိုးအစားအချက်အလက်များ ပြုပြင်မည်",
-    "success-category-update": "ပစ္စည်းအမျိုးအစားအချက်အလက်များ ပြင်ဆင်မှုအောင်မြင်ပါသည်"
+    "success-category-update": "ပစ္စည်းအမျိုးအစားအချက်အလက်များ ပြင်ဆင်မှုအောင်မြင်ပါသည်",
+    "nav-general" : "အထွေထွေပြင်ဆင်မှုများ",
+    "title-tax-setting" : "အခွန်နှုန်းထားသက်မှတ်ချက်"
 }
