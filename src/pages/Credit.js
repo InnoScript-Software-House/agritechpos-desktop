@@ -10,16 +10,6 @@ import { getCreditList, updateCredit } from "../services/credit.service";
 import moment from "moment";
 import { t } from 'i18next';
 
-// const columns = [
-//   "#",
-//   "Credit ID",
-//   "Invoice ID",
-//   "Customer Name",
-//   "Credit Amount",
-//   "Repayment",
-//   "Amount Left",
-// ];
-
 class CreditPage extends Component {
   constructor(props) {
     super(props);

@@ -39,7 +39,7 @@ export const InvoiceReportPage = () => {
                 customer_phone: customer ? customer.phone : null,
                 customer_address: customer ? customer.address : null,
                 customer_email: customer ? customer.email : null,
-                total_amount: amounts.total_amount,
+                total_amount: amounts.grand_amount,
                 pay_amount: amounts.pay_amount,
                 discount: amounts.discount === '' ? 0 : amounts.discount,
                 invoice_data: invoice,
@@ -62,7 +62,6 @@ export const InvoiceReportPage = () => {
         const { print } = window.nativeApi;
         setIsPrint(true);
         setDisplay('display');
-        console.log(invoice)
 
         const getPrintOptions = localStorage.getItem("PRINT_SETTING") ? JSON.parse(localStorage.getItem("PRINT_SETTING")) : printOptions;
         
@@ -76,7 +75,6 @@ export const InvoiceReportPage = () => {
             localStorage.removeItem('CUSTOMER');
         });
     }
-    console.log(customer);
 
     useEffect(async () => {
         const shopinfo = await getShop();

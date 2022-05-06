@@ -77,7 +77,7 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
                                 <td> {item.code} </td>
                                 <td> {item.name} </td>
                                 <td> {item.model} </td>
-                                <td> {item.category.name} </td>
+                                <td> {item.category ? item.category.name : null} </td>
                                 <td> {item.totalQty} </td>
                                 <td> 
                                     <span className="clickable" onClick={() => setShowPrice(!showPrice)}>

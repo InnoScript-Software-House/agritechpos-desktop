@@ -4,7 +4,7 @@ import { Spinner } from "react-bootstrap";
 export const LoadingComponent = () => {
     
     return(
-        <div className="d-md-flex flex-md-column justify-content-center align-items-center">
+        <div className="loading">
             <Spinner animation="border" />
         </div>
     )
