@@ -42,29 +42,48 @@ class GeneralSettingPage extends Component {
         window.nativeApi.app.navigateTo((url) => {
             history.push(url);
         });
+
+        window.nativeApi.device.get((data) => {
+            console.log(data);
+            const cpus = data.totalmem();
+            console.log(cpus);
+        })
     }
 
     render() {
         return (
-            <div className="container-fluid mt-3">
+            <div className="container-fluid">
                 <div className="row mt-1">
-                    <div className="col-md-4">
-                        <Card className="mb-3">
-                            <Language />
-                        </Card>
-                        <TaxSetting />
+                    <div className="col-md-6">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <Language />
+                            </div>
+
+                            <div className="col-md-6">
+                                <TaxSetting />
+                            </div>
+                        </div>
+
+                        <div className="row mt-3">
+                            <div className="col-md-12">
+                                <PrintSetting />
+                            </div>
+                        </div>
+
+                        <div className="row mt-3">
+                            <div className="col-md-12">
+                                {
+                                    this.state.shop === null
+                                        ? (<ShopSettingCreate props={this.props} retrive={e => this.getShopInfo(e)} />)
+                                        : (<ShopSettingEdit props={this.props} dataSource={this.state.shop} retrive={e => this.getShopInfo(e)} />)
+                                }
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="col-md-4">
-                        <PrintSetting />
-                    </div>
+                    <div className="col-md-6">
 
-                    <div className="col-md-4">
-                        {
-                            this.state.shop === null
-                                ? (<ShopSettingCreate props={this.props} retrive={e => this.getShopInfo(e)} />)
-                                : (<ShopSettingEdit props={this.props} dataSource={this.state.shop} retrive={e => this.getShopInfo(e)} />)
-                        }
                     </div>
                 </div>
             </div>
