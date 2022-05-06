@@ -123,7 +123,7 @@ const PrintSetting = () => {
                                     />
                                 </InputGroup>
                             </div>
-                            <div className='mb-3'>
+                            <div className=''>
                                 <FormLabel className="me-3 w-full"> {t('invoice-footer')} </FormLabel>
                                 <InputGroup>
                                     <FormControl

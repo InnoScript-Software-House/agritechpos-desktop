@@ -266,5 +266,6 @@
     "title-update-category": "Update Category",
     "success-category-update": "Category is updated successfully",
     "nav-general" : "General Setting",
-    "title-tax-setting" : "Tax Setting"
+    "title-tax-setting" : "Tax Setting",
+    "title-print-setting" : "Print Setting"
 }

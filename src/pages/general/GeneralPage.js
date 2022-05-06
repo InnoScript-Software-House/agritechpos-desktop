@@ -46,13 +46,13 @@ class GeneralSettingPage extends Component {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div className="container-fluid mt-3">
                 <div className="row mt-1">
                     <div className="col-md-4">
-                        <TaxSetting />
-                        <Card className="mt-3">
+                        <Card className="mb-3">
                             <Language />
                         </Card>
+                        <TaxSetting />
                     </div>
 
                     <div className="col-md-4">
