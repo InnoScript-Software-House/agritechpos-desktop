@@ -12,9 +12,9 @@ const TaxSetting = () => {
 
     const [taxAmount, setTaxAmount] = useState('')
 
-    const saveTax = async (e) => {
-        setTaxAmount(e);
-        dispatch(taxAction(e));
+    const saveTax = async (value) => {
+        setTaxAmount(value);
+        dispatch(taxAction(value));
     }
 
     useEffect(() => {
