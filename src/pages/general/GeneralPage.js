@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Card } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import { Language } from "../../components/general/Language";
 import { getShop } from "../../services/shop.service";
 import PrintSetting from "./PrintSetting";
 import { ShopSettingCreate } from "./ShopSettingCreate";
@@ -48,6 +50,9 @@ class GeneralSettingPage extends Component {
                 <div className="row mt-1">
                     <div className="col-md-4">
                         <TaxSetting />
+                        <Card className="mt-3">
+                            <Language />
+                        </Card>
                     </div>
 
                     <div className="col-md-4">
