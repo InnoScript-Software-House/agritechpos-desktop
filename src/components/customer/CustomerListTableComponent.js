@@ -63,6 +63,7 @@ export const CustomerListTableComponent = ({ props, dataSource, reload, retrive 
                         subHeaderComponent={
                             <CustomerTableHeaderComponent
                                 type={'CustomerLists'}
+                                props={props}
                                 dataSource={dataSource}
                                 searchColumns={searchColumns}
                                 placeholder={t('search')}

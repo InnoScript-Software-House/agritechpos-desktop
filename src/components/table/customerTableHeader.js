@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from 'moment';
 import { setOpenDelModal } from "../../redux/actions/openDelModal.action";
 
-const CustomerTableHeaderComponent = ({dataSource, selectedRows}) => {
+const CustomerTableHeaderComponent = ({props, dataSource, selectedRows}) => {
     const state = useSelector(state => state);
     const {lang} = state;
     const columns = ['Name', 'Email', 'Phone No', 'Address', 'Invoice Count', 'Total Bought Invoices', 'Total Paid Amount'];
@@ -89,7 +89,7 @@ const CustomerTableHeaderComponent = ({dataSource, selectedRows}) => {
                             open: true,
                             title: 'Delete Record',
                             message: 'Are you sure to delete record',
-                            type: 'customers',
+                            type: 'customer',
                             multiple: true,
                             data : selectedData
                         }))}

@@ -1,11 +1,15 @@
 import numeral from 'numeral';
 import React from 'react';
-import {BsTrashFill} from 'react-icons/bs';
+import {BsTrash, BsTrashFill} from 'react-icons/bs';
 import {useHistory} from 'react-router-dom';
 import {t} from 'i18next';
+import { messageBoxType } from '../../utilities/native.utility';
+import { useDispatch } from 'react-redux';
+import { setOpenDelModal } from '../../redux/actions/openDelModal.action';
 
 export const customerColumns = props => {
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	const columns = [
 		{
@@ -93,9 +97,15 @@ export const customerColumns = props => {
 		  selector: (row) => {
 		    return (
 		      <>
-		        <BsTrashFill
-		        size={20}
-		        />
+                <BsTrash size={20} className="btn-icon ms-3" onClick={() => dispatch(setOpenDelModal({
+                        open: true,
+                        title: 'Delete Record',
+                        message: 'Are you sure to delete record',
+                        id: row.id,
+						multiple: false,
+                        type: 'customer'
+                    }))}
+                />
 		      </>
 		    )
 		  }

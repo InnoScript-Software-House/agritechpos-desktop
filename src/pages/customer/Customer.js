@@ -6,6 +6,7 @@ import { CustomerListTableComponent } from '../../components/customer/CustomerLi
 import { getInvoice } from '../../services/invoice.service';
 import { getCustomerList } from '../../services/customer.service';
 import CustomerBoughtItemsComponent from '../../components/customer/CustomerBoughtItemsComponent';
+import { DeleteDialog } from '../../components/general/deleteDialog';
 
 class CustomerPage extends Component {
  
@@ -53,6 +54,7 @@ class CustomerPage extends Component {
     render() {
 
         const { customerLists, selectedCustomer } = this.state;
+        const { delModal } = this.props.reducer;
 
         return (
         <>
@@ -74,9 +76,11 @@ class CustomerPage extends Component {
                             retrive={(e) => this.getSelectCustomerInfo(e)}
                         />
                     </div>
-
                 </div>
             </div>
+            { delModal && (
+                <DeleteDialog props={this.props} retrive={() => this.loadingData()} />
+            )}
         </>
         )
     }
