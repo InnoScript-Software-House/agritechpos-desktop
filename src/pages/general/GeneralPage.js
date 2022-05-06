@@ -43,7 +43,6 @@ class GeneralSettingPage extends Component {
     }
 
     render() {
-        const { props, shop } = this.props
         return (
             <div className="container-fluid">
                 <div className="row mt-1">
@@ -57,9 +56,9 @@ class GeneralSettingPage extends Component {
 
                     <div className="col-md-4">
                         {
-                            shop === null
-                                ? (<ShopSettingCreate props={props} retrive={e => this.getShopInfo(e)} />)
-                                : (<ShopSettingEdit props={props} retrive={e => this.getShopInfo(e)} />)
+                            this.state.shop === null
+                                ? (<ShopSettingCreate props={this.props} retrive={e => this.getShopInfo(e)} />)
+                                : (<ShopSettingEdit props={this.props} dataSource={this.state.shop} retrive={e => this.getShopInfo(e)} />)
                         }
                     </div>
                 </div>

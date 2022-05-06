@@ -8,21 +8,19 @@ import { t, zawgyi } from "../../utilities/translation.utility";
 const PrintSetting = () => {
 
     const state = useSelector(state => state);
-    const { lang , printData } = state;
-    console.log(printData)
+    const { lang } = state;
     const dispatch = useDispatch()
 
     const [printSetting, setPrintSetting] = useState(printOptions);
 
-    const saveInvoiceSetting = async (key, value) => {
+    const savePrintSetting = async (key, value) => {
         printSetting[`${key}`] = value;
-        setPrintSetting(printSetting);
         dispatch(setPrintAction(printSetting));
     }
 
     useEffect(() => {
         console.log(printSetting)
-        const getPrintSetting = dispatch(setPrintAction(printSetting))
+        dispatch(setPrintAction(printSetting))
     }, [])
 
     return (
@@ -43,7 +41,7 @@ const PrintSetting = () => {
                                         placeholder={t('invoice-print-number')}
                                         value={printSetting.copies}
                                         onChange={(e) => {
-                                            saveInvoiceSetting('copies', e.target.value)
+                                            savePrintSetting('copies', e.target.value)
                                         }}
                                     />
                                 </InputGroup>
@@ -55,7 +53,7 @@ const PrintSetting = () => {
                                         as={'select'}
                                         value={printSetting.color}
                                         onChange={(e) => {
-                                            saveInvoiceSetting('color', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.color)
+                                            savePrintSetting('color', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.color)
                                         }}
                                     >
                                         <option value={false}>
@@ -74,7 +72,7 @@ const PrintSetting = () => {
                                         as={'select'}
                                         value={printSetting.printBackground}
                                         onChange={(e) => {
-                                            saveInvoiceSetting('printBackground', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.printBackground)
+                                            savePrintSetting('printBackground', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.printBackground)
                                         }}
                                     >
                                         <option value={false}> {t('no')} </option>
@@ -89,7 +87,7 @@ const PrintSetting = () => {
                                         as={'select'}
                                         value={printSetting.landscape}
                                         onChange={(e) => {
-                                            saveInvoiceSetting('landscape', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.landscape)
+                                            savePrintSetting('landscape', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.landscape)
                                         }}
                                     >
                                         <option value={false}> {t('no')} </option>
@@ -104,7 +102,7 @@ const PrintSetting = () => {
                                         as={'select'}
                                         value={printSetting.silent}
                                         onChange={(e) => {
-                                            saveInvoiceSetting('silent', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.silent)
+                                            savePrintSetting('silent', e.target.value === 'false' ? false : e.target.value === 'true' ? true : printSetting.silent)
                                         }}
                                     >
                                         <option value={false}> {t('no')} </option>
@@ -120,7 +118,7 @@ const PrintSetting = () => {
                                         placeholder={t('invoice-header')}
                                         value={printSetting.header}
                                         onChange={(e) => {
-                                            saveInvoiceSetting('header', e.target.value || printSetting.header)
+                                            savePrintSetting('header', e.target.value || printSetting.header)
                                         }}
                                     />
                                 </InputGroup>
@@ -133,7 +131,7 @@ const PrintSetting = () => {
                                         placeholder={t('invoice-footer')}
                                         value={printSetting.footer}
                                         onChange={(e) => {
-                                            saveInvoiceSetting('footer', e.target.value || printSetting.footer)
+                                            savePrintSetting('footer', e.target.value || printSetting.footer)
                                         }}
                                     />
                                 </InputGroup>

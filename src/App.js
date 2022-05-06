@@ -31,7 +31,6 @@ import BackUpComponent from './components/settings/backup';
 import CreateItemPage from './pages/item/CreateItemPage';
 import TaxComponent from './components/settings/Tax';
 import NumberSpecificationSettingPage from './pages/setting/NumberSpecificationSettingPage';
-import ShopSettigPage from './pages/setting/ShopSettigPage';
 import GeneralSettingPage from './pages/general/GeneralPage';
 
 import './assets/css/theme.css';
@@ -52,7 +51,6 @@ class App extends Component {
 				<Route exact path={'/login'} component={LoginPage} />
 				<Route exact path={'/logout'} component={LogoutPage} />
 
-				{/* <Route exact path={'/setting'} component={ShopSettigPage} /> */}
 				<Route exact path={'/numberspecification'} component={NumberSpecificationSettingPage} />
 				<Route exact path={'/invoicesetting'} component={InvoiceSetting} />
 				<Route exact path={'/backup'} component={BackUpComponent} />
