@@ -5,10 +5,9 @@ import { useSelector } from 'react-redux';
 import { t, zawgyi } from '../../utilities/translation.utility';
 
 export const RecentInvoiceDialog = ({isopen, reload, close}) => {
-	const [recentInvoices, SetRecentInvoices] = useState([]);
+	const [recentInvoices, setRecentInvoices] = useState([]);
 	const [isShow, setIsShow] = useState(false);
-	const [addInvoice, setAddInvoice] = useState(null);
-
+	
 	const state = useSelector(state => state);
 	const { lang } = state;
 
@@ -17,15 +16,13 @@ export const RecentInvoiceDialog = ({isopen, reload, close}) => {
 	};
 
 	const loadingData = () => {
-		const getInvoices = localStorage.getItem('STORE_INVOICES')
-			? JSON.parse(localStorage.getItem('STORE_INVOICES'))
-			: [];
-		SetRecentInvoices(getInvoices);
+		const getInvoices = localStorage.getItem('STORE_INVOICES') ? JSON.parse(localStorage.getItem('STORE_INVOICES')) : [];
+		setRecentInvoices(getInvoices);
 	};
 
 	const removeInvoice = id => {
 		const remainInvoice = recentInvoices.filter((e, i) => i !== id);
-		SetRecentInvoices(remainInvoice);
+		setRecentInvoices(remainInvoice);
 		localStorage.setItem('STORE_INVOICES', JSON.stringify(remainInvoice));
 	};
 
@@ -33,7 +30,7 @@ export const RecentInvoiceDialog = ({isopen, reload, close}) => {
 		const invoiceToCart = recentInvoices.filter((e, i) => i === id);
 		const cart_invoice = invoiceToCart[0];
 		const remainInvoice = recentInvoices.filter((e, i) => i !== id);
-		SetRecentInvoices(remainInvoice);
+		setRecentInvoices(remainInvoice);
 		localStorage.setItem('STORE_INVOICES', JSON.stringify(remainInvoice));
 		localStorage.setItem('CURRENT_INVOICE', JSON.stringify(cart_invoice.items));
 		localStorage.setItem('CUSTOMER', JSON.stringify(cart_invoice.customer));
@@ -52,23 +49,22 @@ export const RecentInvoiceDialog = ({isopen, reload, close}) => {
 
 	return (
 		<Modal show={isShow}>
-			<Modal.Header>Recent Invoices</Modal.Header>
+			<Modal.Header className={`${zawgyi(lang)}`}> {t('title-recent-invoice')} </Modal.Header>
 			<Modal.Body>
 				<table className="table table-bordered table-hover">
 					<thead>
 						<tr>
 							<th className={`text-center ${zawgyi(lang)}`}> {t('save-invoice-id')} </th>
-							<th className={`text-center ${zawgyi(lang)}`}> {t('name')} </th>
+							<th className={`text-center ${zawgyi(lang)}`}> {t('customer-name')} </th>
 							<th className={`text-center ${zawgyi(lang)}`}> {t('option')} </th>
 						</tr>
 					</thead>
 					<tbody>
 						{recentInvoices &&
 							recentInvoices.map((invoice, index) => (
-								<tr key={`recent invoice id ${index}`}>
-									<td align="center"> {`Recent Invoice ${index + 1}`}</td>
+								<tr key={`recent_invoice_id_${index}`}>
+									<td align="center"> {`RI000${index + 1}`}</td>
 									<td align="center">
-										{' '}
 										{invoice.customer === null ? 'Unknown Customer' : invoice.customer.name}
 									</td>
 									<td align="center">

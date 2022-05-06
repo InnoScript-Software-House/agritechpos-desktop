@@ -106,7 +106,7 @@
     "mmk": "MMK",
     "name": "Name",
     "number": "Number",
-    "net-amount": "Net Amount",
+    "net-amount": "Total Paid Amount",
     "number-specification": "Number Specification",
     "no": "NO",
     "new-password": "New Password",
@@ -268,5 +268,9 @@
     "nav-general" : "General Setting",
     "title-tax-setting" : "Tax Setting",
     "title-print-setting" : "Print Setting",
-    "tax-charges": "Tax Amount (%)"
+    "tax-charges": "Tax Amount (%)",
+    "title-recent-invoice": "Save Invoices",
+    "customer-name" : "Customer Name",
+    "actural-amount" : "Paid Amount",
+    "refund-amount" : "Refund"
 }

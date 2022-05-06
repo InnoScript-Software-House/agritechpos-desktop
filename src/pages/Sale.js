@@ -185,13 +185,8 @@ class SalePage extends Component {
 
 										<SaleVoucherInputComponent
 											dataSource={this.state.items}
-											retrive={e => {
-												this.addItem(e);
-											}}
-											selectedItem={e =>
-												this.setState({
-													selectedItem: e
-												})}
+											retrive={e => this.addItem(e)}
+											selectedItem={e => this.setState({ selectedItem: e })}
 										/>
 									</div>
 								</Card.Title>
@@ -224,18 +219,12 @@ class SalePage extends Component {
 				<CreateCustomerDialog
 					isOpen={this.state.openCreateCustomerDialog}
 					reload={() => this.loadingCustomer()}
-					close={e =>
-						this.setState({
-							openCreateCustomerDialog: e
-						})}
+					close={e => this.setState({ openCreateCustomerDialog: e})}
 				/>
 
 				<RecentInvoiceDialog
 					isopen={this.state.openRecentInvoice}
-					close={e =>
-						this.setState({
-							openRecentInvoice: e
-						})}
+					close={e => this.setState({ openRecentInvoice: e })}
 					reload={() => this.reloadComponent()}
 				/>
 			</div>

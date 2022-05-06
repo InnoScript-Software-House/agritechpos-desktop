@@ -160,7 +160,7 @@
     "total-items" : "Total Items",
     "total-sell-amount" : "Total Sell Amount",
     "total-sold-amount" : "စုစုပေါင်းရောင်းရငွေ",
-    "total-amount" : "စုစုပေါင်းကျသင့်ငွေ",
+    "total-amount" : "ကျသင့်ငွေ",
     "username" : "အကောင့်အမည်",
     "user-profile" : "User Profile",
     "update-profile" : "Update Profile",
@@ -217,17 +217,17 @@
     "nav-sale" : "ရောင်းရန်ပြေစာ",
     "change-language" : "ဘာသာစကားပြောင်းရန်",
 
-    "btn-create-customer" : "ဖောက်သည်အသစ်စာရင်းသွင်းရန်",
+    "btn-create-customer" : "ဝယ်သူအသစ်စာရင်းသွင်းရန်",
     "btn-cancel" : "မလုပ်ဆောင်ပါ",
     "btn-save" : "သိမ်းမည်",
     "btn-update": "ပြင်ဆင်ရန်",
     "btn-export-pdf" : "PDF ဖိုင်ထုတ်ရန်",
     "btn-export-excel" : "Excel ဖိုင်ထုတ်ရန်",
 
-    "input-customer-name" : "ဖောက်သည် နာမည်ထည့်ရန်",
-    "input-customer-phone" : "ဖောက်သည် ဖုန်းနံပါတ်ထည့်ရန်",
-    "input-customer-email" : "ဖောက်သည် အီးမေးလ်လိပ်စာထည့်ရန်",
-    "input-customer-address" : "ဖောက်သည် နေရပ်လိပ်စာထည့်ရန်",
+    "input-customer-name" : "နာမည်ထည့်ရန်",
+    "input-customer-phone" : "ဖုန်းနံပါတ်ထည့်ရန်",
+    "input-customer-email" : "အီးမေးလ်လိပ်စာထည့်ရန်",
+    "input-customer-address" : "နေရပ်လိပ်စာထည့်ရန်",
     "input-item-code" : "ကုတ်နံပါတ်ထည့်ရန်",
     "input-item-eng-name" : "နာမည်ထည့်ရန် (အင်္ဂလိပ်)",
     "input-item-myanmar" : "နာမည်ထည့်ရန် (မြန်မာ)",
@@ -236,12 +236,12 @@
     "input-item-price" : "ဝယ်စျေးထည့်ရန်",
     "input-item-location" : "နေရာထည့်ရန်",
 
-    "required-name-and-phone" : "ဖောက်သည် နာမည်နှင့် ဖုန်းနံပါတ်ထည့်ရန် လိုအပ်ပါသည်",
+    "required-name-and-phone" : "ဝယ်သူနာမည်နှင့် ဖုန်းနံပါတ်ထည့်ရန် လိုအပ်ပါသည်",
 
-    "success-create-customer" : "ဖောက်သည်အသစ် စာရင်းသွင်းမှုအောင်မြင်ပါသည်",
-    "success-create-customer-description" : "ဖောက်သည်စာရင်းတွင် ပြန်လှည်ကြည့်ရှုနိုင်ပြီး ပြေစာထုတ်ရာတွင် အသုံးပြုနိုင်ပါသည်",
+    "success-create-customer" : "ဝယ်သူအသစ် စာရင်းသွင်းမှုအောင်မြင်ပါသည်",
+    "success-create-customer-description" : "ဝယ်သူစာရင်းတွင် ပြန်လှည်ကြည့်ရှုနိုင်ပြီး ပြေစာထုတ်ရာတွင် အသုံးပြုနိုင်ပါသည်",
 
-    "placeholder-customer-search" : "ဖောက်သည်များရှာဖွေရန်",
+    "placeholder-customer-search" : "ဝယ်သူများရှာဖွေရန်",
     "placeholder-item-search" : "ပစ္စည်းအမျိုးအစားရှာဖွေရန်",
     "placeholder-update-percentage": "ရာခိုင်နှုန်းပြောင်းလဲရန်",
     "label-brand": "အမှတ်တံဆိပ်",
@@ -282,5 +282,9 @@
     "nav-general" : "အထွေထွေပြင်ဆင်မှုများ",
     "title-tax-setting" : "အခွန်နှုန်းထားသက်မှတ်ချက်",
     "title-print-setting" : "Print ပြင်ဆင်မှုများ",
-    "tax-charges" : "အခွန်နှုန်းထား"
+    "tax-charges" : "အခွန်နှုန်းထား",
+    "title-recent-invoice" : "သိမ်းထားသောပြေစာများ",
+    "customer-name" : "ဝယ်သူအမည်",
+    "actural-amount" : "ပေးချေရမည့်ငွေ",
+    "refund-amount" : "ပြန်အမ်းငွေ"
 }

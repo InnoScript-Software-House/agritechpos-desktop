@@ -29,7 +29,8 @@ export const InvoiceReportPage = () => {
     const [customer, setCustomer] = useState(null);
     const [amounts, setAmounts] = useState(null);
 
-
+    console.log('Invoice');
+    
     const saveInvoice = async () => {
         if (invoice && amounts) {
             const requestBody = {

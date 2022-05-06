@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Dropdown, FormControl } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { t } from "../../../utilities/translation.utility";
+import { t, zawgyi } from "../../../utilities/translation.utility";
 
 const CustomMenu = React.forwardRef(({options, dataSource, chooseCustomer, openCreateDialog}, ref) => {
 
@@ -13,6 +13,10 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseCustomer, openC
 
     const { lang } = state;
 
+    const mergeDeduplicate = (arr) => {
+        return [...new Set([].concat(...arr))];
+    }
+
     const searchResult = (text) => {
         setText(text);
 
@@ -20,13 +24,13 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseCustomer, openC
             setSuggestions([]);
             return;
         }
-
         const suggestionResultByName = customers.filter((customer) => customer.name !== null && customer.name.toLowerCase().includes(text.toLowerCase()));
         const suggestionResultByEmail = customers.filter((customer) => customer.email !== null && customer.email.toLowerCase().includes(text.toLowerCase()));
         const suggestionResultByAddress = customers.filter((customer) => customer.address !== null && customer.address.toLowerCase().includes(text.toLowerCase()));
         const suggestionResultByPhone = customers.filter((customer) => customer.phone !== null && customer.phone.includes(text));
-        
-        const suggestionResult = suggestionResultByName.concat(suggestionResultByEmail).concat(suggestionResultByAddress).concat(suggestionResultByPhone);
+
+        const arrayList = [suggestionResultByName, suggestionResultByEmail, suggestionResultByAddress, suggestionResultByPhone];
+        const suggestionResult = mergeDeduplicate(arrayList);
 
         setSuggestions(suggestionResult);
     }
@@ -48,6 +52,7 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseCustomer, openC
         <>
             <div className="d-md-flex flex-md-row justify-content-start align-items-center">
                 <FormControl 
+                    className={`${zawgyi(lang)}`}
                     type={options.type}
                     placeholder={options.placeholder}
                     value={text}
@@ -58,7 +63,7 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseCustomer, openC
                     className={`ms-1 ${lang === 'unicode' ? 'btn-width' : 'btn-fix-width'}`}
                     onClick={() => openCreateDialog(true)}
                 > 
-                    {t('btn-create-customer')} 
+                    <span className={`${zawgyi(lang)}`}> {t('btn-create-customer')}  </span>
                 </Button>
             </div>
 
@@ -75,7 +80,7 @@ const CustomMenu = React.forwardRef(({options, dataSource, chooseCustomer, openC
                             }
                         }}
                     >
-                        <span> {value.name} </span>
+                        <span className={`${zawgyi(lang)}`}> {value.name} </span>
                     </Dropdown.Item>
                 )
             })}
