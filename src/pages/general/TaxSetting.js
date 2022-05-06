@@ -12,13 +12,15 @@ const TaxSetting = () => {
 
     const [taxAmount, setTaxAmount] = useState('')
 
-    const saveTax = async () => {
-        dispatch(taxAction(taxAmount))
+    const saveTax = async (e) => {
+        setTaxAmount(e);
+        dispatch(taxAction(e));
     }
 
     useEffect(() => {
-        dispatch(taxAction(taxAmount))
-    })
+        const getTax = localStorage.getItem('TAX_CHANGE') && localStorage.getItem('TAX_CHANGE');
+        setTaxAmount(getTax);
+    },[])
 
     return (
         <>
@@ -34,7 +36,7 @@ const TaxSetting = () => {
                             placeholder={t('tax-charges')}
                             value={taxAmount}
                             onChange={(e) => {
-                                setTaxAmount(e.target.value)
+                                saveTax(e.target.value)
                             }}
                         />
                     </InputGroup>
