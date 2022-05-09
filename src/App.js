@@ -29,7 +29,6 @@ import Repayment from './components/repayment/Repayment';
 import InvoiceSetting from './components/settings/InvoiceSetting';
 import BackUpComponent from './components/settings/backup';
 import CreateItemPage from './pages/item/CreateItemPage';
-import TaxComponent from './components/settings/Tax';
 import NumberSpecificationSettingPage from './pages/setting/NumberSpecificationSettingPage';
 import GeneralSettingPage from './pages/general/GeneralPage';
 
@@ -54,7 +53,6 @@ class App extends Component {
 				<Route exact path={'/numberspecification'} component={NumberSpecificationSettingPage} />
 				<Route exact path={'/invoicesetting'} component={InvoiceSetting} />
 				<Route exact path={'/backup'} component={BackUpComponent} />
-				<Route exact path={'/tax'} component={TaxComponent} />
 
 				<Route exact path={'/profile'} component={ProfilePage} />
 

@@ -19,7 +19,7 @@ const PrintSetting = () => {
     }
 
     useEffect(() => {
-        console.log(printSetting)
+        // console.log(printSetting)
         dispatch(setPrintAction(printSetting))
     }, [])
 

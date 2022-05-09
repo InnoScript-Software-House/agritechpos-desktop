@@ -286,5 +286,12 @@
     "title-recent-invoice" : "သိမ်းထားသောပြေစာများ",
     "customer-name" : "ဝယ်သူအမည်",
     "actural-amount" : "ပေးချေရမည့်ငွေ",
-    "refund-amount" : "ပြန်အမ်းငွေ"
+    "refund-amount" : "ပြန်အမ်းငွေ",
+
+    "title-device" : "Device",
+    "cpu-model" : "Model",
+    "cpu-speed" : "Speed",
+    "cpu-cores" : "Cores",
+    "host" : "Hosting Server Name",
+    "ram" : "Ram"
 }

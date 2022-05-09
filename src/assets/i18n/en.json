@@ -95,7 +95,7 @@
     "invoice-id": "Invoice ID",
     "invoice-setting": "Invoice Setting",
     "invoice-prefix-name": "Invoice Prefix Name",
-    "invoice-print-number": "Invoice Print Number",
+    "invoice-print-number": "Print Number",
     "lanscape": "Lanscape",
     "learn-more": "Learn More",
     "make-payment": "Make Payment",
@@ -272,5 +272,12 @@
     "title-recent-invoice": "Save Invoices",
     "customer-name" : "Customer Name",
     "actural-amount" : "Paid Amount",
-    "refund-amount" : "Refund"
+    "refund-amount" : "Refund",
+
+    "title-device" : "Device",
+    "cpu-model" : "Model",
+    "cpu-speed" : "Speed",
+    "cpu-cores" : "Cores",
+    "host" : "Hosting Server Name",
+    "ram" : "Ram"
 }
