@@ -52,8 +52,6 @@ export const InvoiceDataComponent = ({ invoiceDetail, isOpen, closeModal, setpri
         closeModal();
     }
 
-
-    console.log(data)
     useEffect(async () => {
         if(isOpen === 1) {
             setIsShow(true);
@@ -111,9 +109,9 @@ export const InvoiceDataComponent = ({ invoiceDetail, isOpen, closeModal, setpri
 
                                 <div className="customer-info">
                                     <div className="pe-3">
-                                        <h6> {t('name')} - {invoice.customer_name} </h6>
-                                        <h6> {t('phone')} - {invoice.customer_phone} </h6>
-                                        <h6> {t('address')} - {invoice.customer_address} </h6>
+                                        <h6> {t('name')} - {invoice && invoice.customer && invoice.customer.name} </h6>
+                                        <h6> {t('phone')} - {invoice && invoice.customer && invoice.customer.phone} </h6>
+                                        <h6> {t('address')} - {invoice && invoice.customer && invoice.customer.address} </h6>
                                     </div>
                                 </div>
                             </div>
