@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Card } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { Language } from "../../components/general/Language";
@@ -8,6 +8,7 @@ import PrintSetting from "./PrintSetting";
 import { ShopSettingCreate } from "./ShopSettingCreate";
 import { ShopSettingEdit } from "./ShopSettingEdit";
 import TaxSetting from "./TaxSetting";
+import ShowDeviceSetting from "./ShowDeviceSetting";
 
 
 class GeneralSettingPage extends Component {
@@ -16,13 +17,13 @@ class GeneralSettingPage extends Component {
         super(props);
 
         this.state = {
-            shop: null
+            shop: null,
         }
     }
 
     getShopInfo(e) {
         this.setState({
-            shop: e
+            shop: e,
         });
     }
 
@@ -43,11 +44,11 @@ class GeneralSettingPage extends Component {
             history.push(url);
         });
 
-        window.nativeApi.device.get((data) => {
-            console.log(data);
-            const cpus = data.totalmem();
-            console.log(cpus);
-        })
+        // window.nativeApi.device.get((data) => {
+        //     console.log(data);
+        //     const cpus = data.cpus();
+        //     console.log(cpus);
+        // })
     }
 
     render() {
@@ -83,7 +84,7 @@ class GeneralSettingPage extends Component {
                     </div>
 
                     <div className="col-md-6">
-
+                            <ShowDeviceSetting />
                     </div>
                 </div>
             </div>
