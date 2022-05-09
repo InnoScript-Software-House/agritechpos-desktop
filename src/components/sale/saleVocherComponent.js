@@ -26,6 +26,7 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) =>
     const [changes, setChanges] = useState('');
     const [btnDisable, setBtnDisable] = useState(true);
     const [reload, setReload] = useState(false);
+    const [taxchange, setTaxChange] = useState(0);
 
     const messageBoxTitle = t('open-invoice');
 
@@ -140,6 +141,7 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) =>
         retrive(delitems);
     }
 
+
     useEffect(() => {
         setItems(dataSource);
 
@@ -148,13 +150,15 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) =>
             const totalAmounts = dataSource.map(value => value.totalAmount);
             const totaPaidAmount = totalAmounts.reduce((a,b) => a + b);
             setTotalAmount(totaPaidAmount);
+            const taxPercent = localStorage.getItem('TAX_CHANGE') && JSON.parse(localStorage.getItem('TAX_CHANGE')) ;
+            setTaxChange(taxPercent);
 
-            const getTax = parseInt((totaPaidAmount * Number(tax)) / 100);
-
+            const getTax =  (Number(totaPaidAmount) * Number(taxPercent) / 100);
             setTaxAmount(getTax);
+
             setNetAmount(getTax + totaPaidAmount);
             setGrandAmount(getTax + totaPaidAmount);
-            setCreditAmount(getTax + totaPaidAmount)
+            setCreditAmount(getTax + totaPaidAmount);
         }
         if(dataSource.length === 0 ){
             setBtnDisable(true);
@@ -219,7 +223,7 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) =>
                                     <td colSpan={5}></td>
                                     <td colSpan={3}>
                                         <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <h5 className={`${zawgyi(lang)}`}> {t('tax-charges')} ({tax}%) </h5>
+                                            <h5 className={`${zawgyi(lang)}`}> {t('tax-charges')} ({taxchange}%) </h5>
                                             <h5> { numeral(taxAmount).format('0,0')} MMK </h5>
                                         </div>
                                     </td>

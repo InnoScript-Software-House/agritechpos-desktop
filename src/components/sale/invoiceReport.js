@@ -80,17 +80,17 @@ class InvoiceReportPage extends Component {
     async saveInvoice () {
         if (this.state.invoice && this.state.amount) {
             const requestBody = {
-                invoice_no: invoiceId,
-                customer_id: customer ? customer.id : null,
-                customer_name: customer ? customer.name : null,
-                customer_phone: customer ? customer.phone : null,
-                customer_address: customer ? customer.address : null,
-                customer_email: customer ? customer.email : null,
-                total_amount: amounts.grand_amount,
-                pay_amount: amounts.pay_amount,
-                discount: amounts.discount === '' ? 0 : amounts.discount,
-                invoice_data: invoice,
-                credit_amount: amounts.credit_amount,
+                invoice_no: this.state.invoiceNumber,
+                customer_id: this.state.customer ? this.state.customer.id : null,
+                customer_name: this.state.customer ? this.state.customer.name : null,
+                customer_phone: this.state.customer ? this.state.customer.phone : null,
+                customer_address: this.state.customer ? this.state.customer.address : null,
+                customer_email: this.state.customer ? this.state.customer.email : null,
+                total_amount: this.state.amount.grand_amount,
+                pay_amount: this.state.amount.pay_amount,
+                discount: this.state.amount.discount === '' ? 0 : this.state.amount.discount,
+                invoice_data: this.state.invoice,
+                credit_amount: this.state.amount.credit_amount,
             }
 
             const response = await createInvoice(requestBody);
@@ -108,7 +108,6 @@ class InvoiceReportPage extends Component {
 
     async print () {
         const { print } = window.nativeApi;
-
         this.setState({
             isPrint: true,
             display: 'display'
@@ -123,7 +122,6 @@ class InvoiceReportPage extends Component {
             localStorage.removeItem('INVOICE');
             localStorage.removeItem('CURRENT_INVOICE');
             localStorage.removeItem('CUSTOMER');
-
             this.setState({
                 success: true,
                 isPrint: false
@@ -164,14 +162,13 @@ class InvoiceReportPage extends Component {
                 )}
 
                 {this.state.success === false && (
-                    <div className="row mt-1">
-                        <div className="d-md-flex flex-md-row justify-content-start mt-3">
-                            <BsArrowLeftCircle size={30} className={`btn-icon ${this.state.display}`} onClick={() => history.push('/sale')} />
+                    <>
+                        <div className="row mt-1">
+                            <div className="d-md-flex flex-md-row justify-content-start mt-3">
+                                <BsArrowLeftCircle size={30} className={`btn-icon ${this.state.display}`} onClick={() => history.push('/sale')} />
+                            </div>
                         </div>
-                    </div>
-                )}
-
-                {this.state.shop && this.state.invoice && (
+                        {this.state.shop && this.state.invoice && (
                     <div className="row mt-1">
                         <h3> Inovice. {localStorage.getItem('PREFIX') ? localStorage.getItem('PREFIX') : 'AT'}{this.state.invoiceNumber}</h3>
                         <table className="table solid-border">
@@ -271,13 +268,14 @@ class InvoiceReportPage extends Component {
                                     </>
                                 )}
                             </tbody>        
-                        </table>
+                        </table> 
+                        
 
                         {!this.state.isPrint && (
                             <div className="d-flex flex-row justify-content-end me-5 pe-5">
                                 <Button 
                                     className={`btn btn-print mt-3 w-25 ${this.state.display} ${zawgyi(lang)}`} 
-                                    onClick={() => print()}
+                                    onClick={() => this.print()}
                                 > 
                                         {t('print')} 
                                 </Button>
@@ -285,12 +283,14 @@ class InvoiceReportPage extends Component {
                         )}
                     </div>
                 )}
+                    </>
+                )}
 
                 {this.state.success && (
                     <div className="row mt-1">
                         <div className="d-flex flex-column justify-content-center align-items-center hv-100">
                             <h1 className="thank-you"> Thank You </h1>
-                            <Button onClick={() => history.push('/sale')}> {t('go-back')} </Button>
+                            <Button onClick={() => this.props.history.push('/sale')}> {t('go-back')} </Button>
                         </div>
                     </div>
                 )}
