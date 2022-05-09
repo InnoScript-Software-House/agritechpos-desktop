@@ -23,22 +23,22 @@ export const invoiceColumns = props => {
 		},
 		{
 			name: <span> {t('name')} </span>,
-			selector: row => row.customer_name,
+			selector: row => row.customer && row.customer.name,
 			sortable: true
 		},
 		{
 			name: <span> {t('phone')} </span>,
-			selector: row => row.customer_phone,
+			selector: row => row.customer && row.customer.phone,
 			sortable: true
 		},
 		{
 			name: <span> {t('email')} </span>,
-			selector: row => row.customer_email,
+			selector: row => row.customer && row.customer.email,
 			sortable: true
 		},
 		{
 			name: <span> {t('address')} </span>,
-			selector: row => row.customer_address,
+			selector: row => row.customer && row.customer.address,
 			sortable: true
 		},
 		// {
