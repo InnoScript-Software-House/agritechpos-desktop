@@ -293,5 +293,8 @@
     "cpu-speed" : "Speed",
     "cpu-cores" : "Cores",
     "host" : "Hosting Server Name",
-    "ram" : "Ram"
+    "ram" : "Ram",
+
+    "select-the-categories": "Select the Categories",
+    "please-select-the-categories": "Please Select the Categories"
 }
