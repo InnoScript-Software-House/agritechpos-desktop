@@ -14,13 +14,17 @@ const PrintInvoicesComponent = ({printData, closePrint}) => {
     const [grandAmount, setGrandAmount] = useState(0);
     const [changes, setChanges] = useState(0);
 
+
     const printOut = async() => {
         const { print } = window.nativeApi;
-        await print.invoice();
+
+        const getPrintOptions = localStorage.getItem("PRINT_SETTING") ? JSON.parse(localStorage.getItem("PRINT_SETTING")) : printOptions;
+        await print.invoice(getPrintOptions);
         await print.reload((data) => {
             closePrint();
         });
     };
+    console.log(printData)
 
     const calculateData = async() => {
             const data = await printData.invoice;
@@ -77,9 +81,9 @@ const PrintInvoicesComponent = ({printData, closePrint}) => {
 
                 <div className="customer-info">
                     <div className="pe-3">
-                        <h6> {t('name')} - {invoice && invoice.customer_name} </h6>
-                        <h6> {t('phone')} - {invoice && invoice.customer_phone} </h6>
-                        <h6> {t('address')} - {invoice && invoice.customer_address} </h6>
+                        <h6> {t('name')} - {invoice && invoice.customer && invoice.customer.name} </h6>
+                        <h6> {t('phone')} - {invoice && invoice.customer && invoice.customer.phone} </h6>
+                        <h6> {t('address')} - {invoice && invoice.customer && invoice.customer.address} </h6>
                     </div>
                 </div>
             </div>
