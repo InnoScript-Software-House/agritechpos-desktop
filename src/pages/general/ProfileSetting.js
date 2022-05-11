@@ -115,7 +115,8 @@ const ProfileSetting = () => {
         return;
     }
 
-    console.log(data)
+    // console.log(data)
+    
     const change = async() => {
         if(currentPassword === '' || newPassword === '' || confirmPassword === '') {
             nativeApi.messageBox.open({

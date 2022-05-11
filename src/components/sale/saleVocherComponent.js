@@ -140,8 +140,7 @@ export const SaleVoucherComponent = ({ dataSource, total, retrive, refresh }) =>
         setItems(delitems);
         retrive(delitems);
     }
-
-
+    
     useEffect(() => {
         setItems(dataSource);
 
