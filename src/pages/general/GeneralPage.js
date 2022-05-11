@@ -9,6 +9,7 @@ import { ShopSettingCreate } from "./ShopSettingCreate";
 import { ShopSettingEdit } from "./ShopSettingEdit";
 import TaxSetting from "./TaxSetting";
 import ShowDeviceSetting from "./ShowDeviceSetting";
+import ProfileSetting from "./ProfileSetting";
 
 
 class GeneralSettingPage extends Component {
@@ -84,7 +85,14 @@ class GeneralSettingPage extends Component {
                     </div>
 
                     <div className="col-md-6">
-                            <ShowDeviceSetting />
+                        <div className="row">
+                            <div className="col-md-12">
+                                <ProfileSetting />
+                            </div>
+                            <div className="col-md-12 mt-3">
+                                <ShowDeviceSetting />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
