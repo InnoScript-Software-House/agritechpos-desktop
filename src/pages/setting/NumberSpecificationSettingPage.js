@@ -5,7 +5,7 @@ import { HistoryLog } from '../../components/general/Historylog';
 import { EditNumberSpecificationForm } from '../../components/settings/editNumberSpecificationForm';
 import { getNumberSpecList } from '../../services/numberSpecification.service';
 
-export const NumberSpecificationSettingPage = ({ props }) => {
+const NumberSpecificationSettingPage = ({ props }) => {
     const [numLists, setNumLists] = useState([]);
 
     const fetchApi = useCallback( async () => {
@@ -67,3 +67,4 @@ export const NumberSpecificationSettingPage = ({ props }) => {
         </div>
     )
 }
+export default NumberSpecificationSettingPage;
