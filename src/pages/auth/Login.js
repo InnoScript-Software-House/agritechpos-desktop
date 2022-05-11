@@ -142,7 +142,7 @@ class LoginPage extends Component {
 								</InputGroup>
 							</div>
 
-							<div className="social-media-wrapper d-md-flex flex-md-column justify-content-end align-items-center mt-3 mb-3">
+							{/* <div className="social-media-wrapper d-md-flex flex-md-column justify-content-end align-items-center mt-3 mb-3">
 								<label className={`mt-3 mb-3 ${zawgyi(lang)}`}> {t('connect-social-media')}</label>
 
 								<div className="d-md-flex flex-md-row">
@@ -160,8 +160,6 @@ class LoginPage extends Component {
 										cursor={'pointer'}
 										onClick={() => this.openSocialMedia('https://www.facebook.com/agritechpos')}
 									/>
-									{/* <BsYoutube className='btn-social me-3' size={40} color="#2759D4"cursor={'pointer'} onClick={() => this.openSocialMedia('')} />
-                                    <BsGoogle className='btn-social me-3' size={40} color="#2759D4" cursor={'pointer'} onClick={() => this.openSocialMedia('')} /> */}
 									<BsLinkedin
 										className="btn-social me-3"
 										size={40}
@@ -171,7 +169,7 @@ class LoginPage extends Component {
 											this.openSocialMedia('https://www.linkedin.com/company/79565077/')}
 									/>
 								</div>
-							</div>
+							</div> */}
 						</div>
 					</div>
 				</div>
