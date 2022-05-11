@@ -6,14 +6,15 @@ import { changePassword, editUser, getProfile  } from '../../services/user.servi
 import { messageBoxType } from '../../utilities/native.utility'
 import { t, zawgyi } from '../../utilities/translation.utility'
 
+const checkphone = /^(\+?(95)|[09])\d{9}/g;
+const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const ProfileSetting = () => {
 
     const state = useSelector(state => state);
     const { lang } = state;
     const { nativeApi } = window;
-    const history = useHistory()
-    const checkphone = /^(\+?(95)|[09])\d{9}/g;
-    const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const history = useHistory();
 
     const [ data ,setData ] = useState([])
     const [adminName, setAdminName] = useState('');
@@ -23,8 +24,6 @@ const ProfileSetting = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isloading, setIsLoading] = useState(true);
-    const [messageBoxTitle] = useState('Profile Update');
-    const [passwordChange] = useState('Change Password');
 
     const loadingData = async () => {
 
@@ -32,44 +31,27 @@ const ProfileSetting = () => {
 
         if (response && response.success === false) {
             nativeApi.messageBox.open({
-                title: messageBoxTitle,
+                title: t('title-update-profile'),
                 message: response.message,
-                type: messageBoxType.error
+                type: messageBoxType.info
             });
             return;
         }
+
         setData(response);
         setAdminName(response.name);
         setPhone(response.phone);
         setEmail(response.email);
-        setIsLoading(false)
+        setIsLoading(false);
         return;
     }
 
     const update = async () => {
         if (adminName === '' || phone === '' || email === '') {
             nativeApi.messageBox.open({
-                title: messageBoxTitle,
-                message: 'All fields are required',
-                type: messageBoxType.error
-            });
-            return;
-        }
-
-        if (!checkphone.test(phone)) {
-            nativeApi.messageBox.open({
-                title: messageBoxTitle,
-                message: 'Invalid Phone Number',
-                type: messageBoxType.error
-            });
-            return;
-        }
-
-        if (!pattern.test(email)) {
-            nativeApi.messageBox.open({
-                title: messageBoxTitle,
-                message: 'Invalid email address',
-                type: messageBoxType.error
+                title: t('title-update-profile'),
+                message: t('all-fields-are-requried'),
+                type: messageBoxType.info
             });
             return;
         }
@@ -80,57 +62,81 @@ const ProfileSetting = () => {
             email: email
         }
 
-        if(adminName === data.name) {
+        if(data.name === adminName) {
             delete requestBody.name;
         }
 
-        if(phone === data.phone) {
+        if(data.phone === phone) {
             delete requestBody.phone;
         }
 
-        if(email === data.email) {
+        if(data.email === email) {
             delete requestBody.email;
+        }  
+
+        if(Object.keys(requestBody).length === 0) {
+            nativeApi.messageBox.open({
+                title: t('title-update-profile'),
+                message: t('does-not-have-update-info'),
+                type: messageBoxType.info
+            });
+            return;
         }
 
-        console.log('Request Body', requestBody);
+        if (!checkphone.test(phone)) {
+            nativeApi.messageBox.open({
+                title: t('title-update-profile'),
+                message: t('invalid-phone-number'),
+                type: messageBoxType.info
+            });
+            return;
+        }
+
+        if (!pattern.test(email)) {
+            nativeApi.messageBox.open({
+                title: t('title-update-profile'),
+                message: t('invalid-email-address'),
+                type: messageBoxType.info
+            });
+            return;
+        }
 
         const response = await editUser(data.id , requestBody);
 
         if(response && response.success === false) {
             nativeApi.messageBox.open({
-                title: messageBoxTitle,
+                title: t('title-update-profile'),
                 message: response.message,
-                type: messageBoxType.error
+                type: messageBoxType.info
             });
             return;
         }
 
         loadingData();
 
-        nativeApi.messageBox.open({
-            title: messageBoxTitle,
-            message: 'Profile Update Successsful',
-            type: messageBoxType.info
+        nativeApi.notification.show({
+            title: t('title-update-profile'),
+            body: t('success-update-profile')
         });
+
         return;
     }
 
-    console.log(data)
     const change = async() => {
         if(currentPassword === '' || newPassword === '' || confirmPassword === '') {
             nativeApi.messageBox.open({
-                title: passwordChange,
-                message: 'All fields are required',
-                type: messageBoxType.error
+                title: t('title-change-password'),
+                message: t('all-fields-are-requried'),
+                type: messageBoxType.info
             });
             return;
         }
 
         if(confirmPassword !== newPassword) {
             nativeApi.messageBox.open({
-                title: passwordChange,
-                message: 'new password does not match',
-                type: messageBoxType.error
+                title: t('title-change-password'),
+                message: t('invalid-change-password-confirm'),
+                type: messageBoxType.info
             });
             return;
         }
@@ -142,29 +148,28 @@ const ProfileSetting = () => {
             newPassword : newPassword
         }
 
-        console.log(requestBody)
+        const response = await changePassword(data.id , requestBody);
 
-        const response = await changePassword ( data.id , requestBody);
-        console.log(response)
         if(response && response.success === false) {
             nativeApi.messageBox.open({
-                title : passwordChange,
+                title: t('title-change-password'),
                 message : response.message,
-                type : messageBoxType.error
+                type : messageBoxType.info
             });
+            setIsLoading(false);
             return;
         }
        
-        setIsLoading(false)
-        nativeApi.messageBox.open({
-            title: passwordChange,
-            message: 'Password Change Successfully',
-            type: messageBoxType.info
+        setIsLoading(false);
+
+        nativeApi.notification.show({
+            title: t('title-change-password'),
+            body: t('success-update-password')
         });
+
         history.push('/logout');
         return;
     }
-
 
     useEffect(() => {
         loadingData();
@@ -181,7 +186,7 @@ const ProfileSetting = () => {
                     <InputGroup className='mb-3'>
                         <FormControl
                             type='text'
-                            className="me-3"
+                            className={`me-3 ${zawgyi(lang)}`}
                             placeholder={t('name')}
                             value={adminName}
                             onChange={e => setAdminName(e.target.value)}
@@ -189,7 +194,7 @@ const ProfileSetting = () => {
 
                         <FormControl
                             type='text'
-                            className="me-3"
+                            className={`me-3 ${zawgyi(lang)}`}
                             placeholder={t('phone')}
                             value={phone}
                             onChange={e => setPhone(e.target.value)}
@@ -197,20 +202,21 @@ const ProfileSetting = () => {
 
                         <FormControl
                             type='email'
+                            className={`me-3 ${zawgyi(lang)}`}
                             placeholder={t('email')}
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                         />
 
-                        <Button onClick={() => update()} disabled={isloading}> {t('update')} </Button>
+                        <Button onClick={() => update()} disabled={isloading} className={`${zawgyi(lang)}`}> {t('update')} </Button>
                     </InputGroup>
 
-                    <Card.Title className="mt-3"> {t('change-password')} </Card.Title>
+                    <Card.Title className={`${zawgyi(lang)}`}>  {t('change-password')} </Card.Title>
 
                     <InputGroup>
                         <FormControl
                             type='password'
-                            className="me-3"
+                            className={`me-3 ${zawgyi(lang)}`}
                             placeholder={t('current-password')}
                             value={currentPassword}
                             onChange={e => setCurrentPassword(e.target.value)}
@@ -218,20 +224,21 @@ const ProfileSetting = () => {
 
                         <FormControl
                             type='password'
-                            className="me-3"
+                            className={`me-3 ${zawgyi(lang)}`}
                             placeholder={t('new-password')}
                             value={newPassword}
                             onChange={e => setNewPassword(e.target.value)}
                         />
 
                         <FormControl
+                            className={`me-3 ${zawgyi(lang)}`}
                             type='password'
                             placeholder={t('confirm-password')}
                             value={confirmPassword}
                             onChange={e => setConfirmPassword(e.target.value)}
                         />
 
-                        <Button onClick={() => change()} disabled={isloading} > {t('change-password')} </Button>
+                        <Button onClick={() => change()} disabled={isloading} className={`${zawgyi(lang)}`}> {t('change-password')} </Button>
                     </InputGroup>
                 </Card.Body>
             </Card>
@@ -239,4 +246,4 @@ const ProfileSetting = () => {
     )
 }
 
-export default ProfileSetting
+export default ProfileSetting;
