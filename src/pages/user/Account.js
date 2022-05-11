@@ -164,6 +164,14 @@ class AccountPage extends Component {
       email: email
     }
 
+    if(this.state.phone === updateRequest.phone){
+      delete updateRequest.phone
+    }
+
+    if(this.state.email === updateRequest.email){
+      delete updateRequest.email
+    }
+
     const updateUser = await editUser(edit_id, updateRequest);
 
     if(updateUser && updateUser.success === false) {

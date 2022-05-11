@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {FormControl, InputGroup} from 'react-bootstrap';
-import {useSelector} from 'react-redux';
-import {messageBoxType} from '../../utilities/native.utility';
-import {t, zawgyi} from '../../utilities/translation.utility';
-import {ItemAutoCompleteDropDown} from './utilities/ItemAutoCompleteDropDown';
+import React, { useEffect, useState } from 'react';
+import { FormControl, InputGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { messageBoxType } from '../../utilities/native.utility';
+import { t, zawgyi } from '../../utilities/translation.utility';
+import { ItemAutoCompleteDropDown } from './utilities/ItemAutoCompleteDropDown';
 
-export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) => {
+export const SaleVoucherInputComponent = ({ dataSource, retrive, selectedItem }) => {
 	const state = useSelector(state => state);
-	
-	const {lang} = state;
-	const {nativeApi} = window;
+
+	const { lang } = state;
+	const { nativeApi } = window;
 
 	const [qty, setQty] = useState('');
 	const [items, setItems] = useState([]);
@@ -43,6 +43,8 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 		const getCurrentInvoice = localStorage.getItem('CURRENT_INVOICE')
 			? JSON.parse(localStorage.getItem('CURRENT_INVOICE'))
 			: [];
+
+
 
 		const checkItem = getCurrentInvoice.filter(value => value.code === item.code);
 

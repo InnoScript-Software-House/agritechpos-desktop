@@ -288,5 +288,8 @@
     "title-change-password" : "Change account password",
     "invalid-change-password-confirm" : "New password does not match",
     "success-update-password" : "New password is changed successfully",
-    "does-not-have-update-info" : "There is no modifications"
+    "does-not-have-update-info" : "There is no modifications",
+    "title-tax-change" : "Update tax percentage",
+    "success-tax-change" : "tax percentage is updated successfully",
+    "invalid-tax-percentage": "Invalid tax percentage"
 }
