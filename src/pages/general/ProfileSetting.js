@@ -92,7 +92,7 @@ const ProfileSetting = () => {
             delete requestBody.email;
         }
 
-        // console.log('Request Body', requestBody);
+        console.log('Request Body', requestBody);
 
         const response = await editUser(data.id , requestBody);
 
@@ -115,6 +115,7 @@ const ProfileSetting = () => {
         return;
     }
 
+    console.log(data)
     const change = async() => {
         if(currentPassword === '' || newPassword === '' || confirmPassword === '') {
             nativeApi.messageBox.open({
