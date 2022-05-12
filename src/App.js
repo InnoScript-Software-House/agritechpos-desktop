@@ -26,7 +26,7 @@ import EditCustomerPage from './components/customer/EditCustomer';
 import Invoice from './pages/Invoice';
 import CreditPage from './pages/Credit';
 import Repayment from './components/repayment/Repayment';
-import InvoiceSetting from './components/settings/InvoiceSetting';
+import InvoiceSetting from './components/settings/InvoiceSetting2';
 import BackUpComponent from './components/settings/backup';
 import CreateItemPage from './pages/item/CreateItemPage';
 import GeneralSettingPage from './pages/general/GeneralPage';

@@ -28,7 +28,7 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
             return;
         }
 
-        if (!Number(percentageValue)) {
+        if (!Number(percentageValue) && percentageValue !== '') {
             nativeApi.messageBox.open({ title: messageBoxTitle, message: t('invalid-percentage'), type: messageBoxType.info });
             setPercentage('');
             return;
