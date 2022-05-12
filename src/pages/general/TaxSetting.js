@@ -54,7 +54,7 @@ const TaxSetting = () => {
                             type='text'
                             placeholder={t('tax-charges')}
                             maxLength={"3"}
-                            value={taxAmount}
+                            value={taxAmount || ''}
                             onChange={e => setTaxAmount(e.target.value)}
                             onKeyPress={(e) => {
                                 if(e.code === 'Enter') {

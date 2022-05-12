@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, FormControl, FormLabel, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPrintAction } from '../../redux/actions/print.action';
+import { setPrintAction} from '../../redux/actions/print.action';
 import { printOptions } from '../../utilities/print.utility';
 import { t, zawgyi } from "../../utilities/translation.utility";
 
@@ -20,7 +20,8 @@ const PrintSetting = () => {
 
     useEffect(() => {
         // console.log(printSetting)
-        dispatch(setPrintAction(printSetting))
+        const getPrintSetting = (localStorage.getItem('PRINT_DATA')) ? JSON.parse(localStorage.getItem('PRINT_DATA')) : printSetting;
+        setPrintSetting(getPrintSetting) 
     }, [])
 
     return (
