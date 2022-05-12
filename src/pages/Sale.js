@@ -110,6 +110,12 @@ class SalePage extends Component {
 		const existItem = requestItems.filter(value => value.code === item.code);
 
 		if (existItem.length > 0) {
+			const getnew = requestItems.filter(value => value.code !== item.code);
+			getnew.push(item);
+			console.log(getnew);
+			this.setState({
+				requestItems: getnew
+			})
 			return;
 		}
 
