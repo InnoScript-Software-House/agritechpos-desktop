@@ -30,9 +30,6 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
         if (fieldName === 'price' || fieldName === 'qty' || fieldName === 'percentage') {
             if(value === 0){
                 value = Number(0);
-                setPrice(0);
-                setQty(0);
-                setPercentage(0);
             }
             else if(!Number(value)){
                 window.nativeApi.messageBox.open({ title: t('title-update-item'), message: t('invalid-number'), type: messageBoxType.info });
