@@ -41,11 +41,7 @@ class SalePage extends Component {
 		const response = await getItems();
 
 		if (response && response.success === false) {
-			nativeApi.messageBox.open({
-				title: this.state.messageBoxTitle,
-				message: response.message,
-				type: messageBoxType.info
-			});
+			nativeApi.messageBox.open({ title: t('response-error'), message: response.message, type: messageBoxType.info});
 			return;
 		}
 
@@ -81,9 +77,7 @@ class SalePage extends Component {
 	}
 
 	async loadingRequestItems() {
-		const requestItems = localStorage.getItem('CURRENT_INVOICE')
-			? JSON.parse(localStorage.getItem('CURRENT_INVOICE'))
-			: [];
+		const requestItems = localStorage.getItem('CURRENT_INVOICE') ? JSON.parse(localStorage.getItem('CURRENT_INVOICE')) : [];
 		const currentCustomer = localStorage.getItem('CUSTOMER') ? JSON.parse(localStorage.getItem('CUSTOMER')) : null;
 		this.setState({
 			requestItems: requestItems,
@@ -165,49 +159,34 @@ class SalePage extends Component {
 	}
 
 	render() {
-		const {customer, selectedItem, openRecentInvoice } = this.state;
-		const {lang} = this.props.reducer;
+		const { customer, selectedItem, openRecentInvoice } = this.state;
+		const { lang } = this.props.reducer;
 
 		return (
 			<div className="container-fluid">
-				<div className="row">
+				<div className="row mt-1">
 					<div className="col-md-12">
-						<Card className="mt-1">
+						<Card>
 							<Card.Header>
 								<Card.Title>
 									<div className="d-flex flex-row justify-content-between align-items-center">
 										<Button
 											className="btn-primary"
-											onClick={() => {
-												this.setState({
-													openRecentInvoice: !openRecentInvoice
-												})
-											}}
+											onClick={() => { this.setState({ openRecentInvoice: !openRecentInvoice })}}
 										>
-											{t('open-recent-invoice')}
+											<span className={`${zawgyi(lang)}`}> {t('open-recent-invoice')} </span>
 										</Button>
 
 										<CustomerAutoCompleteDropDown
 											dataSource={this.state.customers}
-											chooseCustomer={e =>
-												this.setState({
-													customer: e
-												})}
-											openCreateDialog={e =>
-												this.setState({
-													openCreateCustomerDialog: e
-												})}
+											chooseCustomer={e => this.setState({ customer: e })}
+											openCreateDialog={e => this.setState({ openCreateCustomerDialog: e })}
 										/>
 
 										<SaleVoucherInputComponent
 											dataSource={this.state.items}
-											retrive={e => {
-												this.addItem(e);
-											}}
-											selectedItem={e =>
-												this.setState({
-													selectedItem: e
-												})}
+											retrive={e => this.addItem(e)}
+											selectedItem={e => this.setState({ selectedItem: e })}
 										/>
 									</div>
 								</Card.Title>
@@ -240,18 +219,12 @@ class SalePage extends Component {
 				<CreateCustomerDialog
 					isOpen={this.state.openCreateCustomerDialog}
 					reload={() => this.loadingCustomer()}
-					close={e =>
-						this.setState({
-							openCreateCustomerDialog: e
-						})}
+					close={e => this.setState({ openCreateCustomerDialog: e})}
 				/>
 
 				<RecentInvoiceDialog
 					isopen={this.state.openRecentInvoice}
-					close={e =>
-						this.setState({
-							openRecentInvoice: e
-						})}
+					close={e => this.setState({ openRecentInvoice: e })}
 					reload={() => this.reloadComponent()}
 				/>
 			</div>

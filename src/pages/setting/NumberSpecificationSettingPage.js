@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Card, Table } from 'react-bootstrap';
-import { getNumberSpecList } from '../../services/numberSpecification.service';
-import { EditNumberSpecificationForm } from './editNumberSpecificationForm';
-import { HistoryLog } from '../general/Historylog';
 import { t } from 'i18next';
+import { HistoryLog } from '../../components/general/Historylog';
+import { EditNumberSpecificationForm } from '../../components/settings/editNumberSpecificationForm';
+import { getNumberSpecList } from '../../services/numberSpecification.service';
 
-export const NumberSpecificationComponent = ({ props }) => {
+const NumberSpecificationSettingPage = ({ props }) => {
     const [numLists, setNumLists] = useState([]);
 
     const fetchApi = useCallback( async () => {
@@ -67,3 +67,4 @@ export const NumberSpecificationComponent = ({ props }) => {
         </div>
     )
 }
+export default NumberSpecificationSettingPage;

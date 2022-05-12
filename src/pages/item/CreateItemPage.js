@@ -10,6 +10,7 @@ import { CategoryListTableComponent } from '../../components/category/CategoryLi
 import { BiCategory } from "react-icons/bi";
 import { Card } from 'react-bootstrap';
 import { DeleteDialog } from '../../components/general/deleteDialog';
+import { CategoryChart } from '../../components/category/CategoryChart';
 
 class CreateItemPage extends Component {
 
@@ -67,7 +68,7 @@ class CreateItemPage extends Component {
               </div>
 
               <div className='col-md-6 mt-3'>
-                <Card>
+                {/* <Card>
                   <Card.Header className='card-success'>
                     <Card.Title className={`title-secondary ${zawgyi(lang)}`}> {t('total-categories')} </Card.Title>
                   </Card.Header>
@@ -78,7 +79,8 @@ class CreateItemPage extends Component {
                       <label className='label-count'> {this.state.categoriesTotal}  </label>
                     </div>
                   </Card.Body>
-                </Card>
+                </Card> */}
+                <CategoryChart categories ={this.state.categoriesList} />
               </div>
 
               <div className='col-md-12'>

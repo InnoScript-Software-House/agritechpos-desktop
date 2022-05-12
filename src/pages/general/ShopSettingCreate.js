@@ -1,43 +1,31 @@
-import React, {useState} from 'react';
-import {Button, Card, FormControl, InputGroup} from 'react-bootstrap';
-import {createShop} from '../../services/shop.service';
-import {useDispatch} from 'react-redux';
-import {setOpenToastAction} from '../../redux/actions/toast.action';
-import {t} from 'i18next';
-import {messageBoxType} from '../../utilities/native.utility';
+import React, { useState } from 'react';
+import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { t, zawgyi } from '../../utilities/translation.utility';
+import { messageBoxType } from '../../utilities/native.utility';
+import { createShop } from '../../services/shop.service';
 
-export const CreateShopFormComponent = ({retrive}) => {
+export const ShopSettingCreate = ({retrive}) => {
+	const state = useSelector(state => state);
+	const { lang } = state;
+
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
 	const [phone, setPhone] = useState('');
 	const [email, setEmail] = useState('');
 	const [address, setAddress] = useState('');
 	const [loading, setLoading] = useState(false);
-	const [messageBoxTitle, setMessageBoxTitle] = useState('Create Shop');
-
-	const dispatch = useDispatch();
-
-	const checkphone = /^(\+?(95)|[09])\d{10}/g;
-	const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	const create = async () => {
 		const {nativeApi} = window;
-		if (name === '' || description === '' || phone === '' || address === '') {
+		if (name === '' || phone === '' || address === '') {
 			nativeApi.messageBox.open({
-				title: messageBoxTitle,
-				message: 'All fields are required',
-				type: messageBoxType.error
+				title: t('create-shop-information'),
+				message: t('all-fields-are-requried'),
+				type: messageBoxType.info
 			});
 			return;
 		}
-
-		// if(!checkphone.test(phone)) {
-		//     return dispatch(setOpenToastAction('Create Shop', 'Invalid phone number','danger'));
-		// }
-
-		// if(!pattern.test(email)) {
-		//     return dispatch(setOpenToastAction('Create Shop', 'Invalid email address','danger'));
-		// }
 
 		const requestBody = {
 			name: name,
@@ -51,26 +39,24 @@ export const CreateShopFormComponent = ({retrive}) => {
 
 		const response = await createShop(requestBody);
 
-		if (response.success === false) {
+		if (response && response.success === false) {
 			nativeApi.messageBox.open({
-				title: messageBoxTitle,
-				message: response.message,
-				type: messageBoxType.error
+				title: t('create-shop-information'),
+				message: t('response-error'),
+				type: messageBoxType.info
 			});
 			setLoading(false);
 			return;
 		}
 
-		if (response) {
-			nativeApi.messageBox.open({
-				title: messageBoxTitle,
-				message: 'Shop is created',
-				type: messageBoxType.info
-			});
-			setLoading(false);
-			retrive(response);
-			return;
-		}
+		nativeApi.messageBox.open({
+			title: t('create-shop-information'),
+			message: t('success-shop-info'),
+			type: messageBoxType.info
+		});
+
+		setLoading(false);
+		retrive(response);
 	};
 
 	return (
@@ -82,6 +68,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 			<Card.Body>
 				<InputGroup className="mb-3">
 					<FormControl
+						className={`${zawgyi(lang)}`}
 						type="text"
 						value={name}
 						placeholder={t('name')}
@@ -91,6 +78,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 
 				<InputGroup className="mb-3">
 					<FormControl
+						className={`${zawgyi(lang)}`}
 						type="text"
 						value={description}
 						placeholder={t('description')}
@@ -100,6 +88,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 
 				<InputGroup className="mb-3">
 					<FormControl
+						className={`${zawgyi(lang)}`}
 						as="textarea"
 						value={address}
 						placeholder={t('address')}
@@ -109,7 +98,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 
 				<InputGroup className="mb-3">
 					<FormControl
-						className="me-3"
+						className={`me-3 ${zawgyi(lang)}`}
 						type="phone"
 						value={phone}
 						placeholder={t('phone')}
@@ -118,6 +107,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 
 					<FormControl
 						type="email"
+						className={`${zawgyi(lang)}`}
 						value={email}
 						placeholder={t('email')}
 						onChange={e => setEmail(e.target.value)}
@@ -125,10 +115,7 @@ export const CreateShopFormComponent = ({retrive}) => {
 				</InputGroup>
 
 				<div className="d-flex flex-row justify-content-start align-items-center">
-					<Button onClick={() => create()} disabled={loading}>
-						{' '}
-						{t('confirm')} {' '}
-					</Button>
+					<Button className={`${zawgyi(lang)}`} onClick={() => create()} disabled={loading}> {t('confirm')} </Button>
 				</div>
 			</Card.Body>
 		</Card>

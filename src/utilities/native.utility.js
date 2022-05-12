@@ -24,14 +24,13 @@ export const menus = [
 	{label: 'invoice-page', url: '/invoice'},
 	{label: 'credit-page', url: '/credit'},
 	{label: 'customer-page', url: '/customer'},
-	{label: 'profile-page', url: '/profile'},
 	{label: 'account-page', url: '/account'},
 	{
 		label: 'setting-page',
 		submenu: [
 			{
-				label: `${t('shop')}`,
-				url: '/setting'
+				label: `${t('nav-general')}`,
+				url: '/general-setting'
 			},
 			{
 				label: `${t('number-specification')}`,
@@ -41,10 +40,6 @@ export const menus = [
 				label: `${t('receipt')}`,
 				url: '/invoicesetting'
 			},
-			{
-				label: `${t('backup')}`,
-				url: '/backup'
-			}
 		]
 	},
 	{label: 'logout-page', url: '/logout'}

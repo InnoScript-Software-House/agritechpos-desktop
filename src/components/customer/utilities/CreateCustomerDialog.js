@@ -5,7 +5,6 @@ import { createCustomer } from '../../../services/customer.service';
 import { messageBoxType } from '../../../utilities/native.utility';
 import { zawgyi, t } from '../../../utilities/translation.utility';
 
-const checkEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const checkphone = /^(\+?(95)|[09])\d{10}/g;
 
 export const CreateCustomerDialog = ({isOpen, reload, close}) => {
@@ -44,11 +43,6 @@ export const CreateCustomerDialog = ({isOpen, reload, close}) => {
             return;
         }
 
-        if(!checkEmail.test(email)) {
-            nativeApi.messageBox.open({title: messageBoxTitle, message: t('invalid-email-address'), type: messageBoxType.info});
-            return;
-        }
-
         const requestBody = {
             name: name,
             phone: phone,
@@ -67,6 +61,7 @@ export const CreateCustomerDialog = ({isOpen, reload, close}) => {
         }
 
         setLoading(false);
+
         nativeApi.notification.show({title: t('success-create-customer'), body: t('success-create-customer-description')});
         handleClose();
         reload(true);
@@ -131,7 +126,6 @@ export const CreateCustomerDialog = ({isOpen, reload, close}) => {
             </Modal.Body>
 
             <Modal.Footer>
-                <Button className={`${zawgyi(lang)}`} onClick={() => handleClose()} disabled={isLoading}> {t('btn-cancel')} </Button>
                 <Button className={`${zawgyi(lang)}`} onClick={() => saveCustomer()} disabled={isLoading}> {t('btn-save')} </Button>
             </Modal.Footer>
         </Modal>

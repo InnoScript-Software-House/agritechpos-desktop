@@ -11,7 +11,7 @@ import LicensePage from './pages/License';
 import ErrorPage from './pages/Error';
 import FirstUserRegisterPage from './pages/user/FirstUserRegister';
 import ProfilePage from './pages/user/Profile';
-import SettingPage from './pages/Setting';
+
 import FirstDevice from './pages/device/FirstDevice';
 import AccountPage from './pages/user/Account';
 import InventoryPage from './pages/Inventory';
@@ -19,21 +19,23 @@ import EditItemPage from './pages/item/EditItem';
 import CategoryListPage from './pages/category/CategoryList';
 import EditCategoryPage from './pages/category/EditCategory';
 import SalePage from './pages/Sale';
-import {InvoiceReportPage} from './components/sale/invoiceReport';
+import InvoiceReportPage from './components/sale/invoiceReport';
 import InvociePage from './pages/Invoice';
 import CustomerPage from './pages/customer/Customer';
 import EditCustomerPage from './components/customer/EditCustomer';
-
-import './assets/css/theme.css';
 import Invoice from './pages/Invoice';
 import CreditPage from './pages/Credit';
 import Repayment from './components/repayment/Repayment';
-import {NumberSpecificationComponent} from './components/settings/numberSpecification';
 import InvoiceSetting from './components/settings/InvoiceSetting';
 import BackUpComponent from './components/settings/backup';
 import CreateItemPage from './pages/item/CreateItemPage';
+import GeneralSettingPage from './pages/general/GeneralPage';
+
+import './assets/css/theme.css';
+import NumberSpecificationSettingPage from './pages/setting/NumberSpecificationSettingPage';
 
 class App extends Component {
+
 	render() {
 		return (
 			<HashRouter history={history}>
@@ -48,12 +50,11 @@ class App extends Component {
 				<Route exact path={'/login'} component={LoginPage} />
 				<Route exact path={'/logout'} component={LogoutPage} />
 
-				<Route exact path={'/numberspecification'} component={NumberSpecificationComponent} />
+				<Route exact path={'/numberspecification'} component={NumberSpecificationSettingPage} />
 				<Route exact path={'/invoicesetting'} component={InvoiceSetting} />
 				<Route exact path={'/backup'} component={BackUpComponent} />
 
 				<Route exact path={'/profile'} component={ProfilePage} />
-				<Route exact path={'/setting'} component={SettingPage} />
 
 				<Route exact path={'/device/first'} component={FirstDevice} />
 				<Route exact path={'/account'} component={AccountPage} />
@@ -75,6 +76,8 @@ class App extends Component {
 
 				<Route exact path={'/customer'} component={CustomerPage} />
 				<Route exact path={'/editcustomer/:id'} component={EditCustomerPage} />
+
+				<Route exact path={'/general-setting'} component={GeneralSettingPage} />
 			</HashRouter>
 		);
 	}

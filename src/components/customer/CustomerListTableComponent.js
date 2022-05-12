@@ -7,6 +7,7 @@ import CustomerTableHeaderComponent from '../table/customerTableHeader';
 import { TableLoadingComponent } from '../table/tableLoading';
 import {t} from 'i18next';
 import {CustomerRowExpandComponent} from './utilities/CustomerRowExpandComponent';
+import SearchCustomer from './utilities/SearchCustomer';
 
 const searchColumns = [
     t('name'), t('email'), t('phone')
@@ -32,6 +33,10 @@ export const CustomerListTableComponent = ({ props, dataSource, reload, retrive 
         retrive(e);
     }
 
+    const handleSearch = (e) => {
+        setCustomerList(e);
+    }
+
     useEffect(() => {
         if (dataSource) {
             let customerList = getCustomerList();
@@ -46,6 +51,9 @@ export const CustomerListTableComponent = ({ props, dataSource, reload, retrive 
                 <Card.Header>
                     <div className='d-md-flex flex-md-row justify-content-between'>
                         <span className='title'> {t('customer')}</span>
+                        <div className='col-md-3'>
+                            <SearchCustomer data={dataSource} searchResult={(e) => handleSearch(e)}/>
+                        </div>
                     </div>
                 </Card.Header>
 
@@ -55,6 +63,7 @@ export const CustomerListTableComponent = ({ props, dataSource, reload, retrive 
                         subHeaderComponent={
                             <CustomerTableHeaderComponent
                                 type={'CustomerLists'}
+                                props={props}
                                 dataSource={dataSource}
                                 searchColumns={searchColumns}
                                 placeholder={t('search')}
@@ -78,7 +87,6 @@ export const CustomerListTableComponent = ({ props, dataSource, reload, retrive 
                         selectableRows={true}
                         selectableRowsHighlight={true}
                         onSelectedRowsChange={e => boughtInvoicesHandler(e.selectedRows)}
-                        selectableRowsSingle={true}
                         paginationPerPage={50}
                         expandableRows={true}
                         expandOnRowClicked={true}

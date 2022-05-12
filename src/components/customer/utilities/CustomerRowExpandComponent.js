@@ -8,7 +8,6 @@ export const CustomerRowExpandComponent = ({data, refresh}) => {
   const state = useSelector(state => state);
   const {lang} = state;
 
-  console.log(data);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
