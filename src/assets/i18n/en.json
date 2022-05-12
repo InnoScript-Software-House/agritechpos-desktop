@@ -291,5 +291,6 @@
     "does-not-have-update-info" : "There is no modifications",
     "title-tax-change" : "Update tax percentage",
     "success-tax-change" : "tax percentage is updated successfully",
-    "invalid-tax-percentage": "Invalid tax percentage"
+    "invalid-tax-percentage": "Invalid tax percentage",
+    "success-shop-info": "Shop information is created successfully"
 }
