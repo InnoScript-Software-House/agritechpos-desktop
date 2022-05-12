@@ -12,6 +12,10 @@ const CustomMenu = React.forwardRef(({ options, dataSource, chooseItem, setDisab
     const [items, setItems] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
 
+    const mergeDeduplicate = (arr) => {
+        return [...new Set([].concat(...arr))];
+    }
+
     const searchResult = (text) => {
         setText(text);
 
@@ -26,11 +30,8 @@ const CustomMenu = React.forwardRef(({ options, dataSource, chooseItem, setDisab
         const suggestionResultByModel = items.filter((item) => item.model !== null && item.model.toLowerCase().includes(text.toLowerCase()));
         const suggestionResultByLocaiton = items.filter((item) => item.location !== null && item.location.toLowerCase().includes(text.toLowerCase()));
 
-        const suggestionResult = suggestionResultByEngName.
-        concat(suggestionResultByMyName).
-        concat(suggestionResultByCode).
-        concat(suggestionResultByModel).
-        concat(suggestionResultByLocaiton);
+        const arrayLists = [suggestionResultByEngName, suggestionResultByMyName, suggestionResultByCode, suggestionResultByModel, suggestionResultByLocaiton];
+        const suggestionResult = mergeDeduplicate(arrayLists);
 
         setSuggestions(suggestionResult);
     }

@@ -30,6 +30,11 @@ contextBridge.exposeInMainWorld('nativeApi', {
 			return ipcRenderer.send('quit-app');
 		}
 	},
+	display: {
+		new(){
+			return ipcRenderer.send('print-display');
+		}
+	},
 	print: {
 		invoice(options) {
 			return ipcRenderer.send('print-invoice', options);

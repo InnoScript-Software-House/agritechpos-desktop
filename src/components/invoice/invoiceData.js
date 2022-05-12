@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Modal } from "react-bootstrap";
 import { getShop } from "../../services/shop.service";
 import moment from "moment";
 import { t } from "../../utilities/translation.utility";
@@ -8,7 +8,7 @@ import numeral from "numeral";
 
 const tableHeader = [t('aterail-code'), t('name'), t('model'), t('quantity'), t('price'), t('total')];
 
-export const InvoiceDataComponent = ({ invoiceDetail }) => {
+export const InvoiceDataComponent = ({ invoiceDetail, isOpen, closeModal, setprint }) => {
 
     const [shop, setShop] = useState (null);
     const [invoice, setInvoice] = useState (null);
@@ -17,6 +17,13 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
     const [taxAmount, setTaxAmount] = useState(0);
     const [grandAmount, setGrandAmount] = useState(0);
     const [changes, setChanges] = useState(0);
+    const [isShow, setIsShow] = useState(false);
+    const [isPrint, setIsPrint] = useState(false);
+    const [data, setData] = useState({
+        shop: null,
+        invoice: null,
+        invoiceData: null,
+    });
 
     const lang = useSelector(state => state.lang);
 
@@ -35,8 +42,19 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
         }
     }
 
+    const print = async () => {
+        setprint(data);
+        setIsPrint(true);
+    }
+
+    const close = () => {
+        setIsShow(false);
+        closeModal();
+    }
+
     useEffect(async () => {
-        if(invoiceDetail) {
+        if(isOpen === 1) {
+            setIsShow(true);
             const shopinfo = await getShop();
 
             if(shopinfo && shopinfo.success === false) {
@@ -47,20 +65,21 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
             setInVoiceData(iData);
             setShop(shopinfo);
             setInvoice(invoiceDetail && invoiceDetail[0]);
-            importData();  
+            setData({
+                shop: shopinfo,
+                invoice: invoiceDetail && invoiceDetail[0],
+                invoiceData: iData
+            });
+            importData(); 
         }
 
-    },[invoiceDetail]);
+    },[isOpen]);
 
     return (
         <>
-        <Card className="mt-3">
-            <Card.Header>
-                <Card.Title> <span> Preview Invoice </span> </Card.Title>
-            </Card.Header>
-
-            <Card.Body>
-                {shop && invoice && (
+        <Modal show={isShow} size='lg'>
+            <Modal.Body>
+            {shop && invoice && (
                     <>
                         <div className="d-md-flex flex-md-column justify-content-center align-items-center">
                             <div className="row">
@@ -80,20 +99,7 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                             <div className="column">
                                 <h6>{t('email')} - {shop.email}</h6>
                             </div>
-                        </div>                                               
-                        {/* <div className="col-md-12 d-md-flex flex-md-row justify-content-center align-items-center mt-3 line mb-3">
-                            <div className="d-md-flex flex-md-col justify-content-between">
-                                <h3 className="row"> {shop.name} </h3>
-                                <h5 className="row"> {shop.description} </h5>
-                                <p className="row"> {shop.address} </p>
-                            </div>
-
-                            <div className="d-md-flex flex-md-row justify-content-between">
-                                <span className="col"> {t('phone')} - {shop.phone} </span>
-                                <span className="col"> {t('email')} - {shop.email} </span>
-                            </div>
-                        </div> */}
-
+                        </div>                                             
                         <div className="col-md-12 mt-3 ps-3">
                             <div className="d-md-flex flex-row justify-content-between align-items-center mb-3">
                                 <div className="invoice-info">
@@ -103,9 +109,9 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
 
                                 <div className="customer-info">
                                     <div className="pe-3">
-                                        <h6> {t('name')} - {invoice.customer_name} </h6>
-                                        <h6> {t('phone')} - {invoice.customer_phone} </h6>
-                                        <h6> {t('address')} - {invoice.customer_address} </h6>
+                                        <h6> {t('name')} - {invoice && invoice.customer && invoice.customer.name} </h6>
+                                        <h6> {t('phone')} - {invoice && invoice.customer && invoice.customer.phone} </h6>
+                                        <h6> {t('address')} - {invoice && invoice.customer && invoice.customer.address} </h6>
                                     </div>
                                 </div>
                             </div>
@@ -194,8 +200,12 @@ export const InvoiceDataComponent = ({ invoiceDetail }) => {
                     </>
                 )
                 }
-            </Card.Body>
-        </Card>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={() => print()}> Print </Button> 
+                <Button onClick={close}> Close </Button>
+            </Modal.Footer>
+        </Modal>
         </>
     )
 }

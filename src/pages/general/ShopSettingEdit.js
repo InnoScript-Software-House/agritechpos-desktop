@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Card, FormControl, InputGroup} from 'react-bootstrap';
-import {updateShop} from '../../services/shop.service';
 import {useDispatch} from 'react-redux';
-import {setOpenToastAction} from '../../redux/actions/toast.action';
 import {t} from 'i18next';
-import {messageBoxType} from '../../utilities/native.utility';
+import { messageBoxType } from '../../utilities/native.utility';
+import { updateShop } from '../../services/shop.service';
 
-export const EditShopFormComponent = ({dataSource, retrive}) => {
+
+export const ShopSettingEdit = ({dataSource, retrive}) => {
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
 	const [phone, setPhone] = useState('');

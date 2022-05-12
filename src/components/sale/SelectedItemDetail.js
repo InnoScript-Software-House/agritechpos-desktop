@@ -1,8 +1,7 @@
 import numeral from "numeral";
 import React, { useEffect, useState } from "react";
-import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { setOpenToastAction } from "../../redux/actions/toast.action";
+import { FormControl, InputGroup } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { updateItem } from "../../services/item.service";
 import { messageBoxType } from "../../utilities/native.utility";
 import { t, zawgyi } from "../../utilities/translation.utility";
@@ -22,12 +21,13 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
     const messageBoxTitle = t('title-update-item-percentage');
 
     const changePercentage = (percentageValue) => {
+
         if(!Number(percentageValue)) {
             nativeApi.messageBox.open({title: messageBoxTitle, message: t('invalid-percentage'), type: messageBoxType.info});
-            return;
         }
 
         setPercentage(percentageValue);
+        return;
     }
 
     const save = async () => {
@@ -77,7 +77,7 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
                                 <td> {item.code} </td>
                                 <td> {item.name} </td>
                                 <td> {item.model} </td>
-                                <td> {item.category.name} </td>
+                                <td> {item.category ? item.category.name : null} </td>
                                 <td> {item.totalQty} </td>
                                 <td> 
                                     <span className="clickable" onClick={() => setShowPrice(!showPrice)}>

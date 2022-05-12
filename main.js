@@ -162,6 +162,18 @@ ipcMain.on('app:default-menu', events => {
 	Menu.setApplicationMenu(menu);
 });
 
+ipcMain.on('print-display', () => {
+	let win = new BrowserWindow({
+		width: 800,
+		height: 1000,
+		type: 'MainWindow',
+		frame: false,
+		fullscreen: false,
+	});
+
+	win.loadURL('./index.html');
+});
+
 ipcMain.on('app:change-language', (events, menus) => {
 	let buildTemplate = [];
 
