@@ -19,6 +19,7 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
     const [model, setModel] = useState('');
     const [location, setLocation] = useState('');
     const [price, setPrice] = useState('');
+    const [code, setCode] = useState('');
 
     const update = async (value, fieldName) => {
         if (value === '') {
@@ -27,7 +28,13 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
         }
 
         if (fieldName === 'price' || fieldName === 'qty' || fieldName === 'percentage') {
-            if(!Number(value)){
+            if(value === 0){
+                value = Number(0);
+                setPrice(0);
+                setQty(0);
+                setPercentage(0);
+            }
+            else if(!Number(value)){
                 window.nativeApi.messageBox.open({ title: t('title-update-item'), message: t('invalid-number'), type: messageBoxType.info });
                 return;              
             }
@@ -67,12 +74,32 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
             setPrice(data.price);
             setPercentage(data.percentage);
             setQty(data.qty);
+            setCode(data.code);
         }
     }, [data]);
 
     return (
         <div className='container-fluid'>
             <div className='row'>
+
+            <div className='col-md-2 mt-3 mb-3'>
+                <Form.Label className={`${zawgyi(lang)}`}> {t('materail-code')} </Form.Label>
+                <InputGroup>
+                        <FormControl
+                            className={`${zawgyi(lang)}`}
+                            type='text'
+                            placeholder={t('materail-code')}
+                            value={code || ''}
+                            onChange={e => setCode(e.target.value)}
+                            onKeyPress={e => {
+                                if(e.code === 'Enter'){
+                                update(code, 'code');
+                                }
+                            }}
+                        />
+                </InputGroup>
+            </div>
+
             <div className='col-md-2 mt-3 mb-3'>
                     <Form.Label className={`${zawgyi(lang)}`}> {t('name')} </Form.Label>
                     <InputGroup>
