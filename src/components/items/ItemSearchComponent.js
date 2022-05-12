@@ -27,9 +27,19 @@ export const ItemSearchComponent = ({ dataSource, retrive }) => {
         const suggestionResult = suggestionResultForCode.
             concat(suggestionResultForName).
             concat(suggestionResultForModel).
-            concat(suggestionResultForLocation)
+            concat(suggestionResultForLocation);
 
-        retrive(suggestionResult);
+            if(suggestionResult.length > 1){
+                if(suggestionResultForName.length === 0){
+                    retrive(suggestionResultForModel);
+                    return;
+                }
+               retrive(suggestionResultForName);
+               return;
+            }
+
+            retrive(suggestionResult);
+            return;
     }
 
     useEffect(() => {
