@@ -9,6 +9,7 @@ import { ShopSettingCreate } from "./ShopSettingCreate";
 import { ShopSettingEdit } from "./ShopSettingEdit";
 import TaxSetting from "./TaxSetting";
 import ShowDeviceSetting from "./ShowDeviceSetting";
+import ProfileSetting from "./ProfileSetting";
 
 
 class GeneralSettingPage extends Component {
@@ -29,6 +30,8 @@ class GeneralSettingPage extends Component {
 
     async loadingData() {
         const response = await getShop();
+        console.log(response);
+
         if (response) {
             this.setState({
                 shop: response
@@ -43,12 +46,6 @@ class GeneralSettingPage extends Component {
         window.nativeApi.app.navigateTo((url) => {
             history.push(url);
         });
-
-        // window.nativeApi.device.get((data) => {
-        //     console.log(data);
-        //     const cpus = data.cpus();
-        //     console.log(cpus);
-        // })
     }
 
     render() {
@@ -75,8 +72,7 @@ class GeneralSettingPage extends Component {
                         <div className="row mt-3">
                             <div className="col-md-12">
                                 {
-                                    this.state.shop === null
-                                        ? (<ShopSettingCreate props={this.props} retrive={e => this.getShopInfo(e)} />)
+                                    this.state.shop === null ? (<ShopSettingCreate props={this.props} retrive={e => this.getShopInfo(e)} />)
                                         : (<ShopSettingEdit props={this.props} dataSource={this.state.shop} retrive={e => this.getShopInfo(e)} />)
                                 }
                             </div>
@@ -84,7 +80,14 @@ class GeneralSettingPage extends Component {
                     </div>
 
                     <div className="col-md-6">
-                            <ShowDeviceSetting />
+                        <div className="row">
+                            <div className="col-md-12">
+                                <ProfileSetting />
+                            </div>
+                            <div className="col-md-12 mt-3">
+                                <ShowDeviceSetting />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

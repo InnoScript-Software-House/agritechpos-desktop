@@ -29,10 +29,10 @@ import Repayment from './components/repayment/Repayment';
 import InvoiceSetting from './components/settings/InvoiceSetting';
 import BackUpComponent from './components/settings/backup';
 import CreateItemPage from './pages/item/CreateItemPage';
-import NumberSpecificationSettingPage from './pages/setting/NumberSpecificationSettingPage';
 import GeneralSettingPage from './pages/general/GeneralPage';
 
 import './assets/css/theme.css';
+import NumberSpecificationSettingPage from './pages/setting/NumberSpecificationSettingPage';
 
 class App extends Component {
 

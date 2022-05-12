@@ -21,12 +21,13 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
     const messageBoxTitle = t('title-update-item-percentage');
 
     const changePercentage = (percentageValue) => {
+
         if(!Number(percentageValue)) {
             nativeApi.messageBox.open({title: messageBoxTitle, message: t('invalid-percentage'), type: messageBoxType.info});
-            return;
         }
 
         setPercentage(percentageValue);
+        return;
     }
 
     const save = async () => {

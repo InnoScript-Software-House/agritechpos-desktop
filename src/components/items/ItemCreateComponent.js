@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
-import { Button, Card, FormControl, FormLabel, InputGroup } from "react-bootstrap";
+import { Button, Card, FormControl, FormLabel, FormSelect, InputGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { saveItem } from "../../services/item.service";
 import { messageBoxType } from '../../utilities/native.utility';
@@ -14,7 +14,7 @@ export const ItemCreateComponent = ({ categoriesList }) => {
 
     const [btnLoading, setBtnLoading] = useState(false);
     const [categories, setCategories] = useState(categoriesList);
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState('default');
     const [eng_name, setEngName] = useState('');
     const [mm_name, setMName] = useState('');
     const [model, setModel] = useState('');
@@ -29,6 +29,11 @@ export const ItemCreateComponent = ({ categoriesList }) => {
     const itemSave = async () => {
         if(code === '') {
             window.nativeApi.messageBox.open({title: messageBoxTitle, message: `${t('code-is-required')}`, type: messageBoxType.info});
+            return;
+        }
+
+        if(category === 'select-the-categories'){
+            window.nativeApi.messageBox.open({title: messageBoxTitle, message: `${t('please-select-the-categories')}` , type: messageBoxType.info});
             return;
         }
         
@@ -65,9 +70,9 @@ export const ItemCreateComponent = ({ categoriesList }) => {
     useEffect(() => {
         setCategories(categoriesList);
 
-        if(categoriesList.length > 0) {
-            setCategory(categoriesList[0].id);
-        } 
+        // if(categoriesList.length > 0) {
+        //     setCategory(categoriesList[0].id);
+        // } 
     }, [categoriesList]);
 
     return(
@@ -80,17 +85,17 @@ export const ItemCreateComponent = ({ categoriesList }) => {
                 <>
                     <FormLabel className={`${zawgyi(lang)}`}> {t('category')} </FormLabel>
                     <InputGroup className="mb-3">
-                        <FormControl
-                            as="select"
+                        <FormSelect
                             value={category}
                             onChange={e => setCategory(e.target.value)}
                         >
+                            <option value={'default'} disabled > {t('select-the-categories')} </option>
                             {categories.length > 0 && categories.map((cat, index) => {
                                 return(
                                     <option key={`cat_id_${index}`} value={cat.id}> { cat.name} </option>
                                 )
                             })}
-                        </FormControl>
+                        </FormSelect>
                     </InputGroup>
                     
                     <FormLabel> {t('materail-code')} </FormLabel>
