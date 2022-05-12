@@ -29,7 +29,7 @@ import Repayment from './components/repayment/Repayment';
 import InvoiceSetting from './components/settings/InvoiceSetting';
 import BackUpComponent from './components/settings/backup';
 import CreateItemPage from './pages/item/CreateItemPage';
-// import GeneralSettingPage from './pages/general/GeneralPage';
+import GeneralSettingPage from './pages/general/GeneralPage';
 
 import './assets/css/theme.css';
 import NumberSpecificationSettingPage from './pages/setting/NumberSpecificationSettingPage';
@@ -77,7 +77,7 @@ class App extends Component {
 				<Route exact path={'/customer'} component={CustomerPage} />
 				<Route exact path={'/editcustomer/:id'} component={EditCustomerPage} />
 
-				{/* <Route exact path={'/general-setting'} component={GeneralSettingPage} /> */}
+				<Route exact path={'/general-setting'} component={GeneralSettingPage} />
 			</HashRouter>
 		);
 	}
