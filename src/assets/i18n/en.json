@@ -292,5 +292,6 @@
     "title-tax-change" : "Update tax percentage",
     "success-tax-change" : "tax percentage is updated successfully",
     "invalid-tax-percentage": "Invalid tax percentage",
-    "success-shop-info": "Shop information is created successfully"
+    "success-shop-info": "Shop information is created successfully",
+    "percentage-less-than-100" : "Percentage Can't be greater than 100"
 }

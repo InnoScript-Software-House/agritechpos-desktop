@@ -22,10 +22,18 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
 
     const changePercentage = (percentageValue) => {
 
-        if(!Number(percentageValue)) {
-            nativeApi.messageBox.open({title: messageBoxTitle, message: t('invalid-percentage'), type: messageBoxType.info});
+        if (Number(percentageValue) > 100) {
+            nativeApi.messageBox.open({ title: messageBoxTitle, message: t('percentage-less-than-100'), type: messageBoxType.info });
+            setPercentage('');
+            return;
         }
 
+        if (!Number(percentageValue)) {
+            nativeApi.messageBox.open({ title: messageBoxTitle, message: t('invalid-percentage'), type: messageBoxType.info });
+            setPercentage('');
+            return;
+        }
+        
         setPercentage(percentageValue);
         return;
     }
@@ -37,12 +45,12 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
 
         const response = await updateItem(item.id, requestBody);
 
-        if(response && response.success === false) {
-            nativeApi.messageBox.open({title: messageBoxTitle, message: response.message, type: messageBoxType.info});
+        if (response && response.success === false) {
+            nativeApi.messageBox.open({ title: messageBoxTitle, message: response.message, type: messageBoxType.info });
             return;
         }
 
-        nativeApi.notification.show({title: messageBoxTitle, body: t('success-item-percentage-update')});
+        nativeApi.notification.show({ title: messageBoxTitle, body: t('success-item-percentage-update') });
 
         item.percentage = percentage;
         item.sell_price = ((Number(item.price) * Number(percentage)) / 100) + Number(item.price);
@@ -52,7 +60,7 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
     }
 
     useEffect(() => {
-        if(selectedItem) {
+        if (selectedItem) {
             setItem(selectedItem);
         }
     }, [selectedItem]);
@@ -65,13 +73,13 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
                         <thead>
                             <tr>
                                 {tableHeader.map((value, index) => {
-                                    return(
+                                    return (
                                         <td key={`sale_table_header_id_${index}`}> <span className={`${zawgyi(lang)}`}> {value} </span> </td>
                                     )
                                 })}
                             </tr>
                         </thead>
-                
+
                         <tbody>
                             <tr>
                                 <td> {item.code} </td>
@@ -79,19 +87,19 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
                                 <td> {item.model} </td>
                                 <td> {item.category ? item.category.name : null} </td>
                                 <td> {item.totalQty} </td>
-                                <td> 
+                                <td>
                                     <span className="clickable" onClick={() => setShowPrice(!showPrice)}>
-                                        {showPrice ? `${numeral(item.price).format('0,0')} MMK` : `${item.price.toString().charAt(0)} XXX... MMK` }
+                                        {showPrice ? `${numeral(item.price).format('0,0')} MMK` : `${item.price.toString().charAt(0)} XXX... MMK`}
                                     </span>
                                 </td>
                                 <td>
-                                    <span className="clickable" onClick={() => setShowPercentage(!showPercentage)}> 
-                                        {showPercentage ? `${item.percentage} %` : `${item.percentage.toString().charAt(0)} XX (%)`} 
+                                    <span className="clickable" onClick={() => setShowPercentage(!showPercentage)}>
+                                        {showPercentage ? `${item.percentage} %` : `${item.percentage.toString().charAt(0)} XX (%)`}
                                     </span>
                                 </td>
                                 <td> {numeral(item.sell_price).format('0,0')} MMK </td>
                                 <td> {item.location} </td>
-                                <td> 
+                                <td>
                                     <InputGroup>
                                         <FormControl
                                             type="text"
@@ -99,7 +107,7 @@ export const SelectedItemDetail = ({ selectedItem, reloadItem }) => {
                                             value={percentage}
                                             onChange={(e) => changePercentage(e.target.value)}
                                             onKeyPress={(e) => {
-                                                if(e.code === 'Enter') {
+                                                if (e.code === 'Enter') {
                                                     save();
                                                 }
                                             }}
