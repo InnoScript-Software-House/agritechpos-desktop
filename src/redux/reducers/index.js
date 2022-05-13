@@ -13,6 +13,7 @@ import { toastReducer } from "./toast.reducer";
 import { invoiceReducer } from "./invoice.reducer";
 import { taxReducer } from "./tax.reducer";
 import { printReducer } from "./print.reducer";
+import { invoiceSettingReducer } from "./invoiceSetting.reducer";
 
 export default combineReducers({
     auth: authReducer,
@@ -29,4 +30,5 @@ export default combineReducers({
     config: configReducer,
     sellPrice: sellPriceReducer,
     invoice: invoiceReducer,
+    invoiceSetting : invoiceSettingReducer,
 });
