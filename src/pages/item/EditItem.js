@@ -11,7 +11,7 @@ import { ItemBarCodeComponent } from '../../components/items/ItemBarCode';
 import { messageBoxType } from '../../utilities/native.utility';
 
 class EditItemPage extends Component {
-
+                        
     constructor(props) {
         super(props);
         this.state = {

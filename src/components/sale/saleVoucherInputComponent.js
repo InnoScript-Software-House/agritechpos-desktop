@@ -47,11 +47,12 @@ export const SaleVoucherInputComponent = ({dataSource, retrive, selectedItem}) =
 		const checkItem = getCurrentInvoice.filter(value => value.code === item.code);
 
 		if (checkItem.length > 0) {
-			return nativeApi.messageBox.open({
-				title: messageBoxTitle,
-				message: t('exit-item'),
-				type: messageBoxType.info
-			});
+			const setnew = getCurrentInvoice.filter(e => e.code !== item.code);
+			setnew.push(item);
+			localStorage.setItem('CURRENT_INVOICE', JSON.stringify(setnew));
+			retrive(setnew);
+			selectedItem(null);
+			return;
 		}
 
 		getCurrentInvoice.push(item);

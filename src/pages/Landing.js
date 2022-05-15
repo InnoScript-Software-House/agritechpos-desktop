@@ -32,7 +32,7 @@ class LandingPage extends Component {
     }
 
     async checkLicenseData () {
-
+        
         const { history } = this.props;
         const { setToast } = this.props.reducer;
 

@@ -15,6 +15,9 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
     const [item, setItem] = useState(null);
     const [percentage, setPercentage] = useState('');
     const [qty, setQty] = useState('');
+    const [model, setModel] = useState('');
+    const [location, setLocation] = useState('');
+    const [code, setCode] = useState('');
 
     const update = async (value, fieldName) => {
         if (value === '') {
@@ -22,17 +25,26 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
             return;
         }
 
-        if (!Number(value)) {
-            window.nativeApi.messageBox.open({ title: t('title-update-item'), message: t('invalid-number'), type: messageBoxType.info });
-            return;
+        if(fieldName === 'qty' || fieldName === 'percentage'){
+            if(value === 0){
+                value = Number(0);
+            }
+            else if (!Number(value)) {
+                window.nativeApi.messageBox.open({ title: t('title-update-item'), message: t('invalid-number'), type: messageBoxType.info });
+                return;
+            }
         }
 
         setPercentage(item.percentage);
         setQty(item.qty);
+        setModel(item.model);
+        setLocation(item.location);
+        setCode(item.code);
 
         const requestBody = item;
 
-        requestBody[fieldName] = Number(value);
+
+        requestBody[fieldName] = value;
 
         const updateResponse = updateItem(item.id, requestBody);
 
@@ -51,12 +63,34 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
             setItem(data);
             setPercentage(data.percentage);
             setQty(data.qty);
+            setModel(data.model);
+            setCode(data.code);
+            setLocation(data.location);
         }
     }, [data]);
 
     return (
         <div className='container-fluid'>
             <div className='row'>
+
+            <div className='col-md-2 mt-3 mb-3'>
+                    <Form.Label className={`${zawgyi(lang)}`}> {t('code')} </Form.Label>
+                    <InputGroup>
+                        <FormControl
+                            className={`${zawgyi(lang)}`}
+                            type='text'
+                            placeholder={t('code')}
+                            value={code || ''}
+                            onChange={e => setCode(e.target.value)}
+                            onKeyPress={e => {
+                                if (e.code === 'Enter') {
+                                    update((code), 'code')
+                                }
+                            }}
+                        />
+                    </InputGroup>
+                </div>
+
                 <div className='col-md-2 mt-3 mb-3'>
                     <Form.Label className={`${zawgyi(lang)}`}> {t('percentage')} </Form.Label>
                     <InputGroup>
@@ -92,6 +126,44 @@ export const ItemRowExpandComponent = ({ data, refresh }) => {
                         />
                     </InputGroup>
                 </div>
+
+                <div className='col-md-2 mt-3 mb-3'>
+                    <Form.Label className={`${zawgyi(lang)}`}> {t('model')} </Form.Label>
+                    <InputGroup>
+                        <FormControl
+                            className={`${zawgyi(lang)}`}
+                            type='text'
+                            placeholder={t('model')}
+                            value={model || ''}
+                            onChange={e => setModel(e.target.value)}
+                            onKeyPress={e => {
+                                if (e.code === 'Enter') {
+                                    update((model), 'model')
+                                }
+                            }}
+                        />
+                    </InputGroup>
+                </div>
+
+                <div className='col-md-2 mt-3 mb-3'>
+                    <Form.Label className={`${zawgyi(lang)}`}> {t('location')} </Form.Label>
+                    <InputGroup>
+                        <FormControl
+                            className={`${zawgyi(lang)}`}
+                            type='text'
+                            placeholder={t('location')}
+                            value={location || ''}
+                            onChange={e => setLocation(e.target.value)}
+                            onKeyPress={e => {
+                                if (e.code === 'Enter') {
+                                    update((location), 'location')
+                                }
+                            }}
+                        />
+                    </InputGroup>
+                </div>
+
+                
 
                 <div className='col-md-2 mt-3 mb-3 align-self-end'>
                     <Button 

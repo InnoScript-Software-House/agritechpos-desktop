@@ -226,7 +226,7 @@ class AccountPage extends Component {
                     />
                   )}
 
-                  <FormControl 
+                  <FormControl  
                     className="mb-2"
                     type='email'
                     placeholder={t('email')}
