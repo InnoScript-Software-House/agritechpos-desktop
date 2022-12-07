@@ -59,7 +59,7 @@
     "electron-builder": "^22.14.13",
     "electron-packager": "^15.4.0",
     "electron-reload": "^2.0.0-alpha.1",
-    "express": "^4.17.2",
+    "express": "^4.18.2",
     "redux-devtools-extension": "^2.13.9",
     "sass": "^1.45.1",
     "sass-loader": "^12.4.0",
