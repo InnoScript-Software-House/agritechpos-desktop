@@ -96,7 +96,7 @@
     "react-router-dom": "^5.0.0",
     "react-to-print": "^2.14.4",
     "redux": "^4.1.2",
-    "sequelize": "^6.13.0",
+    "sequelize": "^6.28.2",
     "uuid": "^8.3.2",
     "wine": "^0.9.13",
     "xlsx": "^0.18.2"
